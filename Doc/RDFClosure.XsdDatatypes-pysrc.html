@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.XsdDatatypes</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Module&nbsp;XsdDatatypes
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.XsdDatatypes-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="RDFClosure.XsdDatatypes-module.html">Module RDFClosure.XsdDatatypes</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!/d/Bin/Python/python.exe</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">Lists of XSD datatypes and their mutual relationships</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{RDFLib&lt;http://rdflib.net&gt;}, 2.2.2. and higher</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">@license: This software is available for use under the U{W3C Software License&lt;http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231&gt;}</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">@organization: U{World Wide Web Consortium&lt;http://www.w3.org&gt;}</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring">@author: U{Ivan Herman&lt;a href="http://www.w3.org/People/Ivan/"&gt;}</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-string">$Id: XsdDatatypes.py,v 1.3 2009/09/11 12:30:46 ivan Exp $ $Date: 2009/09/11 12:30:46 $</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.__author__=RDFClosure.AxiomaticTriples-module.html#__author__,Variable RDFClosure.Closure.__author__=RDFClosure.Closure-module.html#__author__,Variable RDFClosure.CombinedClosure.__author__=RDFClosure.CombinedClosure-module.html#__author__,Variable RDFClosure.DatatypeHandling.__author__=RDFClosure.DatatypeHandling-module.html#__author__,Variable RDFClosure.Literals.__author__=RDFClosure.Literals-module.html#__author__,Variable RDFClosure.OWLRL.__author__=RDFClosure.OWLRL-module.html#__author__,Variable RDFClosure.OWLRLExtras.__author__=RDFClosure.OWLRLExtras-module.html#__author__,Variable RDFClosure.RDFSClosure.__author__=RDFClosure.RDFSClosure-module.html#__author__,Variable RDFClosure.RestrictedDatatype.__author__=RDFClosure.RestrictedDatatype-module.html#__author__,Variable RDFClosure.XsdDatatypes.__author__=RDFClosure.XsdDatatypes-module.html#__author__,Variable RDFClosure.__author__=RDFClosure-module.html#__author__,Variable RDFClosure.parsers.__author__=RDFClosure.parsers-module.html#__author__,Variable RDFClosure.serializers.__author__=RDFClosure.serializers-module.html#__author__"><a title="RDFClosure.AxiomaticTriples.__author__
+RDFClosure.Closure.__author__
+RDFClosure.CombinedClosure.__author__
+RDFClosure.DatatypeHandling.__author__
+RDFClosure.Literals.__author__
+RDFClosure.OWLRL.__author__
+RDFClosure.OWLRLExtras.__author__
+RDFClosure.RDFSClosure.__author__
+RDFClosure.RestrictedDatatype.__author__
+RDFClosure.XsdDatatypes.__author__
+RDFClosure.__author__
+RDFClosure.parsers.__author__
+RDFClosure.serializers.__author__" class="py-name" href="#" onclick="return doclink('link-0', '__author__', 'link-0');">__author__</a></tt>  <tt class="py-op">=</tt> <tt class="py-string">'Ivan Herman'</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-name">__contact__</tt> <tt class="py-op">=</tt> <tt class="py-string">'Ivan Herman, ivan@w3.org'</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.__license__=RDFClosure.AxiomaticTriples-module.html#__license__,Variable RDFClosure.Closure.__license__=RDFClosure.Closure-module.html#__license__,Variable RDFClosure.CombinedClosure.__license__=RDFClosure.CombinedClosure-module.html#__license__,Variable RDFClosure.DatatypeHandling.__license__=RDFClosure.DatatypeHandling-module.html#__license__,Variable RDFClosure.Literals.__license__=RDFClosure.Literals-module.html#__license__,Variable RDFClosure.OWLRL.__license__=RDFClosure.OWLRL-module.html#__license__,Variable RDFClosure.OWLRLExtras.__license__=RDFClosure.OWLRLExtras-module.html#__license__,Variable RDFClosure.RDFSClosure.__license__=RDFClosure.RDFSClosure-module.html#__license__,Variable RDFClosure.RestrictedDatatype.__license__=RDFClosure.RestrictedDatatype-module.html#__license__,Variable RDFClosure.XsdDatatypes.__license__=RDFClosure.XsdDatatypes-module.html#__license__,Variable RDFClosure.__license__=RDFClosure-module.html#__license__,Variable RDFClosure.parsers.__license__=RDFClosure.parsers-module.html#__license__,Variable RDFClosure.serializers.__license__=RDFClosure.serializers-module.html#__license__"><a title="RDFClosure.AxiomaticTriples.__license__
+RDFClosure.Closure.__license__
+RDFClosure.CombinedClosure.__license__
+RDFClosure.DatatypeHandling.__license__
+RDFClosure.Literals.__license__
+RDFClosure.OWLRL.__license__
+RDFClosure.OWLRLExtras.__license__
+RDFClosure.RDFSClosure.__license__
+RDFClosure.RestrictedDatatype.__license__
+RDFClosure.XsdDatatypes.__license__
+RDFClosure.__license__
+RDFClosure.parsers.__license__
+RDFClosure.serializers.__license__" class="py-name" href="#" onclick="return doclink('link-1', '__license__', 'link-1');">__license__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">u'W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Variable RDFClosure.RDF=RDFClosure-module.html#RDF,Variable RDFClosure.parsers.n3p.n3proc.RDF=RDFClosure.parsers.n3p.n3proc-module.html#RDF"><a title="RDFClosure.RDF
+RDFClosure.parsers.n3p.n3proc.RDF" class="py-name" href="#" onclick="return doclink('link-2', 'RDF', 'link-2');">RDF</a></tt>                 <tt class="py-keyword">import</tt> <tt class="py-name">RDFNS</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ns_rdf</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt class="py-name">Literal</tt>     <tt class="py-keyword">import</tt> <tt class="py-name">_XSD_NS</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ns_xsd</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Variable RDFClosure.RDFS=RDFClosure-module.html#RDFS"><a title="RDFClosure.RDFS" class="py-name" href="#" onclick="return doclink('link-3', 'RDFS', 'link-3');">RDFS</a></tt>                <tt class="py-keyword">import</tt> <tt class="py-name">Literal</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="RDFClosure.RDF
+RDFClosure.parsers.n3p.n3proc.RDF" class="py-name" href="#" onclick="return doclink('link-4', 'RDF', 'link-2');">RDF</a></tt>                 <tt class="py-keyword">import</tt> <tt class="py-name">XMLLiteral</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-comment">#: The basic XSD types used everywhere; this means not the complete set of day/month types</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable RDFClosure.XsdDatatypes._Common_XSD_Datatypes=RDFClosure.XsdDatatypes-module.html#_Common_XSD_Datatypes"><a title="RDFClosure.XsdDatatypes._Common_XSD_Datatypes" class="py-name" href="#" onclick="return doclink('link-5', '_Common_XSD_Datatypes', 'link-5');">_Common_XSD_Datatypes</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonPositiveInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'negativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'positiveInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'long'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'int'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'short'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'byte'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedLong'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedInt'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedShort'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedByte'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'float'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'double'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'string'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'token'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'language'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'Name'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'NCName'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'NMTOKEN'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'boolean'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'hexBinary'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'base64Binary'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'anyURI'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'dateTimeStamp'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'dateTime'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'time'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'date'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-name">Literal</tt><tt class="py-op">,</tt> <tt class="py-name">XMLLiteral</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-op">]</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-comment">#: RDFS Datatypes: the basic ones plus the complete set of day/month ones</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt id="link-6" class="py-name" targets="Variable RDFClosure.XsdDatatypes.RDFS_Datatypes=RDFClosure.XsdDatatypes-module.html#RDFS_Datatypes"><a title="RDFClosure.XsdDatatypes.RDFS_Datatypes" class="py-name" href="#" onclick="return doclink('link-6', 'RDFS_Datatypes', 'link-6');">RDFS_Datatypes</a></tt>   <tt class="py-op">=</tt> <tt id="link-7" class="py-name"><a title="RDFClosure.XsdDatatypes._Common_XSD_Datatypes" class="py-name" href="#" onclick="return doclink('link-7', '_Common_XSD_Datatypes', 'link-5');">_Common_XSD_Datatypes</a></tt> <tt class="py-op">+</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'gYearMonth'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'gMonthDay'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'gYear'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'gDay'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'gMonth'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-comment">#: OWL RL Datatypes: the basic ones plus plain literal</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Variable RDFClosure.XsdDatatypes.OWL_RL_Datatypes=RDFClosure.XsdDatatypes-module.html#OWL_RL_Datatypes"><a title="RDFClosure.XsdDatatypes.OWL_RL_Datatypes" class="py-name" href="#" onclick="return doclink('link-8', 'OWL_RL_Datatypes', 'link-8');">OWL_RL_Datatypes</a></tt> <tt class="py-op">=</tt> <tt id="link-9" class="py-name"><a title="RDFClosure.XsdDatatypes._Common_XSD_Datatypes" class="py-name" href="#" onclick="return doclink('link-9', '_Common_XSD_Datatypes', 'link-5');">_Common_XSD_Datatypes</a></tt> <tt class="py-op">+</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_rdf</tt><tt class="py-op">[</tt><tt class="py-string">'PlainLiteral'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-comment">#: XSD Datatype subsumptions</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt id="link-10" class="py-name" targets="Variable RDFClosure.XsdDatatypes._Common_Datatype_Subsumptions=RDFClosure.XsdDatatypes-module.html#_Common_Datatype_Subsumptions"><a title="RDFClosure.XsdDatatypes._Common_Datatype_Subsumptions" class="py-name" href="#" onclick="return doclink('link-10', '_Common_Datatype_Subsumptions', 'link-10');">_Common_Datatype_Subsumptions</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'dateTimeStamp'</tt><tt class="py-op">]</tt>                 <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'dateTime'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt>                               <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'long'</tt><tt class="py-op">]</tt>                                  <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'int'</tt><tt class="py-op">]</tt>                                   <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'long'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'short'</tt><tt class="py-op">]</tt>                                 <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'int'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'long'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'byte'</tt><tt class="py-op">]</tt>                                  <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'short'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'int'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'long'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt>    <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'positiveInteger'</tt><tt class="py-op">]</tt>               <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedLong'</tt><tt class="py-op">]</tt>                  <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedInt'</tt><tt class="py-op">]</tt>                   <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedLong'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedShort'</tt><tt class="py-op">]</tt>                 <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedInt'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedLong'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedByte'</tt><tt class="py-op">]</tt>                  <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedShort'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedInt'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'unsignedLong'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonNegativeInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonPositiveInteger'</tt><tt class="py-op">]</tt>    <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'negativeInteger'</tt><tt class="py-op">]</tt>               <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'nonPositiveInteger'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'integer'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'decimal'</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt>              <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">"string"</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'token'</tt><tt class="py-op">]</tt>                                 <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">"string"</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'language'</tt><tt class="py-op">]</tt>                              <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'token'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">"string"</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'Name'</tt><tt class="py-op">]</tt>                                  <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'token'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">"string"</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'NCName'</tt><tt class="py-op">]</tt>                                <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'Name'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'token'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">"string"</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'NMTOKEN'</tt><tt class="py-op">]</tt>                               <tt class="py-op">:</tt> <tt class="py-op">[</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'Name'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'token'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">'normalizedString'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">ns_xsd</tt><tt class="py-op">[</tt><tt class="py-string">"string"</tt><tt class="py-op">]</tt> <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-op">}</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-comment">#: RDFS Datatype subsumptions: at the moment, there is no extra to XSD</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt id="link-11" class="py-name" targets="Variable RDFClosure.XsdDatatypes.RDFS_Datatype_Subsumptions=RDFClosure.XsdDatatypes-module.html#RDFS_Datatype_Subsumptions"><a title="RDFClosure.XsdDatatypes.RDFS_Datatype_Subsumptions" class="py-name" href="#" onclick="return doclink('link-11', 'RDFS_Datatype_Subsumptions', 'link-11');">RDFS_Datatype_Subsumptions</a></tt>      <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="RDFClosure.XsdDatatypes._Common_Datatype_Subsumptions" class="py-name" href="#" onclick="return doclink('link-12', '_Common_Datatype_Subsumptions', 'link-10');">_Common_Datatype_Subsumptions</a></tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"><tt class="py-comment">#: OWL Datatype subsumptions: at the moment, there is no extra to XSD</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"><tt id="link-13" class="py-name" targets="Variable RDFClosure.XsdDatatypes.OWL_Datatype_Subsumptions=RDFClosure.XsdDatatypes-module.html#OWL_Datatype_Subsumptions"><a title="RDFClosure.XsdDatatypes.OWL_Datatype_Subsumptions" class="py-name" href="#" onclick="return doclink('link-13', 'OWL_Datatype_Subsumptions', 'link-13');">OWL_Datatype_Subsumptions</a></tt>       <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="RDFClosure.XsdDatatypes._Common_Datatype_Subsumptions" class="py-name" href="#" onclick="return doclink('link-14', '_Common_Datatype_Subsumptions', 'link-10');">_Common_Datatype_Subsumptions</a></tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:17 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

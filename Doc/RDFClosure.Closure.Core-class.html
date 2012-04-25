@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.Closure.Core</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        <a href="RDFClosure.Closure-module.html">Module&nbsp;Closure</a> ::
+        Class&nbsp;Core
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.Closure.Core-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Core</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core">source&nbsp;code</a></span></p>
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html">RDFSClosure.RDFS_Semantics</a></li><li>, <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Core of the semantics management, dealing with the RDFS and other 
+  Semantic triples. The only reason to have it in a separate class is for 
+  an easier maintainability.</p>
+  <p>This is a common superclass only. In the present module, it is 
+  subclassed by a <a 
+  href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html" class="link">RDFS
+  Closure</a> class and a <a 
+  href="RDFClosure.OWLRL.OWLRL_Semantics-class.html" class="link">OWL RL 
+  Closure</a> classes. There are some methods that are implemented in the 
+  subclasses only, ie, this class cannot be used by itself!</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">graph</span>,
+        <span class="summary-sig-arg">axioms</span>,
+        <span class="summary-sig-arg">daxioms</span>,
+        <span class="summary-sig-arg">rdfs</span>=<span class="summary-sig-default">False</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#add_error" class="summary-sig-name">add_error</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>)</span><br />
+      Add an error message</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.add_error">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#pre_process" class="summary-sig-name">pre_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Do some pre-processing step.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.pre_process">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#post_process" class="summary-sig-name">post_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Do some post-processing step.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.post_process">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#rules" class="summary-sig-name">rules</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">t</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      The core processing cycles through every tuple in the graph and 
+      dispatches it to the various methods implementing a specific group of
+      rules.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#add_axioms" class="summary-sig-name">add_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add axioms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.add_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#add_d_axioms" class="summary-sig-name">add_d_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add d axioms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.add_d_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#one_time_rules" class="summary-sig-name">one_time_rules</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This is only a placeholder; subclasses should fill this with real 
+      content.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.one_time_rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#get_literal_value" class="summary-sig-name">get_literal_value</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node</span>)</span><br />
+      Return the literal value corresponding to a Literal node.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.get_literal_value">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="empty_stored_triples"></a><span class="summary-sig-name">empty_stored_triples</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Empty the internal store for triples</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.empty_stored_triples">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="flush_stored_triples"></a><span class="summary-sig-name">flush_stored_triples</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Send the stored triples to the graph, and empty the container</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.flush_stored_triples">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#store_triple" class="summary-sig-name">store_triple</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">t</span>)</span><br />
+      In contrast to its name, this does not yet add anything to the graph 
+      itself, it just stores the tuple in an <a 
+      href="RDFClosure.Closure.Core-class.html#added_triples" 
+      class="link">internal set</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.store_triple">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Core-class.html#closure" class="summary-sig-name">closure</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Generate the closure the graph.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.closure">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="IMaxNum"></a><span class="summary-name">IMaxNum</span><br />
+      maximal index of <code>rdf:_i</code> occurence in the graph
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">set of triples</span>
+    </td><td class="summary">
+        <a name="added_triples"></a><span class="summary-name">added_triples</span><br />
+      triples added to the graph, conceptually, during one processing cycle
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a name="axioms"></a><span class="summary-name">axioms</span><br />
+      whether axioms should be added or not
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a name="daxioms"></a><span class="summary-name">daxioms</span><br />
+      whether datatype axioms should be added or not
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">array of strings</span>
+    </td><td class="summary">
+        <a href="RDFClosure.Closure.Core-class.html#error_messages" class="summary-name">error_messages</a><br />
+      error messages (typically inconsistency messages in OWL RL) found 
+      during processing.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">rdflib.Graph</span>
+    </td><td class="summary">
+        <a name="graph"></a><span class="summary-name">graph</span><br />
+      the real graph
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><a href="RDFClosure.Literals.LiteralProxies-class.html" 
+      class="link">LiteralProxies</a></span>
+    </td><td class="summary">
+        <a name="literal_proxies"></a><span class="summary-name">literal_proxies</span><br />
+      <a href="RDFClosure.Literals.LiteralProxies-class.html" 
+      class="link">Literal Proxies with BNodes</a> for the graph
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a name="rdfs"></a><span class="summary-name">rdfs</span><br />
+      whether RDFS inference is also done (used in subclassed only)
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">graph</span>,
+        <span class="sig-arg">axioms</span>,
+        <span class="sig-arg">daxioms</span>,
+        <span class="sig-arg">rdfs</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>graph</code></strong> (rdflib.Graph) - the RDF graph to be extended</li>
+        <li><strong class="pname"><code>axioms</code></strong> (boolean) - whether axioms should be added or not</li>
+        <li><strong class="pname"><code>daxioms</code></strong> (boolean) - whether datatype axioms should be added or not</li>
+        <li><strong class="pname"><code>rdfs</code></strong> (boolean) - whether RDFS inference is also done (used in subclassed only)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_error"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_error</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">message</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.add_error">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add an error message</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> (string) - error message</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="pre_process"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">pre_process</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.pre_process">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Do some pre-processing step. This method before anything else in the 
+  closure. By default, this method is empty, subclasses can add content to 
+  it by overriding it.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="post_process"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">post_process</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.post_process">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Do some post-processing step. This method when all processing is done,
+  but before handling possible errors (ie, the method can add its own error
+  messages). By default, this method is empty, subclasses can add content 
+  to it by overriding it.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rules</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">t</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The core processing cycles through every tuple in the graph and 
+  dispatches it to the various methods implementing a specific group of 
+  rules. By default, this method raises an exception; indeed, subclasses 
+  <i>must</i> add content to by overriding it.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>t</code></strong> (tuple) - one triple on which to apply the rules</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. This value is forwarded 
+          to all local rules; it is also used locally to collect the bnodes
+          in the graph.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.add_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add axioms. This is only a placeholder and raises an exception by 
+  default; subclasses <i>must</i> fill this with real content</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_d_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_d_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.add_d_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add d axioms. This is only a placeholder and raises an exception by 
+  default; subclasses <i>must</i> fill this with real content</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="one_time_rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">one_time_rules</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.one_time_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This is only a placeholder; subclasses should fill this with real 
+  content. By default, it is just an empty call. This set of rules is 
+  invoked only once and not in a cycle.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_literal_value"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_literal_value</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">node</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.get_literal_value">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the literal value corresponding to a Literal node. Used in 
+  error messages.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>node</code></strong> - literal node</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>the literal value itself</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="store_triple"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">store_triple</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">t</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.store_triple">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>In contrast to its name, this does not yet add anything to the graph 
+  itself, it just stores the tuple in an <a 
+  href="RDFClosure.Closure.Core-class.html#added_triples" 
+  class="link">internal set</a>. (It is important for this to be a set: 
+  some of the rules in the various closures may generate the same tuples 
+  several times.) Before adding the tuple to the set, the method checks 
+  whether the tuple is in the final graph already (if yes, it is not added 
+  to the set).</p>
+  <p>The set itself is emptied at the start of every processing cycle; the 
+  triples are then effectively added to the graph at the end of such a 
+  cycle. If the set is actually empty at that point, this means that the 
+  cycle has not added any new triple, and the full processing can stop.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>t</code></strong> (a 3-element tuple of (s,p,o)) - the triple to be added to the graph, unless it is already there</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="closure"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">closure</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Core.closure">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generate the closure the graph. This is the real 'core'.</p>
+  <p>The processing rules store new triples via the <a 
+  href="RDFClosure.Closure.Core-class.html#store_triple" 
+  class="link">separate method</a> which stores them in the <a 
+  href="RDFClosure.Closure.Core-class.html#added_triples" 
+  class="link">added_triples</a> array. If that array is emtpy at the end 
+  of a cycle, it means that the whole process can be stopped.</p>
+  <p>If required, the relevant axiomatic triples are added to the graph 
+  before processing in cycles. Similarly the exchange of literals against 
+  bnodes is also done in this step (and restored after all cycles are 
+  over).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="error_messages"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">error_messages</h3>
+  error messages (typically inconsistency messages in OWL RL) found during 
+  processing. These are added to the final graph at the very end as 
+  separate BNodes with error messages
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>array of strings</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

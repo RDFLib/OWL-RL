@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;RDFClosure
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package RDFClosure</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure-pysrc.html">source&nbsp;code</a></span></p>
+<p>This module is brute force implementation of the 'finite' version of 
+  <a href="http://www.w3.org/TR/rdf-mt/" target="_top">RDFS semantics</a> 
+  and of <a 
+  href="http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules"
+  target="_top">OWL 2 RL</a> on the top of RDFLib (with some caveats, see 
+  below). Some extensions to these are also implemented. Brute force means 
+  that, in all cases, simple forward chaining rules are used to extend 
+  (recursively) the incoming graph with all triples that the rule sets 
+  permit (ie, the &quot;deductive closure&quot; of the graph is computed). 
+  There is an extra options whether the axiomatic triples are added to the 
+  graph (prior to the forward chaining step). These, typically set the 
+  domain and range for properties or define some core classes. In the case 
+  of RDFS, the implementation uses a 'finite' version of the axiomatic 
+  triples only (as proposed, for example, by Herman ter Horst). This means 
+  that it adds only those <code>rdf:_i</code> type predicates that do 
+  appear in the original graph, thereby keeping this step finite. For OWL 2
+  RL, OWL 2 does not define axiomatic triples formally; but they can be 
+  deduced from the <a href="http://www.w3.org/TR/owl2-rdf-based-semantics/"
+  target="_top">OWL 2 RDF Based Semantics</a> document and are listed in 
+  Appendix 6 (though informally). Note, however, that this implementation 
+  adds only those triples that refer to OWL terms that are meaningful for 
+  the OWL 2 RL case.</p>
+  <h1 class="heading">Package Entry Points</h1>
+    <p>The main entry point to the package is via the <a 
+    href="RDFClosure.DeductiveClosure-class.html" 
+    class="link">DeductiveClosure</a> class. This class should be 
+    initialized to control the parameters of the deductive closure; the 
+    forward chaining is done via the <a 
+    href="RDFClosure.DeductiveClosure-class.html#expand" 
+    class="link">expand</a> method. The simplest way to use the package 
+    from an RDFLib application is as follows:</p>
+<pre class="literalblock">
+graph = Graph()                                 # creation of an RDFLib graph
+...
+...                                             # normal RDFLib application, eg, parsing RDF data
+...
+DeductiveClosure(OWLRL_Semantics).expand(graph) # calculate an OWL 2 RL deductive closure of graph
+                                                # without axiomatic triples
+</pre>
+    <p>The first argument of the <code>DeductiveClosure</code> 
+    initialization can be replaces with other classes, providing different 
+    types of deductive closure; other arguments are also possible. For 
+    example:</p>
+<pre class="literalblock">
+DeductiveClosure(OWLRL_Extension, rdfs_closure = True, axiomatic_triples = True, datatype_axioms = True).expand(graph)
+</pre>
+    <p>will calculate the deductive closure including RDFS and some 
+    extensions to OWL 2 RL, and with all possible axiomatic triples added 
+    to the graph (this is about the maximum the package can do&#8230;)</p>
+    <p>The same instance of <a 
+    href="RDFClosure.DeductiveClosure-class.html" 
+    class="link">DeductiveClosure</a> can be used for several graph 
+    expansions. In other words, the expand function does not change any 
+    state.</p>
+    <p>For convenience, a second entry point to the package is provided in 
+    the form of a function called <a 
+    href="RDFClosure-module.html#convert_graph" 
+    class="link">convert_graph</a>, that expects a directory with various 
+    options, including a file name. The function parses the file, creates 
+    the expanded graph, and serializes the result into RDF/XML or Turtle. 
+    This function is particularly useful as an entry point for a CGI call 
+    (where the HTML form parameters are in a directory) and is easy to use 
+    with a command line interface. The package distribution contains an 
+    example for both.</p>
+    <p>There are major closure type (ie, semantic closure possibilities); 
+    these can be controlled through the appropriate parameters of the <a 
+    href="RDFClosure.DeductiveClosure-class.html" 
+    class="link">DeductiveClosure</a> class:</p>
+    <ul>
+      <li>
+        using the <a 
+        href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html" 
+        class="link">RDFS_Semantics</a> class, implementing the <a 
+        href="http://www.w3.org/TR/rdf-mt/" target="_top">RDFS 
+        semantics</a>
+      </li>
+      <li>
+        using the <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html" 
+        class="link">OWLRL_Semantics</a> class, implementing the <a 
+        href="http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules"
+        target="_top">OWL 2 RL</a>
+      </li>
+      <li>
+        using <a 
+        href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html" 
+        class="link">RDFS_OWLRL_Semantics</a> class, implementing a 
+        combined semantics of <a href="http://www.w3.org/TR/rdf-mt/" 
+        target="_top">RDFS semantics</a> and <a 
+        href="http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules"
+        target="_top">OWL 2 RL</a>
+      </li>
+    </ul>
+    <p>In all three cases there are other dimensions that can control the 
+    exact closure being generated:</p>
+    <ul>
+      <li>
+        for convenience, the so called axiomatic triples (see, eg, the <a 
+        href="http://www.w3.org/TR/rdf-mt/#rdfs_interp" 
+        target="_top">axiomatic triples in RDFS</a>) are, by default, 
+        <i>not</i> added to the graph closure to reduce the number of 
+        generated triples. These can be controlled through a separate 
+        initialization argument
+      </li>
+      <li>
+        similarly, the axiomatic triples for D-entailement are separated
+      </li>
+    </ul>
+    <h2 class="heading">Extensions</h2>
+      <p>The three major entry points (ie, <a 
+      href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html" 
+      class="link">RDFS Semantics</a>, <a 
+      href="RDFClosure.OWLRL.OWLRL_Semantics-class.html" class="link">OWL2 
+      RL Semantics</a>, and <a 
+      href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html" 
+      class="link">RDFS + OWL 2 RL Semantics</a>) represent clearly 
+      documented rule sets that correspond to various inference regimes 
+      defined by the RDFS and OWL 2 standards. They can also be viewed as 
+      incomplete implementation of a full <a 
+      href="http://www.w3.org/TR/owl2-rdf-based-semantics/" 
+      target="_top">OWL 2 specification following the RDF based semantics 
+      (a.k.a. &#8220;OWL 2 Full&#8221;)</a>. While the approach of using a simple 
+      forward chaining process cannot be used for a complete OWL 2 Full 
+      implemenations, it is however possible to add some features that, 
+      while not being mandated by, say, the <a 
+      href="http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules"
+      target="_top">OWL 2 RL</a> specification, are nevertheless useful and
+      implementable. This can be done by providing a suitable subclass of 
+      the <a 
+      href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html" 
+      class="link">RDFS + OWL 2 RL Semantics</a>), adding, eg, to the set 
+      of rules that are implemented.</p>
+      <p>As an example, this package contains such an <a 
+      href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" 
+      class="link">extension</a> that can also be used by the entry points.
+      The features implemented by this extension, ie, added to the core OWL
+      2 RL features are:</p>
+      <ul>
+        <li>
+          self restriction
+        </li>
+        <li>
+          owl:rational datatype
+        </li>
+        <li>
+          datatype restrictions via facets
+        </li>
+      </ul>
+      <p>(There are some minor restriction on the datatype restriction 
+      implementation, see the <a 
+      href="RDFClosure.RestrictedDatatype-module.html" 
+      class="link">description of the corresponding module</a>.)</p>
+      <p>When initializing this <a 
+      href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" 
+      class="link">extension</a> class, the user can control whether RDFS 
+      reasoning should also be used or not (default is 
+      <code>False</code>).</p>
+  <h1 class="heading">Some Technical/implementation aspects</h1>
+    <p>The core processing is done in the in the <a 
+    href="RDFClosure.Closure.Core-class.html" class="link">Core</a> class, 
+    which is subclassed by the <a 
+    href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html" 
+    class="link">RDFS</a> and the <a 
+    href="RDFClosure.OWLRL.OWLRL_Semantics-class.html" class="link">OWL 2 
+    RL</a> classes (these two are then, on their turn, subclassed by the <a
+    href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html" 
+    class="link">RDFS + OWL 2 RL Semantics</a>) class). The core implements
+    the core functionality of cycling through the rules, whereas the rules 
+    themselves are defined and implemented in the subclasses. There are 
+    also methods that are executed only once either at the beginning or at 
+    the end of the full processing cycle. Adding axiomatic triples is 
+    handled separately, which allows a finer user control over these 
+    features.</p>
+    <p>Literals must be handled separately. Indeed, the functionality 
+    relies on 'extended' RDF graphs, that allows literals to be in a 
+    subject position, too. Because RDFLib does not allow that, processing 
+    begins by exchaning all literals in the graph for bnodes (identical 
+    literals get the same associated bnode). Processing occurs on these 
+    bnodes; at the end of the process all these bnodes are replaced by 
+    their corresponding literals if possible (if the bnode occurs in a 
+    subject position, that triple is removed from the resulting graph). 
+    Details of this processing is handled in the separate <a 
+    href="RDFClosure.Literals.LiteralProxies-class.html" 
+    class="link">Literals Proxies</a> class.</p>
+    <p>The OWL specification includes references to datatypes that are not 
+    in the core RDFS specification, consequently not directly implemented 
+    by RDFLib. These are added in a separate module of the package.</p>
+    <h2 class="heading">Problems with Literals with datatypes</h2>
+      <p>The current distribution of RDFLib is fairly poor in handling 
+      datatypes, particularly in checking whether a lexical form of a 
+      literal is &quot;proper&quot; as for its declared datatype. A typical
+      example is:</p>
+<pre class="literalblock">
+ &quot;-1234&quot;^^xsd:nonNegativeInteger
+</pre>
+      <p>which should not be accepted as valid literal. Because the 
+      requirements of OWL 2 RL are much stricter in this respect, an 
+      alternative set of datatype handling (essentially, conversions) had 
+      to be implemented (see the <a 
+      href="RDFClosure.XsdDatatypes-module.html" 
+      class="link">XsdDatatypes</a> module).</p>
+      <p>The <a href="RDFClosure.DeductiveClosure-class.html" 
+      class="link">DeductiveClosure</a> class has an additional instance 
+      variable whether the default RDFLib conversion routines should be 
+      exchanged against the new ones. If this flag is set to True and 
+      instance creation (this is the default), then the conversion routines
+      are set back to the originals once the expansion is complete, thereby
+      avoiding to influence older application that may not work properly 
+      with the new set of conversion routines.</p>
+      <p>If the user wants to use these alternative lexical conversions 
+      everywhere in the application, then the <a 
+      href="RDFClosure.DeductiveClosure-class.html#use_improved_datatypes_conversions"
+      class="link">use_improved_datatypes_conversions</a> method can be 
+      invoked. That method changes the conversion routines and, from that 
+      point on, all usage of <a 
+      href="RDFClosure.DeductiveClosure-class.html" 
+      class="link">DeductiveClosure</a> instances will use the improved 
+      conversion methods without resetting them. Ie, the code structure can
+      be something like:</p>
+<pre class="literalblock">
+ DeductiveClosure().use_improved_datatypes_conversions()
+ ... RDFLib application
+ DeductiveClosure().expand(graph)
+ ...
+</pre>
+      <p>The default situation can be set back using the <a 
+      href="RDFClosure.DeductiveClosure-class.html#use_improved_datatypes_conversions"
+      class="link">use_rdflib_datatypes_conversions</a> call.</p>
+      <p>It is, however, not <i>required</i> to use these methods at all. 
+      Ie, the user can use:</p>
+<pre class="literalblock">
+ DeductiveClosure(improved_datatypes=False).expand(graph)
+</pre>
+      <p>which will result in a proper graph expansion except for the 
+      datatype specific comparisons which will be incomplete.</p>
+    <h2 class="heading">Serializer bugs</h2>
+      <p>During the development of the software a number of small bugs on 
+      the RDFLib serializers were found. The alternative RDF/XML and Turtle
+      serializers, originally developed for the <a 
+      href="http://www.w3.org/2007/08/pyRdfa" target="_top">RDFa 
+      distiller</a>, have been added to this package, too.</p>
+      <p>The <a href="RDFClosure-module.html#convert_graph" 
+      class="link">convert_graph</a> entry point used, for example, by the 
+      CGI service, uses these serializers.</p>
+    <h2 class="heading">Turtle Parsing bug</h2>
+      <p>Unfortunately, there are some bugs in the underlying Turtle 
+      parser, used by RDFLib. All bugs are related to the way common 
+      datatypes can be abbreviated in Turtle. According to the latest <a 
+      href="http://www.w3.org/TeamSubmission/2008/SUBM-turtle-20080114/" 
+      target="_top">Turtle grammar</a>, the following abbreviations should 
+      happen</p>
+      <ul>
+        <li>
+          Constants of the form 1234 should be interpreted as xsd integers,
+          which is done correctly by the parser.
+        </li>
+        <li>
+          Constants of the form 1.2345 should be interpreted as 
+          xsd:decimal. Unfortunately, the parser interprets them as 
+          xsd:double
+        </li>
+        <li>
+          Constants of the form 'true' or 'false' (whithout the quotes, 
+          that is) should be interpreted as xsd:boolean. Instead, they are 
+          put as symbols into the default namespace
+        </li>
+        <li>
+          Constants of the form 1.2345E12 should be interpreted as 
+          xsd:doubles. Unfortunately, the parser crashes on those
+        </li>
+      </ul>
+      <p>The current distribution includes a modified version of the RDFLib
+      Turtle parser that takes care of the second and third item. 
+      Unfortunately, third problem seems to be missing in the core grammar 
+      of the parser, and could not be handled. Ie, 
+      &quot;1.2345E+12&quot;^^xsd:double should be used instead.</p>
+      <p>The <a href="RDFClosure-module.html#convert_graph" 
+      class="link">convert_graph</a> entry point used, for example, by the 
+      CGI service, uses this parser.</p>
+
+<hr />
+<div class="fields">      <p><strong>Requires:</strong>
+        <a href="http://rdflib.net" target="_top">RDFLib</a>, 2.2.2. and 
+        higher
+      </p>
+      <p><strong>License:</strong>
+        This software is available for use under the <a 
+        href="http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
+        target="_top">W3C Software License</a>
+      </p>
+      <p><strong>Organization:</strong>
+        <a href="http://www.w3.org" target="_top">World Wide Web 
+        Consortium</a>
+      </p>
+      <p><strong>Author:</strong>
+        <a href="http://ahref=&quot;http://www.w3.org/People/Ivan/&quot;" 
+        target="_top">Ivan Herman</a>
+      </p>
+      <p><strong>Version:</strong>
+        4.1
+      </p>
+      <p><strong>Contact:</strong>
+        Ivan Herman, ivan@w3.org
+      </p>
+</div><!-- ==================== SUBMODULES ==================== -->
+<a name="section-Submodules"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Submodules</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Submodules"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr><td class="summary">
+  <ul class="nomargin">
+    <li> <strong class="uidlink"><a href="RDFClosure.AxiomaticTriples-module.html">RDFClosure.AxiomaticTriples</a></strong>: <em class="summary">Axiomatic triples to be (possibly) added to the final graph.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.Closure-module.html">RDFClosure.Closure</a></strong>: <em class="summary">The generic superclasses for various rule based semantics and the 
+        possible extensions.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.CombinedClosure-module.html">RDFClosure.CombinedClosure</a></strong>: <em class="summary">The combined closure: performing <i>both</i> the OWL 2 RL and RDFS 
+        closures.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.DatatypeHandling-module.html">RDFClosure.DatatypeHandling</a></strong>: <em class="summary">Most of the XSD datatypes are handled directly by RDFLib.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.Literals-module.html">RDFClosure.Literals</a></strong>: <em class="summary">Separate module to handle literals.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.OWL%27-module.html">RDFClosure.OWL'</a></strong>: <em class="summary">OWL and OWL2 terms.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.OWLRL-module.html">RDFClosure.OWLRL</a></strong>: <em class="summary">This module is a <code>brute force</code> implementation of the OWL
+        2 RL profile.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.OWLRLExtras-module.html">RDFClosure.OWLRLExtras</a></strong>: <em class="summary">Extension to OWL 2 RL, ie, some additional rules added to the 
+        system from OWL 2 Full.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.RDFSClosure-module.html">RDFClosure.RDFSClosure</a></strong>: <em class="summary">This module is brute force implementation of the RDFS semantics on 
+        the top of RDFLib (with some caveats, see in the introductory 
+        text).</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.RestrictedDatatype-module.html">RDFClosure.RestrictedDatatype</a></strong>: <em class="summary">Module to datatype restrictions, ie, data ranges.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.XsdDatatypes-module.html">RDFClosure.XsdDatatypes</a></strong>: <em class="summary">Lists of XSD datatypes and their mutual relationships</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers-module.html">RDFClosure.parsers</a></strong>: <em class="summary">Parser module with a slightly improved versions of the Turtle 
+        parser.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers.N3Parser-module.html">RDFClosure.parsers.N3Parser</a></strong>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers.n3p-module.html">RDFClosure.parsers.n3p</a></strong>
+    <ul>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers.n3p.n3meta-module.html">RDFClosure.parsers.n3p.n3meta</a></strong>: <em class="summary">n3meta - For use with n3p.py.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers.n3p.n3p-module.html">RDFClosure.parsers.n3p.n3p</a></strong>: <em class="summary">N3P - An N3 Parser using n3.n3
+Author: Sean B.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers.n3p.n3proc-module.html">RDFClosure.parsers.n3p.n3proc</a></strong>: <em class="summary">n3proc - An N3 Processor using n3.n3
+Author: Sean B.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.parsers.n3p.uripath-module.html">RDFClosure.parsers.n3p.uripath</a></strong>: <em class="summary">Uniform Resource Identifier (URI) path manipulation,
+above the access layer</em>    </li>
+    </ul>
+    </li>
+    </ul>
+    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.serializers-module.html">RDFClosure.serializers</a></strong>: <em class="summary">Serializer module with a slightly improved versions of the Turtle 
+        and Pretty XML serializers.</em>
+    <ul>
+    <li> <strong class="uidlink"><a href="RDFClosure.serializers.PrettyXMLSerializer-module.html">RDFClosure.serializers.PrettyXMLSerializer</a></strong>: <em class="summary">Serializer for RDF/XML.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.serializers.TurtleSerializer-module.html">RDFClosure.serializers.TurtleSerializer</a></strong>: <em class="summary">Serializer for Turtle.</em>    </li>
+    <li> <strong class="uidlink"><a href="RDFClosure.serializers.XMLWriter-module.html">RDFClosure.serializers.XMLWriter</a></strong>: <em class="summary">XML Writer to be used by the <a 
+        href="RDFClosure.serializers.PrettyXMLSerializer-module.html" 
+        class="link">PrettyXMLSerializer</a> module.</em>    </li>
+    </ul>
+    </li>
+  </ul></td></tr>
+</table>
+
+<br />
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.DeductiveClosure-class.html" class="summary-name">DeductiveClosure</a><br />
+      Entry point to generate the deductive closure of a graph.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure-module.html#__parse_input" class="summary-sig-name" onclick="show_private();">__parse_input</a>(<span class="summary-sig-arg">iformat</span>,
+        <span class="summary-sig-arg">inp</span>,
+        <span class="summary-sig-arg">graph</span>)</span><br />
+      Parse the input into the graph, possibly checking the suffix for the 
+      format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#__parse_input">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure-module.html#interpret_owl_imports" class="summary-sig-name">interpret_owl_imports</a>(<span class="summary-sig-arg">iformat</span>,
+        <span class="summary-sig-arg">graph</span>)</span><br />
+      Intepret the owl import statements.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#interpret_owl_imports">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Class type</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure-module.html#return_closure_class" class="summary-sig-name">return_closure_class</a>(<span class="summary-sig-arg">owl_closure</span>,
+        <span class="summary-sig-arg">rdfs_closure</span>,
+        <span class="summary-sig-arg">owl_extras</span>,
+        <span class="summary-sig-arg">trimming</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Return the right semantic extension class based on three possible 
+      choices (this method is here to help potential users, the result can 
+      be fed into a <a href="RDFClosure.DeductiveClosure-class.html" 
+      class="link">DeductiveClosure</a> instance at initialziation)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#return_closure_class">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure-module.html#convert_graph" class="summary-sig-name">convert_graph</a>(<span class="summary-sig-arg">options</span>)</span><br />
+      Entry point for external scripts (CGI or command line) to parse an 
+      RDF file(s), possibly execute OWL and/or RDFS closures, and serialize
+      back the result in some format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#convert_graph">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__author__"></a><span class="summary-name">__author__</span> = <code title="'Ivan Herman'"><code class="variable-quote">'</code><code class="variable-string">Ivan Herman</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure-module.html#__license__" class="summary-name">__license__</a> = <code title="u'W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal\
+/2002/copyright-software-20021231'"><code class="variable-quote">u'</code><code class="variable-string">W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RDFXML"></a><span class="summary-name">RDFXML</span> = <code title="'xml'"><code class="variable-quote">'</code><code class="variable-string">xml</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TURTLE"></a><span class="summary-name">TURTLE</span> = <code title="'turtle'"><code class="variable-quote">'</code><code class="variable-string">turtle</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="AUTO"></a><span class="summary-name">AUTO</span> = <code title="'auto'"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="NONE"></a><span class="summary-name">NONE</span> = <code title="'none'"><code class="variable-quote">'</code><code class="variable-string">none</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RDF"></a><span class="summary-name">RDF</span> = <code title="'rdf'"><code class="variable-quote">'</code><code class="variable-string">rdf</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RDFS"></a><span class="summary-name">RDFS</span> = <code title="'rdfs'"><code class="variable-quote">'</code><code class="variable-string">rdfs</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="OWL"></a><span class="summary-name">OWL</span> = <code title="'owl'"><code class="variable-quote">'</code><code class="variable-string">owl</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FULL"></a><span class="summary-name">FULL</span> = <code title="'full'"><code class="variable-quote">'</code><code class="variable-string">full</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'RDFClosure'"><code class="variable-quote">'</code><code class="variable-string">RDFClosure</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<p class="indent-wrapped-lines"><b>Imports:</b>
+  <span title="StringIO">StringIO</span>,
+  <span title="types.IntType">IntType</span>,
+  <span title="types.TypeType">TypeType</span>,
+  <span title="types.BooleanType">BooleanType</span>,
+  <span title="types.CodeType">CodeType</span>,
+  <span title="types.UnboundMethodType">UnboundMethodType</span>,
+  <span title="types.StringType">StringType</span>,
+  <span title="types.BuiltinMethodType">BuiltinMethodType</span>,
+  <span title="types.FloatType">FloatType</span>,
+  <span title="types.DictionaryType">DictionaryType</span>,
+  <span title="types.NotImplementedType">NotImplementedType</span>,
+  <span title="types.BuiltinFunctionType">BuiltinFunctionType</span>,
+  <span title="types.DictProxyType">DictProxyType</span>,
+  <span title="types.GeneratorType">GeneratorType</span>,
+  <span title="types.InstanceType">InstanceType</span>,
+  <span title="types.ObjectType">ObjectType</span>,
+  <span title="types.DictType">DictType</span>,
+  <span title="types.GetSetDescriptorType">GetSetDescriptorType</span>,
+  <span title="types.FileType">FileType</span>,
+  <span title="types.EllipsisType">EllipsisType</span>,
+  <span title="types.StringTypes">StringTypes</span>,
+  <span title="types.ListType">ListType</span>,
+  <span title="types.MethodType">MethodType</span>,
+  <span title="types.TupleType">TupleType</span>,
+  <span title="types.ModuleType">ModuleType</span>,
+  <span title="types.FrameType">FrameType</span>,
+  <span title="types.LongType">LongType</span>,
+  <span title="types.BufferType">BufferType</span>,
+  <span title="types.TracebackType">TracebackType</span>,
+  <span title="types.ClassType">ClassType</span>,
+  <span title="types.MemberDescriptorType">MemberDescriptorType</span>,
+  <span title="types.UnicodeType">UnicodeType</span>,
+  <span title="types.SliceType">SliceType</span>,
+  <span title="types.ComplexType">ComplexType</span>,
+  <span title="types.LambdaType">LambdaType</span>,
+  <span title="types.FunctionType">FunctionType</span>,
+  <span title="types.XRangeType">XRangeType</span>,
+  <span title="types.NoneType">NoneType</span>,
+  <span title="rdflib.Graph">Graph</span>,
+  <span title="rdflib.plugin.register">register</span>,
+  <span title="rdflib.syntax.serializers">serializers</span>,
+  <span title="rdflib.syntax.parsers">parsers</span>,
+  <span title="rdflib.Literal.Literal">rdflibLiteral</span>,
+  <a href="RDFClosure.DatatypeHandling-module.html" title="RDFClosure.DatatypeHandling">DatatypeHandling</a>,
+  <a href="RDFClosure.Closure-module.html" title="RDFClosure.Closure">Closure</a>,
+  <a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" title="RDFClosure.OWLRLExtras.OWLRL_Extension">OWLRL_Extension</a>,
+  <a href="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html" title="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming">OWLRL_Extension_Trimming</a>,
+  <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html" title="RDFClosure.OWLRL.OWLRL_Semantics">OWLRL_Semantics</a>,
+  <a href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html" title="RDFClosure.RDFSClosure.RDFS_Semantics">RDFS_Semantics</a>,
+  <a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html" title="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics">RDFS_OWLRL_Semantics</a>,
+  <span title="RDFClosure.OWL.imports">imports</span>,
+  <a href="RDFClosure.AxiomaticTriples-module.html" title="RDFClosure.AxiomaticTriples">AxiomaticTriples</a>,
+  <a href="RDFClosure.CombinedClosure-module.html" title="RDFClosure.CombinedClosure">CombinedClosure</a>,
+  <a href="RDFClosure.Literals-module.html" title="RDFClosure.Literals">Literals</a>,
+  <a href="RDFClosure.OWLRL-module.html" title="RDFClosure.OWLRL">OWLRL</a>,
+  <a href="RDFClosure.OWLRLExtras-module.html" title="RDFClosure.OWLRLExtras">OWLRLExtras</a>,
+  <a href="RDFClosure.RDFSClosure-module.html" title="RDFClosure.RDFSClosure">RDFSClosure</a>,
+  <a href="RDFClosure.RestrictedDatatype-module.html" title="RDFClosure.RestrictedDatatype">RestrictedDatatype</a>,
+  <a href="RDFClosure.XsdDatatypes-module.html" title="RDFClosure.XsdDatatypes">XsdDatatypes</a>
+</p><br />
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__parse_input"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__parse_input</span>(<span class="sig-arg">iformat</span>,
+        <span class="sig-arg">inp</span>,
+        <span class="sig-arg">graph</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure-pysrc.html#__parse_input">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse the input into the graph, possibly checking the suffix for the 
+  format.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>iformat</code></strong> - input format; can be one of <a href="RDFClosure-module.html#AUTO"
+          class="link">AUTO</a>, <a href="RDFClosure-module.html#TURTLE" 
+          class="link">TURTLE</a>, or <a 
+          href="RDFClosure-module.html#RDFXML" class="link">RDFXML</a>. <a 
+          href="RDFClosure-module.html#AUTO" class="link">AUTO</a> means 
+          that the suffix of the file name or URI will decide: '.ttl' means
+          Turtle, RDF/XML otherwise.</li>
+        <li><strong class="pname"><code>inp</code></strong> - input file; anything that RDFLib accepts in that position (URI, 
+          file name, file object). If '-', standard input is used.</li>
+        <li><strong class="pname"><code>graph</code></strong> - the RDFLib Graph instance to parse into.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="interpret_owl_imports"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">interpret_owl_imports</span>(<span class="sig-arg">iformat</span>,
+        <span class="sig-arg">graph</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure-pysrc.html#interpret_owl_imports">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Intepret the owl import statements. Essentially, recursively merge 
+  with all the objects in the owl import statement, and remove the 
+  corresponding triples from the graph.</p>
+  <p>This method can be used by an application prior to expansion. It is 
+  <i>not</i> done by the the <a 
+  href="RDFClosure.DeductiveClosure-class.html" 
+  class="link">DeductiveClosure</a> class.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>iformat</code></strong> - input format; can be one of <a href="RDFClosure-module.html#AUTO"
+          class="link">AUTO</a>, <a href="RDFClosure-module.html#TURTLE" 
+          class="link">TURTLE</a>, or <a 
+          href="RDFClosure-module.html#RDFXML" class="link">RDFXML</a>. <a 
+          href="RDFClosure-module.html#AUTO" class="link">AUTO</a> means 
+          that the suffix of the file name or URI will decide: '.ttl' means
+          Turtle, RDF/XML otherwise.</li>
+        <li><strong class="pname"><code>graph</code></strong> - the RDFLib Graph instance to parse into.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="return_closure_class"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">return_closure_class</span>(<span class="sig-arg">owl_closure</span>,
+        <span class="sig-arg">rdfs_closure</span>,
+        <span class="sig-arg">owl_extras</span>,
+        <span class="sig-arg">trimming</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure-pysrc.html#return_closure_class">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the right semantic extension class based on three possible 
+  choices (this method is here to help potential users, the result can be 
+  fed into a <a href="RDFClosure.DeductiveClosure-class.html" 
+  class="link">DeductiveClosure</a> instance at initialziation)</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>owl_closure</code></strong> (boolean) - whether OWL 2 RL deductive closure should be calculated</li>
+        <li><strong class="pname"><code>rdfs_closure</code></strong> (boolean) - whether RDFS deductive closure should be calculated. In case 
+          <code>owl_closure==True</code>, this parameter should also be 
+          used in the initialziation of <a 
+          href="RDFClosure.DeductiveClosure-class.html" 
+          class="link">DeductiveClosure</a></li>
+        <li><strong class="pname"><code>owl_extras</code></strong> - whether the extra possibilities (rational datatype, etc) should 
+          be added to an OWL 2 RL deductive closure. This parameter has no 
+          effect in case <code>owl_closure==False</code>.</li>
+        <li><strong class="pname"><code>trimming</code></strong> - whether extra trimming is done on the OWL RL + Extension output</li>
+    </ul></dd>
+    <dt>Returns: Class type</dt>
+        <dd>deductive class reference or None</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="convert_graph"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">convert_graph</span>(<span class="sig-arg">options</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure-pysrc.html#convert_graph">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Entry point for external scripts (CGI or command line) to parse an RDF
+  file(s), possibly execute OWL and/or RDFS closures, and serialize back 
+  the result in some format. Note that this entry point can be used 
+  requiring no entailement at all. Because both the input and the output 
+  format for the package can be RDF/XML or Turtle, such usage would simply 
+  mean a format conversion.</p>
+  <p>If OWL 2 RL processing is required, that also means that the 
+  owl:imports statements are interpreted. Ie, ontologies can be spread over
+  several files. Note, however, that the output of the process would then 
+  include all imported ontologies, too.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>options</code></strong> - object with specific attributes, namely:
+          <ul>
+            <li>
+              options.sources: list of uris or file names for the source 
+              data; for each one if the name ends with 'ttl', it is 
+              considered to be turtle, RDF/XML otherwise (this can be 
+              overwritten by the options.iformat, though)
+            </li>
+            <li>
+              options.text: direct Turtle encoding of a graph as a text 
+              string (useful, eg, for a CGI call using a text field)
+            </li>
+            <li>
+              options.owlClosure: can be yes or no
+            </li>
+            <li>
+              options.rdfsClosure: can be yes or no
+            </li>
+            <li>
+              options.owlExtras: can be yes or no; whether the extra rules 
+              beyond OWL 2 RL are used or not.
+            </li>
+            <li>
+              options.axioms: whether relevant axiomatic triples are added 
+              before chaining (can be a boolean, or the strings 
+              &quot;yes&quot; or &quot;no&quot;)
+            </li>
+            <li>
+              options.daxioms: further datatype axiomatic triples are added
+              to the output (can be a boolean, or the strings 
+              &quot;yes&quot; or &quot;no&quot;)
+            </li>
+            <li>
+              options.format: output format, can be &quot;turtle&quot; or 
+              &quot;rdfxml&quot;
+            </li>
+            <li>
+              options.iformat: input format, can be &quot;turtle&quot;, 
+              &quot;rdfxml&quot;, or &quot;auto&quot;. &quot;auto&quot; 
+              means that the suffix of the file is considered: '.ttl' is 
+              for turtle, rdfxml otherwise
+            </li>
+            <li>
+              options.trimming: whether the extension to OWLRL should also 
+              includ trimming
+            </li>
+          </ul></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__license__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">__license__</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">u'</code><code class="variable-string">W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">/2002/copyright-software-20021231</code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:15 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.OWL'</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Module&nbsp;OWL'
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.OWL%27-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="RDFClosure.OWL%27-module.html">Module RDFClosure.OWL'</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">OWL and OWL2 terms. Note that the set of terms is I{complete}, ie, it includes I{all} OWL 2 terms, regardless of whether the term is</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">used in OWL 2 RL or not.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{RDFLib&lt;http://rdflib.net&gt;}, 2.2.2. and higher</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">@license: This software is available for use under the U{W3C Software License&lt;http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231&gt;}</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">@organization: U{World Wide Web Consortium&lt;http://www.w3.org&gt;}</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">@author: U{Ivan Herman&lt;a href="http://www.w3.org/People/Ivan/"&gt;}</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-string">$Id: OWL.py,v 1.9 2009/09/09 12:47:54 ivan Exp $ $Date: 2009/09/09 12:47:54 $</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt class="py-name">Namespace</tt>   <tt class="py-keyword">import</tt> <tt class="py-name">Namespace</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-comment">#: The OWL namespace as used for RDFLib</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.OWLNS=RDFClosure.AxiomaticTriples-module.html#OWLNS,Variable RDFClosure.OWL'.OWLNS=RDFClosure.OWL%27-module.html#OWLNS,Variable RDFClosure.OWLRL.OWLNS=RDFClosure.OWLRL-module.html#OWLNS,Variable RDFClosure.OWLRLExtras.OWLNS=RDFClosure.OWLRLExtras-module.html#OWLNS,Variable RDFClosure.RestrictedDatatype.OWLNS=RDFClosure.RestrictedDatatype-module.html#OWLNS"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-0', 'OWLNS', 'link-0');">OWLNS</a></tt>  <tt class="py-op">=</tt> <tt class="py-name">Namespace</tt><tt class="py-op">(</tt><tt class="py-string">"http://www.w3.org/2002/07/owl#"</tt><tt class="py-op">)</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.annotatedSource=RDFClosure.AxiomaticTriples-module.html#annotatedSource,Variable RDFClosure.OWL'.annotatedSource=RDFClosure.OWL%27-module.html#annotatedSource,Variable RDFClosure.OWLRL.annotatedSource=RDFClosure.OWLRL-module.html#annotatedSource,Variable RDFClosure.OWLRLExtras.annotatedSource=RDFClosure.OWLRLExtras-module.html#annotatedSource,Variable RDFClosure.RestrictedDatatype.annotatedSource=RDFClosure.RestrictedDatatype-module.html#annotatedSource"><a title="RDFClosure.AxiomaticTriples.annotatedSource
+RDFClosure.OWL'.annotatedSource
+RDFClosure.OWLRL.annotatedSource
+RDFClosure.OWLRLExtras.annotatedSource
+RDFClosure.RestrictedDatatype.annotatedSource" class="py-name" href="#" onclick="return doclink('link-1', 'annotatedSource', 'link-1');">annotatedSource</a></tt>                         <tt class="py-op">=</tt> <tt id="link-2" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-2', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"annotatedSource"</tt><tt class="py-op">]</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.annotatedTarget=RDFClosure.AxiomaticTriples-module.html#annotatedTarget,Variable RDFClosure.OWL'.annotatedTarget=RDFClosure.OWL%27-module.html#annotatedTarget,Variable RDFClosure.OWLRL.annotatedTarget=RDFClosure.OWLRL-module.html#annotatedTarget,Variable RDFClosure.OWLRLExtras.annotatedTarget=RDFClosure.OWLRLExtras-module.html#annotatedTarget,Variable RDFClosure.RestrictedDatatype.annotatedTarget=RDFClosure.RestrictedDatatype-module.html#annotatedTarget"><a title="RDFClosure.AxiomaticTriples.annotatedTarget
+RDFClosure.OWL'.annotatedTarget
+RDFClosure.OWLRL.annotatedTarget
+RDFClosure.OWLRLExtras.annotatedTarget
+RDFClosure.RestrictedDatatype.annotatedTarget" class="py-name" href="#" onclick="return doclink('link-3', 'annotatedTarget', 'link-3');">annotatedTarget</a></tt>                         <tt class="py-op">=</tt> <tt id="link-4" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-4', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"annotatedTarget"</tt><tt class="py-op">]</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.annotatedProperty=RDFClosure.AxiomaticTriples-module.html#annotatedProperty,Variable RDFClosure.OWL'.annotatedProperty=RDFClosure.OWL%27-module.html#annotatedProperty,Variable RDFClosure.OWLRL.annotatedProperty=RDFClosure.OWLRL-module.html#annotatedProperty,Variable RDFClosure.OWLRLExtras.annotatedProperty=RDFClosure.OWLRLExtras-module.html#annotatedProperty,Variable RDFClosure.RestrictedDatatype.annotatedProperty=RDFClosure.RestrictedDatatype-module.html#annotatedProperty"><a title="RDFClosure.AxiomaticTriples.annotatedProperty
+RDFClosure.OWL'.annotatedProperty
+RDFClosure.OWLRL.annotatedProperty
+RDFClosure.OWLRLExtras.annotatedProperty
+RDFClosure.RestrictedDatatype.annotatedProperty" class="py-name" href="#" onclick="return doclink('link-5', 'annotatedProperty', 'link-5');">annotatedProperty</a></tt>                       <tt class="py-op">=</tt> <tt id="link-6" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-6', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"annotatedProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt id="link-7" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.allValuesFrom=RDFClosure.AxiomaticTriples-module.html#allValuesFrom,Variable RDFClosure.OWL'.allValuesFrom=RDFClosure.OWL%27-module.html#allValuesFrom,Variable RDFClosure.OWLRL.allValuesFrom=RDFClosure.OWLRL-module.html#allValuesFrom,Variable RDFClosure.OWLRLExtras.allValuesFrom=RDFClosure.OWLRLExtras-module.html#allValuesFrom,Variable RDFClosure.RestrictedDatatype.allValuesFrom=RDFClosure.RestrictedDatatype-module.html#allValuesFrom"><a title="RDFClosure.AxiomaticTriples.allValuesFrom
+RDFClosure.OWL'.allValuesFrom
+RDFClosure.OWLRL.allValuesFrom
+RDFClosure.OWLRLExtras.allValuesFrom
+RDFClosure.RestrictedDatatype.allValuesFrom" class="py-name" href="#" onclick="return doclink('link-7', 'allValuesFrom', 'link-7');">allValuesFrom</a></tt>                           <tt class="py-op">=</tt> <tt id="link-8" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-8', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"allValuesFrom"</tt><tt class="py-op">]</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt id="link-9" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.assertionProperty=RDFClosure.AxiomaticTriples-module.html#assertionProperty,Variable RDFClosure.OWL'.assertionProperty=RDFClosure.OWL%27-module.html#assertionProperty,Variable RDFClosure.OWLRL.assertionProperty=RDFClosure.OWLRL-module.html#assertionProperty,Variable RDFClosure.OWLRLExtras.assertionProperty=RDFClosure.OWLRLExtras-module.html#assertionProperty,Variable RDFClosure.RestrictedDatatype.assertionProperty=RDFClosure.RestrictedDatatype-module.html#assertionProperty"><a title="RDFClosure.AxiomaticTriples.assertionProperty
+RDFClosure.OWL'.assertionProperty
+RDFClosure.OWLRL.assertionProperty
+RDFClosure.OWLRLExtras.assertionProperty
+RDFClosure.RestrictedDatatype.assertionProperty" class="py-name" href="#" onclick="return doclink('link-9', 'assertionProperty', 'link-9');">assertionProperty</a></tt>                       <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-10', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"assertionProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt id="link-11" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.backwardCompatibleWith=RDFClosure.AxiomaticTriples-module.html#backwardCompatibleWith,Variable RDFClosure.OWL'.backwardCompatibleWith=RDFClosure.OWL%27-module.html#backwardCompatibleWith,Variable RDFClosure.OWLRL.backwardCompatibleWith=RDFClosure.OWLRL-module.html#backwardCompatibleWith,Variable RDFClosure.OWLRLExtras.backwardCompatibleWith=RDFClosure.OWLRLExtras-module.html#backwardCompatibleWith,Variable RDFClosure.RestrictedDatatype.backwardCompatibleWith=RDFClosure.RestrictedDatatype-module.html#backwardCompatibleWith"><a title="RDFClosure.AxiomaticTriples.backwardCompatibleWith
+RDFClosure.OWL'.backwardCompatibleWith
+RDFClosure.OWLRL.backwardCompatibleWith
+RDFClosure.OWLRLExtras.backwardCompatibleWith
+RDFClosure.RestrictedDatatype.backwardCompatibleWith" class="py-name" href="#" onclick="return doclink('link-11', 'backwardCompatibleWith', 'link-11');">backwardCompatibleWith</a></tt>          <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-12', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"backwardCompatibleWith"</tt><tt class="py-op">]</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt id="link-13" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.cardinality=RDFClosure.AxiomaticTriples-module.html#cardinality,Variable RDFClosure.OWL'.cardinality=RDFClosure.OWL%27-module.html#cardinality,Variable RDFClosure.OWLRL.cardinality=RDFClosure.OWLRL-module.html#cardinality,Variable RDFClosure.OWLRLExtras.cardinality=RDFClosure.OWLRLExtras-module.html#cardinality,Variable RDFClosure.RestrictedDatatype.cardinality=RDFClosure.RestrictedDatatype-module.html#cardinality"><a title="RDFClosure.AxiomaticTriples.cardinality
+RDFClosure.OWL'.cardinality
+RDFClosure.OWLRL.cardinality
+RDFClosure.OWLRLExtras.cardinality
+RDFClosure.RestrictedDatatype.cardinality" class="py-name" href="#" onclick="return doclink('link-13', 'cardinality', 'link-13');">cardinality</a></tt>                                     <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-14', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"cardinality"</tt><tt class="py-op">]</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt id="link-15" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.complementOf=RDFClosure.AxiomaticTriples-module.html#complementOf,Variable RDFClosure.OWL'.complementOf=RDFClosure.OWL%27-module.html#complementOf,Variable RDFClosure.OWLRL.complementOf=RDFClosure.OWLRL-module.html#complementOf,Variable RDFClosure.OWLRLExtras.complementOf=RDFClosure.OWLRLExtras-module.html#complementOf,Variable RDFClosure.RestrictedDatatype.complementOf=RDFClosure.RestrictedDatatype-module.html#complementOf"><a title="RDFClosure.AxiomaticTriples.complementOf
+RDFClosure.OWL'.complementOf
+RDFClosure.OWLRL.complementOf
+RDFClosure.OWLRLExtras.complementOf
+RDFClosure.RestrictedDatatype.complementOf" class="py-name" href="#" onclick="return doclink('link-15', 'complementOf', 'link-15');">complementOf</a></tt>                            <tt class="py-op">=</tt> <tt id="link-16" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-16', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"complementOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt id="link-17" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.BottomDataProperty=RDFClosure.AxiomaticTriples-module.html#BottomDataProperty,Variable RDFClosure.OWL'.BottomDataProperty=RDFClosure.OWL%27-module.html#BottomDataProperty,Variable RDFClosure.OWLRL.BottomDataProperty=RDFClosure.OWLRL-module.html#BottomDataProperty,Variable RDFClosure.OWLRLExtras.BottomDataProperty=RDFClosure.OWLRLExtras-module.html#BottomDataProperty,Variable RDFClosure.RestrictedDatatype.BottomDataProperty=RDFClosure.RestrictedDatatype-module.html#BottomDataProperty"><a title="RDFClosure.AxiomaticTriples.BottomDataProperty
+RDFClosure.OWL'.BottomDataProperty
+RDFClosure.OWLRL.BottomDataProperty
+RDFClosure.OWLRLExtras.BottomDataProperty
+RDFClosure.RestrictedDatatype.BottomDataProperty" class="py-name" href="#" onclick="return doclink('link-17', 'BottomDataProperty', 'link-17');">BottomDataProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-18" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-18', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"BottomDataProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt id="link-19" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.BottomObjectProperty=RDFClosure.AxiomaticTriples-module.html#BottomObjectProperty,Variable RDFClosure.OWL'.BottomObjectProperty=RDFClosure.OWL%27-module.html#BottomObjectProperty,Variable RDFClosure.OWLRL.BottomObjectProperty=RDFClosure.OWLRL-module.html#BottomObjectProperty,Variable RDFClosure.OWLRLExtras.BottomObjectProperty=RDFClosure.OWLRLExtras-module.html#BottomObjectProperty,Variable RDFClosure.RestrictedDatatype.BottomObjectProperty=RDFClosure.RestrictedDatatype-module.html#BottomObjectProperty"><a title="RDFClosure.AxiomaticTriples.BottomObjectProperty
+RDFClosure.OWL'.BottomObjectProperty
+RDFClosure.OWLRL.BottomObjectProperty
+RDFClosure.OWLRLExtras.BottomObjectProperty
+RDFClosure.RestrictedDatatype.BottomObjectProperty" class="py-name" href="#" onclick="return doclink('link-19', 'BottomObjectProperty', 'link-19');">BottomObjectProperty</a></tt>            <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-20', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"BottomObjectProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt id="link-21" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.datatypeComplementOf=RDFClosure.AxiomaticTriples-module.html#datatypeComplementOf,Variable RDFClosure.OWL'.datatypeComplementOf=RDFClosure.OWL%27-module.html#datatypeComplementOf,Variable RDFClosure.OWLRL.datatypeComplementOf=RDFClosure.OWLRL-module.html#datatypeComplementOf,Variable RDFClosure.OWLRLExtras.datatypeComplementOf=RDFClosure.OWLRLExtras-module.html#datatypeComplementOf,Variable RDFClosure.RestrictedDatatype.datatypeComplementOf=RDFClosure.RestrictedDatatype-module.html#datatypeComplementOf"><a title="RDFClosure.AxiomaticTriples.datatypeComplementOf
+RDFClosure.OWL'.datatypeComplementOf
+RDFClosure.OWLRL.datatypeComplementOf
+RDFClosure.OWLRLExtras.datatypeComplementOf
+RDFClosure.RestrictedDatatype.datatypeComplementOf" class="py-name" href="#" onclick="return doclink('link-21', 'datatypeComplementOf', 'link-21');">datatypeComplementOf</a></tt>            <tt class="py-op">=</tt> <tt id="link-22" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-22', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"datatypeComplementOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt id="link-23" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.deprecated=RDFClosure.AxiomaticTriples-module.html#deprecated,Variable RDFClosure.OWL'.deprecated=RDFClosure.OWL%27-module.html#deprecated,Variable RDFClosure.OWLRL.deprecated=RDFClosure.OWLRL-module.html#deprecated,Variable RDFClosure.OWLRLExtras.deprecated=RDFClosure.OWLRLExtras-module.html#deprecated,Variable RDFClosure.RestrictedDatatype.deprecated=RDFClosure.RestrictedDatatype-module.html#deprecated"><a title="RDFClosure.AxiomaticTriples.deprecated
+RDFClosure.OWL'.deprecated
+RDFClosure.OWLRL.deprecated
+RDFClosure.OWLRLExtras.deprecated
+RDFClosure.RestrictedDatatype.deprecated" class="py-name" href="#" onclick="return doclink('link-23', 'deprecated', 'link-23');">deprecated</a></tt>                                      <tt class="py-op">=</tt> <tt id="link-24" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-24', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"deprecated"</tt><tt class="py-op">]</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt id="link-25" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.differentFrom=RDFClosure.AxiomaticTriples-module.html#differentFrom,Variable RDFClosure.OWL'.differentFrom=RDFClosure.OWL%27-module.html#differentFrom,Variable RDFClosure.OWLRL.differentFrom=RDFClosure.OWLRL-module.html#differentFrom,Variable RDFClosure.OWLRLExtras.differentFrom=RDFClosure.OWLRLExtras-module.html#differentFrom,Variable RDFClosure.RestrictedDatatype.differentFrom=RDFClosure.RestrictedDatatype-module.html#differentFrom"><a title="RDFClosure.AxiomaticTriples.differentFrom
+RDFClosure.OWL'.differentFrom
+RDFClosure.OWLRL.differentFrom
+RDFClosure.OWLRLExtras.differentFrom
+RDFClosure.RestrictedDatatype.differentFrom" class="py-name" href="#" onclick="return doclink('link-25', 'differentFrom', 'link-25');">differentFrom</a></tt>                           <tt class="py-op">=</tt> <tt id="link-26" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-26', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"differentFrom"</tt><tt class="py-op">]</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt id="link-27" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.disjointUnionOf=RDFClosure.AxiomaticTriples-module.html#disjointUnionOf,Variable RDFClosure.OWL'.disjointUnionOf=RDFClosure.OWL%27-module.html#disjointUnionOf,Variable RDFClosure.OWLRL.disjointUnionOf=RDFClosure.OWLRL-module.html#disjointUnionOf,Variable RDFClosure.OWLRLExtras.disjointUnionOf=RDFClosure.OWLRLExtras-module.html#disjointUnionOf,Variable RDFClosure.RestrictedDatatype.disjointUnionOf=RDFClosure.RestrictedDatatype-module.html#disjointUnionOf"><a title="RDFClosure.AxiomaticTriples.disjointUnionOf
+RDFClosure.OWL'.disjointUnionOf
+RDFClosure.OWLRL.disjointUnionOf
+RDFClosure.OWLRLExtras.disjointUnionOf
+RDFClosure.RestrictedDatatype.disjointUnionOf" class="py-name" href="#" onclick="return doclink('link-27', 'disjointUnionOf', 'link-27');">disjointUnionOf</a></tt>                         <tt class="py-op">=</tt> <tt id="link-28" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-28', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"disjointUnionOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt id="link-29" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.disjointClasses=RDFClosure.AxiomaticTriples-module.html#disjointClasses,Variable RDFClosure.OWL'.disjointClasses=RDFClosure.OWL%27-module.html#disjointClasses,Variable RDFClosure.OWLRL.disjointClasses=RDFClosure.OWLRL-module.html#disjointClasses,Variable RDFClosure.OWLRLExtras.disjointClasses=RDFClosure.OWLRLExtras-module.html#disjointClasses,Variable RDFClosure.RestrictedDatatype.disjointClasses=RDFClosure.RestrictedDatatype-module.html#disjointClasses"><a title="RDFClosure.AxiomaticTriples.disjointClasses
+RDFClosure.OWL'.disjointClasses
+RDFClosure.OWLRL.disjointClasses
+RDFClosure.OWLRLExtras.disjointClasses
+RDFClosure.RestrictedDatatype.disjointClasses" class="py-name" href="#" onclick="return doclink('link-29', 'disjointClasses', 'link-29');">disjointClasses</a></tt>                         <tt class="py-op">=</tt> <tt id="link-30" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-30', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"disjointClasses"</tt><tt class="py-op">]</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt id="link-31" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.disjointWith=RDFClosure.AxiomaticTriples-module.html#disjointWith,Variable RDFClosure.OWL'.disjointWith=RDFClosure.OWL%27-module.html#disjointWith,Variable RDFClosure.OWLRL.disjointWith=RDFClosure.OWLRL-module.html#disjointWith,Variable RDFClosure.OWLRLExtras.disjointWith=RDFClosure.OWLRLExtras-module.html#disjointWith,Variable RDFClosure.RestrictedDatatype.disjointWith=RDFClosure.RestrictedDatatype-module.html#disjointWith"><a title="RDFClosure.AxiomaticTriples.disjointWith
+RDFClosure.OWL'.disjointWith
+RDFClosure.OWLRL.disjointWith
+RDFClosure.OWLRLExtras.disjointWith
+RDFClosure.RestrictedDatatype.disjointWith" class="py-name" href="#" onclick="return doclink('link-31', 'disjointWith', 'link-31');">disjointWith</a></tt>                            <tt class="py-op">=</tt> <tt id="link-32" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-32', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"disjointWith"</tt><tt class="py-op">]</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt id="link-33" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.distinctMembers=RDFClosure.AxiomaticTriples-module.html#distinctMembers,Variable RDFClosure.OWL'.distinctMembers=RDFClosure.OWL%27-module.html#distinctMembers,Variable RDFClosure.OWLRL.distinctMembers=RDFClosure.OWLRL-module.html#distinctMembers,Variable RDFClosure.OWLRLExtras.distinctMembers=RDFClosure.OWLRLExtras-module.html#distinctMembers,Variable RDFClosure.RestrictedDatatype.distinctMembers=RDFClosure.RestrictedDatatype-module.html#distinctMembers"><a title="RDFClosure.AxiomaticTriples.distinctMembers
+RDFClosure.OWL'.distinctMembers
+RDFClosure.OWLRL.distinctMembers
+RDFClosure.OWLRLExtras.distinctMembers
+RDFClosure.RestrictedDatatype.distinctMembers" class="py-name" href="#" onclick="return doclink('link-33', 'distinctMembers', 'link-33');">distinctMembers</a></tt>                         <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-34', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"distinctMembers"</tt><tt class="py-op">]</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt id="link-35" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.equivalentClass=RDFClosure.AxiomaticTriples-module.html#equivalentClass,Variable RDFClosure.OWL'.equivalentClass=RDFClosure.OWL%27-module.html#equivalentClass,Variable RDFClosure.OWLRL.equivalentClass=RDFClosure.OWLRL-module.html#equivalentClass,Variable RDFClosure.OWLRLExtras.equivalentClass=RDFClosure.OWLRLExtras-module.html#equivalentClass,Variable RDFClosure.RestrictedDatatype.equivalentClass=RDFClosure.RestrictedDatatype-module.html#equivalentClass"><a title="RDFClosure.AxiomaticTriples.equivalentClass
+RDFClosure.OWL'.equivalentClass
+RDFClosure.OWLRL.equivalentClass
+RDFClosure.OWLRLExtras.equivalentClass
+RDFClosure.RestrictedDatatype.equivalentClass" class="py-name" href="#" onclick="return doclink('link-35', 'equivalentClass', 'link-35');">equivalentClass</a></tt>                         <tt class="py-op">=</tt> <tt id="link-36" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-36', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"equivalentClass"</tt><tt class="py-op">]</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt id="link-37" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.equivalentProperty=RDFClosure.AxiomaticTriples-module.html#equivalentProperty,Variable RDFClosure.OWL'.equivalentProperty=RDFClosure.OWL%27-module.html#equivalentProperty,Variable RDFClosure.OWLRL.equivalentProperty=RDFClosure.OWLRL-module.html#equivalentProperty,Variable RDFClosure.OWLRLExtras.equivalentProperty=RDFClosure.OWLRLExtras-module.html#equivalentProperty,Variable RDFClosure.RestrictedDatatype.equivalentProperty=RDFClosure.RestrictedDatatype-module.html#equivalentProperty"><a title="RDFClosure.AxiomaticTriples.equivalentProperty
+RDFClosure.OWL'.equivalentProperty
+RDFClosure.OWLRL.equivalentProperty
+RDFClosure.OWLRLExtras.equivalentProperty
+RDFClosure.RestrictedDatatype.equivalentProperty" class="py-name" href="#" onclick="return doclink('link-37', 'equivalentProperty', 'link-37');">equivalentProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-38" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-38', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"equivalentProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt id="link-39" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.hasKey=RDFClosure.AxiomaticTriples-module.html#hasKey,Variable RDFClosure.OWL'.hasKey=RDFClosure.OWL%27-module.html#hasKey,Variable RDFClosure.OWLRL.hasKey=RDFClosure.OWLRL-module.html#hasKey,Variable RDFClosure.OWLRLExtras.hasKey=RDFClosure.OWLRLExtras-module.html#hasKey,Variable RDFClosure.RestrictedDatatype.hasKey=RDFClosure.RestrictedDatatype-module.html#hasKey"><a title="RDFClosure.AxiomaticTriples.hasKey
+RDFClosure.OWL'.hasKey
+RDFClosure.OWLRL.hasKey
+RDFClosure.OWLRLExtras.hasKey
+RDFClosure.RestrictedDatatype.hasKey" class="py-name" href="#" onclick="return doclink('link-39', 'hasKey', 'link-39');">hasKey</a></tt>                                          <tt class="py-op">=</tt> <tt id="link-40" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-40', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"hasKey"</tt><tt class="py-op">]</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt id="link-41" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.hasValue=RDFClosure.AxiomaticTriples-module.html#hasValue,Variable RDFClosure.OWL'.hasValue=RDFClosure.OWL%27-module.html#hasValue,Variable RDFClosure.OWLRL.hasValue=RDFClosure.OWLRL-module.html#hasValue,Variable RDFClosure.OWLRLExtras.hasValue=RDFClosure.OWLRLExtras-module.html#hasValue,Variable RDFClosure.RestrictedDatatype.hasValue=RDFClosure.RestrictedDatatype-module.html#hasValue"><a title="RDFClosure.AxiomaticTriples.hasValue
+RDFClosure.OWL'.hasValue
+RDFClosure.OWLRL.hasValue
+RDFClosure.OWLRLExtras.hasValue
+RDFClosure.RestrictedDatatype.hasValue" class="py-name" href="#" onclick="return doclink('link-41', 'hasValue', 'link-41');">hasValue</a></tt>                                        <tt class="py-op">=</tt> <tt id="link-42" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-42', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"hasValue"</tt><tt class="py-op">]</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt id="link-43" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.hasSelf=RDFClosure.AxiomaticTriples-module.html#hasSelf,Variable RDFClosure.OWL'.hasSelf=RDFClosure.OWL%27-module.html#hasSelf,Variable RDFClosure.OWLRL.hasSelf=RDFClosure.OWLRL-module.html#hasSelf,Variable RDFClosure.OWLRLExtras.hasSelf=RDFClosure.OWLRLExtras-module.html#hasSelf,Variable RDFClosure.RestrictedDatatype.hasSelf=RDFClosure.RestrictedDatatype-module.html#hasSelf"><a title="RDFClosure.AxiomaticTriples.hasSelf
+RDFClosure.OWL'.hasSelf
+RDFClosure.OWLRL.hasSelf
+RDFClosure.OWLRLExtras.hasSelf
+RDFClosure.RestrictedDatatype.hasSelf" class="py-name" href="#" onclick="return doclink('link-43', 'hasSelf', 'link-43');">hasSelf</a></tt>                                         <tt class="py-op">=</tt> <tt id="link-44" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-44', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"hasSelf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt id="link-45" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.imports=RDFClosure.AxiomaticTriples-module.html#imports,Variable RDFClosure.OWL'.imports=RDFClosure.OWL%27-module.html#imports,Variable RDFClosure.OWLRL.imports=RDFClosure.OWLRL-module.html#imports,Variable RDFClosure.OWLRLExtras.imports=RDFClosure.OWLRLExtras-module.html#imports,Variable RDFClosure.RestrictedDatatype.imports=RDFClosure.RestrictedDatatype-module.html#imports"><a title="RDFClosure.AxiomaticTriples.imports
+RDFClosure.OWL'.imports
+RDFClosure.OWLRL.imports
+RDFClosure.OWLRLExtras.imports
+RDFClosure.RestrictedDatatype.imports" class="py-name" href="#" onclick="return doclink('link-45', 'imports', 'link-45');">imports</a></tt>                                         <tt class="py-op">=</tt> <tt id="link-46" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-46', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"imports"</tt><tt class="py-op">]</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt id="link-47" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.incompatibleWith=RDFClosure.AxiomaticTriples-module.html#incompatibleWith,Variable RDFClosure.OWL'.incompatibleWith=RDFClosure.OWL%27-module.html#incompatibleWith,Variable RDFClosure.OWLRL.incompatibleWith=RDFClosure.OWLRL-module.html#incompatibleWith,Variable RDFClosure.OWLRLExtras.incompatibleWith=RDFClosure.OWLRLExtras-module.html#incompatibleWith,Variable RDFClosure.RestrictedDatatype.incompatibleWith=RDFClosure.RestrictedDatatype-module.html#incompatibleWith"><a title="RDFClosure.AxiomaticTriples.incompatibleWith
+RDFClosure.OWL'.incompatibleWith
+RDFClosure.OWLRL.incompatibleWith
+RDFClosure.OWLRLExtras.incompatibleWith
+RDFClosure.RestrictedDatatype.incompatibleWith" class="py-name" href="#" onclick="return doclink('link-47', 'incompatibleWith', 'link-47');">incompatibleWith</a></tt>                        <tt class="py-op">=</tt> <tt id="link-48" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-48', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"incompatibleWith"</tt><tt class="py-op">]</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt id="link-49" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.intersectionOf=RDFClosure.AxiomaticTriples-module.html#intersectionOf,Variable RDFClosure.OWL'.intersectionOf=RDFClosure.OWL%27-module.html#intersectionOf,Variable RDFClosure.OWLRL.intersectionOf=RDFClosure.OWLRL-module.html#intersectionOf,Variable RDFClosure.OWLRLExtras.intersectionOf=RDFClosure.OWLRLExtras-module.html#intersectionOf,Variable RDFClosure.RestrictedDatatype.intersectionOf=RDFClosure.RestrictedDatatype-module.html#intersectionOf"><a title="RDFClosure.AxiomaticTriples.intersectionOf
+RDFClosure.OWL'.intersectionOf
+RDFClosure.OWLRL.intersectionOf
+RDFClosure.OWLRLExtras.intersectionOf
+RDFClosure.RestrictedDatatype.intersectionOf" class="py-name" href="#" onclick="return doclink('link-49', 'intersectionOf', 'link-49');">intersectionOf</a></tt>                          <tt class="py-op">=</tt> <tt id="link-50" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-50', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"intersectionOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt id="link-51" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.inverseOf=RDFClosure.AxiomaticTriples-module.html#inverseOf,Variable RDFClosure.OWL'.inverseOf=RDFClosure.OWL%27-module.html#inverseOf,Variable RDFClosure.OWLRL.inverseOf=RDFClosure.OWLRL-module.html#inverseOf,Variable RDFClosure.OWLRLExtras.inverseOf=RDFClosure.OWLRLExtras-module.html#inverseOf,Variable RDFClosure.RestrictedDatatype.inverseOf=RDFClosure.RestrictedDatatype-module.html#inverseOf"><a title="RDFClosure.AxiomaticTriples.inverseOf
+RDFClosure.OWL'.inverseOf
+RDFClosure.OWLRL.inverseOf
+RDFClosure.OWLRLExtras.inverseOf
+RDFClosure.RestrictedDatatype.inverseOf" class="py-name" href="#" onclick="return doclink('link-51', 'inverseOf', 'link-51');">inverseOf</a></tt>                                       <tt class="py-op">=</tt> <tt id="link-52" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-52', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"inverseOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt id="link-53" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.maxCardinality=RDFClosure.AxiomaticTriples-module.html#maxCardinality,Variable RDFClosure.OWL'.maxCardinality=RDFClosure.OWL%27-module.html#maxCardinality,Variable RDFClosure.OWLRL.maxCardinality=RDFClosure.OWLRL-module.html#maxCardinality,Variable RDFClosure.OWLRLExtras.maxCardinality=RDFClosure.OWLRLExtras-module.html#maxCardinality,Variable RDFClosure.RestrictedDatatype.maxCardinality=RDFClosure.RestrictedDatatype-module.html#maxCardinality"><a title="RDFClosure.AxiomaticTriples.maxCardinality
+RDFClosure.OWL'.maxCardinality
+RDFClosure.OWLRL.maxCardinality
+RDFClosure.OWLRLExtras.maxCardinality
+RDFClosure.RestrictedDatatype.maxCardinality" class="py-name" href="#" onclick="return doclink('link-53', 'maxCardinality', 'link-53');">maxCardinality</a></tt>                          <tt class="py-op">=</tt> <tt id="link-54" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-54', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"maxCardinality"</tt><tt class="py-op">]</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt id="link-55" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.maxQualifiedCardinality=RDFClosure.AxiomaticTriples-module.html#maxQualifiedCardinality,Variable RDFClosure.OWL'.maxQualifiedCardinality=RDFClosure.OWL%27-module.html#maxQualifiedCardinality,Variable RDFClosure.OWLRL.maxQualifiedCardinality=RDFClosure.OWLRL-module.html#maxQualifiedCardinality,Variable RDFClosure.OWLRLExtras.maxQualifiedCardinality=RDFClosure.OWLRLExtras-module.html#maxQualifiedCardinality,Variable RDFClosure.RestrictedDatatype.maxQualifiedCardinality=RDFClosure.RestrictedDatatype-module.html#maxQualifiedCardinality"><a title="RDFClosure.AxiomaticTriples.maxQualifiedCardinality
+RDFClosure.OWL'.maxQualifiedCardinality
+RDFClosure.OWLRL.maxQualifiedCardinality
+RDFClosure.OWLRLExtras.maxQualifiedCardinality
+RDFClosure.RestrictedDatatype.maxQualifiedCardinality" class="py-name" href="#" onclick="return doclink('link-55', 'maxQualifiedCardinality', 'link-55');">maxQualifiedCardinality</a></tt>         <tt class="py-op">=</tt> <tt id="link-56" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-56', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"maxQualifiedCardinality"</tt><tt class="py-op">]</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt id="link-57" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.members=RDFClosure.AxiomaticTriples-module.html#members,Variable RDFClosure.OWL'.members=RDFClosure.OWL%27-module.html#members,Variable RDFClosure.OWLRL.members=RDFClosure.OWLRL-module.html#members,Variable RDFClosure.OWLRLExtras.members=RDFClosure.OWLRLExtras-module.html#members,Variable RDFClosure.RestrictedDatatype.members=RDFClosure.RestrictedDatatype-module.html#members"><a title="RDFClosure.AxiomaticTriples.members
+RDFClosure.OWL'.members
+RDFClosure.OWLRL.members
+RDFClosure.OWLRLExtras.members
+RDFClosure.RestrictedDatatype.members" class="py-name" href="#" onclick="return doclink('link-57', 'members', 'link-57');">members</a></tt>                                         <tt class="py-op">=</tt> <tt id="link-58" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-58', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"members"</tt><tt class="py-op">]</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt id="link-59" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.minCardinality=RDFClosure.AxiomaticTriples-module.html#minCardinality,Variable RDFClosure.OWL'.minCardinality=RDFClosure.OWL%27-module.html#minCardinality,Variable RDFClosure.OWLRL.minCardinality=RDFClosure.OWLRL-module.html#minCardinality,Variable RDFClosure.OWLRLExtras.minCardinality=RDFClosure.OWLRLExtras-module.html#minCardinality,Variable RDFClosure.RestrictedDatatype.minCardinality=RDFClosure.RestrictedDatatype-module.html#minCardinality"><a title="RDFClosure.AxiomaticTriples.minCardinality
+RDFClosure.OWL'.minCardinality
+RDFClosure.OWLRL.minCardinality
+RDFClosure.OWLRLExtras.minCardinality
+RDFClosure.RestrictedDatatype.minCardinality" class="py-name" href="#" onclick="return doclink('link-59', 'minCardinality', 'link-59');">minCardinality</a></tt>                          <tt class="py-op">=</tt> <tt id="link-60" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-60', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"minCardinality"</tt><tt class="py-op">]</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt id="link-61" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.minQualifiedCardinality=RDFClosure.AxiomaticTriples-module.html#minQualifiedCardinality,Variable RDFClosure.OWL'.minQualifiedCardinality=RDFClosure.OWL%27-module.html#minQualifiedCardinality,Variable RDFClosure.OWLRL.minQualifiedCardinality=RDFClosure.OWLRL-module.html#minQualifiedCardinality,Variable RDFClosure.OWLRLExtras.minQualifiedCardinality=RDFClosure.OWLRLExtras-module.html#minQualifiedCardinality,Variable RDFClosure.RestrictedDatatype.minQualifiedCardinality=RDFClosure.RestrictedDatatype-module.html#minQualifiedCardinality"><a title="RDFClosure.AxiomaticTriples.minQualifiedCardinality
+RDFClosure.OWL'.minQualifiedCardinality
+RDFClosure.OWLRL.minQualifiedCardinality
+RDFClosure.OWLRLExtras.minQualifiedCardinality
+RDFClosure.RestrictedDatatype.minQualifiedCardinality" class="py-name" href="#" onclick="return doclink('link-61', 'minQualifiedCardinality', 'link-61');">minQualifiedCardinality</a></tt>         <tt class="py-op">=</tt> <tt id="link-62" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-62', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"minQualifiedCardinality"</tt><tt class="py-op">]</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt id="link-63" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.onClass=RDFClosure.AxiomaticTriples-module.html#onClass,Variable RDFClosure.OWL'.onClass=RDFClosure.OWL%27-module.html#onClass,Variable RDFClosure.OWLRL.onClass=RDFClosure.OWLRL-module.html#onClass,Variable RDFClosure.OWLRLExtras.onClass=RDFClosure.OWLRLExtras-module.html#onClass,Variable RDFClosure.RestrictedDatatype.onClass=RDFClosure.RestrictedDatatype-module.html#onClass"><a title="RDFClosure.AxiomaticTriples.onClass
+RDFClosure.OWL'.onClass
+RDFClosure.OWLRL.onClass
+RDFClosure.OWLRLExtras.onClass
+RDFClosure.RestrictedDatatype.onClass" class="py-name" href="#" onclick="return doclink('link-63', 'onClass', 'link-63');">onClass</a></tt>                                         <tt class="py-op">=</tt> <tt id="link-64" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-64', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"onClass"</tt><tt class="py-op">]</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt id="link-65" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.onDataRange=RDFClosure.AxiomaticTriples-module.html#onDataRange,Variable RDFClosure.OWL'.onDataRange=RDFClosure.OWL%27-module.html#onDataRange,Variable RDFClosure.OWLRL.onDataRange=RDFClosure.OWLRL-module.html#onDataRange,Variable RDFClosure.OWLRLExtras.onDataRange=RDFClosure.OWLRLExtras-module.html#onDataRange,Variable RDFClosure.RestrictedDatatype.onDataRange=RDFClosure.RestrictedDatatype-module.html#onDataRange"><a title="RDFClosure.AxiomaticTriples.onDataRange
+RDFClosure.OWL'.onDataRange
+RDFClosure.OWLRL.onDataRange
+RDFClosure.OWLRLExtras.onDataRange
+RDFClosure.RestrictedDatatype.onDataRange" class="py-name" href="#" onclick="return doclink('link-65', 'onDataRange', 'link-65');">onDataRange</a></tt>                                     <tt class="py-op">=</tt> <tt id="link-66" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-66', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"onDataRange"</tt><tt class="py-op">]</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt id="link-67" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.onDatatype=RDFClosure.AxiomaticTriples-module.html#onDatatype,Variable RDFClosure.OWL'.onDatatype=RDFClosure.OWL%27-module.html#onDatatype,Variable RDFClosure.OWLRL.onDatatype=RDFClosure.OWLRL-module.html#onDatatype,Variable RDFClosure.OWLRLExtras.onDatatype=RDFClosure.OWLRLExtras-module.html#onDatatype,Variable RDFClosure.RestrictedDatatype.onDatatype=RDFClosure.RestrictedDatatype-module.html#onDatatype"><a title="RDFClosure.AxiomaticTriples.onDatatype
+RDFClosure.OWL'.onDatatype
+RDFClosure.OWLRL.onDatatype
+RDFClosure.OWLRLExtras.onDatatype
+RDFClosure.RestrictedDatatype.onDatatype" class="py-name" href="#" onclick="return doclink('link-67', 'onDatatype', 'link-67');">onDatatype</a></tt>                                      <tt class="py-op">=</tt> <tt id="link-68" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-68', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"onDatatype"</tt><tt class="py-op">]</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt id="link-69" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.oneOf=RDFClosure.AxiomaticTriples-module.html#oneOf,Variable RDFClosure.OWL'.oneOf=RDFClosure.OWL%27-module.html#oneOf,Variable RDFClosure.OWLRL.oneOf=RDFClosure.OWLRL-module.html#oneOf,Variable RDFClosure.OWLRLExtras.oneOf=RDFClosure.OWLRLExtras-module.html#oneOf,Variable RDFClosure.RestrictedDatatype.oneOf=RDFClosure.RestrictedDatatype-module.html#oneOf"><a title="RDFClosure.AxiomaticTriples.oneOf
+RDFClosure.OWL'.oneOf
+RDFClosure.OWLRL.oneOf
+RDFClosure.OWLRLExtras.oneOf
+RDFClosure.RestrictedDatatype.oneOf" class="py-name" href="#" onclick="return doclink('link-69', 'oneOf', 'link-69');">oneOf</a></tt>                                           <tt class="py-op">=</tt> <tt id="link-70" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-70', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"oneOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt id="link-71" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.onProperty=RDFClosure.AxiomaticTriples-module.html#onProperty,Variable RDFClosure.OWL'.onProperty=RDFClosure.OWL%27-module.html#onProperty,Variable RDFClosure.OWLRL.onProperty=RDFClosure.OWLRL-module.html#onProperty,Variable RDFClosure.OWLRLExtras.onProperty=RDFClosure.OWLRLExtras-module.html#onProperty,Variable RDFClosure.RestrictedDatatype.onProperty=RDFClosure.RestrictedDatatype-module.html#onProperty"><a title="RDFClosure.AxiomaticTriples.onProperty
+RDFClosure.OWL'.onProperty
+RDFClosure.OWLRL.onProperty
+RDFClosure.OWLRLExtras.onProperty
+RDFClosure.RestrictedDatatype.onProperty" class="py-name" href="#" onclick="return doclink('link-71', 'onProperty', 'link-71');">onProperty</a></tt>                                      <tt class="py-op">=</tt> <tt id="link-72" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-72', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"onProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt id="link-73" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.onProperties=RDFClosure.AxiomaticTriples-module.html#onProperties,Variable RDFClosure.OWL'.onProperties=RDFClosure.OWL%27-module.html#onProperties,Variable RDFClosure.OWLRL.onProperties=RDFClosure.OWLRL-module.html#onProperties,Variable RDFClosure.OWLRLExtras.onProperties=RDFClosure.OWLRLExtras-module.html#onProperties,Variable RDFClosure.RestrictedDatatype.onProperties=RDFClosure.RestrictedDatatype-module.html#onProperties"><a title="RDFClosure.AxiomaticTriples.onProperties
+RDFClosure.OWL'.onProperties
+RDFClosure.OWLRL.onProperties
+RDFClosure.OWLRLExtras.onProperties
+RDFClosure.RestrictedDatatype.onProperties" class="py-name" href="#" onclick="return doclink('link-73', 'onProperties', 'link-73');">onProperties</a></tt>                            <tt class="py-op">=</tt> <tt id="link-74" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-74', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"onProperties"</tt><tt class="py-op">]</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt id="link-75" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.OWLpredicate=RDFClosure.AxiomaticTriples-module.html#OWLpredicate,Variable RDFClosure.OWL'.OWLpredicate=RDFClosure.OWL%27-module.html#OWLpredicate,Variable RDFClosure.OWLRL.OWLpredicate=RDFClosure.OWLRL-module.html#OWLpredicate,Variable RDFClosure.OWLRLExtras.OWLpredicate=RDFClosure.OWLRLExtras-module.html#OWLpredicate,Variable RDFClosure.RestrictedDatatype.OWLpredicate=RDFClosure.RestrictedDatatype-module.html#OWLpredicate"><a title="RDFClosure.AxiomaticTriples.OWLpredicate
+RDFClosure.OWL'.OWLpredicate
+RDFClosure.OWLRL.OWLpredicate
+RDFClosure.OWLRLExtras.OWLpredicate
+RDFClosure.RestrictedDatatype.OWLpredicate" class="py-name" href="#" onclick="return doclink('link-75', 'OWLpredicate', 'link-75');">OWLpredicate</a></tt>                            <tt class="py-op">=</tt> <tt id="link-76" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-76', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"predicate"</tt><tt class="py-op">]</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt id="link-77" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.priorVersion=RDFClosure.AxiomaticTriples-module.html#priorVersion,Variable RDFClosure.OWL'.priorVersion=RDFClosure.OWL%27-module.html#priorVersion,Variable RDFClosure.OWLRL.priorVersion=RDFClosure.OWLRL-module.html#priorVersion,Variable RDFClosure.OWLRLExtras.priorVersion=RDFClosure.OWLRLExtras-module.html#priorVersion,Variable RDFClosure.RestrictedDatatype.priorVersion=RDFClosure.RestrictedDatatype-module.html#priorVersion"><a title="RDFClosure.AxiomaticTriples.priorVersion
+RDFClosure.OWL'.priorVersion
+RDFClosure.OWLRL.priorVersion
+RDFClosure.OWLRLExtras.priorVersion
+RDFClosure.RestrictedDatatype.priorVersion" class="py-name" href="#" onclick="return doclink('link-77', 'priorVersion', 'link-77');">priorVersion</a></tt>                            <tt class="py-op">=</tt> <tt id="link-78" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-78', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"priorVersion"</tt><tt class="py-op">]</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt id="link-79" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.propertyChainAxiom=RDFClosure.AxiomaticTriples-module.html#propertyChainAxiom,Variable RDFClosure.OWL'.propertyChainAxiom=RDFClosure.OWL%27-module.html#propertyChainAxiom,Variable RDFClosure.OWLRL.propertyChainAxiom=RDFClosure.OWLRL-module.html#propertyChainAxiom,Variable RDFClosure.OWLRLExtras.propertyChainAxiom=RDFClosure.OWLRLExtras-module.html#propertyChainAxiom,Variable RDFClosure.RestrictedDatatype.propertyChainAxiom=RDFClosure.RestrictedDatatype-module.html#propertyChainAxiom"><a title="RDFClosure.AxiomaticTriples.propertyChainAxiom
+RDFClosure.OWL'.propertyChainAxiom
+RDFClosure.OWLRL.propertyChainAxiom
+RDFClosure.OWLRLExtras.propertyChainAxiom
+RDFClosure.RestrictedDatatype.propertyChainAxiom" class="py-name" href="#" onclick="return doclink('link-79', 'propertyChainAxiom', 'link-79');">propertyChainAxiom</a></tt>                      <tt class="py-op">=</tt> <tt id="link-80" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-80', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"propertyChainAxiom"</tt><tt class="py-op">]</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt id="link-81" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.propertyDisjointWith=RDFClosure.AxiomaticTriples-module.html#propertyDisjointWith,Variable RDFClosure.OWL'.propertyDisjointWith=RDFClosure.OWL%27-module.html#propertyDisjointWith,Variable RDFClosure.OWLRL.propertyDisjointWith=RDFClosure.OWLRL-module.html#propertyDisjointWith,Variable RDFClosure.OWLRLExtras.propertyDisjointWith=RDFClosure.OWLRLExtras-module.html#propertyDisjointWith,Variable RDFClosure.RestrictedDatatype.propertyDisjointWith=RDFClosure.RestrictedDatatype-module.html#propertyDisjointWith"><a title="RDFClosure.AxiomaticTriples.propertyDisjointWith
+RDFClosure.OWL'.propertyDisjointWith
+RDFClosure.OWLRL.propertyDisjointWith
+RDFClosure.OWLRLExtras.propertyDisjointWith
+RDFClosure.RestrictedDatatype.propertyDisjointWith" class="py-name" href="#" onclick="return doclink('link-81', 'propertyDisjointWith', 'link-81');">propertyDisjointWith</a></tt>            <tt class="py-op">=</tt> <tt id="link-82" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-82', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"propertyDisjointWith"</tt><tt class="py-op">]</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt id="link-83" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.qualifiedCardinality=RDFClosure.AxiomaticTriples-module.html#qualifiedCardinality,Variable RDFClosure.OWL'.qualifiedCardinality=RDFClosure.OWL%27-module.html#qualifiedCardinality,Variable RDFClosure.OWLRL.qualifiedCardinality=RDFClosure.OWLRL-module.html#qualifiedCardinality,Variable RDFClosure.OWLRLExtras.qualifiedCardinality=RDFClosure.OWLRLExtras-module.html#qualifiedCardinality,Variable RDFClosure.RestrictedDatatype.qualifiedCardinality=RDFClosure.RestrictedDatatype-module.html#qualifiedCardinality"><a title="RDFClosure.AxiomaticTriples.qualifiedCardinality
+RDFClosure.OWL'.qualifiedCardinality
+RDFClosure.OWLRL.qualifiedCardinality
+RDFClosure.OWLRLExtras.qualifiedCardinality
+RDFClosure.RestrictedDatatype.qualifiedCardinality" class="py-name" href="#" onclick="return doclink('link-83', 'qualifiedCardinality', 'link-83');">qualifiedCardinality</a></tt>            <tt class="py-op">=</tt> <tt id="link-84" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-84', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"qualifiedCardinality"</tt><tt class="py-op">]</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt id="link-85" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.sameAs=RDFClosure.AxiomaticTriples-module.html#sameAs,Variable RDFClosure.OWL'.sameAs=RDFClosure.OWL%27-module.html#sameAs,Variable RDFClosure.OWLRL.sameAs=RDFClosure.OWLRL-module.html#sameAs,Variable RDFClosure.OWLRLExtras.sameAs=RDFClosure.OWLRLExtras-module.html#sameAs,Variable RDFClosure.RestrictedDatatype.sameAs=RDFClosure.RestrictedDatatype-module.html#sameAs"><a title="RDFClosure.AxiomaticTriples.sameAs
+RDFClosure.OWL'.sameAs
+RDFClosure.OWLRL.sameAs
+RDFClosure.OWLRLExtras.sameAs
+RDFClosure.RestrictedDatatype.sameAs" class="py-name" href="#" onclick="return doclink('link-85', 'sameAs', 'link-85');">sameAs</a></tt>                                          <tt class="py-op">=</tt> <tt id="link-86" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-86', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"sameAs"</tt><tt class="py-op">]</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt id="link-87" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.someValuesFrom=RDFClosure.AxiomaticTriples-module.html#someValuesFrom,Variable RDFClosure.OWL'.someValuesFrom=RDFClosure.OWL%27-module.html#someValuesFrom,Variable RDFClosure.OWLRL.someValuesFrom=RDFClosure.OWLRL-module.html#someValuesFrom,Variable RDFClosure.OWLRLExtras.someValuesFrom=RDFClosure.OWLRLExtras-module.html#someValuesFrom,Variable RDFClosure.RestrictedDatatype.someValuesFrom=RDFClosure.RestrictedDatatype-module.html#someValuesFrom"><a title="RDFClosure.AxiomaticTriples.someValuesFrom
+RDFClosure.OWL'.someValuesFrom
+RDFClosure.OWLRL.someValuesFrom
+RDFClosure.OWLRLExtras.someValuesFrom
+RDFClosure.RestrictedDatatype.someValuesFrom" class="py-name" href="#" onclick="return doclink('link-87', 'someValuesFrom', 'link-87');">someValuesFrom</a></tt>                          <tt class="py-op">=</tt> <tt id="link-88" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-88', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"someValuesFrom"</tt><tt class="py-op">]</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt id="link-89" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.sourceIndividual=RDFClosure.AxiomaticTriples-module.html#sourceIndividual,Variable RDFClosure.OWL'.sourceIndividual=RDFClosure.OWL%27-module.html#sourceIndividual,Variable RDFClosure.OWLRL.sourceIndividual=RDFClosure.OWLRL-module.html#sourceIndividual,Variable RDFClosure.OWLRLExtras.sourceIndividual=RDFClosure.OWLRLExtras-module.html#sourceIndividual,Variable RDFClosure.RestrictedDatatype.sourceIndividual=RDFClosure.RestrictedDatatype-module.html#sourceIndividual"><a title="RDFClosure.AxiomaticTriples.sourceIndividual
+RDFClosure.OWL'.sourceIndividual
+RDFClosure.OWLRL.sourceIndividual
+RDFClosure.OWLRLExtras.sourceIndividual
+RDFClosure.RestrictedDatatype.sourceIndividual" class="py-name" href="#" onclick="return doclink('link-89', 'sourceIndividual', 'link-89');">sourceIndividual</a></tt>                        <tt class="py-op">=</tt> <tt id="link-90" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-90', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"sourceIndividual"</tt><tt class="py-op">]</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt id="link-91" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.OWLsubject=RDFClosure.AxiomaticTriples-module.html#OWLsubject,Variable RDFClosure.OWL'.OWLsubject=RDFClosure.OWL%27-module.html#OWLsubject,Variable RDFClosure.OWLRL.OWLsubject=RDFClosure.OWLRL-module.html#OWLsubject,Variable RDFClosure.OWLRLExtras.OWLsubject=RDFClosure.OWLRLExtras-module.html#OWLsubject,Variable RDFClosure.RestrictedDatatype.OWLsubject=RDFClosure.RestrictedDatatype-module.html#OWLsubject"><a title="RDFClosure.AxiomaticTriples.OWLsubject
+RDFClosure.OWL'.OWLsubject
+RDFClosure.OWLRL.OWLsubject
+RDFClosure.OWLRLExtras.OWLsubject
+RDFClosure.RestrictedDatatype.OWLsubject" class="py-name" href="#" onclick="return doclink('link-91', 'OWLsubject', 'link-91');">OWLsubject</a></tt>                                      <tt class="py-op">=</tt> <tt id="link-92" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-92', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"subject"</tt><tt class="py-op">]</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt id="link-93" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.targetIndividual=RDFClosure.AxiomaticTriples-module.html#targetIndividual,Variable RDFClosure.OWL'.targetIndividual=RDFClosure.OWL%27-module.html#targetIndividual,Variable RDFClosure.OWLRL.targetIndividual=RDFClosure.OWLRL-module.html#targetIndividual,Variable RDFClosure.OWLRLExtras.targetIndividual=RDFClosure.OWLRLExtras-module.html#targetIndividual,Variable RDFClosure.RestrictedDatatype.targetIndividual=RDFClosure.RestrictedDatatype-module.html#targetIndividual"><a title="RDFClosure.AxiomaticTriples.targetIndividual
+RDFClosure.OWL'.targetIndividual
+RDFClosure.OWLRL.targetIndividual
+RDFClosure.OWLRLExtras.targetIndividual
+RDFClosure.RestrictedDatatype.targetIndividual" class="py-name" href="#" onclick="return doclink('link-93', 'targetIndividual', 'link-93');">targetIndividual</a></tt>                        <tt class="py-op">=</tt> <tt id="link-94" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-94', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"targetIndividual"</tt><tt class="py-op">]</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt id="link-95" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.targetValue=RDFClosure.AxiomaticTriples-module.html#targetValue,Variable RDFClosure.OWL'.targetValue=RDFClosure.OWL%27-module.html#targetValue,Variable RDFClosure.OWLRL.targetValue=RDFClosure.OWLRL-module.html#targetValue,Variable RDFClosure.OWLRLExtras.targetValue=RDFClosure.OWLRLExtras-module.html#targetValue,Variable RDFClosure.RestrictedDatatype.targetValue=RDFClosure.RestrictedDatatype-module.html#targetValue"><a title="RDFClosure.AxiomaticTriples.targetValue
+RDFClosure.OWL'.targetValue
+RDFClosure.OWLRL.targetValue
+RDFClosure.OWLRLExtras.targetValue
+RDFClosure.RestrictedDatatype.targetValue" class="py-name" href="#" onclick="return doclink('link-95', 'targetValue', 'link-95');">targetValue</a></tt>                                     <tt class="py-op">=</tt> <tt id="link-96" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-96', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"targetValue"</tt><tt class="py-op">]</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt id="link-97" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.TopDataProperty=RDFClosure.AxiomaticTriples-module.html#TopDataProperty,Variable RDFClosure.OWL'.TopDataProperty=RDFClosure.OWL%27-module.html#TopDataProperty,Variable RDFClosure.OWLRL.TopDataProperty=RDFClosure.OWLRL-module.html#TopDataProperty,Variable RDFClosure.OWLRLExtras.TopDataProperty=RDFClosure.OWLRLExtras-module.html#TopDataProperty,Variable RDFClosure.RestrictedDatatype.TopDataProperty=RDFClosure.RestrictedDatatype-module.html#TopDataProperty"><a title="RDFClosure.AxiomaticTriples.TopDataProperty
+RDFClosure.OWL'.TopDataProperty
+RDFClosure.OWLRL.TopDataProperty
+RDFClosure.OWLRLExtras.TopDataProperty
+RDFClosure.RestrictedDatatype.TopDataProperty" class="py-name" href="#" onclick="return doclink('link-97', 'TopDataProperty', 'link-97');">TopDataProperty</a></tt>                         <tt class="py-op">=</tt> <tt id="link-98" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-98', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"TopDataProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt id="link-99" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.TopObjectProperty=RDFClosure.AxiomaticTriples-module.html#TopObjectProperty,Variable RDFClosure.OWL'.TopObjectProperty=RDFClosure.OWL%27-module.html#TopObjectProperty,Variable RDFClosure.OWLRL.TopObjectProperty=RDFClosure.OWLRL-module.html#TopObjectProperty,Variable RDFClosure.OWLRLExtras.TopObjectProperty=RDFClosure.OWLRLExtras-module.html#TopObjectProperty,Variable RDFClosure.RestrictedDatatype.TopObjectProperty=RDFClosure.RestrictedDatatype-module.html#TopObjectProperty"><a title="RDFClosure.AxiomaticTriples.TopObjectProperty
+RDFClosure.OWL'.TopObjectProperty
+RDFClosure.OWLRL.TopObjectProperty
+RDFClosure.OWLRLExtras.TopObjectProperty
+RDFClosure.RestrictedDatatype.TopObjectProperty" class="py-name" href="#" onclick="return doclink('link-99', 'TopObjectProperty', 'link-99');">TopObjectProperty</a></tt>                       <tt class="py-op">=</tt> <tt id="link-100" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-100', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"TopObjectProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt id="link-101" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.unionOf=RDFClosure.AxiomaticTriples-module.html#unionOf,Variable RDFClosure.OWL'.unionOf=RDFClosure.OWL%27-module.html#unionOf,Variable RDFClosure.OWLRL.unionOf=RDFClosure.OWLRL-module.html#unionOf,Variable RDFClosure.OWLRLExtras.unionOf=RDFClosure.OWLRLExtras-module.html#unionOf,Variable RDFClosure.RestrictedDatatype.unionOf=RDFClosure.RestrictedDatatype-module.html#unionOf"><a title="RDFClosure.AxiomaticTriples.unionOf
+RDFClosure.OWL'.unionOf
+RDFClosure.OWLRL.unionOf
+RDFClosure.OWLRLExtras.unionOf
+RDFClosure.RestrictedDatatype.unionOf" class="py-name" href="#" onclick="return doclink('link-101', 'unionOf', 'link-101');">unionOf</a></tt>                                         <tt class="py-op">=</tt> <tt id="link-102" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-102', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"unionOf"</tt><tt class="py-op">]</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt id="link-103" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.versionInfo=RDFClosure.AxiomaticTriples-module.html#versionInfo,Variable RDFClosure.OWL'.versionInfo=RDFClosure.OWL%27-module.html#versionInfo,Variable RDFClosure.OWLRL.versionInfo=RDFClosure.OWLRL-module.html#versionInfo,Variable RDFClosure.OWLRLExtras.versionInfo=RDFClosure.OWLRLExtras-module.html#versionInfo,Variable RDFClosure.RestrictedDatatype.versionInfo=RDFClosure.RestrictedDatatype-module.html#versionInfo"><a title="RDFClosure.AxiomaticTriples.versionInfo
+RDFClosure.OWL'.versionInfo
+RDFClosure.OWLRL.versionInfo
+RDFClosure.OWLRLExtras.versionInfo
+RDFClosure.RestrictedDatatype.versionInfo" class="py-name" href="#" onclick="return doclink('link-103', 'versionInfo', 'link-103');">versionInfo</a></tt>                                     <tt class="py-op">=</tt> <tt id="link-104" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-104', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"versionInfo"</tt><tt class="py-op">]</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt id="link-105" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.versionIRI=RDFClosure.AxiomaticTriples-module.html#versionIRI,Variable RDFClosure.OWL'.versionIRI=RDFClosure.OWL%27-module.html#versionIRI,Variable RDFClosure.OWLRL.versionIRI=RDFClosure.OWLRL-module.html#versionIRI,Variable RDFClosure.OWLRLExtras.versionIRI=RDFClosure.OWLRLExtras-module.html#versionIRI,Variable RDFClosure.RestrictedDatatype.versionIRI=RDFClosure.RestrictedDatatype-module.html#versionIRI"><a title="RDFClosure.AxiomaticTriples.versionIRI
+RDFClosure.OWL'.versionIRI
+RDFClosure.OWLRL.versionIRI
+RDFClosure.OWLRLExtras.versionIRI
+RDFClosure.RestrictedDatatype.versionIRI" class="py-name" href="#" onclick="return doclink('link-105', 'versionIRI', 'link-105');">versionIRI</a></tt>                                      <tt class="py-op">=</tt> <tt id="link-106" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-106', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"versionIRI"</tt><tt class="py-op">]</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt id="link-107" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.withRestrictions=RDFClosure.AxiomaticTriples-module.html#withRestrictions,Variable RDFClosure.OWL'.withRestrictions=RDFClosure.OWL%27-module.html#withRestrictions,Variable RDFClosure.OWLRL.withRestrictions=RDFClosure.OWLRL-module.html#withRestrictions,Variable RDFClosure.OWLRLExtras.withRestrictions=RDFClosure.OWLRLExtras-module.html#withRestrictions,Variable RDFClosure.RestrictedDatatype.withRestrictions=RDFClosure.RestrictedDatatype-module.html#withRestrictions"><a title="RDFClosure.AxiomaticTriples.withRestrictions
+RDFClosure.OWL'.withRestrictions
+RDFClosure.OWLRL.withRestrictions
+RDFClosure.OWLRLExtras.withRestrictions
+RDFClosure.RestrictedDatatype.withRestrictions" class="py-name" href="#" onclick="return doclink('link-107', 'withRestrictions', 'link-107');">withRestrictions</a></tt>                        <tt class="py-op">=</tt> <tt id="link-108" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-108', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"withRestrictions"</tt><tt class="py-op">]</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt id="link-109" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.AllDisjointProperties=RDFClosure.AxiomaticTriples-module.html#AllDisjointProperties,Variable RDFClosure.OWL'.AllDisjointProperties=RDFClosure.OWL%27-module.html#AllDisjointProperties,Variable RDFClosure.OWLRL.AllDisjointProperties=RDFClosure.OWLRL-module.html#AllDisjointProperties,Variable RDFClosure.OWLRLExtras.AllDisjointProperties=RDFClosure.OWLRLExtras-module.html#AllDisjointProperties,Variable RDFClosure.RestrictedDatatype.AllDisjointProperties=RDFClosure.RestrictedDatatype-module.html#AllDisjointProperties"><a title="RDFClosure.AxiomaticTriples.AllDisjointProperties
+RDFClosure.OWL'.AllDisjointProperties
+RDFClosure.OWLRL.AllDisjointProperties
+RDFClosure.OWLRLExtras.AllDisjointProperties
+RDFClosure.RestrictedDatatype.AllDisjointProperties" class="py-name" href="#" onclick="return doclink('link-109', 'AllDisjointProperties', 'link-109');">AllDisjointProperties</a></tt>           <tt class="py-op">=</tt> <tt id="link-110" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-110', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"AllDisjointProperties"</tt><tt class="py-op">]</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt id="link-111" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.AllDifferent=RDFClosure.AxiomaticTriples-module.html#AllDifferent,Variable RDFClosure.OWL'.AllDifferent=RDFClosure.OWL%27-module.html#AllDifferent,Variable RDFClosure.OWLRL.AllDifferent=RDFClosure.OWLRL-module.html#AllDifferent,Variable RDFClosure.OWLRLExtras.AllDifferent=RDFClosure.OWLRLExtras-module.html#AllDifferent,Variable RDFClosure.RestrictedDatatype.AllDifferent=RDFClosure.RestrictedDatatype-module.html#AllDifferent"><a title="RDFClosure.AxiomaticTriples.AllDifferent
+RDFClosure.OWL'.AllDifferent
+RDFClosure.OWLRL.AllDifferent
+RDFClosure.OWLRLExtras.AllDifferent
+RDFClosure.RestrictedDatatype.AllDifferent" class="py-name" href="#" onclick="return doclink('link-111', 'AllDifferent', 'link-111');">AllDifferent</a></tt>                            <tt class="py-op">=</tt> <tt id="link-112" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-112', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"AllDifferent"</tt><tt class="py-op">]</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt id="link-113" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.AllDisjointClasses=RDFClosure.AxiomaticTriples-module.html#AllDisjointClasses,Variable RDFClosure.OWL'.AllDisjointClasses=RDFClosure.OWL%27-module.html#AllDisjointClasses,Variable RDFClosure.OWLRL.AllDisjointClasses=RDFClosure.OWLRL-module.html#AllDisjointClasses,Variable RDFClosure.OWLRLExtras.AllDisjointClasses=RDFClosure.OWLRLExtras-module.html#AllDisjointClasses,Variable RDFClosure.RestrictedDatatype.AllDisjointClasses=RDFClosure.RestrictedDatatype-module.html#AllDisjointClasses"><a title="RDFClosure.AxiomaticTriples.AllDisjointClasses
+RDFClosure.OWL'.AllDisjointClasses
+RDFClosure.OWLRL.AllDisjointClasses
+RDFClosure.OWLRLExtras.AllDisjointClasses
+RDFClosure.RestrictedDatatype.AllDisjointClasses" class="py-name" href="#" onclick="return doclink('link-113', 'AllDisjointClasses', 'link-113');">AllDisjointClasses</a></tt>                      <tt class="py-op">=</tt> <tt id="link-114" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-114', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"AllDisjointClasses"</tt><tt class="py-op">]</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt id="link-115" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Annotation=RDFClosure.AxiomaticTriples-module.html#Annotation,Variable RDFClosure.OWL'.Annotation=RDFClosure.OWL%27-module.html#Annotation,Variable RDFClosure.OWLRL.Annotation=RDFClosure.OWLRL-module.html#Annotation,Variable RDFClosure.OWLRLExtras.Annotation=RDFClosure.OWLRLExtras-module.html#Annotation,Variable RDFClosure.RestrictedDatatype.Annotation=RDFClosure.RestrictedDatatype-module.html#Annotation"><a title="RDFClosure.AxiomaticTriples.Annotation
+RDFClosure.OWL'.Annotation
+RDFClosure.OWLRL.Annotation
+RDFClosure.OWLRLExtras.Annotation
+RDFClosure.RestrictedDatatype.Annotation" class="py-name" href="#" onclick="return doclink('link-115', 'Annotation', 'link-115');">Annotation</a></tt>                                      <tt class="py-op">=</tt> <tt id="link-116" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-116', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Annotation"</tt><tt class="py-op">]</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt id="link-117" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.AnnotationProperty=RDFClosure.AxiomaticTriples-module.html#AnnotationProperty,Variable RDFClosure.OWL'.AnnotationProperty=RDFClosure.OWL%27-module.html#AnnotationProperty,Variable RDFClosure.OWLRL.AnnotationProperty=RDFClosure.OWLRL-module.html#AnnotationProperty,Variable RDFClosure.OWLRLExtras.AnnotationProperty=RDFClosure.OWLRLExtras-module.html#AnnotationProperty,Variable RDFClosure.RestrictedDatatype.AnnotationProperty=RDFClosure.RestrictedDatatype-module.html#AnnotationProperty"><a title="RDFClosure.AxiomaticTriples.AnnotationProperty
+RDFClosure.OWL'.AnnotationProperty
+RDFClosure.OWLRL.AnnotationProperty
+RDFClosure.OWLRLExtras.AnnotationProperty
+RDFClosure.RestrictedDatatype.AnnotationProperty" class="py-name" href="#" onclick="return doclink('link-117', 'AnnotationProperty', 'link-117');">AnnotationProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-118" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-118', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"AnnotationProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"><tt id="link-119" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.AsymmetricProperty=RDFClosure.AxiomaticTriples-module.html#AsymmetricProperty,Variable RDFClosure.OWL'.AsymmetricProperty=RDFClosure.OWL%27-module.html#AsymmetricProperty,Variable RDFClosure.OWLRL.AsymmetricProperty=RDFClosure.OWLRL-module.html#AsymmetricProperty,Variable RDFClosure.OWLRLExtras.AsymmetricProperty=RDFClosure.OWLRLExtras-module.html#AsymmetricProperty,Variable RDFClosure.RestrictedDatatype.AsymmetricProperty=RDFClosure.RestrictedDatatype-module.html#AsymmetricProperty"><a title="RDFClosure.AxiomaticTriples.AsymmetricProperty
+RDFClosure.OWL'.AsymmetricProperty
+RDFClosure.OWLRL.AsymmetricProperty
+RDFClosure.OWLRLExtras.AsymmetricProperty
+RDFClosure.RestrictedDatatype.AsymmetricProperty" class="py-name" href="#" onclick="return doclink('link-119', 'AsymmetricProperty', 'link-119');">AsymmetricProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-120" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-120', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"AsymmetricProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt id="link-121" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Axiom=RDFClosure.AxiomaticTriples-module.html#Axiom,Variable RDFClosure.OWL'.Axiom=RDFClosure.OWL%27-module.html#Axiom,Variable RDFClosure.OWLRL.Axiom=RDFClosure.OWLRL-module.html#Axiom,Variable RDFClosure.OWLRLExtras.Axiom=RDFClosure.OWLRLExtras-module.html#Axiom,Variable RDFClosure.RestrictedDatatype.Axiom=RDFClosure.RestrictedDatatype-module.html#Axiom"><a title="RDFClosure.AxiomaticTriples.Axiom
+RDFClosure.OWL'.Axiom
+RDFClosure.OWLRL.Axiom
+RDFClosure.OWLRLExtras.Axiom
+RDFClosure.RestrictedDatatype.Axiom" class="py-name" href="#" onclick="return doclink('link-121', 'Axiom', 'link-121');">Axiom</a></tt>                                           <tt class="py-op">=</tt> <tt id="link-122" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-122', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Axiom"</tt><tt class="py-op">]</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt id="link-123" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.OWLClass=RDFClosure.AxiomaticTriples-module.html#OWLClass,Variable RDFClosure.OWL'.OWLClass=RDFClosure.OWL%27-module.html#OWLClass,Variable RDFClosure.OWLRL.OWLClass=RDFClosure.OWLRL-module.html#OWLClass,Variable RDFClosure.OWLRLExtras.OWLClass=RDFClosure.OWLRLExtras-module.html#OWLClass,Variable RDFClosure.RestrictedDatatype.OWLClass=RDFClosure.RestrictedDatatype-module.html#OWLClass"><a title="RDFClosure.AxiomaticTriples.OWLClass
+RDFClosure.OWL'.OWLClass
+RDFClosure.OWLRL.OWLClass
+RDFClosure.OWLRLExtras.OWLClass
+RDFClosure.RestrictedDatatype.OWLClass" class="py-name" href="#" onclick="return doclink('link-123', 'OWLClass', 'link-123');">OWLClass</a></tt>                                        <tt class="py-op">=</tt> <tt id="link-124" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-124', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Class"</tt><tt class="py-op">]</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt id="link-125" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.DataRange=RDFClosure.AxiomaticTriples-module.html#DataRange,Variable RDFClosure.OWL'.DataRange=RDFClosure.OWL%27-module.html#DataRange,Variable RDFClosure.OWLRL.DataRange=RDFClosure.OWLRL-module.html#DataRange,Variable RDFClosure.OWLRLExtras.DataRange=RDFClosure.OWLRLExtras-module.html#DataRange,Variable RDFClosure.RestrictedDatatype.DataRange=RDFClosure.RestrictedDatatype-module.html#DataRange"><a title="RDFClosure.AxiomaticTriples.DataRange
+RDFClosure.OWL'.DataRange
+RDFClosure.OWLRL.DataRange
+RDFClosure.OWLRLExtras.DataRange
+RDFClosure.RestrictedDatatype.DataRange" class="py-name" href="#" onclick="return doclink('link-125', 'DataRange', 'link-125');">DataRange</a></tt>                                       <tt class="py-op">=</tt> <tt id="link-126" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-126', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"DataRange"</tt><tt class="py-op">]</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt id="link-127" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.DatatypeProperty=RDFClosure.AxiomaticTriples-module.html#DatatypeProperty,Variable RDFClosure.OWL'.DatatypeProperty=RDFClosure.OWL%27-module.html#DatatypeProperty,Variable RDFClosure.OWLRL.DatatypeProperty=RDFClosure.OWLRL-module.html#DatatypeProperty,Variable RDFClosure.OWLRLExtras.DatatypeProperty=RDFClosure.OWLRLExtras-module.html#DatatypeProperty,Variable RDFClosure.RestrictedDatatype.DatatypeProperty=RDFClosure.RestrictedDatatype-module.html#DatatypeProperty"><a title="RDFClosure.AxiomaticTriples.DatatypeProperty
+RDFClosure.OWL'.DatatypeProperty
+RDFClosure.OWLRL.DatatypeProperty
+RDFClosure.OWLRLExtras.DatatypeProperty
+RDFClosure.RestrictedDatatype.DatatypeProperty" class="py-name" href="#" onclick="return doclink('link-127', 'DatatypeProperty', 'link-127');">DatatypeProperty</a></tt>                        <tt class="py-op">=</tt> <tt id="link-128" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-128', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"DatatypeProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt id="link-129" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.DeprecatedClass=RDFClosure.AxiomaticTriples-module.html#DeprecatedClass,Variable RDFClosure.OWL'.DeprecatedClass=RDFClosure.OWL%27-module.html#DeprecatedClass,Variable RDFClosure.OWLRL.DeprecatedClass=RDFClosure.OWLRL-module.html#DeprecatedClass,Variable RDFClosure.OWLRLExtras.DeprecatedClass=RDFClosure.OWLRLExtras-module.html#DeprecatedClass,Variable RDFClosure.RestrictedDatatype.DeprecatedClass=RDFClosure.RestrictedDatatype-module.html#DeprecatedClass"><a title="RDFClosure.AxiomaticTriples.DeprecatedClass
+RDFClosure.OWL'.DeprecatedClass
+RDFClosure.OWLRL.DeprecatedClass
+RDFClosure.OWLRLExtras.DeprecatedClass
+RDFClosure.RestrictedDatatype.DeprecatedClass" class="py-name" href="#" onclick="return doclink('link-129', 'DeprecatedClass', 'link-129');">DeprecatedClass</a></tt>                         <tt class="py-op">=</tt> <tt id="link-130" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-130', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"DeprecatedClass"</tt><tt class="py-op">]</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt id="link-131" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.DeprecatedProperty=RDFClosure.AxiomaticTriples-module.html#DeprecatedProperty,Variable RDFClosure.OWL'.DeprecatedProperty=RDFClosure.OWL%27-module.html#DeprecatedProperty,Variable RDFClosure.OWLRL.DeprecatedProperty=RDFClosure.OWLRL-module.html#DeprecatedProperty,Variable RDFClosure.OWLRLExtras.DeprecatedProperty=RDFClosure.OWLRLExtras-module.html#DeprecatedProperty,Variable RDFClosure.RestrictedDatatype.DeprecatedProperty=RDFClosure.RestrictedDatatype-module.html#DeprecatedProperty"><a title="RDFClosure.AxiomaticTriples.DeprecatedProperty
+RDFClosure.OWL'.DeprecatedProperty
+RDFClosure.OWLRL.DeprecatedProperty
+RDFClosure.OWLRLExtras.DeprecatedProperty
+RDFClosure.RestrictedDatatype.DeprecatedProperty" class="py-name" href="#" onclick="return doclink('link-131', 'DeprecatedProperty', 'link-131');">DeprecatedProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-132" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-132', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"DeprecatedProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"><tt id="link-133" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.FunctionalProperty=RDFClosure.AxiomaticTriples-module.html#FunctionalProperty,Variable RDFClosure.OWL'.FunctionalProperty=RDFClosure.OWL%27-module.html#FunctionalProperty,Variable RDFClosure.OWLRL.FunctionalProperty=RDFClosure.OWLRL-module.html#FunctionalProperty,Variable RDFClosure.OWLRLExtras.FunctionalProperty=RDFClosure.OWLRLExtras-module.html#FunctionalProperty,Variable RDFClosure.RestrictedDatatype.FunctionalProperty=RDFClosure.RestrictedDatatype-module.html#FunctionalProperty"><a title="RDFClosure.AxiomaticTriples.FunctionalProperty
+RDFClosure.OWL'.FunctionalProperty
+RDFClosure.OWLRL.FunctionalProperty
+RDFClosure.OWLRLExtras.FunctionalProperty
+RDFClosure.RestrictedDatatype.FunctionalProperty" class="py-name" href="#" onclick="return doclink('link-133', 'FunctionalProperty', 'link-133');">FunctionalProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-134" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-134', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"FunctionalProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"><tt id="link-135" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.InverseFunctionalProperty=RDFClosure.AxiomaticTriples-module.html#InverseFunctionalProperty,Variable RDFClosure.OWL'.InverseFunctionalProperty=RDFClosure.OWL%27-module.html#InverseFunctionalProperty,Variable RDFClosure.OWLRL.InverseFunctionalProperty=RDFClosure.OWLRL-module.html#InverseFunctionalProperty,Variable RDFClosure.OWLRLExtras.InverseFunctionalProperty=RDFClosure.OWLRLExtras-module.html#InverseFunctionalProperty,Variable RDFClosure.RestrictedDatatype.InverseFunctionalProperty=RDFClosure.RestrictedDatatype-module.html#InverseFunctionalProperty"><a title="RDFClosure.AxiomaticTriples.InverseFunctionalProperty
+RDFClosure.OWL'.InverseFunctionalProperty
+RDFClosure.OWLRL.InverseFunctionalProperty
+RDFClosure.OWLRLExtras.InverseFunctionalProperty
+RDFClosure.RestrictedDatatype.InverseFunctionalProperty" class="py-name" href="#" onclick="return doclink('link-135', 'InverseFunctionalProperty', 'link-135');">InverseFunctionalProperty</a></tt>       <tt class="py-op">=</tt> <tt id="link-136" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-136', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"InverseFunctionalProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"><tt id="link-137" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.IrreflexiveProperty=RDFClosure.AxiomaticTriples-module.html#IrreflexiveProperty,Variable RDFClosure.OWL'.IrreflexiveProperty=RDFClosure.OWL%27-module.html#IrreflexiveProperty,Variable RDFClosure.OWLRL.IrreflexiveProperty=RDFClosure.OWLRL-module.html#IrreflexiveProperty,Variable RDFClosure.OWLRLExtras.IrreflexiveProperty=RDFClosure.OWLRLExtras-module.html#IrreflexiveProperty,Variable RDFClosure.RestrictedDatatype.IrreflexiveProperty=RDFClosure.RestrictedDatatype-module.html#IrreflexiveProperty"><a title="RDFClosure.AxiomaticTriples.IrreflexiveProperty
+RDFClosure.OWL'.IrreflexiveProperty
+RDFClosure.OWLRL.IrreflexiveProperty
+RDFClosure.OWLRLExtras.IrreflexiveProperty
+RDFClosure.RestrictedDatatype.IrreflexiveProperty" class="py-name" href="#" onclick="return doclink('link-137', 'IrreflexiveProperty', 'link-137');">IrreflexiveProperty</a></tt>                     <tt class="py-op">=</tt> <tt id="link-138" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-138', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"IrreflexiveProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt id="link-139" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.NamedIndividual=RDFClosure.AxiomaticTriples-module.html#NamedIndividual,Variable RDFClosure.OWL'.NamedIndividual=RDFClosure.OWL%27-module.html#NamedIndividual,Variable RDFClosure.OWLRL.NamedIndividual=RDFClosure.OWLRL-module.html#NamedIndividual,Variable RDFClosure.OWLRLExtras.NamedIndividual=RDFClosure.OWLRLExtras-module.html#NamedIndividual,Variable RDFClosure.RestrictedDatatype.NamedIndividual=RDFClosure.RestrictedDatatype-module.html#NamedIndividual"><a title="RDFClosure.AxiomaticTriples.NamedIndividual
+RDFClosure.OWL'.NamedIndividual
+RDFClosure.OWLRL.NamedIndividual
+RDFClosure.OWLRLExtras.NamedIndividual
+RDFClosure.RestrictedDatatype.NamedIndividual" class="py-name" href="#" onclick="return doclink('link-139', 'NamedIndividual', 'link-139');">NamedIndividual</a></tt>                         <tt class="py-op">=</tt> <tt id="link-140" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-140', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"NamedIndividual"</tt><tt class="py-op">]</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt id="link-141" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.NegativePropertyAssertion=RDFClosure.AxiomaticTriples-module.html#NegativePropertyAssertion,Variable RDFClosure.OWL'.NegativePropertyAssertion=RDFClosure.OWL%27-module.html#NegativePropertyAssertion,Variable RDFClosure.OWLRL.NegativePropertyAssertion=RDFClosure.OWLRL-module.html#NegativePropertyAssertion,Variable RDFClosure.OWLRLExtras.NegativePropertyAssertion=RDFClosure.OWLRLExtras-module.html#NegativePropertyAssertion,Variable RDFClosure.RestrictedDatatype.NegativePropertyAssertion=RDFClosure.RestrictedDatatype-module.html#NegativePropertyAssertion"><a title="RDFClosure.AxiomaticTriples.NegativePropertyAssertion
+RDFClosure.OWL'.NegativePropertyAssertion
+RDFClosure.OWLRL.NegativePropertyAssertion
+RDFClosure.OWLRLExtras.NegativePropertyAssertion
+RDFClosure.RestrictedDatatype.NegativePropertyAssertion" class="py-name" href="#" onclick="return doclink('link-141', 'NegativePropertyAssertion', 'link-141');">NegativePropertyAssertion</a></tt>       <tt class="py-op">=</tt> <tt id="link-142" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-142', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"NegativePropertyAssertion"</tt><tt class="py-op">]</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt id="link-143" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Nothing=RDFClosure.AxiomaticTriples-module.html#Nothing,Variable RDFClosure.OWL'.Nothing=RDFClosure.OWL%27-module.html#Nothing,Variable RDFClosure.OWLRL.Nothing=RDFClosure.OWLRL-module.html#Nothing,Variable RDFClosure.OWLRLExtras.Nothing=RDFClosure.OWLRLExtras-module.html#Nothing,Variable RDFClosure.RestrictedDatatype.Nothing=RDFClosure.RestrictedDatatype-module.html#Nothing"><a title="RDFClosure.AxiomaticTriples.Nothing
+RDFClosure.OWL'.Nothing
+RDFClosure.OWLRL.Nothing
+RDFClosure.OWLRLExtras.Nothing
+RDFClosure.RestrictedDatatype.Nothing" class="py-name" href="#" onclick="return doclink('link-143', 'Nothing', 'link-143');">Nothing</a></tt>                                         <tt class="py-op">=</tt> <tt id="link-144" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-144', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Nothing"</tt><tt class="py-op">]</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt id="link-145" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.ObjectProperty=RDFClosure.AxiomaticTriples-module.html#ObjectProperty,Variable RDFClosure.OWL'.ObjectProperty=RDFClosure.OWL%27-module.html#ObjectProperty,Variable RDFClosure.OWLRL.ObjectProperty=RDFClosure.OWLRL-module.html#ObjectProperty,Variable RDFClosure.OWLRLExtras.ObjectProperty=RDFClosure.OWLRLExtras-module.html#ObjectProperty,Variable RDFClosure.RestrictedDatatype.ObjectProperty=RDFClosure.RestrictedDatatype-module.html#ObjectProperty"><a title="RDFClosure.AxiomaticTriples.ObjectProperty
+RDFClosure.OWL'.ObjectProperty
+RDFClosure.OWLRL.ObjectProperty
+RDFClosure.OWLRLExtras.ObjectProperty
+RDFClosure.RestrictedDatatype.ObjectProperty" class="py-name" href="#" onclick="return doclink('link-145', 'ObjectProperty', 'link-145');">ObjectProperty</a></tt>                          <tt class="py-op">=</tt> <tt id="link-146" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-146', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"ObjectProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt id="link-147" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Ontology=RDFClosure.AxiomaticTriples-module.html#Ontology,Variable RDFClosure.OWL'.Ontology=RDFClosure.OWL%27-module.html#Ontology,Variable RDFClosure.OWLRL.Ontology=RDFClosure.OWLRL-module.html#Ontology,Variable RDFClosure.OWLRLExtras.Ontology=RDFClosure.OWLRLExtras-module.html#Ontology,Variable RDFClosure.RestrictedDatatype.Ontology=RDFClosure.RestrictedDatatype-module.html#Ontology"><a title="RDFClosure.AxiomaticTriples.Ontology
+RDFClosure.OWL'.Ontology
+RDFClosure.OWLRL.Ontology
+RDFClosure.OWLRLExtras.Ontology
+RDFClosure.RestrictedDatatype.Ontology" class="py-name" href="#" onclick="return doclink('link-147', 'Ontology', 'link-147');">Ontology</a></tt>                                        <tt class="py-op">=</tt> <tt id="link-148" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-148', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Ontology"</tt><tt class="py-op">]</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt id="link-149" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.OntologyProperty=RDFClosure.AxiomaticTriples-module.html#OntologyProperty,Variable RDFClosure.OWL'.OntologyProperty=RDFClosure.OWL%27-module.html#OntologyProperty,Variable RDFClosure.OWLRL.OntologyProperty=RDFClosure.OWLRL-module.html#OntologyProperty,Variable RDFClosure.OWLRLExtras.OntologyProperty=RDFClosure.OWLRLExtras-module.html#OntologyProperty,Variable RDFClosure.RestrictedDatatype.OntologyProperty=RDFClosure.RestrictedDatatype-module.html#OntologyProperty"><a title="RDFClosure.AxiomaticTriples.OntologyProperty
+RDFClosure.OWL'.OntologyProperty
+RDFClosure.OWLRL.OntologyProperty
+RDFClosure.OWLRLExtras.OntologyProperty
+RDFClosure.RestrictedDatatype.OntologyProperty" class="py-name" href="#" onclick="return doclink('link-149', 'OntologyProperty', 'link-149');">OntologyProperty</a></tt>                        <tt class="py-op">=</tt> <tt id="link-150" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-150', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"OntologyProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt id="link-151" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.ReflexiveProperty=RDFClosure.AxiomaticTriples-module.html#ReflexiveProperty,Variable RDFClosure.OWL'.ReflexiveProperty=RDFClosure.OWL%27-module.html#ReflexiveProperty,Variable RDFClosure.OWLRL.ReflexiveProperty=RDFClosure.OWLRL-module.html#ReflexiveProperty,Variable RDFClosure.OWLRLExtras.ReflexiveProperty=RDFClosure.OWLRLExtras-module.html#ReflexiveProperty,Variable RDFClosure.RestrictedDatatype.ReflexiveProperty=RDFClosure.RestrictedDatatype-module.html#ReflexiveProperty"><a title="RDFClosure.AxiomaticTriples.ReflexiveProperty
+RDFClosure.OWL'.ReflexiveProperty
+RDFClosure.OWLRL.ReflexiveProperty
+RDFClosure.OWLRLExtras.ReflexiveProperty
+RDFClosure.RestrictedDatatype.ReflexiveProperty" class="py-name" href="#" onclick="return doclink('link-151', 'ReflexiveProperty', 'link-151');">ReflexiveProperty</a></tt>                       <tt class="py-op">=</tt> <tt id="link-152" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-152', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"ReflexiveProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt id="link-153" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Restriction=RDFClosure.AxiomaticTriples-module.html#Restriction,Variable RDFClosure.OWL'.Restriction=RDFClosure.OWL%27-module.html#Restriction,Variable RDFClosure.OWLRL.Restriction=RDFClosure.OWLRL-module.html#Restriction,Variable RDFClosure.OWLRLExtras.Restriction=RDFClosure.OWLRLExtras-module.html#Restriction,Variable RDFClosure.RestrictedDatatype.Restriction=RDFClosure.RestrictedDatatype-module.html#Restriction"><a title="RDFClosure.AxiomaticTriples.Restriction
+RDFClosure.OWL'.Restriction
+RDFClosure.OWLRL.Restriction
+RDFClosure.OWLRLExtras.Restriction
+RDFClosure.RestrictedDatatype.Restriction" class="py-name" href="#" onclick="return doclink('link-153', 'Restriction', 'link-153');">Restriction</a></tt>                                     <tt class="py-op">=</tt> <tt id="link-154" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-154', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Restriction"</tt><tt class="py-op">]</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"><tt id="link-155" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Thing=RDFClosure.AxiomaticTriples-module.html#Thing,Variable RDFClosure.OWL'.Thing=RDFClosure.OWL%27-module.html#Thing,Variable RDFClosure.OWLRL.Thing=RDFClosure.OWLRL-module.html#Thing,Variable RDFClosure.OWLRLExtras.Thing=RDFClosure.OWLRLExtras-module.html#Thing,Variable RDFClosure.RestrictedDatatype.Thing=RDFClosure.RestrictedDatatype-module.html#Thing"><a title="RDFClosure.AxiomaticTriples.Thing
+RDFClosure.OWL'.Thing
+RDFClosure.OWLRL.Thing
+RDFClosure.OWLRLExtras.Thing
+RDFClosure.RestrictedDatatype.Thing" class="py-name" href="#" onclick="return doclink('link-155', 'Thing', 'link-155');">Thing</a></tt>                                           <tt class="py-op">=</tt> <tt id="link-156" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-156', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"Thing"</tt><tt class="py-op">]</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"><tt id="link-157" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.SelfRestriction=RDFClosure.AxiomaticTriples-module.html#SelfRestriction,Variable RDFClosure.OWL'.SelfRestriction=RDFClosure.OWL%27-module.html#SelfRestriction,Variable RDFClosure.OWLRL.SelfRestriction=RDFClosure.OWLRL-module.html#SelfRestriction,Variable RDFClosure.OWLRLExtras.SelfRestriction=RDFClosure.OWLRLExtras-module.html#SelfRestriction,Variable RDFClosure.RestrictedDatatype.SelfRestriction=RDFClosure.RestrictedDatatype-module.html#SelfRestriction"><a title="RDFClosure.AxiomaticTriples.SelfRestriction
+RDFClosure.OWL'.SelfRestriction
+RDFClosure.OWLRL.SelfRestriction
+RDFClosure.OWLRLExtras.SelfRestriction
+RDFClosure.RestrictedDatatype.SelfRestriction" class="py-name" href="#" onclick="return doclink('link-157', 'SelfRestriction', 'link-157');">SelfRestriction</a></tt>                         <tt class="py-op">=</tt> <tt id="link-158" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-158', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"SelfRestriction"</tt><tt class="py-op">]</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt id="link-159" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.SymmetricProperty=RDFClosure.AxiomaticTriples-module.html#SymmetricProperty,Variable RDFClosure.OWL'.SymmetricProperty=RDFClosure.OWL%27-module.html#SymmetricProperty,Variable RDFClosure.OWLRL.SymmetricProperty=RDFClosure.OWLRL-module.html#SymmetricProperty,Variable RDFClosure.OWLRLExtras.SymmetricProperty=RDFClosure.OWLRLExtras-module.html#SymmetricProperty,Variable RDFClosure.RestrictedDatatype.SymmetricProperty=RDFClosure.RestrictedDatatype-module.html#SymmetricProperty"><a title="RDFClosure.AxiomaticTriples.SymmetricProperty
+RDFClosure.OWL'.SymmetricProperty
+RDFClosure.OWLRL.SymmetricProperty
+RDFClosure.OWLRLExtras.SymmetricProperty
+RDFClosure.RestrictedDatatype.SymmetricProperty" class="py-name" href="#" onclick="return doclink('link-159', 'SymmetricProperty', 'link-159');">SymmetricProperty</a></tt>                       <tt class="py-op">=</tt> <tt id="link-160" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-160', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"SymmetricProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt id="link-161" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.TransitiveProperty=RDFClosure.AxiomaticTriples-module.html#TransitiveProperty,Variable RDFClosure.OWL'.TransitiveProperty=RDFClosure.OWL%27-module.html#TransitiveProperty,Variable RDFClosure.OWLRL.TransitiveProperty=RDFClosure.OWLRL-module.html#TransitiveProperty,Variable RDFClosure.OWLRLExtras.TransitiveProperty=RDFClosure.OWLRLExtras-module.html#TransitiveProperty,Variable RDFClosure.RestrictedDatatype.TransitiveProperty=RDFClosure.RestrictedDatatype-module.html#TransitiveProperty"><a title="RDFClosure.AxiomaticTriples.TransitiveProperty
+RDFClosure.OWL'.TransitiveProperty
+RDFClosure.OWLRL.TransitiveProperty
+RDFClosure.OWLRLExtras.TransitiveProperty
+RDFClosure.RestrictedDatatype.TransitiveProperty" class="py-name" href="#" onclick="return doclink('link-161', 'TransitiveProperty', 'link-161');">TransitiveProperty</a></tt>                      <tt class="py-op">=</tt> <tt id="link-162" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLNS
+RDFClosure.OWL'.OWLNS
+RDFClosure.OWLRL.OWLNS
+RDFClosure.OWLRLExtras.OWLNS
+RDFClosure.RestrictedDatatype.OWLNS" class="py-name" href="#" onclick="return doclink('link-162', 'OWLNS', 'link-0');">OWLNS</a></tt><tt class="py-op">[</tt><tt class="py-string">"TransitiveProperty"</tt><tt class="py-op">]</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:17 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

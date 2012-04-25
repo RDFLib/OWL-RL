@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.DeductiveClosure</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Class&nbsp;DeductiveClosure
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.DeductiveClosure-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DeductiveClosure</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure">source&nbsp;code</a></span></p>
+<p>Entry point to generate the deductive closure of a graph. The exact 
+  choice deductive closure is controlled by a class reference. The 
+  important initialization parameter is the <code>closure_class</code>: a 
+  Class object referring to a subclass of <a 
+  href="RDFClosure.Closure.Core-class.html" class="link">Closure.Core</a>. 
+  Although this package includes a number of such subclasses (<a 
+  href="RDFClosure.OWLRL.OWLRL_Semantics-class.html" 
+  class="link">OWLRL_Semantics</a>, <a 
+  href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html" 
+  class="link">RDFS_Semantics</a>, <a 
+  href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html" 
+  class="link">RDFS_OWLRL_Semantics</a>, and <a 
+  href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" 
+  class="link">OWLRL_Extension</a>), the user can use his/her own if 
+  additional rules are implemented.</p>
+  <p>Note that owl:imports statements are <i>not</i> interpreted in this 
+  class, that has to be done beforehand on the graph that is to be 
+  expaned.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.DeductiveClosure-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">closure_class</span>,
+        <span class="summary-sig-arg">improved_datatypes</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">rdfs_closure</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">axiomatic_triples</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">datatype_axioms</span>=<span class="summary-sig-default">False</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.DeductiveClosure-class.html#expand" class="summary-sig-name">expand</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">graph</span>)</span><br />
+      Expand the graph using forward chaining, and with the relevant 
+      closure type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure.expand">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="use_improved_datatypes_conversions"></a><span class="summary-sig-name">use_improved_datatypes_conversions</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Switch the system to use the improved datatype conversion routines.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure.use_improved_datatypes_conversions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="use_rdflib_datatypes_conversions"></a><span class="summary-sig-name">use_rdflib_datatypes_conversions</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Switch the system to use the generic (RDFLib) datatype conversion 
+      routines</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure.use_rdflib_datatypes_conversions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a href="RDFClosure.DeductiveClosure-class.html#improved_datatype_generic" class="summary-name">improved_datatype_generic</a> = <code title="False">False</code><br />
+      Whether the improved set of lexical-to-Python conversions should be 
+      used for datatype handline <i>in general</i>, ie, not only for a 
+      particular instance and not only for inference purposes.
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a href="RDFClosure.DeductiveClosure-class.html#axiomatic_triples" class="summary-name">axiomatic_triples</a><br />
+      Whether relevant axiomatic triples are added before chaining, except 
+      for datatype axiomatic triples.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><a href="RDFClosure.Closure.Core-class.html" 
+      class="link">Closure.Core</a></span>
+    </td><td class="summary">
+        <a name="closure_class"></a><span class="summary-name">closure_class</span><br />
+      the class instance used to expand the graph
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a href="RDFClosure.DeductiveClosure-class.html#datatype_axioms" class="summary-name">datatype_axioms</a><br />
+      Whether further datatype axiomatic triples are added to the output.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a href="RDFClosure.DeductiveClosure-class.html#rdfs_closure" class="summary-name">rdfs_closure</a><br />
+      Whether the RDFS closure should also be executed.
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">closure_class</span>,
+        <span class="sig-arg">improved_datatypes</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">rdfs_closure</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">axiomatic_triples</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">datatype_axioms</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>closure_class</code></strong> (subclass of <a href="RDFClosure.Closure.Core-class.html" 
+          class="link">Closure.Core</a>) - a closure class reference.</li>
+        <li><strong class="pname"><code>rdfs_closure</code></strong> (boolean) - whether RDFS rules are executed or not</li>
+        <li><strong class="pname"><code>axiomatic_triples</code></strong> (boolean) - Whether relevant axiomatic triples are added before chaining, 
+          except for datatype axiomatic triples. Default: False.</li>
+        <li><strong class="pname"><code>datatype_axioms</code></strong> (boolean) - Whether further datatype axiomatic triples are added to the 
+          output. Default: false.</li>
+        <li><strong class="pname"><code>improved_datatypes</code></strong> (boolean) - Whether the improved set of lexical-to-Python conversions should 
+          be used for datatype handline. See the introduction for more 
+          details. Default: True.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="expand"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expand</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">graph</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure-pysrc.html#DeductiveClosure.expand">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Expand the graph using forward chaining, and with the relevant closure
+  type.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>graph</code></strong> (rdflib.Graph) - the RDF graph</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="improved_datatype_generic"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">improved_datatype_generic</h3>
+  Whether the improved set of lexical-to-Python conversions should be used 
+  for datatype handline <i>in general</i>, ie, not only for a particular 
+  instance and not only for inference purposes. Default: False.
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>boolean</dd>
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+False
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="axiomatic_triples"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">axiomatic_triples</h3>
+  Whether relevant axiomatic triples are added before chaining, except for 
+  datatype axiomatic triples. Default: False.
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>boolean</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="datatype_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">datatype_axioms</h3>
+  Whether further datatype axiomatic triples are added to the output. 
+  Default: false.
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>boolean</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rdfs_closure"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">rdfs_closure</h3>
+  Whether the RDFS closure should also be executed. Default: False.
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>boolean</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

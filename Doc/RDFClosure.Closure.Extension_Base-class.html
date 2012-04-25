@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.Closure.Extension_Base</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        <a href="RDFClosure.Closure-module.html">Module&nbsp;Closure</a> ::
+        Class&nbsp;Extension_Base
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.Closure.Extension_Base-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Extension_Base</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base">source&nbsp;code</a></span></p>
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRLExtras.OWLRL_Extension</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>This class can be used by third parties to extend the rule base 
+  (essentially, adding some rules to the established semantics). All 
+  methods are empty by default, subclasses are supposed to add content. In 
+  general, the methods of the instance are called after the method with an 
+  identical name in the <a href="http://Core" target="_top">core class</a> 
+  is executed.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">core</span>,
+        <span class="summary-sig-arg">graph</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Extension_Base-class.html#add_new_datatype" class="summary-sig-name">add_new_datatype</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">uri</span>,
+        <span class="summary-sig-arg">conversion_function</span>,
+        <span class="summary-sig-arg">datatype_list</span>,
+        <span class="summary-sig-arg">subsumption_dict</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">subsumption_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">subsumption_list</span>=<span class="summary-sig-default">None</span>)</span><br />
+      If an extension wants to add new datatypes, this method should be 
+      invoked at initialization time.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.add_new_datatype">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Extension_Base-class.html#add_axioms" class="summary-sig-name">add_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add axioms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.add_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Extension_Base-class.html#add_d_axioms" class="summary-sig-name">add_d_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add axioms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.add_d_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Extension_Base-class.html#one_time_rules" class="summary-sig-name">one_time_rules</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      One time rules, to be executed before the forward chaining cycle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.one_time_rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Extension_Base-class.html#rules" class="summary-sig-name">rules</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">t</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Rules to be executed at each processing cyecl in the forward chaining
+      cycle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.Closure.Extension_Base-class.html#post_process" class="summary-sig-name">post_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Post process, to be executed after the forward chaining cycle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.post_process">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">instance for a (subclass of) <a href="http://Core" 
+      target="_top">Core</a></span>
+    </td><td class="summary">
+        <a name="core"></a><span class="summary-name">core</span><br />
+      instance of the Semantic class that runs the main processing cycle
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">RDFLib Graph</span>
+    </td><td class="summary">
+        <a name="graph"></a><span class="summary-name">graph</span><br />
+      instance of an RDF Graph
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="add_new_datatype"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_new_datatype</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">uri</span>,
+        <span class="sig-arg">conversion_function</span>,
+        <span class="sig-arg">datatype_list</span>,
+        <span class="sig-arg">subsumption_dict</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">subsumption_key</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">subsumption_list</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.add_new_datatype">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>If an extension wants to add new datatypes, this method should be 
+  invoked at initialization time.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>uri</code></strong> - URI for the new datatypes, like owl_ns[&quot;Rational&quot;]</li>
+        <li><strong class="pname"><code>conversion_function</code></strong> - a function converting the lexical representation of the datatype 
+          to a Python value, possibly raising an exception in case of 
+          unsuitable lexical form</li>
+        <li><strong class="pname"><code>datatype_list</code></strong> - list of datatypes already in use that has to be checked</li>
+        <li><strong class="pname"><code>subsumption_dict</code></strong> - dictionary of subsumption hierarchies (indexed by the datatype 
+          URI-s)</li>
+        <li><strong class="pname"><code>subsumption_key</code></strong> - key in the dictionary, if None, the uri parameter is used</li>
+        <li><strong class="pname"><code>subsumption_list</code></strong> - list of subsumptions associated to a subsumption key (ie, all 
+          datatypes that are superclasses of the new datatype)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.add_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add axioms. See <a href="http://Core.add_axioms" target="_top">method 
+  in the core class</a></p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_d_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_d_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.add_d_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add axioms. See <a href="http://Core.add_d_axioms" 
+  target="_top">method in the core class</a></p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="one_time_rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">one_time_rules</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.one_time_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>One time rules, to be executed before the forward chaining cycle. See 
+  <a href="http://Core.one_time_rules" target="_top">method in the core 
+  class</a></p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rules</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">t</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Rules to be executed at each processing cyecl in the forward chaining 
+  cycle. See <a href="http://Core.rules" target="_top">method in the core 
+  class</a></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>t</code></strong> (tuple) - one triple on which to apply the rules</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. This value is forwarded 
+          to all local rules; it is also used locally to collect the bnodes
+          in the graph.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="post_process"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">post_process</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.Closure-pysrc.html#Extension_Base.post_process">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Post process, to be executed after the forward chaining cycle. See <a 
+  href="http://Core.post_process" target="_top">method in the core 
+  class</a></p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Fri Sep 18 17:30:19 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

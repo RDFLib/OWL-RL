@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.OWLRL.OWLRL_Semantics</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        <a href="RDFClosure.OWLRL-module.html">Module&nbsp;OWLRL</a> ::
+        Class&nbsp;OWLRL_Semantics
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class OWLRL_Semantics</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+<a href="RDFClosure.Closure.Core-class.html">Closure.Core</a> --+
+               |
+              <strong class="uidshort">OWLRL_Semantics</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">CombinedClosure.RDFS_OWLRL_Semantics</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>OWL 2 RL Semantics class, ie, implementation of the OWL 2 RL closure 
+  graph.</p>
+  <p>Note that the module does <i>not</i> implement the so called Datatype 
+  entailement rules, simply because the underlying RDFLib does not 
+  implement the datatypes (ie, RDFLib will not make the literal 
+  &quot;1.00&quot; and &quot;1.00000&quot; identical, although even with 
+  all the ambiguities on datatypes, this <i>should</i> be made equal...). 
+  Also, the so-called extensional entailement rules (Section 7.3.1 in the 
+  RDF Semantics document) have not been implemented either.</p>
+  <p>The comments and references to the various rule follow the names as 
+  used in the <a 
+  href="http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules"
+  target="_top">OWL 2 RL document</a>.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">graph</span>,
+        <span class="summary-sig-arg">axioms</span>,
+        <span class="summary-sig-arg">daxioms</span>,
+        <span class="summary-sig-arg">rdfs</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_list" class="summary-sig-name" onclick="show_private();">_list</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">l</span>)</span><br />
+      Shorthand to get a list of values (ie, from an rdf:List structure) 
+      starting at a head</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._list">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_get_resource_or_literal"></a><span class="summary-sig-name">_get_resource_or_literal</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._get_resource_or_literal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#post_process" class="summary-sig-name">post_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Remove triples with bnode predicates.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.post_process">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_axioms" class="summary-sig-name">add_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add axioms</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.add_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_d_axioms" class="summary-sig-name">add_d_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add the datatype axioms</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.add_d_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_one_time_rules_datatypes" class="summary-sig-name" onclick="show_private();">_one_time_rules_datatypes</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Some of the rules in the rule set are axiomatic in nature, meaning 
+      that they really have to be added only once, there is no reason to 
+      add these in a cycle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._one_time_rules_datatypes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_one_time_rules_misc"></a><span class="summary-sig-name">_one_time_rules_misc</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Rules executed: cls-thing, cls-nothing, prp-ap.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._one_time_rules_misc">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#one_time_rules" class="summary-sig-name">one_time_rules</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Some of the rules in the rule set are axiomatic in nature, meaning 
+      that they really have to be added only once, there is no reason to 
+      add these in a cycle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.one_time_rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#rules" class="summary-sig-name">rules</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">t</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Go through the various rule groups, as defined in the OWL-RL profile 
+      text and implemented via local methods.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_property_chain" class="summary-sig-name" onclick="show_private();">_property_chain</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">p</span>,
+        <span class="summary-sig-arg">x</span>)</span><br />
+      Implementation of the property chain axiom, invoked from inside the 
+      property axiom handler.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._property_chain">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_equality" class="summary-sig-name" onclick="show_private();">_equality</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">triple</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Table 4: Semantics of equality.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._equality">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_properties" class="summary-sig-name" onclick="show_private();">_properties</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">triple</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Table 5: The Semantics of Axioms about Properties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._properties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_classes" class="summary-sig-name" onclick="show_private();">_classes</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">triple</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Table 6: The Semantics of Classes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._classes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_class_axioms" class="summary-sig-name" onclick="show_private();">_class_axioms</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">triple</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Table 7: Class Axioms.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._class_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_schema_vocabulary" class="summary-sig-name" onclick="show_private();">_schema_vocabulary</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">triple</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Table 9: The Semantics of Schema Vocabulary.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._schema_vocabulary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
+      <code><a href="RDFClosure.Closure.Core-class.html#add_error">add_error</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#closure">closure</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#empty_stored_triples">empty_stored_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#flush_stored_triples">flush_stored_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#get_literal_value">get_literal_value</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#pre_process">pre_process</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#store_triple">store_triple</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">array</span>
+    </td><td class="summary">
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#bnodes" class="summary-name">bnodes</a><br />
+      array of bnodes in the graph.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
+      <code><a href="RDFClosure.Closure.Core-class.html#IMaxNum">IMaxNum</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#added_triples">added_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#axioms">axioms</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#daxioms">daxioms</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#error_messages">error_messages</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#graph">graph</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#literal_proxies">literal_proxies</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#rdfs">rdfs</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">graph</span>,
+        <span class="sig-arg">axioms</span>,
+        <span class="sig-arg">daxioms</span>,
+        <span class="sig-arg">rdfs</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>graph</code></strong> (rdflib.Graph) - the RDF graph to be extended</li>
+        <li><strong class="pname"><code>axioms</code></strong> (Boolean) - whether (non-datatype) axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>daxioms</code></strong> (Boolean) - whether datatype axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>rdfs</code></strong> (boolean) - whether RDFS inference is also done (used in subclassed only)</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="RDFClosure.Closure.Core-class.html#__init__">Closure.Core.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_list"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_list</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">l</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._list">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shorthand to get a list of values (ie, from an rdf:List structure) 
+  starting at a head</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>l</code></strong> - RDFLib resource, should be the head of an rdf:List</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>array of resources</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="post_process"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">post_process</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.post_process">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Remove triples with bnode predicates. The Bnodes in the graph are 
+  collected in the first cycle run.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.Closure.Core-class.html#post_process">Closure.Core.post_process</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.add_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add axioms</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.Closure.Core-class.html#add_axioms">Closure.Core.add_axioms</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_d_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_d_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.add_d_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add the datatype axioms</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.Closure.Core-class.html#add_d_axioms">Closure.Core.add_d_axioms</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_one_time_rules_datatypes"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_one_time_rules_datatypes</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._one_time_rules_datatypes">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Some of the rules in the rule set are axiomatic in nature, meaning 
+  that they really have to be added only once, there is no reason to add 
+  these in a cycle. These are performed by this method that is invoked only
+  once at the beginning of the process.</p>
+  <p>These are: cls-thing, cls-nothing1, prp-ap, dt-types1, dt-types2, 
+  dt-eq, dt-diff.</p>
+  <p>Note, however, that the dt-* are executed only partially, limited by 
+  the possibilities offered by RDFLib. These may not cover all the edge 
+  cases of OWL RL. Especially, dt-not-type has not (yet?) been implemented 
+  (I wonder whether RDFLib should not raise exception for those 
+  anyway...</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="one_time_rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">one_time_rules</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.one_time_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Some of the rules in the rule set are axiomatic in nature, meaning 
+  that they really have to be added only once, there is no reason to add 
+  these in a cycle. These are performed by this method that is invoked only
+  once at the beginning of the process.</p>
+  <p>These are: cls-thing, cls-nothing1, prp-ap, dt-types1, dt-types2, 
+  dt-eq, dt-diff.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.Closure.Core-class.html#one_time_rules">Closure.Core.one_time_rules</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rules</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">t</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics.rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Go through the various rule groups, as defined in the OWL-RL profile 
+  text and implemented via local methods. (The calling cycle takes every 
+  tuple in the graph.)</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>t</code></strong> - a triple (in the form of a tuple)</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. This value is forwarded 
+          to all local rules; it is also used locally to collect the bnodes
+          in the graph.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="RDFClosure.Closure.Core-class.html#rules">Closure.Core.rules</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_property_chain"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_property_chain</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">p</span>,
+        <span class="sig-arg">x</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._property_chain">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Implementation of the property chain axiom, invoked from inside the 
+  property axiom handler. This is the implementation of rule prp-spo2, 
+  taken aside for an easier readibility of the code.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_equality"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_equality</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">triple</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._equality">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Table 4: Semantics of equality. Essentially, the eq-* rules.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>triple</code></strong> - triple to work on</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. Can be used for some 
+          optimization.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_properties"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_properties</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">triple</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._properties">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Table 5: The Semantics of Axioms about Properties. Essentially, the 
+  prp-* rules.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>triple</code></strong> - triple to work on</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. Can be used for some 
+          optimization.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_classes"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_classes</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">triple</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._classes">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Table 6: The Semantics of Classes. Essentially, the cls-* rules</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>triple</code></strong> - triple to work on</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. Can be used for some 
+          optimization.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_class_axioms"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_class_axioms</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">triple</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._class_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Table 7: Class Axioms. Essentially, the cax-* rules.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>triple</code></strong> - triple to work on</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. Can be used for some 
+          optimization.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_schema_vocabulary"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_schema_vocabulary</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">triple</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRL-pysrc.html#OWLRL_Semantics._schema_vocabulary">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Table 9: The Semantics of Schema Vocabulary. Essentially, the scm-* 
+  rules</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>triple</code></strong> - triple to work on</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. Can be used for some 
+          optimization.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="bnodes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">bnodes</h3>
+  array of bnodes in the graph. This is used to filter out triples with a 
+  bnode predicate at the end of the processing.
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>array</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

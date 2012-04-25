@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.CombinedClosure</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Module&nbsp;CombinedClosure
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.CombinedClosure-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="RDFClosure.CombinedClosure-module.html">Module RDFClosure.CombinedClosure</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/d/Bin/Python/python.exe</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">The combined closure: performing I{both} the OWL 2 RL and RDFS closures.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">The two are very close but there are some rules in RDFS that are not in OWL 2 RL (eg, the axiomatic</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">triples concerning the container membership properties). Using this closure class the</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">OWL 2 RL implementation becomes a full extension of RDFS.</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{RDFLib&lt;http://rdflib.net&gt;}, 2.2.2. and higher</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">@license: This software is available for use under the U{W3C Software License&lt;http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231&gt;}</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">@organization: U{World Wide Web Consortium&lt;http://www.w3.org&gt;}</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">@author: U{Ivan Herman&lt;a href="http://www.w3.org/People/Ivan/"&gt;}</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-string">$Id: CombinedClosure.py,v 1.5 2009/09/21 12:04:45 ivan Exp $ $Date: 2009/09/21 12:04:45 $</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.__author__=RDFClosure.AxiomaticTriples-module.html#__author__,Variable RDFClosure.Closure.__author__=RDFClosure.Closure-module.html#__author__,Variable RDFClosure.CombinedClosure.__author__=RDFClosure.CombinedClosure-module.html#__author__,Variable RDFClosure.DatatypeHandling.__author__=RDFClosure.DatatypeHandling-module.html#__author__,Variable RDFClosure.Literals.__author__=RDFClosure.Literals-module.html#__author__,Variable RDFClosure.OWLRL.__author__=RDFClosure.OWLRL-module.html#__author__,Variable RDFClosure.OWLRLExtras.__author__=RDFClosure.OWLRLExtras-module.html#__author__,Variable RDFClosure.RDFSClosure.__author__=RDFClosure.RDFSClosure-module.html#__author__,Variable RDFClosure.RestrictedDatatype.__author__=RDFClosure.RestrictedDatatype-module.html#__author__,Variable RDFClosure.XsdDatatypes.__author__=RDFClosure.XsdDatatypes-module.html#__author__,Variable RDFClosure.__author__=RDFClosure-module.html#__author__,Variable RDFClosure.parsers.__author__=RDFClosure.parsers-module.html#__author__,Variable RDFClosure.serializers.__author__=RDFClosure.serializers-module.html#__author__"><a title="RDFClosure.AxiomaticTriples.__author__
+RDFClosure.Closure.__author__
+RDFClosure.CombinedClosure.__author__
+RDFClosure.DatatypeHandling.__author__
+RDFClosure.Literals.__author__
+RDFClosure.OWLRL.__author__
+RDFClosure.OWLRLExtras.__author__
+RDFClosure.RDFSClosure.__author__
+RDFClosure.RestrictedDatatype.__author__
+RDFClosure.XsdDatatypes.__author__
+RDFClosure.__author__
+RDFClosure.parsers.__author__
+RDFClosure.serializers.__author__" class="py-name" href="#" onclick="return doclink('link-0', '__author__', 'link-0');">__author__</a></tt>  <tt class="py-op">=</tt> <tt class="py-string">'Ivan Herman'</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-name">__contact__</tt> <tt class="py-op">=</tt> <tt class="py-string">'Ivan Herman, ivan@w3.org'</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.__license__=RDFClosure.AxiomaticTriples-module.html#__license__,Variable RDFClosure.Closure.__license__=RDFClosure.Closure-module.html#__license__,Variable RDFClosure.CombinedClosure.__license__=RDFClosure.CombinedClosure-module.html#__license__,Variable RDFClosure.DatatypeHandling.__license__=RDFClosure.DatatypeHandling-module.html#__license__,Variable RDFClosure.Literals.__license__=RDFClosure.Literals-module.html#__license__,Variable RDFClosure.OWLRL.__license__=RDFClosure.OWLRL-module.html#__license__,Variable RDFClosure.OWLRLExtras.__license__=RDFClosure.OWLRLExtras-module.html#__license__,Variable RDFClosure.RDFSClosure.__license__=RDFClosure.RDFSClosure-module.html#__license__,Variable RDFClosure.RestrictedDatatype.__license__=RDFClosure.RestrictedDatatype-module.html#__license__,Variable RDFClosure.XsdDatatypes.__license__=RDFClosure.XsdDatatypes-module.html#__license__,Variable RDFClosure.__license__=RDFClosure-module.html#__license__,Variable RDFClosure.parsers.__license__=RDFClosure.parsers-module.html#__license__,Variable RDFClosure.serializers.__license__=RDFClosure.serializers-module.html#__license__"><a title="RDFClosure.AxiomaticTriples.__license__
+RDFClosure.Closure.__license__
+RDFClosure.CombinedClosure.__license__
+RDFClosure.DatatypeHandling.__license__
+RDFClosure.Literals.__license__
+RDFClosure.OWLRL.__license__
+RDFClosure.OWLRLExtras.__license__
+RDFClosure.RDFSClosure.__license__
+RDFClosure.RestrictedDatatype.__license__
+RDFClosure.XsdDatatypes.__license__
+RDFClosure.__license__
+RDFClosure.parsers.__license__
+RDFClosure.serializers.__license__" class="py-name" href="#" onclick="return doclink('link-1', '__license__', 'link-1');">__license__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">u'W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Variable RDFClosure.RDFS=RDFClosure-module.html#RDFS"><a title="RDFClosure.RDFS" class="py-name" href="#" onclick="return doclink('link-2', 'RDFS', 'link-2');">RDFS</a></tt>                <tt class="py-keyword">import</tt> <tt class="py-name">Resource</tt><tt class="py-op">,</tt> <tt class="py-name">Class</tt><tt class="py-op">,</tt> <tt class="py-name">Datatype</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-3" class="py-name" targets="Package RDFClosure=RDFClosure-module.html"><a title="RDFClosure" class="py-name" href="#" onclick="return doclink('link-3', 'RDFClosure', 'link-3');">RDFClosure</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Variable RDFClosure.OWL=RDFClosure-module.html#OWL,Variable RDFClosure.parsers.n3p.n3proc.OWL=RDFClosure.parsers.n3p.n3proc-module.html#OWL"><a title="RDFClosure.OWL
+RDFClosure.parsers.n3p.n3proc.OWL" class="py-name" href="#" onclick="return doclink('link-4', 'OWL', 'link-4');">OWL</a></tt>             <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.OWLClass=RDFClosure.AxiomaticTriples-module.html#OWLClass,Variable RDFClosure.OWL'.OWLClass=RDFClosure.OWL%27-module.html#OWLClass,Variable RDFClosure.OWLRL.OWLClass=RDFClosure.OWLRL-module.html#OWLClass,Variable RDFClosure.OWLRLExtras.OWLClass=RDFClosure.OWLRLExtras-module.html#OWLClass,Variable RDFClosure.RestrictedDatatype.OWLClass=RDFClosure.RestrictedDatatype-module.html#OWLClass"><a title="RDFClosure.AxiomaticTriples.OWLClass
+RDFClosure.OWL'.OWLClass
+RDFClosure.OWLRL.OWLClass
+RDFClosure.OWLRLExtras.OWLClass
+RDFClosure.RestrictedDatatype.OWLClass" class="py-name" href="#" onclick="return doclink('link-5', 'OWLClass', 'link-5');">OWLClass</a></tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.Thing=RDFClosure.AxiomaticTriples-module.html#Thing,Variable RDFClosure.OWL'.Thing=RDFClosure.OWL%27-module.html#Thing,Variable RDFClosure.OWLRL.Thing=RDFClosure.OWLRL-module.html#Thing,Variable RDFClosure.OWLRLExtras.Thing=RDFClosure.OWLRLExtras-module.html#Thing,Variable RDFClosure.RestrictedDatatype.Thing=RDFClosure.RestrictedDatatype-module.html#Thing"><a title="RDFClosure.AxiomaticTriples.Thing
+RDFClosure.OWL'.Thing
+RDFClosure.OWLRL.Thing
+RDFClosure.OWLRLExtras.Thing
+RDFClosure.RestrictedDatatype.Thing" class="py-name" href="#" onclick="return doclink('link-6', 'Thing', 'link-6');">Thing</a></tt><tt class="py-op">,</tt> <tt id="link-7" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.equivalentClass=RDFClosure.AxiomaticTriples-module.html#equivalentClass,Variable RDFClosure.OWL'.equivalentClass=RDFClosure.OWL%27-module.html#equivalentClass,Variable RDFClosure.OWLRL.equivalentClass=RDFClosure.OWLRL-module.html#equivalentClass,Variable RDFClosure.OWLRLExtras.equivalentClass=RDFClosure.OWLRLExtras-module.html#equivalentClass,Variable RDFClosure.RestrictedDatatype.equivalentClass=RDFClosure.RestrictedDatatype-module.html#equivalentClass"><a title="RDFClosure.AxiomaticTriples.equivalentClass
+RDFClosure.OWL'.equivalentClass
+RDFClosure.OWLRL.equivalentClass
+RDFClosure.OWLRLExtras.equivalentClass
+RDFClosure.RestrictedDatatype.equivalentClass" class="py-name" href="#" onclick="return doclink('link-7', 'equivalentClass', 'link-7');">equivalentClass</a></tt><tt class="py-op">,</tt> <tt id="link-8" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.DataRange=RDFClosure.AxiomaticTriples-module.html#DataRange,Variable RDFClosure.OWL'.DataRange=RDFClosure.OWL%27-module.html#DataRange,Variable RDFClosure.OWLRL.DataRange=RDFClosure.OWLRL-module.html#DataRange,Variable RDFClosure.OWLRLExtras.DataRange=RDFClosure.OWLRLExtras-module.html#DataRange,Variable RDFClosure.RestrictedDatatype.DataRange=RDFClosure.RestrictedDatatype-module.html#DataRange"><a title="RDFClosure.AxiomaticTriples.DataRange
+RDFClosure.OWL'.DataRange
+RDFClosure.OWLRL.DataRange
+RDFClosure.OWLRLExtras.DataRange
+RDFClosure.RestrictedDatatype.DataRange" class="py-name" href="#" onclick="return doclink('link-8', 'DataRange', 'link-8');">DataRange</a></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-9" class="py-name"><a title="RDFClosure" class="py-name" href="#" onclick="return doclink('link-9', 'RDFClosure', 'link-3');">RDFClosure</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module RDFClosure.RDFSClosure=RDFClosure.RDFSClosure-module.html"><a title="RDFClosure.RDFSClosure" class="py-name" href="#" onclick="return doclink('link-10', 'RDFSClosure', 'link-10');">RDFSClosure</a></tt>     <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class RDFClosure.RDFSClosure.RDFS_Semantics=RDFClosure.RDFSClosure.RDFS_Semantics-class.html"><a title="RDFClosure.RDFSClosure.RDFS_Semantics" class="py-name" href="#" onclick="return doclink('link-11', 'RDFS_Semantics', 'link-11');">RDFS_Semantics</a></tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-12" class="py-name"><a title="RDFClosure" class="py-name" href="#" onclick="return doclink('link-12', 'RDFClosure', 'link-3');">RDFClosure</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Module RDFClosure.OWLRL=RDFClosure.OWLRL-module.html"><a title="RDFClosure.OWLRL" class="py-name" href="#" onclick="return doclink('link-13', 'OWLRL', 'link-13');">OWLRL</a></tt>                   <tt class="py-keyword">import</tt> <tt id="link-14" class="py-name" targets="Class RDFClosure.OWLRL.OWLRL_Semantics=RDFClosure.OWLRL.OWLRL_Semantics-class.html"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-14', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-comment">######################################################################################################</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics"></a><div id="RDFS_OWLRL_Semantics-def"><a name="L33"></a><tt class="py-lineno"> 33</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics-toggle" onclick="return toggle('RDFS_OWLRL_Semantics');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">RDFS_OWLRL_Semantics</a><tt class="py-op">(</tt><tt class="py-base-class">RDFS_Semantics</tt><tt class="py-op">,</tt> <tt class="py-base-class">OWLRL_Semantics</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RDFS_OWLRL_Semantics-expanded"><a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">        <tt class="py-docstring">"""Common subclass of the RDFS and OWL 2 RL semantic classes. All methods simply call back</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">        to the functions in the superclasses. This may lead to some unnecessary duplication of terms</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">        and rules, but it it not so bad. Also, the additional identification defined for OWL Full,</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">        ie, Resource being the same as Thing and OWL and RDFS classes being identical are added to the</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">        triple store.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">        Note that this class is also a possible user extension point: subclasses can be created that</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">        extend the standard functionality by extending this class. This class I{always} performs RDFS inferences.</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">        Subclasses have to set the C{self.rdfs} flag explicitly to the requested value if that is to be controlled.</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">        @ivar full_binding_triples: additional axiom type triples that are added to the combined semantics; these 'bind' the RDFS and the OWL worlds together</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">        @ivar rdfs: whether RDFS inference is to be performed or not. In this class instance the value is I{always} C{True}, subclasses may explicitly change it at initialization time.</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">        @type rdfs: boolean</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">        <tt id="link-15" class="py-name" targets="Variable RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.full_binding_triples=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#full_binding_triples"><a title="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.full_binding_triples" class="py-name" href="#" onclick="return doclink('link-15', 'full_binding_triples', 'link-15');">full_binding_triples</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">                <tt class="py-op">(</tt><tt id="link-16" class="py-name"><a title="RDFClosure.AxiomaticTriples.Thing
+RDFClosure.OWL'.Thing
+RDFClosure.OWLRL.Thing
+RDFClosure.OWLRLExtras.Thing
+RDFClosure.RestrictedDatatype.Thing" class="py-name" href="#" onclick="return doclink('link-16', 'Thing', 'link-6');">Thing</a></tt><tt class="py-op">,</tt> <tt id="link-17" class="py-name"><a title="RDFClosure.AxiomaticTriples.equivalentClass
+RDFClosure.OWL'.equivalentClass
+RDFClosure.OWLRL.equivalentClass
+RDFClosure.OWLRLExtras.equivalentClass
+RDFClosure.RestrictedDatatype.equivalentClass" class="py-name" href="#" onclick="return doclink('link-17', 'equivalentClass', 'link-7');">equivalentClass</a></tt><tt class="py-op">,</tt> <tt class="py-name">Resource</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">                <tt class="py-op">(</tt><tt class="py-name">Class</tt><tt class="py-op">,</tt> <tt id="link-18" class="py-name"><a title="RDFClosure.AxiomaticTriples.equivalentClass
+RDFClosure.OWL'.equivalentClass
+RDFClosure.OWLRL.equivalentClass
+RDFClosure.OWLRLExtras.equivalentClass
+RDFClosure.RestrictedDatatype.equivalentClass" class="py-name" href="#" onclick="return doclink('link-18', 'equivalentClass', 'link-7');">equivalentClass</a></tt><tt class="py-op">,</tt> <tt id="link-19" class="py-name"><a title="RDFClosure.AxiomaticTriples.OWLClass
+RDFClosure.OWL'.OWLClass
+RDFClosure.OWLRL.OWLClass
+RDFClosure.OWLRLExtras.OWLClass
+RDFClosure.RestrictedDatatype.OWLClass" class="py-name" href="#" onclick="return doclink('link-19', 'OWLClass', 'link-5');">OWLClass</a></tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">                <tt class="py-op">(</tt><tt id="link-20" class="py-name"><a title="RDFClosure.AxiomaticTriples.DataRange
+RDFClosure.OWL'.DataRange
+RDFClosure.OWLRL.DataRange
+RDFClosure.OWLRLExtras.DataRange
+RDFClosure.RestrictedDatatype.DataRange" class="py-name" href="#" onclick="return doclink('link-20', 'DataRange', 'link-8');">DataRange</a></tt><tt class="py-op">,</tt> <tt id="link-21" class="py-name"><a title="RDFClosure.AxiomaticTriples.equivalentClass
+RDFClosure.OWL'.equivalentClass
+RDFClosure.OWLRL.equivalentClass
+RDFClosure.OWLRLExtras.equivalentClass
+RDFClosure.RestrictedDatatype.equivalentClass" class="py-name" href="#" onclick="return doclink('link-21', 'equivalentClass', 'link-7');">equivalentClass</a></tt><tt class="py-op">,</tt> <tt class="py-name">Datatype</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-op">]</tt> </tt>
+<a name="RDFS_OWLRL_Semantics.__init__"></a><div id="RDFS_OWLRL_Semantics.__init__-def"><a name="L53"></a><tt class="py-lineno"> 53</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.__init__-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.__init__');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">graph</tt><tt class="py-op">,</tt> <tt class="py-param">axioms</tt><tt class="py-op">,</tt> <tt class="py-param">daxioms</tt><tt class="py-op">,</tt> <tt class="py-param">rdfs</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.__init__-expanded"><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">                <tt class="py-docstring">"""</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">                @param graph: the RDF graph to be extended</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">                @type graph: rdflib.Graph</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">                @param axioms: whether (non-datatype) axiomatic triples should be added or not</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">                @type axioms: Boolean</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">                @param daxioms: whether datatype axiomatic triples should be added or not</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">                @type daxioms: Boolean</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">                @param rdfs: placeholder flag (used in subclassed only, it is always defaulted to True in this class)</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">                @type rdfs: boolean</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">                <tt id="link-22" class="py-name"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-22', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Method RDFClosure.Closure.Core.__init__()=RDFClosure.Closure.Core-class.html#__init__,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.__init__()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#__init__,Method RDFClosure.DatatypeHandling._namelessTZ.__init__()=RDFClosure.DatatypeHandling._namelessTZ-class.html#__init__,Method RDFClosure.DeductiveClosure.__init__()=RDFClosure.DeductiveClosure-class.html#__init__,Method RDFClosure.Literals.LiteralProxies.__init__()=RDFClosure.Literals.LiteralProxies-class.html#__init__,Method RDFClosure.Literals._LiteralStructure.__init__()=RDFClosure.Literals._LiteralStructure-class.html#__init__,Method RDFClosure.OWLRL.OWLRL_Semantics.__init__()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#__init__,Method RDFClosure.OWLRLExtras.OWLRL_Extension.__init__()=RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#__init__,Method RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.__init__()=RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html#__init__,Method RDFClosure.RDFSClosure.RDFS_Semantics.__init__()=RDFClosure.RDFSClosure.RDFS_Semantics-class.html#__init__,Method RDFClosure.RestrictedDatatype.RestrictedDatatype.__init__()=RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html#__init__,Method RDFClosure.parsers.N3Parser.N3Parser.__init__()=RDFClosure.parsers.N3Parser.N3Parser-class.html#__init__,Method RDFClosure.parsers.N3Parser.Sink.__init__()=RDFClosure.parsers.N3Parser.Sink-class.html#__init__,Method RDFClosure.parsers.n3p.n3p.N3Parser.__init__()=RDFClosure.parsers.n3p.n3p.N3Parser-class.html#__init__,Method RDFClosure.parsers.n3p.n3proc.N3Processor.__init__()=RDFClosure.parsers.n3p.n3proc.N3Processor-class.html#__init__,Method RDFClosure.parsers.n3p.n3proc.NTriplesSink.__init__()=RDFClosure.parsers.n3p.n3proc.NTriplesSink-class.html#__init__,Method RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer.__init__()=RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer-class.html#__init__,Method RDFClosure.serializers.TurtleSerializer.TurtleSerializer.__init__()=RDFClosure.serializers.TurtleSerializer.TurtleSerializer-class.html#__init__,Method RDFClosure.serializers.XMLWriter.XMLWriter.__init__()=RDFClosure.serializers.XMLWriter.XMLWriter-class.html#__init__"><a title="RDFClosure.Closure.Core.__init__
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.__init__
+RDFClosure.DatatypeHandling._namelessTZ.__init__
+RDFClosure.DeductiveClosure.__init__
+RDFClosure.Literals.LiteralProxies.__init__
+RDFClosure.Literals._LiteralStructure.__init__
+RDFClosure.OWLRL.OWLRL_Semantics.__init__
+RDFClosure.OWLRLExtras.OWLRL_Extension.__init__
+RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.__init__
+RDFClosure.RDFSClosure.RDFS_Semantics.__init__
+RDFClosure.RestrictedDatatype.RestrictedDatatype.__init__
+RDFClosure.parsers.N3Parser.N3Parser.__init__
+RDFClosure.parsers.N3Parser.Sink.__init__
+RDFClosure.parsers.n3p.n3p.N3Parser.__init__
+RDFClosure.parsers.n3p.n3proc.N3Processor.__init__
+RDFClosure.parsers.n3p.n3proc.NTriplesSink.__init__
+RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer.__init__
+RDFClosure.serializers.TurtleSerializer.TurtleSerializer.__init__
+RDFClosure.serializers.XMLWriter.XMLWriter.__init__" class="py-name" href="#" onclick="return doclink('link-23', '__init__', 'link-23');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">graph</tt><tt class="py-op">,</tt> <tt class="py-name">axioms</tt><tt class="py-op">,</tt> <tt class="py-name">daxioms</tt><tt class="py-op">,</tt> <tt class="py-name">rdfs</tt><tt class="py-op">)</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">                <tt id="link-24" class="py-name"><a title="RDFClosure.RDFSClosure.RDFS_Semantics" class="py-name" href="#" onclick="return doclink('link-24', 'RDFS_Semantics', 'link-11');">RDFS_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="RDFClosure.Closure.Core.__init__
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.__init__
+RDFClosure.DatatypeHandling._namelessTZ.__init__
+RDFClosure.DeductiveClosure.__init__
+RDFClosure.Literals.LiteralProxies.__init__
+RDFClosure.Literals._LiteralStructure.__init__
+RDFClosure.OWLRL.OWLRL_Semantics.__init__
+RDFClosure.OWLRLExtras.OWLRL_Extension.__init__
+RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.__init__
+RDFClosure.RDFSClosure.RDFS_Semantics.__init__
+RDFClosure.RestrictedDatatype.RestrictedDatatype.__init__
+RDFClosure.parsers.N3Parser.N3Parser.__init__
+RDFClosure.parsers.N3Parser.Sink.__init__
+RDFClosure.parsers.n3p.n3p.N3Parser.__init__
+RDFClosure.parsers.n3p.n3proc.N3Processor.__init__
+RDFClosure.parsers.n3p.n3proc.NTriplesSink.__init__
+RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer.__init__
+RDFClosure.serializers.TurtleSerializer.TurtleSerializer.__init__
+RDFClosure.serializers.XMLWriter.XMLWriter.__init__" class="py-name" href="#" onclick="return doclink('link-25', '__init__', 'link-23');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">graph</tt><tt class="py-op">,</tt> <tt class="py-name">axioms</tt><tt class="py-op">,</tt> <tt class="py-name">daxioms</tt><tt class="py-op">,</tt> <tt class="py-name">rdfs</tt><tt class="py-op">)</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">rdfs</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+</div><a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics.add_new_datatype"></a><div id="RDFS_OWLRL_Semantics.add_new_datatype-def"><a name="L68"></a><tt class="py-lineno"> 68</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.add_new_datatype-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.add_new_datatype');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype">add_new_datatype</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">uri</tt><tt class="py-op">,</tt> <tt class="py-param">conversion_function</tt><tt class="py-op">,</tt> <tt class="py-param">datatype_list</tt><tt class="py-op">,</tt> <tt class="py-param">subsumption_dict</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">subsumption_key</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">subsumption_list</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> <tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.add_new_datatype-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.add_new_datatype-expanded"><a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">                <tt class="py-docstring">"""If an extension wants to add new datatypes, this method should be invoked at initialization time.</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">                </tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring">                @param uri : URI for the new datatypes, like owl_ns["Rational"]</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">                @param conversion_function : a function converting the lexical representation of the datatype to a Python value, possibly raising an exception in case of unsuitable lexical form</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring">                @param datatype_list : list of datatypes already in use that has to be checked</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt class="py-docstring">                @param subsumption_dict : dictionary of subsumption hierarchies (indexed by the datatype URI-s)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt class="py-docstring">                @param subsumption_key  : key in the dictionary, if None, the uri parameter is used</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring">                @param subsumption_list : list of subsumptions associated to a subsumption key (ie, all datatypes that are superclasses of the new datatype)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">                <tt class="py-keyword">from</tt> <tt id="link-26" class="py-name" targets="Module RDFClosure.DatatypeHandling=RDFClosure.DatatypeHandling-module.html"><a title="RDFClosure.DatatypeHandling" class="py-name" href="#" onclick="return doclink('link-26', 'DatatypeHandling', 'link-26');">DatatypeHandling</a></tt> <tt class="py-keyword">import</tt> <tt id="link-27" class="py-name" targets="Variable RDFClosure.DatatypeHandling.AltXSDToPYTHON=RDFClosure.DatatypeHandling-module.html#AltXSDToPYTHON"><a title="RDFClosure.DatatypeHandling.AltXSDToPYTHON" class="py-name" href="#" onclick="return doclink('link-27', 'AltXSDToPYTHON', 'link-27');">AltXSDToPYTHON</a></tt><tt class="py-op">,</tt> <tt id="link-28" class="py-name" targets="Function RDFClosure.DatatypeHandling.use_Alt_lexical_conversions()=RDFClosure.DatatypeHandling-module.html#use_Alt_lexical_conversions"><a title="RDFClosure.DatatypeHandling.use_Alt_lexical_conversions" class="py-name" href="#" onclick="return doclink('link-28', 'use_Alt_lexical_conversions', 'link-28');">use_Alt_lexical_conversions</a></tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">                 </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">datatype_list</tt> <tt class="py-op">:</tt> <tt class="py-name">datatype_list</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt id="link-29" class="py-name" targets="Method RDFClosure.parsers.n3p.n3proc.N3Processor.uri()=RDFClosure.parsers.n3p.n3proc.N3Processor-class.html#uri"><a title="RDFClosure.parsers.n3p.n3proc.N3Processor.uri" class="py-name" href="#" onclick="return doclink('link-29', 'uri', 'link-29');">uri</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">                 </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">subsumption_dict</tt> <tt class="py-keyword">and</tt> <tt class="py-name">subsumption_list</tt> <tt class="py-op">:</tt>  </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">                        <tt class="py-keyword">if</tt> <tt class="py-name">subsumption_key</tt> <tt class="py-op">:</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">                                <tt class="py-name">subsumption_dict</tt><tt class="py-op">[</tt><tt class="py-name">subsumption_key</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">subsumption_list</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">                        <tt class="py-keyword">else</tt> <tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                                <tt class="py-name">subsumption_dict</tt><tt class="py-op">[</tt><tt id="link-30" class="py-name"><a title="RDFClosure.parsers.n3p.n3proc.N3Processor.uri" class="py-name" href="#" onclick="return doclink('link-30', 'uri', 'link-29');">uri</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">subsumption_list</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                 </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                <tt id="link-31" class="py-name"><a title="RDFClosure.DatatypeHandling.AltXSDToPYTHON" class="py-name" href="#" onclick="return doclink('link-31', 'AltXSDToPYTHON', 'link-27');">AltXSDToPYTHON</a></tt><tt class="py-op">[</tt><tt id="link-32" class="py-name"><a title="RDFClosure.parsers.n3p.n3proc.N3Processor.uri" class="py-name" href="#" onclick="return doclink('link-32', 'uri', 'link-29');">uri</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">conversion_function</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">                <tt id="link-33" class="py-name"><a title="RDFClosure.DatatypeHandling.use_Alt_lexical_conversions" class="py-name" href="#" onclick="return doclink('link-33', 'use_Alt_lexical_conversions', 'link-28');">use_Alt_lexical_conversions</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics.post_process"></a><div id="RDFS_OWLRL_Semantics.post_process-def"><a name="L91"></a><tt class="py-lineno"> 91</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.post_process-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.post_process');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#post_process">post_process</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.post_process-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.post_process-expanded"><a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">                <tt class="py-docstring">"""Do some post-processing step. This method when all processing is done, but before handling possible</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">                errors (ie, the method can add its own error messages). By default, this method is empty, subclasses</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring">                can add content to it by overriding it.</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                <tt id="link-34" class="py-name"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-34', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-35" class="py-name" targets="Method RDFClosure.Closure.Core.post_process()=RDFClosure.Closure.Core-class.html#post_process,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.post_process()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#post_process,Method RDFClosure.OWLRL.OWLRL_Semantics.post_process()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#post_process,Method RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.post_process()=RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html#post_process"><a title="RDFClosure.Closure.Core.post_process
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.post_process
+RDFClosure.OWLRL.OWLRL_Semantics.post_process
+RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.post_process" class="py-name" href="#" onclick="return doclink('link-35', 'post_process', 'link-35');">post_process</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics.rules"></a><div id="RDFS_OWLRL_Semantics.rules-def"><a name="L98"></a><tt class="py-lineno"> 98</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.rules-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.rules');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#rules">rules</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">t</tt><tt class="py-op">,</tt> <tt class="py-param">cycle_num</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.rules-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.rules-expanded"><a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">                <tt class="py-docstring">"""</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-docstring">                @param t: a triple (in the form of a tuple)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring">                @param cycle_num: which cycle are we in, starting with 1. This value is forwarded to all local rules; it is also used</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">                locally to collect the bnodes in the graph.</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">                <tt id="link-36" class="py-name"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-36', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Method RDFClosure.Closure.Core.rules()=RDFClosure.Closure.Core-class.html#rules,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.rules()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#rules,Method RDFClosure.OWLRL.OWLRL_Semantics.rules()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#rules,Method RDFClosure.OWLRLExtras.OWLRL_Extension.rules()=RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#rules,Method RDFClosure.RDFSClosure.RDFS_Semantics.rules()=RDFClosure.RDFSClosure.RDFS_Semantics-class.html#rules"><a title="RDFClosure.Closure.Core.rules
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.rules
+RDFClosure.OWLRL.OWLRL_Semantics.rules
+RDFClosure.OWLRLExtras.OWLRL_Extension.rules
+RDFClosure.RDFSClosure.RDFS_Semantics.rules" class="py-name" href="#" onclick="return doclink('link-37', 'rules', 'link-37');">rules</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">t</tt><tt class="py-op">,</tt> <tt class="py-name">cycle_num</tt><tt class="py-op">)</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">rdfs</tt><tt class="py-op">:</tt> <tt id="link-38" class="py-name"><a title="RDFClosure.RDFSClosure.RDFS_Semantics" class="py-name" href="#" onclick="return doclink('link-38', 'RDFS_Semantics', 'link-11');">RDFS_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="RDFClosure.Closure.Core.rules
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.rules
+RDFClosure.OWLRL.OWLRL_Semantics.rules
+RDFClosure.OWLRLExtras.OWLRL_Extension.rules
+RDFClosure.RDFSClosure.RDFS_Semantics.rules" class="py-name" href="#" onclick="return doclink('link-39', 'rules', 'link-37');">rules</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">t</tt><tt class="py-op">,</tt> <tt class="py-name">cycle_num</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics.add_axioms"></a><div id="RDFS_OWLRL_Semantics.add_axioms-def"><a name="L107"></a><tt class="py-lineno">107</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.add_axioms-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.add_axioms');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_axioms">add_axioms</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.add_axioms-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.add_axioms-expanded"><a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">rdfs</tt><tt class="py-op">:</tt> <tt id="link-40" class="py-name"><a title="RDFClosure.RDFSClosure.RDFS_Semantics" class="py-name" href="#" onclick="return doclink('link-40', 'RDFS_Semantics', 'link-11');">RDFS_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-41" class="py-name" targets="Method RDFClosure.Closure.Core.add_axioms()=RDFClosure.Closure.Core-class.html#add_axioms,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.add_axioms()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_axioms,Method RDFClosure.OWLRL.OWLRL_Semantics.add_axioms()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_axioms,Method RDFClosure.OWLRLExtras.OWLRL_Extension.add_axioms()=RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#add_axioms,Method RDFClosure.RDFSClosure.RDFS_Semantics.add_axioms()=RDFClosure.RDFSClosure.RDFS_Semantics-class.html#add_axioms"><a title="RDFClosure.Closure.Core.add_axioms
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.add_axioms
+RDFClosure.OWLRL.OWLRL_Semantics.add_axioms
+RDFClosure.OWLRLExtras.OWLRL_Extension.add_axioms
+RDFClosure.RDFSClosure.RDFS_Semantics.add_axioms" class="py-name" href="#" onclick="return doclink('link-41', 'add_axioms', 'link-41');">add_axioms</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">                <tt id="link-42" class="py-name"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-42', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="RDFClosure.Closure.Core.add_axioms
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.add_axioms
+RDFClosure.OWLRL.OWLRL_Semantics.add_axioms
+RDFClosure.OWLRLExtras.OWLRL_Extension.add_axioms
+RDFClosure.RDFSClosure.RDFS_Semantics.add_axioms" class="py-name" href="#" onclick="return doclink('link-43', 'add_axioms', 'link-41');">add_axioms</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics.add_d_axioms"></a><div id="RDFS_OWLRL_Semantics.add_d_axioms-def"><a name="L111"></a><tt class="py-lineno">111</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.add_d_axioms-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.add_d_axioms');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_d_axioms">add_d_axioms</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.add_d_axioms-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.add_d_axioms-expanded"><a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">rdfs</tt><tt class="py-op">:</tt> <tt id="link-44" class="py-name"><a title="RDFClosure.RDFSClosure.RDFS_Semantics" class="py-name" href="#" onclick="return doclink('link-44', 'RDFS_Semantics', 'link-11');">RDFS_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name" targets="Method RDFClosure.Closure.Core.add_d_axioms()=RDFClosure.Closure.Core-class.html#add_d_axioms,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.add_d_axioms()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_d_axioms,Method RDFClosure.OWLRL.OWLRL_Semantics.add_d_axioms()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_d_axioms,Method RDFClosure.RDFSClosure.RDFS_Semantics.add_d_axioms()=RDFClosure.RDFSClosure.RDFS_Semantics-class.html#add_d_axioms"><a title="RDFClosure.Closure.Core.add_d_axioms
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.add_d_axioms
+RDFClosure.OWLRL.OWLRL_Semantics.add_d_axioms
+RDFClosure.RDFSClosure.RDFS_Semantics.add_d_axioms" class="py-name" href="#" onclick="return doclink('link-45', 'add_d_axioms', 'link-45');">add_d_axioms</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">                <tt id="link-46" class="py-name"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-46', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-47" class="py-name"><a title="RDFClosure.Closure.Core.add_d_axioms
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.add_d_axioms
+RDFClosure.OWLRL.OWLRL_Semantics.add_d_axioms
+RDFClosure.RDFSClosure.RDFS_Semantics.add_d_axioms" class="py-name" href="#" onclick="return doclink('link-47', 'add_d_axioms', 'link-45');">add_d_axioms</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_OWLRL_Semantics.one_time_rules"></a><div id="RDFS_OWLRL_Semantics.one_time_rules-def"><a name="L115"></a><tt class="py-lineno">115</tt> <a class="py-toggle" href="#" id="RDFS_OWLRL_Semantics.one_time_rules-toggle" onclick="return toggle('RDFS_OWLRL_Semantics.one_time_rules');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#one_time_rules">one_time_rules</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_OWLRL_Semantics.one_time_rules-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_OWLRL_Semantics.one_time_rules-expanded"><a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">                <tt class="py-docstring">"""Adds some extra axioms and calls for the d_axiom part of the OWL Semantics."""</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">t</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.full_binding_triples" class="py-name" href="#" onclick="return doclink('link-48', 'full_binding_triples', 'link-15');">full_binding_triples</a></tt> <tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-49" class="py-name" targets="Method RDFClosure.Closure.Core.store_triple()=RDFClosure.Closure.Core-class.html#store_triple"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-49', 'store_triple', 'link-49');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-name">t</tt><tt class="py-op">)</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">                <tt class="py-comment"># Note that the RL one time rules include the management of datatype which is a true superset</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">                <tt class="py-comment"># of the rules in RDFS. It is therefore unnecessary to add those even self.rdfs is True.</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                <tt id="link-50" class="py-name"><a title="RDFClosure.OWLRL.OWLRL_Semantics" class="py-name" href="#" onclick="return doclink('link-50', 'OWLRL_Semantics', 'link-14');">OWLRL_Semantics</a></tt><tt class="py-op">.</tt><tt id="link-51" class="py-name" targets="Method RDFClosure.Closure.Core.one_time_rules()=RDFClosure.Closure.Core-class.html#one_time_rules,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.one_time_rules()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#one_time_rules,Method RDFClosure.OWLRL.OWLRL_Semantics.one_time_rules()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#one_time_rules,Method RDFClosure.OWLRLExtras.OWLRL_Extension.one_time_rules()=RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#one_time_rules,Method RDFClosure.RDFSClosure.RDFS_Semantics.one_time_rules()=RDFClosure.RDFSClosure.RDFS_Semantics-class.html#one_time_rules"><a title="RDFClosure.Closure.Core.one_time_rules
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.one_time_rules
+RDFClosure.OWLRL.OWLRL_Semantics.one_time_rules
+RDFClosure.OWLRLExtras.OWLRL_Extension.one_time_rules
+RDFClosure.RDFSClosure.RDFS_Semantics.one_time_rules" class="py-name" href="#" onclick="return doclink('link-51', 'one_time_rules', 'link-51');">one_time_rules</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:17 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

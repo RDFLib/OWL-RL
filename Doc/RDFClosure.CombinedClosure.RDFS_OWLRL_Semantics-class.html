@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        <a href="RDFClosure.CombinedClosure-module.html">Module&nbsp;CombinedClosure</a> ::
+        Class&nbsp;RDFS_OWLRL_Semantics
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class RDFS_OWLRL_Semantics</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+          <a href="RDFClosure.Closure.Core-class.html">Closure.Core</a> --+    
+                         |    
+<a href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html">RDFSClosure.RDFS_Semantics</a> --+
+                             |
+          <a href="RDFClosure.Closure.Core-class.html">Closure.Core</a> --+   |
+                         |   |
+     <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a> --+
+                             |
+                            <strong class="uidshort">RDFS_OWLRL_Semantics</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRLExtras.OWLRL_Extension</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>Common subclass of the RDFS and OWL 2 RL semantic classes. All methods
+  simply call back to the functions in the superclasses. This may lead to 
+  some unnecessary duplication of terms and rules, but it it not so bad. 
+  Also, the additional identification defined for OWL Full, ie, Resource 
+  being the same as Thing and OWL and RDFS classes being identical are 
+  added to the triple store.</p>
+  <p>Note that this class is also a possible user extension point: 
+  subclasses can be created that extend the standard functionality by 
+  extending this class. This class <i>always</i> performs RDFS inferences. 
+  Subclasses have to set the <code>self.rdfs</code> flag explicitly to the 
+  requested value if that is to be controlled.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">graph</span>,
+        <span class="summary-sig-arg">axioms</span>,
+        <span class="summary-sig-arg">daxioms</span>,
+        <span class="summary-sig-arg">rdfs</span>=<span class="summary-sig-default">True</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype" class="summary-sig-name">add_new_datatype</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">uri</span>,
+        <span class="summary-sig-arg">conversion_function</span>,
+        <span class="summary-sig-arg">datatype_list</span>,
+        <span class="summary-sig-arg">subsumption_dict</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">subsumption_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">subsumption_list</span>=<span class="summary-sig-default">None</span>)</span><br />
+      If an extension wants to add new datatypes, this method should be 
+      invoked at initialization time.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_new_datatype">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#post_process" class="summary-sig-name">post_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Do some post-processing step.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.post_process">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#rules" class="summary-sig-name">rules</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">t</span>,
+        <span class="summary-sig-arg">cycle_num</span>)</span><br />
+      Go through the RDFS entailement rules rdf1, rdfs4-rdfs12, by 
+      extending the graph.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_axioms" class="summary-sig-name">add_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add axioms</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_d_axioms" class="summary-sig-name">add_d_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This is not really complete, because it just uses the comparison 
+      possibilities that rdflib provides.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_d_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#one_time_rules" class="summary-sig-name">one_time_rules</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Adds some extra axioms and calls for the d_axiom part of the OWL 
+      Semantics.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.one_time_rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
+      <code><a href="RDFClosure.Closure.Core-class.html#add_error">add_error</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#closure">closure</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#empty_stored_triples">empty_stored_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#flush_stored_triples">flush_stored_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#get_literal_value">get_literal_value</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#pre_process">pre_process</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#store_triple">store_triple</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b> (private):
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_class_axioms" onclick="show_private();">_class_axioms</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_classes" onclick="show_private();">_classes</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_equality" onclick="show_private();">_equality</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_get_resource_or_literal" onclick="show_private();">_get_resource_or_literal</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_list" onclick="show_private();">_list</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_one_time_rules_datatypes" onclick="show_private();">_one_time_rules_datatypes</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_one_time_rules_misc" onclick="show_private();">_one_time_rules_misc</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_properties" onclick="show_private();">_properties</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_property_chain" onclick="show_private();">_property_chain</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_schema_vocabulary" onclick="show_private();">_schema_vocabulary</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#full_binding_triples" class="summary-name">full_binding_triples</a> = <code title="[(rdflib.URIRef('http://www.w3.org/2002/07/owl#Thing'),
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass'),
+  rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Resource')),
+ (rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Class'),
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass'),
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#Class')),
+ (rdflib.URIRef('http://www.w3.org/2002/07/owl#DataRange'),
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass'),
+..."><code class="variable-group">[</code><code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002<code class="variable-ellipsis">...</code></code><br />
+      additional axiom type triples that are added to the combined 
+      semantics; these 'bind' the RDFS and the OWL worlds together
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+        <a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#rdfs" class="summary-name">rdfs</a><br />
+      whether RDFS inference is also done (used in subclassed only)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
+      <code><a href="RDFClosure.Closure.Core-class.html#IMaxNum">IMaxNum</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#added_triples">added_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#axioms">axioms</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#daxioms">daxioms</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#error_messages">error_messages</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#graph">graph</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#literal_proxies">literal_proxies</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b>:
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#bnodes">bnodes</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">graph</span>,
+        <span class="sig-arg">axioms</span>,
+        <span class="sig-arg">daxioms</span>,
+        <span class="sig-arg">rdfs</span>=<span class="sig-default">True</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>graph</code></strong> (rdflib.Graph) - the RDF graph to be extended</li>
+        <li><strong class="pname"><code>axioms</code></strong> (Boolean) - whether (non-datatype) axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>daxioms</code></strong> (Boolean) - whether datatype axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>rdfs</code></strong> (boolean) - placeholder flag (used in subclassed only, it is always defaulted
+          to True in this class)</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#__init__">OWLRL.OWLRL_Semantics.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_new_datatype"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_new_datatype</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">uri</span>,
+        <span class="sig-arg">conversion_function</span>,
+        <span class="sig-arg">datatype_list</span>,
+        <span class="sig-arg">subsumption_dict</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">subsumption_key</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">subsumption_list</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_new_datatype">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>If an extension wants to add new datatypes, this method should be 
+  invoked at initialization time.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>uri</code></strong> - URI for the new datatypes, like owl_ns[&quot;Rational&quot;]</li>
+        <li><strong class="pname"><code>conversion_function</code></strong> - a function converting the lexical representation of the datatype 
+          to a Python value, possibly raising an exception in case of 
+          unsuitable lexical form</li>
+        <li><strong class="pname"><code>datatype_list</code></strong> - list of datatypes already in use that has to be checked</li>
+        <li><strong class="pname"><code>subsumption_dict</code></strong> - dictionary of subsumption hierarchies (indexed by the datatype 
+          URI-s)</li>
+        <li><strong class="pname"><code>subsumption_key</code></strong> - key in the dictionary, if None, the uri parameter is used</li>
+        <li><strong class="pname"><code>subsumption_list</code></strong> - list of subsumptions associated to a subsumption key (ie, all 
+          datatypes that are superclasses of the new datatype)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="post_process"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">post_process</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.post_process">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Do some post-processing step. This method when all processing is done,
+  but before handling possible errors (ie, the method can add its own error
+  messages). By default, this method is empty, subclasses can add content 
+  to it by overriding it.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#post_process">OWLRL.OWLRL_Semantics.post_process</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rules</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">t</span>,
+        <span class="sig-arg">cycle_num</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Go through the RDFS entailement rules rdf1, rdfs4-rdfs12, by extending
+  the graph.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>t</code></strong> - a triple (in the form of a tuple)</li>
+        <li><strong class="pname"><code>cycle_num</code></strong> - which cycle are we in, starting with 1. This value is forwarded 
+          to all local rules; it is also used locally to collect the bnodes
+          in the graph.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#rules">OWLRL.OWLRL_Semantics.rules</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add axioms</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_axioms">OWLRL.OWLRL_Semantics.add_axioms</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_d_axioms"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_d_axioms</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_d_axioms">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This is not really complete, because it just uses the comparison 
+  possibilities that rdflib provides.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_d_axioms">OWLRL.OWLRL_Semantics.add_d_axioms</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="one_time_rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">one_time_rules</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.one_time_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds some extra axioms and calls for the d_axiom part of the OWL 
+  Semantics.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#one_time_rules">OWLRL.OWLRL_Semantics.one_time_rules</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="full_binding_triples"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">full_binding_triples</h3>
+  additional axiom type triples that are added to the combined semantics; 
+  these 'bind' the RDFS and the OWL worlds together
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code><code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#Thing')<code class="variable-op">,</code>
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op">,</code>
+  rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Resource')<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Class')<code class="variable-op">,</code>
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op">,</code>
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#Class')<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#DataRange')<code class="variable-op">,</code>
+  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rdfs"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">rdfs</h3>
+  whether RDFS inference is also done (used in subclassed only)
+  <dl class="fields">
+    <dt>Type:</dt>
+      <dd>boolean</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

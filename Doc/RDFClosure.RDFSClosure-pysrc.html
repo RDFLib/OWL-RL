@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.RDFSClosure</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Module&nbsp;RDFSClosure
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.RDFSClosure-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="RDFClosure.RDFSClosure-module.html">Module RDFClosure.RDFSClosure</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/d/Bin/Python/python.exe</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">This module is brute force implementation of the RDFS semantics on the top of RDFLib (with some caveats, see in the introductory text).</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">@requires: U{RDFLib&lt;http://rdflib.net&gt;}, 2.2.2. and higher</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">@license: This software is available for use under the U{W3C Software License&lt;http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231&gt;}</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">@organization: U{World Wide Web Consortium&lt;http://www.w3.org&gt;}</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">@author: U{Ivan Herman&lt;a href="http://www.w3.org/People/Ivan/"&gt;}</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-string">$Id: RDFSClosure.py,v 1.14 2009/09/19 17:23:42 ivan Exp $ $Date: 2009/09/19 17:23:42 $</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-string">"""</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt id="link-0" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.__author__=RDFClosure.AxiomaticTriples-module.html#__author__,Variable RDFClosure.Closure.__author__=RDFClosure.Closure-module.html#__author__,Variable RDFClosure.CombinedClosure.__author__=RDFClosure.CombinedClosure-module.html#__author__,Variable RDFClosure.DatatypeHandling.__author__=RDFClosure.DatatypeHandling-module.html#__author__,Variable RDFClosure.Literals.__author__=RDFClosure.Literals-module.html#__author__,Variable RDFClosure.OWLRL.__author__=RDFClosure.OWLRL-module.html#__author__,Variable RDFClosure.OWLRLExtras.__author__=RDFClosure.OWLRLExtras-module.html#__author__,Variable RDFClosure.RDFSClosure.__author__=RDFClosure.RDFSClosure-module.html#__author__,Variable RDFClosure.RestrictedDatatype.__author__=RDFClosure.RestrictedDatatype-module.html#__author__,Variable RDFClosure.XsdDatatypes.__author__=RDFClosure.XsdDatatypes-module.html#__author__,Variable RDFClosure.__author__=RDFClosure-module.html#__author__,Variable RDFClosure.parsers.__author__=RDFClosure.parsers-module.html#__author__,Variable RDFClosure.serializers.__author__=RDFClosure.serializers-module.html#__author__"><a title="RDFClosure.AxiomaticTriples.__author__
+RDFClosure.Closure.__author__
+RDFClosure.CombinedClosure.__author__
+RDFClosure.DatatypeHandling.__author__
+RDFClosure.Literals.__author__
+RDFClosure.OWLRL.__author__
+RDFClosure.OWLRLExtras.__author__
+RDFClosure.RDFSClosure.__author__
+RDFClosure.RestrictedDatatype.__author__
+RDFClosure.XsdDatatypes.__author__
+RDFClosure.__author__
+RDFClosure.parsers.__author__
+RDFClosure.serializers.__author__" class="py-name" href="#" onclick="return doclink('link-0', '__author__', 'link-0');">__author__</a></tt>  <tt class="py-op">=</tt> <tt class="py-string">'Ivan Herman'</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-name">__contact__</tt> <tt class="py-op">=</tt> <tt class="py-string">'Ivan Herman, ivan@w3.org'</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.__license__=RDFClosure.AxiomaticTriples-module.html#__license__,Variable RDFClosure.Closure.__license__=RDFClosure.Closure-module.html#__license__,Variable RDFClosure.CombinedClosure.__license__=RDFClosure.CombinedClosure-module.html#__license__,Variable RDFClosure.DatatypeHandling.__license__=RDFClosure.DatatypeHandling-module.html#__license__,Variable RDFClosure.Literals.__license__=RDFClosure.Literals-module.html#__license__,Variable RDFClosure.OWLRL.__license__=RDFClosure.OWLRL-module.html#__license__,Variable RDFClosure.OWLRLExtras.__license__=RDFClosure.OWLRLExtras-module.html#__license__,Variable RDFClosure.RDFSClosure.__license__=RDFClosure.RDFSClosure-module.html#__license__,Variable RDFClosure.RestrictedDatatype.__license__=RDFClosure.RestrictedDatatype-module.html#__license__,Variable RDFClosure.XsdDatatypes.__license__=RDFClosure.XsdDatatypes-module.html#__license__,Variable RDFClosure.__license__=RDFClosure-module.html#__license__,Variable RDFClosure.parsers.__license__=RDFClosure.parsers-module.html#__license__,Variable RDFClosure.serializers.__license__=RDFClosure.serializers-module.html#__license__"><a title="RDFClosure.AxiomaticTriples.__license__
+RDFClosure.Closure.__license__
+RDFClosure.CombinedClosure.__license__
+RDFClosure.DatatypeHandling.__license__
+RDFClosure.Literals.__license__
+RDFClosure.OWLRL.__license__
+RDFClosure.OWLRLExtras.__license__
+RDFClosure.RDFSClosure.__license__
+RDFClosure.RestrictedDatatype.__license__
+RDFClosure.XsdDatatypes.__license__
+RDFClosure.__license__
+RDFClosure.parsers.__license__
+RDFClosure.serializers.__license__" class="py-name" href="#" onclick="return doclink('link-1', '__license__', 'link-1');">__license__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">u'W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Variable RDFClosure.RDF=RDFClosure-module.html#RDF,Variable RDFClosure.parsers.n3p.n3proc.RDF=RDFClosure.parsers.n3p.n3proc-module.html#RDF"><a title="RDFClosure.RDF
+RDFClosure.parsers.n3p.n3proc.RDF" class="py-name" href="#" onclick="return doclink('link-2', 'RDF', 'link-2');">RDF</a></tt>         <tt class="py-keyword">import</tt> <tt class="py-name">Property</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Variable RDFClosure.RDFS=RDFClosure-module.html#RDFS"><a title="RDFClosure.RDFS" class="py-name" href="#" onclick="return doclink('link-3', 'RDFS', 'link-3');">RDFS</a></tt>        <tt class="py-keyword">import</tt> <tt class="py-name">Resource</tt><tt class="py-op">,</tt> <tt class="py-name">Class</tt><tt class="py-op">,</tt> <tt class="py-name">subClassOf</tt><tt class="py-op">,</tt> <tt class="py-name">subPropertyOf</tt><tt class="py-op">,</tt> <tt class="py-name">domain</tt><tt class="py-op">,</tt> <tt class="py-name">range</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="RDFClosure.RDFS" class="py-name" href="#" onclick="return doclink('link-4', 'RDFS', 'link-3');">RDFS</a></tt>        <tt class="py-keyword">import</tt> <tt class="py-name">Literal</tt><tt class="py-op">,</tt> <tt class="py-name">ContainerMembershipProperty</tt><tt class="py-op">,</tt> <tt class="py-name">member</tt><tt class="py-op">,</tt> <tt class="py-name">Datatype</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">rdflib</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="RDFClosure.RDF
+RDFClosure.parsers.n3p.n3proc.RDF" class="py-name" href="#" onclick="return doclink('link-5', 'RDF', 'link-2');">RDF</a></tt>         <tt class="py-keyword">import</tt> <tt class="py-name">RDFNS</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ns_rdf</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-6" class="py-name" targets="Package RDFClosure=RDFClosure-module.html"><a title="RDFClosure" class="py-name" href="#" onclick="return doclink('link-6', 'RDFClosure', 'link-6');">RDFClosure</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Module RDFClosure.Closure=RDFClosure.Closure-module.html"><a title="RDFClosure.Closure" class="py-name" href="#" onclick="return doclink('link-7', 'Closure', 'link-7');">Closure</a></tt>          <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Class RDFClosure.Closure.Core=RDFClosure.Closure.Core-class.html"><a title="RDFClosure.Closure.Core" class="py-name" href="#" onclick="return doclink('link-8', 'Core', 'link-8');">Core</a></tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-9" class="py-name"><a title="RDFClosure" class="py-name" href="#" onclick="return doclink('link-9', 'RDFClosure', 'link-6');">RDFClosure</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module RDFClosure.AxiomaticTriples=RDFClosure.AxiomaticTriples-module.html"><a title="RDFClosure.AxiomaticTriples" class="py-name" href="#" onclick="return doclink('link-10', 'AxiomaticTriples', 'link-10');">AxiomaticTriples</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.RDFS_Axiomatic_Triples=RDFClosure.AxiomaticTriples-module.html#RDFS_Axiomatic_Triples"><a title="RDFClosure.AxiomaticTriples.RDFS_Axiomatic_Triples" class="py-name" href="#" onclick="return doclink('link-11', 'RDFS_Axiomatic_Triples', 'link-11');">RDFS_Axiomatic_Triples</a></tt><tt class="py-op">,</tt> <tt id="link-12" class="py-name" targets="Variable RDFClosure.AxiomaticTriples.RDFS_D_Axiomatic_Triples=RDFClosure.AxiomaticTriples-module.html#RDFS_D_Axiomatic_Triples"><a title="RDFClosure.AxiomaticTriples.RDFS_D_Axiomatic_Triples" class="py-name" href="#" onclick="return doclink('link-12', 'RDFS_D_Axiomatic_Triples', 'link-12');">RDFS_D_Axiomatic_Triples</a></tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-comment">######################################################################################################</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-comment">## RDFS Semantics class</tt> </tt>
+<a name="RDFS_Semantics"></a><div id="RDFS_Semantics-def"><a name="L36"></a><tt class="py-lineno"> 36</tt> <a class="py-toggle" href="#" id="RDFS_Semantics-toggle" onclick="return toggle('RDFS_Semantics');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html">RDFS_Semantics</a><tt class="py-op">(</tt><tt class="py-base-class">Core</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_Semantics-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="RDFS_Semantics-expanded"><a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">        <tt class="py-docstring">"""RDFS Semantics class, ie, implementation of the RDFS closure graph.</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">        Note that the module does I{not} implement the so called Datatype entailement rules, simply because the underlying RDFLib does</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">        not implement the datatypes (ie, RDFLib will not make the literal "1.00" and "1.00000" identical, although</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">        even with all the ambiguities on datatypes, this I{should} be made equal...). Also, the so-called extensional entailement rules</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">        (Section 7.3.1 in the RDF Semantics document) have not been implemented either.</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">        The comments and references to the various rule follow the names as used in the U{RDF Semantics document&lt;http://www.w3.org/TR/rdf-mt/&gt;}.</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="RDFS_Semantics.__init__"></a><div id="RDFS_Semantics.__init__-def"><a name="L46"></a><tt class="py-lineno"> 46</tt> <a class="py-toggle" href="#" id="RDFS_Semantics.__init__-toggle" onclick="return toggle('RDFS_Semantics.__init__');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt><tt class="py-param">graph</tt><tt class="py-op">,</tt> <tt class="py-param">axioms</tt><tt class="py-op">,</tt> <tt class="py-param">daxioms</tt><tt class="py-op">,</tt> <tt class="py-param">rdfs</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_Semantics.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_Semantics.__init__-expanded"><a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">                <tt class="py-docstring">"""</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">                @param graph: the RDF graph to be extended</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">                @type graph: rdflib.Graph</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">                @param axioms: whether (non-datatype) axiomatic triples should be added or not</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">                @type axioms: Boolean</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">                @param daxioms: whether datatype axiomatic triples should be added or not</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">                @type daxioms: Boolean</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">                @param rdfs: whether RDFS inference is also done (used in subclassed only)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">                @type rdfs: boolean</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">                <tt id="link-13" class="py-name"><a title="RDFClosure.Closure.Core" class="py-name" href="#" onclick="return doclink('link-13', 'Core', 'link-8');">Core</a></tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Method RDFClosure.Closure.Core.__init__()=RDFClosure.Closure.Core-class.html#__init__,Method RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.__init__()=RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#__init__,Method RDFClosure.DatatypeHandling._namelessTZ.__init__()=RDFClosure.DatatypeHandling._namelessTZ-class.html#__init__,Method RDFClosure.DeductiveClosure.__init__()=RDFClosure.DeductiveClosure-class.html#__init__,Method RDFClosure.Literals.LiteralProxies.__init__()=RDFClosure.Literals.LiteralProxies-class.html#__init__,Method RDFClosure.Literals._LiteralStructure.__init__()=RDFClosure.Literals._LiteralStructure-class.html#__init__,Method RDFClosure.OWLRL.OWLRL_Semantics.__init__()=RDFClosure.OWLRL.OWLRL_Semantics-class.html#__init__,Method RDFClosure.OWLRLExtras.OWLRL_Extension.__init__()=RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#__init__,Method RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.__init__()=RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html#__init__,Method RDFClosure.RDFSClosure.RDFS_Semantics.__init__()=RDFClosure.RDFSClosure.RDFS_Semantics-class.html#__init__,Method RDFClosure.RestrictedDatatype.RestrictedDatatype.__init__()=RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html#__init__,Method RDFClosure.parsers.N3Parser.N3Parser.__init__()=RDFClosure.parsers.N3Parser.N3Parser-class.html#__init__,Method RDFClosure.parsers.N3Parser.Sink.__init__()=RDFClosure.parsers.N3Parser.Sink-class.html#__init__,Method RDFClosure.parsers.n3p.n3p.N3Parser.__init__()=RDFClosure.parsers.n3p.n3p.N3Parser-class.html#__init__,Method RDFClosure.parsers.n3p.n3proc.N3Processor.__init__()=RDFClosure.parsers.n3p.n3proc.N3Processor-class.html#__init__,Method RDFClosure.parsers.n3p.n3proc.NTriplesSink.__init__()=RDFClosure.parsers.n3p.n3proc.NTriplesSink-class.html#__init__,Method RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer.__init__()=RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer-class.html#__init__,Method RDFClosure.serializers.TurtleSerializer.TurtleSerializer.__init__()=RDFClosure.serializers.TurtleSerializer.TurtleSerializer-class.html#__init__,Method RDFClosure.serializers.XMLWriter.XMLWriter.__init__()=RDFClosure.serializers.XMLWriter.XMLWriter-class.html#__init__"><a title="RDFClosure.Closure.Core.__init__
+RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics.__init__
+RDFClosure.DatatypeHandling._namelessTZ.__init__
+RDFClosure.DeductiveClosure.__init__
+RDFClosure.Literals.LiteralProxies.__init__
+RDFClosure.Literals._LiteralStructure.__init__
+RDFClosure.OWLRL.OWLRL_Semantics.__init__
+RDFClosure.OWLRLExtras.OWLRL_Extension.__init__
+RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming.__init__
+RDFClosure.RDFSClosure.RDFS_Semantics.__init__
+RDFClosure.RestrictedDatatype.RestrictedDatatype.__init__
+RDFClosure.parsers.N3Parser.N3Parser.__init__
+RDFClosure.parsers.N3Parser.Sink.__init__
+RDFClosure.parsers.n3p.n3p.N3Parser.__init__
+RDFClosure.parsers.n3p.n3proc.N3Processor.__init__
+RDFClosure.parsers.n3p.n3proc.NTriplesSink.__init__
+RDFClosure.serializers.PrettyXMLSerializer.PrettyXMLSerializer.__init__
+RDFClosure.serializers.TurtleSerializer.TurtleSerializer.__init__
+RDFClosure.serializers.XMLWriter.XMLWriter.__init__" class="py-name" href="#" onclick="return doclink('link-14', '__init__', 'link-14');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">graph</tt><tt class="py-op">,</tt> <tt class="py-name">axioms</tt><tt class="py-op">,</tt> <tt class="py-name">daxioms</tt><tt class="py-op">,</tt> <tt class="py-name">rdfs</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_Semantics.add_axioms"></a><div id="RDFS_Semantics.add_axioms-def"><a name="L59"></a><tt class="py-lineno"> 59</tt> <a class="py-toggle" href="#" id="RDFS_Semantics.add_axioms-toggle" onclick="return toggle('RDFS_Semantics.add_axioms');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html#add_axioms">add_axioms</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_Semantics.add_axioms-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_Semantics.add_axioms-expanded"><a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">                <tt class="py-docstring">"""Add axioms</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">t</tt> <tt class="py-keyword">in</tt> <tt id="link-15" class="py-name"><a title="RDFClosure.AxiomaticTriples.RDFS_Axiomatic_Triples" class="py-name" href="#" onclick="return doclink('link-15', 'RDFS_Axiomatic_Triples', 'link-11');">RDFS_Axiomatic_Triples</a></tt> <tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-name">t</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">xrange</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">IMaxNum</tt><tt class="py-op">+</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">                        <tt class="py-name">ci</tt> <tt class="py-op">=</tt> <tt class="py-name">ns_rdf</tt><tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-string">"_%d"</tt> <tt class="py-op">%</tt> <tt class="py-name">i</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">ci</tt><tt class="py-op">,</tt><tt class="py-name">type</tt><tt class="py-op">,</tt><tt class="py-name">Property</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">ci</tt><tt class="py-op">,</tt><tt class="py-name">domain</tt><tt class="py-op">,</tt><tt class="py-name">Resource</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">ci</tt><tt class="py-op">,</tt><tt class="py-name">range</tt><tt class="py-op">,</tt><tt class="py-name">Resource</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">ci</tt><tt class="py-op">,</tt><tt class="py-name">type</tt><tt class="py-op">,</tt><tt class="py-name">ContainerMembershipProperty</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_Semantics.add_d_axioms"></a><div id="RDFS_Semantics.add_d_axioms-def"><a name="L70"></a><tt class="py-lineno"> 70</tt> <a class="py-toggle" href="#" id="RDFS_Semantics.add_d_axioms-toggle" onclick="return toggle('RDFS_Semantics.add_d_axioms');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html#add_d_axioms">add_d_axioms</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_Semantics.add_d_axioms-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_Semantics.add_d_axioms-expanded"><a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">                <tt class="py-docstring">"""This is not really complete, because it just uses the comparison possibilities that rdflib provides."""</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">                <tt class="py-name">literals</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">literal_proxies</tt><tt class="py-op">.</tt><tt class="py-name">lit_to_bnode</tt><tt class="py-op">.</tt><tt class="py-name">keys</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">                <tt class="py-comment"># #1</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">lt</tt> <tt class="py-keyword">in</tt> <tt class="py-name">literals</tt> <tt class="py-op">:</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">                        <tt class="py-keyword">if</tt> <tt class="py-name">lt</tt><tt class="py-op">.</tt><tt class="py-name">dt</tt> <tt class="py-op">!=</tt> <tt class="py-name">None</tt> <tt class="py-op">:</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">literal_proxies</tt><tt class="py-op">.</tt><tt class="py-name">lit_to_bnode</tt><tt class="py-op">[</tt><tt class="py-name">lt</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">lt</tt><tt class="py-op">.</tt><tt class="py-name">dt</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">t</tt> <tt class="py-keyword">in</tt> <tt id="link-16" class="py-name"><a title="RDFClosure.AxiomaticTriples.RDFS_D_Axiomatic_Triples" class="py-name" href="#" onclick="return doclink('link-16', 'RDFS_D_Axiomatic_Triples', 'link-12');">RDFS_D_Axiomatic_Triples</a></tt> <tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-name">t</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_Semantics.one_time_rules"></a><div id="RDFS_Semantics.one_time_rules-def"><a name="L80"></a><tt class="py-lineno"> 80</tt> <a class="py-toggle" href="#" id="RDFS_Semantics.one_time_rules-toggle" onclick="return toggle('RDFS_Semantics.one_time_rules');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html#one_time_rules">one_time_rules</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_Semantics.one_time_rules-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_Semantics.one_time_rules-expanded"><a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">                <tt class="py-docstring">"""Some of the rules in the rule set are axiomatic in nature, meaning that they really have to be added only</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">                once, there is no reason to add these in a cycle. These are performed by this method that is invoked only once</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-docstring">                at the beginning of the process.</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-docstring">                In this case this is related to a 'hidden' same as rules on literals with identical values (though different lexical values)</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                <tt class="py-comment"># There is also a hidden sameAs rule in RDF Semantics: if a literal appears in a triple, and another one has the same value,</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                <tt class="py-comment"># then the triple should be duplicated with the other value.</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">lt1</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">literal_proxies</tt><tt class="py-op">.</tt><tt class="py-name">lit_to_bnode</tt><tt class="py-op">.</tt><tt class="py-name">keys</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">lt2</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">literal_proxies</tt><tt class="py-op">.</tt><tt class="py-name">lit_to_bnode</tt><tt class="py-op">.</tt><tt class="py-name">keys</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">                                <tt class="py-keyword">if</tt> <tt class="py-name">lt1</tt> <tt class="py-op">!=</tt> <tt class="py-name">lt2</tt> <tt class="py-op">:</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">                                        <tt class="py-keyword">try</tt> <tt class="py-op">:</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">                                                <tt class="py-name">lt1_d</tt> <tt class="py-op">=</tt> <tt class="py-name">lt1</tt><tt class="py-op">.</tt><tt class="py-name">lit</tt><tt class="py-op">.</tt><tt class="py-name">toPython</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">                                                <tt class="py-name">lt2_d</tt> <tt class="py-op">=</tt> <tt class="py-name">lt2</tt><tt class="py-op">.</tt><tt class="py-name">lit</tt><tt class="py-op">.</tt><tt class="py-name">toPython</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">                                                <tt class="py-keyword">if</tt> <tt class="py-name">lt1_d</tt> <tt class="py-op">==</tt> <tt class="py-name">lt2_d</tt> <tt class="py-op">:</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                                                        <tt class="py-comment"># In OWL, this line is simply stating a sameAs for the corresponding BNodes, and then let</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">                                                        <tt class="py-comment"># the usual rules take effect. In RDFS this is not possible, so the sameAs rule is, essentially</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">                                                        <tt class="py-comment"># replicated...</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">                                                        <tt class="py-name">bn1</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">literal_proxies</tt><tt class="py-op">.</tt><tt class="py-name">lit_to_bnode</tt><tt class="py-op">[</tt><tt class="py-name">lt1</tt><tt class="py-op">]</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">                                                        <tt class="py-name">bn2</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">literal_proxies</tt><tt class="py-op">.</tt><tt class="py-name">lit_to_bnode</tt><tt class="py-op">[</tt><tt class="py-name">lt2</tt><tt class="py-op">]</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">                                                        <tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt><tt class="py-name">p</tt><tt class="py-op">,</tt><tt class="py-name">o</tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">,</tt><tt class="py-name">None</tt><tt class="py-op">,</tt><tt class="py-name">bn1</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">                                                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">add</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt><tt class="py-name">p</tt><tt class="py-op">,</tt><tt class="py-name">bn2</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">                                        <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt><tt class="py-op">,</tt> <tt class="py-name">e</tt> <tt class="py-op">:</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">                                                <tt class="py-comment"># there may be a problem with one of the python conversions; the rule is imply ignored</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">                                                <tt class="py-comment">#raise e</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">                                                <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"> </tt>
+<a name="RDFS_Semantics.rules"></a><div id="RDFS_Semantics.rules-def"><a name="L108"></a><tt class="py-lineno">108</tt> <a class="py-toggle" href="#" id="RDFS_Semantics.rules-toggle" onclick="return toggle('RDFS_Semantics.rules');">-</a><tt class="py-line">        <tt class="py-keyword">def</tt> <a class="py-def-name" href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html#rules">rules</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt><tt class="py-param">t</tt><tt class="py-op">,</tt><tt class="py-param">cycle_num</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+</div><div id="RDFS_Semantics.rules-collapsed" style="display:none;" pad="+++" indent="++++++++++++"></div><div id="RDFS_Semantics.rules-expanded"><a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">                <tt class="py-docstring">"""</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">                        Go through the RDFS entailement rules rdf1, rdfs4-rdfs12, by extending the graph.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">                        @param t: a triple (in the form of a tuple)</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">                        @param cycle_num: which cycle are we in, starting with 1. Can be used for some (though minor) optimization.</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">                """</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">                <tt class="py-name">s</tt><tt class="py-op">,</tt><tt class="py-name">p</tt><tt class="py-op">,</tt><tt class="py-name">o</tt> <tt class="py-op">=</tt> <tt class="py-name">t</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">                <tt class="py-comment"># rdf1</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method RDFClosure.Closure.Core.store_triple()=RDFClosure.Closure.Core-class.html#store_triple"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-17', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">Property</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">                <tt class="py-comment"># rdfs4a</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">cycle_num</tt> <tt class="py-op">==</tt> <tt class="py-number">1</tt> <tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-18', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">Resource</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">                <tt class="py-comment"># rdfs4b</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">cycle_num</tt> <tt class="py-op">==</tt> <tt class="py-number">1</tt> <tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-19', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">o</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">Resource</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">domain</tt> <tt class="py-op">:</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs2</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">uuu</tt><tt class="py-op">,</tt><tt class="py-name">Y</tt><tt class="py-op">,</tt><tt class="py-name">yyy</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-20', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">uuu</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">o</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">range</tt> <tt class="py-op">:</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs3</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">uuu</tt><tt class="py-op">,</tt><tt class="py-name">Y</tt><tt class="py-op">,</tt><tt class="py-name">vvv</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-21', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">vvv</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">o</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">subPropertyOf</tt> <tt class="py-op">:</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs5</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">Z</tt><tt class="py-op">,</tt><tt class="py-name">Y</tt><tt class="py-op">,</tt><tt class="py-name">xxx</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">o</tt><tt class="py-op">,</tt> <tt class="py-name">subPropertyOf</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-22', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt><tt class="py-name">subPropertyOf</tt><tt class="py-op">,</tt><tt class="py-name">xxx</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs7</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">zzz</tt><tt class="py-op">,</tt><tt class="py-name">Z</tt><tt class="py-op">,</tt><tt class="py-name">www</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-23', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">zzz</tt><tt class="py-op">,</tt> <tt class="py-name">o</tt><tt class="py-op">,</tt> <tt class="py-name">www</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt> <tt class="py-keyword">and</tt> <tt class="py-name">o</tt> <tt class="py-op">==</tt> <tt class="py-name">Property</tt> <tt class="py-op">:</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs6</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-24', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">subPropertyOf</tt><tt class="py-op">,</tt> <tt class="py-name">s</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt> <tt class="py-keyword">and</tt> <tt class="py-name">o</tt> <tt class="py-op">==</tt> <tt class="py-name">Class</tt> <tt class="py-op">:</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs8</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-25', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">subClassOf</tt><tt class="py-op">,</tt> <tt class="py-name">Resource</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs10</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-26', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">subClassOf</tt><tt class="py-op">,</tt> <tt class="py-name">s</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">subClassOf</tt> <tt class="py-op">:</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs9</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">vvv</tt><tt class="py-op">,</tt><tt class="py-name">Y</tt><tt class="py-op">,</tt><tt class="py-name">Z</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">s</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-27', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">vvv</tt><tt class="py-op">,</tt> <tt class="py-name">type</tt><tt class="py-op">,</tt> <tt class="py-name">o</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs11</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">                        <tt class="py-keyword">for</tt> <tt class="py-name">Z</tt><tt class="py-op">,</tt><tt class="py-name">Y</tt><tt class="py-op">,</tt><tt class="py-name">xxx</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">graph</tt><tt class="py-op">.</tt><tt class="py-name">triples</tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">o</tt><tt class="py-op">,</tt> <tt class="py-name">subClassOf</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-op">:</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">                                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-28', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">subClassOf</tt><tt class="py-op">,</tt> <tt class="py-name">xxx</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt> <tt class="py-keyword">and</tt> <tt class="py-name">o</tt> <tt class="py-op">==</tt> <tt class="py-name">ContainerMembershipProperty</tt> <tt class="py-op">:</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">                        <tt class="py-comment"># rdfs12</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-29', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">subPropertyOf</tt><tt class="py-op">,</tt> <tt class="py-name">member</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">p</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt> <tt class="py-keyword">and</tt> <tt class="py-name">o</tt> <tt class="py-op">==</tt> <tt class="py-name">Datatype</tt> <tt class="py-op">:</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="RDFClosure.Closure.Core.store_triple" class="py-name" href="#" onclick="return doclink('link-30', 'store_triple', 'link-17');">store_triple</a></tt><tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">,</tt> <tt class="py-name">subClassOf</tt><tt class="py-op">,</tt> <tt class="py-name">Literal</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:17 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

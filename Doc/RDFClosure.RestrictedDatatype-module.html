@@ -1,0 +1,2420 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.RestrictedDatatype</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Module&nbsp;RestrictedDatatype
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.RestrictedDatatype-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module RestrictedDatatype</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html">source&nbsp;code</a></span></p>
+<p>Module to datatype restrictions, ie, data ranges.</p>
+  <p>The module implements the following aspects of datatype 
+  restrictions:</p>
+  <ul>
+    <li>
+      a new datatype is created run-time and added to the allowed and 
+      accepted datatypes; literals are checked whether they abide to the 
+      restrictions
+    </li>
+    <li>
+      the new datatype is defined to be a 'subClass' of the restricted 
+      datatype
+    </li>
+    <li>
+      literals of the restricted datatype and that abide to the 
+      restrictions defined by the facets are also assigned to be of the new
+      type
+    </li>
+  </ul>
+  <p>The last item is important to handle the following structures:</p>
+<pre class="literalblock">
+ex:RE a owl:Restriction ;
+       owl:onProperty ex:p ;
+       owl:someValuesFrom [
+               a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:withRestrictions (
+                       [ xsd:minLength &quot;3&quot;^^xsd:integer ]
+                       [ xsd:maxLength &quot;6&quot;^^xsd:integer ]
+               )
+       ]
+.
+ex:q ex:p &quot;abcd&quot;^^xsd:string.
+</pre>
+  <p>In the case above the system can then infer that <code>ex:q</code> is 
+  also of type <code>ex:RE</code>.</p>
+  <p>Datatype restrictions are used by the <a 
+  href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" class="link">OWL
+  RL Extensions</a> extension class.</p>
+  <p>The implementation is not 100% complete. Some things that an ideal 
+  implementation should do are not done yet like:</p>
+  <ul>
+    <li>
+      checking whether a facet is of a datatype that is allowed for that 
+      facet
+    </li>
+    <li>
+      handling of non-literals in the facets (ie, if the resource is 
+      defined to be of type literal, but whose value is defined via a 
+      separate 'owl:sameAs' somewhere else)
+    </li>
+  </ul>
+
+<hr />
+<div class="fields">      <p><strong>Requires:</strong>
+        <a href="http://rdflib.net" target="_top">RDFLib</a>, 2.2.2. and 
+        higher
+      </p>
+      <p><strong>License:</strong>
+        This software is available for use under the <a 
+        href="http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
+        target="_top">W3C Software License</a>
+      </p>
+      <p><strong>Organization:</strong>
+        <a href="http://www.w3.org" target="_top">World Wide Web 
+        Consortium</a>
+      </p>
+      <p><strong>Author:</strong>
+        <a href="http://ahref=&quot;http://www.w3.org/People/Ivan/&quot;" 
+        target="_top">Ivan Herman</a>
+      </p>
+      <p><strong>Contact:</strong>
+        Ivan Herman, ivan@w3.org
+      </p>
+</div><!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html" class="summary-name">RestrictedDatatype</a><br />
+      Implementation of a datatype with facets, ie, datatype with 
+        restrictions.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.RestrictedDatatype-module.html#_lit_to_value" class="summary-sig-name" onclick="show_private();">_lit_to_value</a>(<span class="summary-sig-arg">dt</span>,
+        <span class="summary-sig-arg">v</span>)</span><br />
+      This method is used to convert a string to a value with facet 
+      checking.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#_lit_to_value">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">boolean</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.RestrictedDatatype-module.html#_lang_range_check" class="summary-sig-name" onclick="show_private();">_lang_range_check</a>(<span class="summary-sig-arg">range</span>,
+        <span class="summary-sig-arg">lang</span>)</span><br />
+      Implementation of the extended filtering algorithm, as defined in 
+      point 3.3.2, of <a href="http://www.rfc-editor.org/rfc/rfc4647.txt" 
+      target="_top">RFC 4647</a>, on matching language ranges and language 
+      tags.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#_lang_range_check">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.RestrictedDatatype-module.html#extract_faceted_datatypes" class="summary-sig-name">extract_faceted_datatypes</a>(<span class="summary-sig-arg">core</span>,
+        <span class="summary-sig-arg">graph</span>)</span><br />
+      Extractions of restricted (ie, faceted) datatypes from the graph.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#extract_faceted_datatypes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__author__"></a><span class="summary-name">__author__</span> = <code title="'Ivan Herman'"><code class="variable-quote">'</code><code class="variable-string">Ivan Herman</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#__license__" class="summary-name">__license__</a> = <code title="u'W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal\
+/2002/copyright-software-20021231'"><code class="variable-quote">u'</code><code class="variable-string">W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MIN_MAX"></a><span class="summary-name">MIN_MAX</span> = <code title="0">0</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LENGTH"></a><span class="summary-name">LENGTH</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LENGTH_AND_PATTERN"></a><span class="summary-name">LENGTH_AND_PATTERN</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LENGTH_PATTERN_LRANGE"></a><span class="summary-name">LENGTH_PATTERN_LRANGE</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#Datatypes_per_facets" class="summary-name">Datatypes_per_facets</a> = <code title="{0: [rdflib.URIRef('http://www.w3.org/2002/07/owl#rational'),
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#decimal'),
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#integer'),
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonNegativeIntege\
+r'),
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonPositiveIntege\
+r'),
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#positiveInteger')\
+..."><code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-group">[</code>rdflib.URIRef('http://www.w3.org/2<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#facetable_datatypes" class="summary-name">facetable_datatypes</a> = <code title="[rdflib.URIRef('http://www.w3.org/2002/07/owl#rational'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#decimal'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#integer'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonNegativeInteger'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonPositiveInteger'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#positiveInteger'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#negativeInteger'),
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#long'),
+..."><code class="variable-group">[</code>rdflib.URIRef('http://www.w3.org/2002/0<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#AllDifferent" class="summary-name">AllDifferent</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#AllDifferent')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Al<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#AllDisjointClasses" class="summary-name">AllDisjointClasses</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#AllDisjointClasses')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#AllDisjointProperties" class="summary-name">AllDisjointProperties</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#AllDisjointProperties')">rdflib.URIRef('http://www.w3.org/2002/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#Annotation" class="summary-name">Annotation</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Annotation')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Anno<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#AnnotationProperty" class="summary-name">AnnotationProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#AnnotationProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#AsymmetricProperty" class="summary-name">AsymmetricProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#AsymmetricProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Axiom"></a><span class="summary-name">Axiom</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Axiom')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Axiom')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#BottomDataProperty" class="summary-name">BottomDataProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#BottomDataProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#BottomObjectProperty" class="summary-name">BottomObjectProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#BottomObjectProperty')">rdflib.URIRef('http://www.w3.org/2002/0<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#DataRange" class="summary-name">DataRange</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#DataRange')">rdflib.URIRef('http://www.w3.org/2002/07/owl#DataR<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#DatatypeProperty" class="summary-name">DatatypeProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#DatatypeProperty')">rdflib.URIRef('http://www.w3.org/2002/07/ow<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#DeprecatedClass" class="summary-name">DeprecatedClass</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#DeprecatedClass')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#DeprecatedProperty" class="summary-name">DeprecatedProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#DeprecatedProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#FunctionalProperty" class="summary-name">FunctionalProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#FunctionalProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#InverseFunctionalProperty" class="summary-name">InverseFunctionalProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#InverseFunctionalProperty\
+')">rdflib.URIRef('http://www.w3.org/2<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#IrreflexiveProperty" class="summary-name">IrreflexiveProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#IrreflexiveProperty')">rdflib.URIRef('http://www.w3.org/2002/07<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#NamedIndividual" class="summary-name">NamedIndividual</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#NamedIndividual')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#NegativePropertyAssertion" class="summary-name">NegativePropertyAssertion</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#NegativePropertyAssertion\
+')">rdflib.URIRef('http://www.w3.org/2<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Nothing"></a><span class="summary-name">Nothing</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Nothing')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Nothing')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="OWLClass"></a><span class="summary-name">OWLClass</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Class')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Class')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="OWLNS"></a><span class="summary-name">OWLNS</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#')">rdflib.URIRef('http://www.w3.org/2002/07/owl#')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#OWLpredicate" class="summary-name">OWLpredicate</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#predicate')">rdflib.URIRef('http://www.w3.org/2002/07/owl#pr<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#OWLsubject" class="summary-name">OWLsubject</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#subject')">rdflib.URIRef('http://www.w3.org/2002/07/owl#subj<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#ObjectProperty" class="summary-name">ObjectProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#ObjectProperty')">rdflib.URIRef('http://www.w3.org/2002/07/owl#<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#Ontology" class="summary-name">Ontology</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Ontology')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Ontolo<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#OntologyProperty" class="summary-name">OntologyProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#OntologyProperty')">rdflib.URIRef('http://www.w3.org/2002/07/ow<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#ReflexiveProperty" class="summary-name">ReflexiveProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#ReflexiveProperty')">rdflib.URIRef('http://www.w3.org/2002/07/o<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#Restriction" class="summary-name">Restriction</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Restriction')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Res<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#SelfRestriction" class="summary-name">SelfRestriction</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#SelfRestriction')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#SymmetricProperty" class="summary-name">SymmetricProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#SymmetricProperty')">rdflib.URIRef('http://www.w3.org/2002/07/o<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="Thing"></a><span class="summary-name">Thing</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#Thing')">rdflib.URIRef('http://www.w3.org/2002/07/owl#Thing')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#TopDataProperty" class="summary-name">TopDataProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#TopDataProperty')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#TopObjectProperty" class="summary-name">TopObjectProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#TopObjectProperty')">rdflib.URIRef('http://www.w3.org/2002/07/o<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#TransitiveProperty" class="summary-name">TransitiveProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#TransitiveProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'RDFClosure'"><code class="variable-quote">'</code><code class="variable-string">RDFClosure</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#allValuesFrom" class="summary-name">allValuesFrom</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#allValuesFrom')">rdflib.URIRef('http://www.w3.org/2002/07/owl#a<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#annotatedProperty" class="summary-name">annotatedProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#annotatedProperty')">rdflib.URIRef('http://www.w3.org/2002/07/o<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#annotatedSource" class="summary-name">annotatedSource</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#annotatedSource')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#annotatedTarget" class="summary-name">annotatedTarget</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#annotatedTarget')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#assertionProperty" class="summary-name">assertionProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#assertionProperty')">rdflib.URIRef('http://www.w3.org/2002/07/o<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#backwardCompatibleWith" class="summary-name">backwardCompatibleWith</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#backwardCompatibleWith')">rdflib.URIRef('http://www.w3.org/2002<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#cardinality" class="summary-name">cardinality</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#cardinality')">rdflib.URIRef('http://www.w3.org/2002/07/owl#car<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#complementOf" class="summary-name">complementOf</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#complementOf')">rdflib.URIRef('http://www.w3.org/2002/07/owl#co<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#datatypeComplementOf" class="summary-name">datatypeComplementOf</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#datatypeComplementOf')">rdflib.URIRef('http://www.w3.org/2002/0<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#deprecated" class="summary-name">deprecated</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#deprecated')">rdflib.URIRef('http://www.w3.org/2002/07/owl#depr<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#differentFrom" class="summary-name">differentFrom</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#differentFrom')">rdflib.URIRef('http://www.w3.org/2002/07/owl#d<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#disjointClasses" class="summary-name">disjointClasses</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#disjointClasses')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#disjointUnionOf" class="summary-name">disjointUnionOf</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#disjointUnionOf')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#disjointWith" class="summary-name">disjointWith</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#disjointWith')">rdflib.URIRef('http://www.w3.org/2002/07/owl#di<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#distinctMembers" class="summary-name">distinctMembers</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#distinctMembers')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#equivalentClass" class="summary-name">equivalentClass</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')">rdflib.URIRef('http://www.w3.org/2002/07/owl<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#equivalentProperty" class="summary-name">equivalentProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentProperty')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hasKey"></a><span class="summary-name">hasKey</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#hasKey')">rdflib.URIRef('http://www.w3.org/2002/07/owl#hasKey')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hasSelf"></a><span class="summary-name">hasSelf</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#hasSelf')">rdflib.URIRef('http://www.w3.org/2002/07/owl#hasSelf')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#hasValue" class="summary-name">hasValue</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#hasValue')">rdflib.URIRef('http://www.w3.org/2002/07/owl#hasVal<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="imports"></a><span class="summary-name">imports</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#imports')">rdflib.URIRef('http://www.w3.org/2002/07/owl#imports')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#incompatibleWith" class="summary-name">incompatibleWith</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#incompatibleWith')">rdflib.URIRef('http://www.w3.org/2002/07/ow<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#intersectionOf" class="summary-name">intersectionOf</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#intersectionOf')">rdflib.URIRef('http://www.w3.org/2002/07/owl#<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#inverseOf" class="summary-name">inverseOf</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#inverseOf')">rdflib.URIRef('http://www.w3.org/2002/07/owl#inver<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#maxCardinality" class="summary-name">maxCardinality</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#maxCardinality')">rdflib.URIRef('http://www.w3.org/2002/07/owl#<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#maxQualifiedCardinality" class="summary-name">maxQualifiedCardinality</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#maxQualifiedCardinality')">rdflib.URIRef('http://www.w3.org/200<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="members"></a><span class="summary-name">members</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#members')">rdflib.URIRef('http://www.w3.org/2002/07/owl#members')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#minCardinality" class="summary-name">minCardinality</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#minCardinality')">rdflib.URIRef('http://www.w3.org/2002/07/owl#<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#minQualifiedCardinality" class="summary-name">minQualifiedCardinality</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#minQualifiedCardinality')">rdflib.URIRef('http://www.w3.org/200<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="onClass"></a><span class="summary-name">onClass</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#onClass')">rdflib.URIRef('http://www.w3.org/2002/07/owl#onClass')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#onDataRange" class="summary-name">onDataRange</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#onDataRange')">rdflib.URIRef('http://www.w3.org/2002/07/owl#onD<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#onDatatype" class="summary-name">onDatatype</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#onDatatype')">rdflib.URIRef('http://www.w3.org/2002/07/owl#onDa<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#onProperties" class="summary-name">onProperties</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#onProperties')">rdflib.URIRef('http://www.w3.org/2002/07/owl#on<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#onProperty" class="summary-name">onProperty</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#onProperty')">rdflib.URIRef('http://www.w3.org/2002/07/owl#onPr<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="oneOf"></a><span class="summary-name">oneOf</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#oneOf')">rdflib.URIRef('http://www.w3.org/2002/07/owl#oneOf')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#priorVersion" class="summary-name">priorVersion</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#priorVersion')">rdflib.URIRef('http://www.w3.org/2002/07/owl#pr<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#propertyChainAxiom" class="summary-name">propertyChainAxiom</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#propertyChainAxiom')">rdflib.URIRef('http://www.w3.org/2002/07/<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#propertyDisjointWith" class="summary-name">propertyDisjointWith</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#propertyDisjointWith')">rdflib.URIRef('http://www.w3.org/2002/0<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#qualifiedCardinality" class="summary-name">qualifiedCardinality</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#qualifiedCardinality')">rdflib.URIRef('http://www.w3.org/2002/0<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="sameAs"></a><span class="summary-name">sameAs</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#sameAs')">rdflib.URIRef('http://www.w3.org/2002/07/owl#sameAs')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#someValuesFrom" class="summary-name">someValuesFrom</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#someValuesFrom')">rdflib.URIRef('http://www.w3.org/2002/07/owl#<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#sourceIndividual" class="summary-name">sourceIndividual</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#sourceIndividual')">rdflib.URIRef('http://www.w3.org/2002/07/ow<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#targetIndividual" class="summary-name">targetIndividual</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#targetIndividual')">rdflib.URIRef('http://www.w3.org/2002/07/ow<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#targetValue" class="summary-name">targetValue</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#targetValue')">rdflib.URIRef('http://www.w3.org/2002/07/owl#tar<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="unionOf"></a><span class="summary-name">unionOf</span> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#unionOf')">rdflib.URIRef('http://www.w3.org/2002/07/owl#unionOf')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#versionIRI" class="summary-name">versionIRI</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#versionIRI')">rdflib.URIRef('http://www.w3.org/2002/07/owl#vers<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#versionInfo" class="summary-name">versionInfo</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#versionInfo')">rdflib.URIRef('http://www.w3.org/2002/07/owl#ver<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RestrictedDatatype-module.html#withRestrictions" class="summary-name">withRestrictions</a> = <code title="rdflib.URIRef('http://www.w3.org/2002/07/owl#withRestrictions')">rdflib.URIRef('http://www.w3.org/2002/07/ow<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<p class="indent-wrapped-lines"><b>Imports:</b>
+  <span title="re">re</span>,
+  <span title="RDFClosure.OWL.OWLNS">ns_owl</span>,
+  <span title="rdflib.RDFS.Datatype">Datatype</span>,
+  <span title="rdflib.RDF.type">type</span>,
+  <span title="rdflib.RDF.RDFNS">ns_rdf</span>,
+  <span title="rdflib.Literal.Literal">rdflibLiteral</span>,
+  <span title="rdflib.Literal._XSD_NS">ns_xsd</span>,
+  <span title="RDFClosure.DatatypeHandling.AltXSDToPYTHON">AltXSDToPYTHON</span>,
+  <a href="RDFClosure.OWLRLExtras-module.html#Namespace" title="RDFClosure.OWLRLExtras.Namespace">Namespace</a>
+</p><br />
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_lit_to_value"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_lit_to_value</span>(<span class="sig-arg">dt</span>,
+        <span class="sig-arg">v</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#_lit_to_value">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is used to convert a string to a value with facet 
+  checking. RDF Literals are converted to Python values using this method; 
+  if there is a problem, an extension is created (and caught higher up to 
+  generate an error message).</p>
+  <p>The method is the equivalent of all the methods in the <a 
+  href="RDFClosure.DatatypeHandling-module.html" 
+  class="link">DatatypeHandling</a> module, and is registered to the system
+  run time, as new restricted datatypes are discovered.</p>
+  <p>(Technically, the registration is done via a <code>lambda v: 
+  _lit_to_value(self,v)</code> setting from within a <a 
+  href="RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html" 
+  class="link">RestrictedDatatype</a> instance)</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dt</code></strong> (<a 
+          href="RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html"
+          class="link">RestrictedDatatype</a>) - faceted datatype</li>
+        <li><strong class="pname"><code>v</code></strong> - literal to be converted and checked</li>
+    </ul></dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - invalid literal value</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_lang_range_check"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_lang_range_check</span>(<span class="sig-arg">range</span>,
+        <span class="sig-arg">lang</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#_lang_range_check">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Implementation of the extended filtering algorithm, as defined in 
+  point 3.3.2, of <a href="http://www.rfc-editor.org/rfc/rfc4647.txt" 
+  target="_top">RFC 4647</a>, on matching language ranges and language 
+  tags. Needed to handle the <code>rdf:PlainLiteral</code> datatype.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>range</code></strong> - language range</li>
+        <li><strong class="pname"><code>lang</code></strong> - language tag</li>
+    </ul></dd>
+    <dt>Returns: boolean</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extract_faceted_datatypes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract_faceted_datatypes</span>(<span class="sig-arg">core</span>,
+        <span class="sig-arg">graph</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#extract_faceted_datatypes">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extractions of restricted (ie, faceted) datatypes from the graph.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>core</code></strong> (<a href="RDFClosure.Closure.Core-class.html" 
+          class="link">Closure.Core</a>) - the core closure instance that is being handled</li>
+        <li><strong class="pname"><code>graph</code></strong> - RDFLib graph</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>array of <a 
+          href="RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html"
+          class="link">RestrictedDatatype</a> instances</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__license__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">__license__</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">u'</code><code class="variable-string">W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">/2002/copyright-software-20021231</code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Datatypes_per_facets"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Datatypes_per_facets</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-group">[</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#rational')<code class="variable-op">,</code>
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#decimal')<code class="variable-op">,</code>
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#integer')<code class="variable-op">,</code>
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonNegativeIntege<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+r')<code class="variable-op">,</code>
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonPositiveIntege<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+r')<code class="variable-op">,</code>
+     rdflib.URIRef('http://www.w3.org/2001/XMLSchema#positiveInteger')<code class="variable-op"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="facetable_datatypes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">facetable_datatypes</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#rational')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#decimal')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#integer')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonNegativeInteger')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#nonPositiveInteger')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#positiveInteger')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#negativeInteger')<code class="variable-op">,</code>
+ rdflib.URIRef('http://www.w3.org/2001/XMLSchema#long')<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="AllDifferent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">AllDifferent</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#AllDifferent')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="AllDisjointClasses"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">AllDisjointClasses</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#AllDisjointClasses')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="AllDisjointProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">AllDisjointProperties</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#AllDisjointProperties')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Annotation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Annotation</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#Annotation')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="AnnotationProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">AnnotationProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#AnnotationProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="AsymmetricProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">AsymmetricProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#AsymmetricProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="BottomDataProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">BottomDataProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#BottomDataProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="BottomObjectProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">BottomObjectProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#BottomObjectProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DataRange"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">DataRange</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#DataRange')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DatatypeProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">DatatypeProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#DatatypeProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DeprecatedClass"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">DeprecatedClass</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#DeprecatedClass')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DeprecatedProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">DeprecatedProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#DeprecatedProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="FunctionalProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">FunctionalProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#FunctionalProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="InverseFunctionalProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">InverseFunctionalProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#InverseFunctionalProperty<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="IrreflexiveProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">IrreflexiveProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#IrreflexiveProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="NamedIndividual"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">NamedIndividual</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#NamedIndividual')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="NegativePropertyAssertion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">NegativePropertyAssertion</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#NegativePropertyAssertion<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="OWLpredicate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">OWLpredicate</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#predicate')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="OWLsubject"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">OWLsubject</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#subject')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ObjectProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ObjectProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#ObjectProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Ontology"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Ontology</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#Ontology')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="OntologyProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">OntologyProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#OntologyProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ReflexiveProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ReflexiveProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#ReflexiveProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Restriction"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Restriction</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#Restriction')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="SelfRestriction"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">SelfRestriction</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#SelfRestriction')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="SymmetricProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">SymmetricProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#SymmetricProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="TopDataProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TopDataProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#TopDataProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="TopObjectProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TopObjectProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#TopObjectProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="TransitiveProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TransitiveProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#TransitiveProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="allValuesFrom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">allValuesFrom</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#allValuesFrom')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="annotatedProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">annotatedProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#annotatedProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="annotatedSource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">annotatedSource</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#annotatedSource')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="annotatedTarget"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">annotatedTarget</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#annotatedTarget')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="assertionProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">assertionProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#assertionProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="backwardCompatibleWith"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">backwardCompatibleWith</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#backwardCompatibleWith')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="cardinality"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">cardinality</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#cardinality')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="complementOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">complementOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#complementOf')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="datatypeComplementOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">datatypeComplementOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#datatypeComplementOf')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="deprecated"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">deprecated</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#deprecated')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="differentFrom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">differentFrom</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#differentFrom')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="disjointClasses"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">disjointClasses</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#disjointClasses')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="disjointUnionOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">disjointUnionOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#disjointUnionOf')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="disjointWith"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">disjointWith</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#disjointWith')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="distinctMembers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">distinctMembers</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#distinctMembers')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="equivalentClass"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">equivalentClass</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="equivalentProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">equivalentProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="hasValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">hasValue</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#hasValue')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="incompatibleWith"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">incompatibleWith</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#incompatibleWith')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="intersectionOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">intersectionOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#intersectionOf')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="inverseOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">inverseOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#inverseOf')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="maxCardinality"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">maxCardinality</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#maxCardinality')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="maxQualifiedCardinality"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">maxQualifiedCardinality</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#maxQualifiedCardinality')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="minCardinality"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">minCardinality</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#minCardinality')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="minQualifiedCardinality"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">minQualifiedCardinality</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#minQualifiedCardinality')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="onDataRange"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">onDataRange</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#onDataRange')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="onDatatype"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">onDatatype</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#onDatatype')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="onProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">onProperties</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#onProperties')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="onProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">onProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#onProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="priorVersion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">priorVersion</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#priorVersion')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="propertyChainAxiom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">propertyChainAxiom</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#propertyChainAxiom')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="propertyDisjointWith"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">propertyDisjointWith</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#propertyDisjointWith')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="qualifiedCardinality"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">qualifiedCardinality</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#qualifiedCardinality')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="someValuesFrom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">someValuesFrom</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#someValuesFrom')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sourceIndividual"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">sourceIndividual</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#sourceIndividual')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="targetIndividual"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">targetIndividual</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#targetIndividual')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="targetValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">targetValue</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#targetValue')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="versionIRI"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">versionIRI</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#versionIRI')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="versionInfo"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">versionInfo</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#versionInfo')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="withRestrictions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">withRestrictions</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.URIRef('http://www.w3.org/2002/07/owl#withRestrictions')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

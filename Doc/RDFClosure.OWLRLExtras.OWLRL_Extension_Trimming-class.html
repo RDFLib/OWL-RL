@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        <a href="RDFClosure.OWLRLExtras-module.html">Module&nbsp;OWLRLExtras</a> ::
+        Class&nbsp;OWLRL_Extension_Trimming
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class OWLRL_Extension_Trimming</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension_Trimming">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+                <a href="RDFClosure.Closure.Core-class.html">Closure.Core</a> --+            
+                               |            
+      <a href="RDFClosure.RDFSClosure.RDFS_Semantics-class.html">RDFSClosure.RDFS_Semantics</a> --+        
+                                   |        
+                <a href="RDFClosure.Closure.Core-class.html">Closure.Core</a> --+   |        
+                               |   |        
+           <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a> --+        
+                                   |        
+<a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">CombinedClosure.RDFS_OWLRL_Semantics</a> --+    
+                                       |    
+                         <a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRL_Extension</a> --+
+                                           |
+                                          <strong class="uidshort">OWLRL_Extension_Trimming</strong>
+</pre>
+
+<hr />
+<p>This Class adds only one feature to <a 
+  href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" 
+  class="link">OWLRL_Extension</a>: to initialize with a trimming flag set 
+  to <code>True</code> by default.</p>
+  <p>This is pretty experimental and probably contentious: this class 
+  <i>removes</i> a number of triples from the Graph at the very end of the 
+  processing steps. These triples are either the by-products of the 
+  deductive closure calculation or are axiom like triples that are added 
+  following the rules of OWL 2 RL. While these triples <i>are necessary</i>
+  for the correct inference of really 'useful' triples, they may not be of 
+  interest for the application for the end result. The triples that are 
+  removed are of the form (following a SPARQL-like notation):</p>
+  <ul>
+    <li>
+      <code>?x owl:sameAs ?x</code>, <code>?x rdfs:subClassOf ?x</code>, 
+      <code>?x rdfs:subPropertyOf</code>, <code>?x owl:equivalentClass 
+      ?x</code> type triples
+    </li>
+    <li>
+      <code>?x rdfs:subClassOf rdf:Resource</code>, <code>?x 
+      rdfs:subClassOf owl:Thing</code>, <code>?x rdf:type 
+      rdf:Resource</code>, <code>owl:Nothing rdfs:subClassOf ?x</code> type
+      triples
+    </li>
+    <li>
+      For a datatype that does <i>not</i> appear explicitly in a type 
+      assignments (ie, in a <code>?x rdf:type dt</code>) the corresponding 
+      <code>dt rdf:type owl:Datatype</code> and <code>dt rdf:type 
+      owl:DataRange</code> triples, as well as the disjointness statements 
+      with other datatypes
+    </li>
+    <li>
+      annotation property axioms
+    </li>
+    <li>
+      a number of axiomatic triples on <code>owl:Thing</code>, 
+      <code>owl:Nothing</code> and <code>rdf:Resource</code> (eg, 
+      <code>owl:Nothing rdf:type owl:Class</code>, <code>owl:Thing 
+      owl:equivalentClass rdf:Resource</code>, etc.)
+    </li>
+  </ul>
+  <p>Trimming is the only feature of this class, done in the <a 
+  href="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html#post_process"
+  class="link">post_process</a> step. If users extend <a 
+  href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html" 
+  class="link">OWLRL_Extension</a>, this class can be safely mixed in via 
+  multiple inheritance.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">graph</span>,
+        <span class="summary-sig-arg">axioms</span>,
+        <span class="summary-sig-arg">daxioms</span>,
+        <span class="summary-sig-arg">rdfs</span>=<span class="summary-sig-default">False</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension_Trimming.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html#post_process" class="summary-sig-name">post_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Do some post-processing step performing the trimming of the graph.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension_Trimming.post_process">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRL_Extension</a></code></b>:
+      <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#add_axioms">add_axioms</a></code>,
+      <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#one_time_rules">one_time_rules</a></code>,
+      <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#rules">rules</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRL_Extension</a></code></b> (private):
+      <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#_subsume_restricted_datatypes" onclick="show_private();">_subsume_restricted_datatypes</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">CombinedClosure.RDFS_OWLRL_Semantics</a></code></b>:
+      <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_d_axioms">add_d_axioms</a></code>,
+      <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype">add_new_datatype</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
+      <code><a href="RDFClosure.Closure.Core-class.html#add_error">add_error</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#closure">closure</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#empty_stored_triples">empty_stored_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#flush_stored_triples">flush_stored_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#get_literal_value">get_literal_value</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#pre_process">pre_process</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#store_triple">store_triple</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b> (private):
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_class_axioms" onclick="show_private();">_class_axioms</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_classes" onclick="show_private();">_classes</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_equality" onclick="show_private();">_equality</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_get_resource_or_literal" onclick="show_private();">_get_resource_or_literal</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_list" onclick="show_private();">_list</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_one_time_rules_datatypes" onclick="show_private();">_one_time_rules_datatypes</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_one_time_rules_misc" onclick="show_private();">_one_time_rules_misc</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_properties" onclick="show_private();">_properties</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_property_chain" onclick="show_private();">_property_chain</a></code>,
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_schema_vocabulary" onclick="show_private();">_schema_vocabulary</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRL_Extension</a></code></b>:
+      <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#extra_axioms">extra_axioms</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html">OWLRL_Extension</a></code></b>:
+      <code><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#restricted_datatypes">restricted_datatypes</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">CombinedClosure.RDFS_OWLRL_Semantics</a></code></b>:
+      <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#full_binding_triples">full_binding_triples</a></code>,
+      <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#rdfs">rdfs</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
+      <code><a href="RDFClosure.Closure.Core-class.html#IMaxNum">IMaxNum</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#added_triples">added_triples</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#axioms">axioms</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#daxioms">daxioms</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#error_messages">error_messages</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#graph">graph</a></code>,
+      <code><a href="RDFClosure.Closure.Core-class.html#literal_proxies">literal_proxies</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b>:
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#bnodes">bnodes</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">graph</span>,
+        <span class="sig-arg">axioms</span>,
+        <span class="sig-arg">daxioms</span>,
+        <span class="sig-arg">rdfs</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension_Trimming.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>graph</code></strong> (rdflib.Graph) - the RDF graph to be extended</li>
+        <li><strong class="pname"><code>axioms</code></strong> (Boolean) - whether (non-datatype) axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>daxioms</code></strong> (Boolean) - whether datatype axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>rdfs</code></strong> (boolean) - whether RDFS extension is done</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#__init__">OWLRL.OWLRL_Semantics.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="post_process"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">post_process</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension_Trimming.post_process">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Do some post-processing step performing the trimming of the graph. See
+  the <a href="RDFClosure.OWLRLExtras.OWLRL_Extension_Trimming-class.html" 
+  class="link">class description</a> for further details.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#post_process">OWLRL.OWLRL_Semantics.post_process</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
