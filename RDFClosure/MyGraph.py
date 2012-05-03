@@ -25,6 +25,7 @@ __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+import sys
 import rdflib
 if rdflib.__version__ >= "3.0.0" :
 	from rdflib	import Graph
@@ -36,6 +37,14 @@ from rdflib	import Namespace
 _xml_serializer_name	= "my-rdfxml-serializer"
 _turtle_serializer_name	= "my-turtle-serializer"
 _turtle_parser_name     = "my-turtle-parser"
+_json_serializer_name	= "my-json-ld"
+
+_can_json = rdflib.__version__ >= "3.2.0" and sys.version_info[1] >= 7
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 
 #########################################################################################################
 class MyGraph(Graph) :
@@ -51,33 +60,20 @@ class MyGraph(Graph) :
 
 	@cvar xml_serializer_registered_2: flag to avoid duplicate registration for RDF/XML for rdflib 2.*
 	@type xml_serializer_registered_2: boolean
-	@cvar xml_serializer_registered_3: flag to avoid duplicate registration for RDF/XML for rdflib 3.*
-	@type xml_serializer_registered_3: boolean
 	@cvar turtle_serializer_registered_2: flag to avoid duplicate registration for Turtle for rdflib 2.*
 	@type turtle_serializer_registered_2: boolean
 	@cvar turtle_parser_registered_2: flag to avoid duplicate registration for Turtle for rdflib 2.*
 	@type turtle_parser_registered_2: boolean
 	"""
 	xml_serializer_registered_2		= False
-	xml_serializer_registered_3		= False
 	turtle_serializer_registered_2	= False
 	turtle_serializer_registered_3	= False
 	turtle_parser_registered_2		= False
+	json_serializer_registered      = False
 	
 	def __init__(self) :
 		Graph.__init__(self)
 
-	def _register_XML_serializer_3(self) :
-		"""The default XML Serializer of RDFLib 3.X is buggy, mainly when handling lists. An L{own version<serializers.PrettyXMLSerializer_3>} is
-		registered in RDFlib and used in the rest of the package. 
-		"""
-		if not MyGraph.xml_serializer_registered_3 :
-			from rdflib.plugin import register
-			from rdflib.serializer import Serializer
-			register(_xml_serializer_name, Serializer,
-					 "RDFClosure.serializers.PrettyXMLSerializer_3", "PrettyXMLSerializer")
-			MyGraph.xml_serializer_registered_3 = True
-				
 	def _register_XML_serializer_2(self) :
 		"""The default XML Serializer of RDFLib 2.X is buggy, mainly when handling lists.
 		An L{own version<serializers.PrettyXMLSerializer>} is
@@ -89,6 +85,16 @@ class MyGraph(Graph) :
 			register(_xml_serializer_name, serializers.Serializer,
 					 "RDFClosure.serializers.PrettyXMLSerializer", "PrettyXMLSerializer")
 			MyGraph.xml_serializer_registered_2 = True
+
+	def _register_JSON_serializer_3(self) :
+		"""JSON LD serializer 
+		"""
+		if not MyGraph.json_serializer_registered :
+			from rdflib.plugin import register
+			from rdflib.serializer import Serializer
+			register(_json_serializer_name, Serializer,
+					 "RDFClosure.serializers.jsonserializer", "JsonSerializer")
+			MyGraph.json_serializer_registered = True
 
 	def _register_Turtle_serializer_2(self) :
 		"""The default Turtle Serializers of RDFLib 2.X is buggy and not very nice as far as the output is concerned.
@@ -138,11 +144,18 @@ class MyGraph(Graph) :
 		if rdflib.__version__ >= "3.0.0" :
 			# this is the easy case
 			if format == "xml" or format == "pretty-xml" :
-				self._register_XML_serializer_3()
-				format = _xml_serializer_name
+				# Fall back to system
+				Graph.serialize(self, format="pretty-xml")
 			elif format == "n3" or format == "turtle" :
 				format = _turtle_serializer_name
 				self._register_Turtle_serializer_3()
+			elif _can_json and (format == "json-ld" or format == "json") :
+				# The new version of the serialziers in RDFLib 3.2.X require this extra round...
+				# I do not have the patience of working out why that is so.
+				self._register_JSON_serializer_3()
+				stream = StringIO()
+				Graph.serialize(self, format=_json_serializer_name, destination = stream)
+				return stream.getvalue()
 		else :
 			if format == "pretty-xml" :
 				self._register_XML_serializer_2()

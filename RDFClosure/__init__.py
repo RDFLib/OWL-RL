@@ -191,6 +191,7 @@ from OWL				import imports
 ################################################################################################################
 RDFXML = "xml"
 TURTLE = "turtle"
+JSON   = "json"
 AUTO   = "auto"
 
 NONE   = "none"
@@ -397,6 +398,10 @@ def convert_graph(options, closureClass = None) :
 		"""Using a non-rdflib Turtle Serializer"""
 		return graph.serialize(format="turtle")
 
+	def __convert_to_json(graph) :
+		"""Using a JSON-LD Serializer"""
+		return graph.serialize(format="json")
+
 	def __convert_to_XML(graph) :
 		"""Using a non-rdflib RDF/XML Serializer"""
 		retval = ""
@@ -485,6 +490,8 @@ def convert_graph(options, closureClass = None) :
 
 	if options.format == TURTLE :
 		return __convert_to_turtle(graph)
+	elif options.format == JSON :
+		return __convert_to_json(graph)
 	else :
 		return __convert_to_XML(graph)
 

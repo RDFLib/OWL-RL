@@ -6,9 +6,11 @@ if platform.node() == 'jay' or platform.node() == 'homer' :
 	# this is the server on W3C
 	sys.path.insert(0,"/home/ivan/W3C/dev/2004/PythonLib-IH")
 	sys.path.insert(0,"/home/ivan/lib/Python")
+else :
+	sys.path.insert(0,"/Users/ivan/Source/PythonModules/rdflib-3")
 
 from optparse import OptionParser, OptionError
-from RDFClosure import convert_graph, RDFXML, TURTLE, AUTO
+from RDFClosure import convert_graph, RDFXML, TURTLE, JSON, AUTO
 
 def main() :
 			
@@ -58,8 +60,8 @@ def main() :
 	parser.add_option("-t", action="store_const", dest="trimming", const="yes",
 		               help="trim the output of OWL 2 RL and extension; shorthand for --trimming=yes [default: %default]")
 	
-	parser.add_option("-o", "-s", "--serialization", "--syntax", action="store", dest="format", choices=[TURTLE,RDFXML], 
-					   help="output format; argument must be turtle|xml [default: %default]")
+	parser.add_option("-o", "-s", "--serialization", "--syntax", action="store", dest="format", choices=[TURTLE,JSON,RDFXML], 
+					   help="output format; argument must be turtle|json|xml [default: %default]")
 	
 	parser.add_option("-i", "--input_syntax", action="store", dest="iformat", choices=[AUTO,TURTLE,RDFXML],
 					   help="format of intput; argument must be auto|turtle|xml [default: %default]; auto means that file suffix defines the format. This flag is valid for all input files.")

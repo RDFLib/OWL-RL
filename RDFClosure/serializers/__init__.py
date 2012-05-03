@@ -19,12 +19,6 @@ The differences, v.a.v. the original, for the Turtle serializer:
  - the original Turtle had a bug and did not generate the shorhands for lists
  - changed the indentation rules for anonymous ('squared') blank nodes	
  
-Obviously, these serializers can be used directly, too. Here is a way to do it (for the turtle one)::
-  from rdflib.plugin import register
-  from rdflib.syntax import serializer, serializers
-  register("my-turtle",serializers.Serializer,"RDFClosure.serializers.TurtleSerializer","TurtleSerializer")
-  ...
-  graph.serialize(format="my-turtle")
  
 @requires: U{RDFLib<http://rdflib.net>}, 2.2.2. and higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
