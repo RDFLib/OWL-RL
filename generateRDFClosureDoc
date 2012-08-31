@@ -1,0 +1,2 @@
+#!/bin/sh
+epydoc -v --show-imports -o Doc-RDFClosure --css epydoc.css RDFClosure
