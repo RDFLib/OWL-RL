@@ -161,7 +161,7 @@ The L{convert_graph<convert_graph>} entry point used, for example, by the CGI se
 $Id: __init__.py,v 1.39 2011/08/04 13:53:01 ivan Exp $ $Date: 2011/08/04 13:53:01 $
 """
 
-__version__ = "4.2.2"
+__version__ = "4.2.3"
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
@@ -178,8 +178,6 @@ if rdflib.__version__ >= "3.0.0" :
 else :
 	from rdflib.Literal 	import _XSD_NS as ns_xsd
 	from rdflib.Literal		import Literal as rdflibLiteral
-
-from MyGraph import MyGraph as Graph
 
 import DatatypeHandling, Closure
 from OWLRLExtras 		import OWLRL_Extension, OWLRL_Extension_Trimming
@@ -436,7 +434,11 @@ def convert_graph(options, closureClass = None) :
 
 	__modify_request_header()
 
-	graph = Graph()
+	try :
+		from pyRdfaExtras import MyGraph
+		graph = MyGraph()
+	except :
+		graph = Graph()
 	
 	# Just to be sure that this attribute does not create issues with older versions of the service...
 	# the try statement should be removed, eventually...
