@@ -8,6 +8,7 @@ if platform.node() == 'jay' or platform.node() == 'homer' :
 	sys.path.insert(0,"/home/ivan/lib/Python")
 else :
 	sys.path.insert(0,"/Users/ivan/Source/PythonModules/rdflib-3")
+#	sys.path.insert(0,"/Users/ivan/Source/PythonModules/RDFLib-repo/rdflib-3.2.1/")
 
 from optparse import OptionParser, OptionError
 from RDFClosure import convert_graph, RDFXML, TURTLE, JSON, AUTO
