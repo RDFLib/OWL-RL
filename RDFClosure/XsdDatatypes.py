@@ -11,23 +11,18 @@ Lists of XSD datatypes and their mutual relationships
 
 """
 
-"""
-$Id: XsdDatatypes.py,v 1.4 2011/08/04 12:41:58 ivan Exp $ $Date: 2011/08/04 12:41:58 $
-"""
-
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
-from RDFClosure.RDFS 	import RDFNS as ns_rdf
-from RDFClosure.RDFS	import Literal
-from RDFClosure.RDFS	import XMLLiteral
+# noinspection PyPep8Naming
+from RDFClosure.RDFS import RDFNS as ns_rdf
+from RDFClosure.RDFS import Literal
+from RDFClosure.RDFS import XMLLiteral
 
 import rdflib
-if rdflib.__version__ >= "3.0.0" :
-	from rdflib.namespace 	import XSD as ns_xsd
-else :
-	from rdflib.Literal 	import _XSD_NS as ns_xsd
+# noinspection PyPep8Naming
+from rdflib.namespace 	import XSD as ns_xsd
 
 #: The basic XSD types used everywhere; this means not the complete set of day/month types
 _Common_XSD_Datatypes = [

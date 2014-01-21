@@ -7,6 +7,6 @@ setup(name="RDFClosure",
 	  maintainer="Ivan Herman",
 	  maintainer_email="ivan@ivan-herman.net",
       packages=['RDFClosure','RDFClosure.serializers','RDFClosure.parsers','RDFClosure.parsers.n3p'],
-	  py_modules=['rational']      
+	  py_modules=['rational'], requires=['rdflib']
 )
 

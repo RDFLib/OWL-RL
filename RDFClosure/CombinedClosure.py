@@ -22,15 +22,16 @@ __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
-from RDFClosure.RDFS 	import Resource, Class, Datatype
-from RDFClosure.OWL		import OWLClass, Thing, equivalentClass, DataRange
+from RDFClosure.RDFS import Resource, Class, Datatype
+from RDFClosure.OWL  import OWLClass, Thing, equivalentClass, DataRange
 
-from RDFClosure.RDFSClosure 	import RDFS_Semantics
-from RDFClosure.OWLRL			import OWLRL_Semantics
+from RDFClosure.RDFSClosure import RDFS_Semantics
+from RDFClosure.OWLRL       import OWLRL_Semantics
 
 ######################################################################################################
 
-class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics) :
+
+class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 	"""Common subclass of the RDFS and OWL 2 RL semantic classes. All methods simply call back
 	to the functions in the superclasses. This may lead to some unnecessary duplication of terms
 	and rules, but it it not so bad. Also, the additional identification defined for OWL Full,
@@ -50,7 +51,7 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics) :
 		(Class, equivalentClass, OWLClass),
 		(DataRange, equivalentClass, Datatype)
 	]
-	def __init__(self, graph, axioms, daxioms, rdfs = True) :
+	def __init__(self, graph, axioms, daxioms, rdfs=True):
 		"""
 		@param graph: the RDF graph to be extended
 		@type graph: rdflib.Graph
@@ -65,7 +66,7 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics) :
 		RDFS_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
 		self.rdfs = True
 
-	def add_new_datatype(self, uri, conversion_function, datatype_list, subsumption_dict = None, subsumption_key = None, subsumption_list = None ) :
+	def add_new_datatype(self, uri, conversion_function, datatype_list, subsumption_dict=None, subsumption_key=None, subsumption_list=None):
 		"""If an extension wants to add new datatypes, this method should be invoked at initialization time.
 		
 		@param uri : URI for the new datatypes, like owl_ns["Rational"]
@@ -80,8 +81,8 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics) :
 		
 		if datatype_list : datatype_list.append(uri)
 		
-		if subsumption_dict and subsumption_list : 
-			if subsumption_key :
+		if subsumption_dict and subsumption_list:
+			if subsumption_key:
 				subsumption_dict[subsumption_key] = subsumption_list
 			else :
 				subsumption_dict[uri] = subsumption_list
@@ -89,31 +90,34 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics) :
 		AltXSDToPYTHON[uri] = conversion_function
 		use_Alt_lexical_conversions()
 
-	def post_process(self) :
+	def post_process(self):
 		"""Do some post-processing step. This method when all processing is done, but before handling possible
 		errors (ie, the method can add its own error messages). By default, this method is empty, subclasses
 		can add content to it by overriding it.
 		"""
 		OWLRL_Semantics.post_process(self)
 
-	def rules(self, t, cycle_num) :
+	def rules(self, t, cycle_num):
 		"""
 		@param t: a triple (in the form of a tuple)
 		@param cycle_num: which cycle are we in, starting with 1. This value is forwarded to all local rules; it is also used
 		locally to collect the bnodes in the graph.
 		"""
 		OWLRL_Semantics.rules(self, t, cycle_num)
-		if self.rdfs: RDFS_Semantics.rules(self, t, cycle_num)
+		if self.rdfs:
+			RDFS_Semantics.rules(self, t, cycle_num)
 
-	def add_axioms(self) :
-		if self.rdfs: RDFS_Semantics.add_axioms(self)
+	def add_axioms(self):
+		if self.rdfs:
+			RDFS_Semantics.add_axioms(self)
 		OWLRL_Semantics.add_axioms(self)
 
-	def add_d_axioms(self) :
-		if self.rdfs: RDFS_Semantics.add_d_axioms(self)
+	def add_d_axioms(self):
+		if self.rdfs:
+			RDFS_Semantics.add_d_axioms(self)
 		OWLRL_Semantics.add_d_axioms(self)
 
-	def one_time_rules(self) :
+	def one_time_rules(self):
 		"""Adds some extra axioms and calls for the d_axiom part of the OWL Semantics."""
 		for t in self.full_binding_triples : self.store_triple(t)
 

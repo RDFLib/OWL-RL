@@ -11,26 +11,18 @@ Axiomatic triples to be (possibly) added to the final graph.
 
 """
 
-"""
-$Id: AxiomaticTriples.py,v 1.17 2011/08/04 12:41:57 ivan Exp $ $Date: 2011/08/04 12:41:57 $
-"""
-
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
-from RDFClosure.RDFS 		import Seq, Bag, Alt, Statement, Property, XMLLiteral, List
-from RDFClosure.RDFS		import RDFNS as ns_rdf
-from RDFClosure.RDFS 		import subject, predicate, object, type, value, first, rest, nil
-from RDFClosure.RDFS 		import Resource, Class, subClassOf, subPropertyOf, comment, label, domain, range
-from RDFClosure.RDFS 		import seeAlso, isDefinedBy, Literal, Container, ContainerMembershipProperty, member, Datatype
+from RDFClosure.RDFS import Seq, Bag, Alt, Statement, Property, XMLLiteral, List
+from RDFClosure.RDFS import RDFNS as ns_rdf
+from RDFClosure.RDFS import subject, predicate, object, type, value, first, rest, nil
+from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, comment, label, domain, range
+from RDFClosure.RDFS import seeAlso, isDefinedBy, Literal, Container, ContainerMembershipProperty, member, Datatype
 
-if rdflib.__version__ >= "3.0.0" :
-	from rdflib.namespace 	import XSD as ns_xsd
-else :
-	from rdflib.Literal 	import _XSD_NS as ns_xsd
-
+from rdflib.namespace 	import XSD as ns_xsd
 from OWL import *
 
 #: Simple RDF axiomatic triples (typing of subject, predicate, first, rest, etc)
@@ -586,7 +578,7 @@ _OWL_axiomatic_triples_Facets = [
 	(ns_xsd['pattern'],range,Literal),
 ]
 
-#: OWL D-entailement triples (additionally to the RDFS ones), ie, possible subclassing of various extra datatypes
+#: OWL D-entailment triples (additionally to the RDFS ones), ie, possible subclassing of various extra datatypes
 _OWL_D_Axiomatic_Triples_types = [
 	(ns_rdf['PlainLiteral'], type, Datatype)
 ]

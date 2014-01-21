@@ -8,15 +8,10 @@ used in OWL 2 RL or not.
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 """
 
-"""
-$Id: OWL.py,v 1.10 2011/08/04 12:41:58 ivan Exp $ $Date: 2011/08/04 12:41:58 $
-"""
 
 import rdflib
-if rdflib.__version__ >= "3.0.0" :
-	from rdflib				import Namespace
-else :
-	from rdflib.Namespace	import Namespace
+from rdflib				import Namespace
+
 
 #: The OWL namespace as used for RDFLib
 OWLNS  = Namespace("http://www.w3.org/2002/07/owl#")

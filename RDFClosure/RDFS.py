@@ -8,16 +8,9 @@ used in OWL 2 RL or not.
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 """
 
-"""
-$Id: RDFS.py,v 1.1 2011/08/04 12:41:58 ivan Exp $ $Date: 2011/08/04 12:41:58 $
-"""
-
 import rdflib
-if rdflib.__version__ >= "3.0.0" :
-	from rdflib				import Namespace
-else :
-	from rdflib.Namespace	import Namespace
-	
+from rdflib				import Namespace
+
 RDFNS 		= Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 RDFSNS 		= Namespace("http://www.w3.org/2000/01/rdf-schema#")
 

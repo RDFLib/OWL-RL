@@ -1,19 +1,17 @@
 #!/usr/bin/env python
 import sys
 # You may want to adapt this to your environment...
-import sys, getopt, platform
-if platform.node() == 'jay' or platform.node() == 'homer' :
+import sys, platform
+if platform.node() == 'jay' or platform.node() == 'homer':
 	# this is the server on W3C
 	sys.path.insert(0,"/home/ivan/W3C/dev/2004/PythonLib-IH")
 	sys.path.insert(0,"/home/ivan/lib/Python")
-else :
-	sys.path.insert(0,"/Users/ivan/Source/PythonModules/rdflib-3")
 
-from optparse import OptionParser, OptionError
+from optparse import OptionParser
 from RDFClosure import convert_graph, RDFXML, TURTLE, JSON, AUTO
 
-def main() :
-			
+
+def main():
 	parser = OptionParser(usage="%prog [options] fname1 fname2 ...")
 	parser.disable_interspersed_args()
 	
@@ -67,15 +65,15 @@ def main() :
 					   help="format of intput; argument must be auto|turtle|xml [default: %default]; auto means that file suffix defines the format. This flag is valid for all input files.")
 
 	(options,args) = parser.parse_args()
-	if options.source == None :
+	if options.source is None:
 		options.sources = []
 	else :
 		options.sources = [options.source]
 		
-	if len(args) > 0 :
+	if len(args) > 0:
 		options.sources += args
 		
-	if len(options.sources) == 0 :
+	if len(options.sources) == 0:
 		# the default mechanism, ie, to use standard input
 		options.sources = ["-"]
 			
@@ -83,7 +81,7 @@ def main() :
 
 
 # The standard startup idiom...
-if __name__ == '__main__' :
+if __name__ == '__main__':
 	main()
 		
 

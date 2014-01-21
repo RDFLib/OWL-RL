@@ -12,7 +12,7 @@ The errors are:
 
  - Constants of the form 1234 should be interpreted as xsd integers, which is done correctly by the parser.
  - Constants of the form 1.2345 should be interpreted as xsd:decimal. Unfortunately, the original parser interprets them as xsd:double
- - Constants of the form 'true' or 'false' (whithout the quotes, that is) should be interpreted as xsd:boolean. Instead, they are put as symbols into the default namespace by the original parser.
+ - Constants of the form 'true' or 'false' (without the quotes, that is) should be interpreted as xsd:boolean. Instead, they are put as symbols into the default namespace by the original parser.
  - Constants of the form 1.2345E12 should be interpreted as xsd:doubles. Unfortunately, the original parser crashes on those
  
 This module provides an alternative parser that takes care of the first three problems.
