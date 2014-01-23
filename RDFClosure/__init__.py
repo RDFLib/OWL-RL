@@ -418,7 +418,7 @@ def convert_graph(options, closureClass=None) :
 		return retval
 
 	def __check_yes_or_true(opt) :
-		return opt == True or opt == "yes" or opt == "Yes" or opt == "True" or opt == "true"
+		return opt is True or opt == "yes" or opt == "Yes" or opt == "True" or opt == "true"
 
 	import warnings
 

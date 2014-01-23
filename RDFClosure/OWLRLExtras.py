@@ -25,61 +25,39 @@ In more details, the rules that are added:
 
 """
 
-"""
-$Id: OWLRLExtras.py,v 1.10 2011/08/04 12:41:58 ivan Exp $ $Date: 2011/08/04 12:41:58 $
-"""
-
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
-if rdflib.__version__ >= "3.0.0" :
-	from rdflib				import BNode
-	from rdflib				import Literal as rdflibLiteral
-	from rdflib				import Namespace
-	from rdflib.namespace 	import XSD as ns_xsd
-else :
-	from rdflib.Literal 	import _XSD_NS as ns_xsd
-	from rdflib.BNode		import BNode
-	from rdflib.Namespace	import Namespace
-	from rdflib.Literal		import Literal as rdflibLiteral
-	
-from rdflib.exceptions	import Error
-from RDFClosure.RDFS	import RDFNS  as ns_rdf
-from RDFClosure.RDFS	import RDFSNS as ns_rdfs
-from RDFClosure.RDFS	import Literal
-from RDFClosure.RDFS	import Seq, Bag, Alt, Statement, Property, XMLLiteral, List
-from RDFClosure.RDFS	import subject, predicate, object, value, first, rest, nil
+# noinspection PyPep8Naming
+from rdflib.namespace 	import XSD as ns_xsd
+
+from RDFClosure.RDFS	import  Property
+# noinspection PyPep8Naming
 from RDFClosure.RDFS	import type as rdfType
-from RDFClosure.RDFS 	import Resource, Class, subClassOf, subPropertyOf, comment, label, domain, range
-from RDFClosure.RDFS 	import seeAlso, isDefinedBy, Literal, Container, ContainerMembershipProperty, member, Datatype
+from RDFClosure.RDFS 	import Resource, Class, subClassOf, subPropertyOf, domain
+from RDFClosure.RDFS 	import Datatype
 
-import sys
-if sys.version_info[1] >= 6 :
-	# Running python 2.6 or higher, ie, there is a built in rational called fraction
-	from fractions import Fraction as Rational
-else :
-	from rational import Rational
+from fractions import Fraction as Rational
 
-from RDFClosure.DatatypeHandling 	import AltXSDToPYTHON
+from RDFClosure.DatatypeHandling import AltXSDToPYTHON
 
 from RDFClosure.OWL 				import *
+# noinspection PyPep8Naming
 from RDFClosure.OWL					import OWLNS as ns_owl
-from RDFClosure.Closure				import Core
-from RDFClosure.AxiomaticTriples	import OWLRL_Axiomatic_Triples, OWLRL_D_Axiomatic_Triples
-from RDFClosure.AxiomaticTriples	import OWLRL_Datatypes_Disjointness
 from RDFClosure.CombinedClosure		import RDFS_OWLRL_Semantics
 from RDFClosure.OWLRL				import OWLRL_Annotation_properties
 
 from RDFClosure.XsdDatatypes 		import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
 
-from RestrictedDatatype 			import extract_faceted_datatypes, RestrictedDatatype
+from RestrictedDatatype 			import extract_faceted_datatypes
 
 ###########################################################################################################################
 # Rational datatype
 
-def _strToRational(v) :
+# noinspection PyPep8Naming
+def _strToRational(v):
 	"""Converting a string to a rational.
 	
 	According to the OWL spec: numerator must be an integer, denominator a positive integer (ie, xsd['integer'] type), and the denominator
@@ -92,23 +70,24 @@ def _strToRational(v) :
 	"""
 	try :
 		r = v.split('/')
-		if len(r) == 2 :
+		if len(r) == 2:
 			n_str = r[0]
 			d_str = r[1]
-		else :
+		else:
 			n_str = r[0]
 			d_str = "1"
-		if d_str.strip()[0] == '+' :
+		if d_str.strip()[0] == '+':
 			raise ValueError("Invalid Rational literal value %s" % v)
 		else :
 			return Rational(AltXSDToPYTHON[ns_xsd["integer"]](n_str), AltXSDToPYTHON[ns_xsd["positiveInteger"]](d_str))
-	except e :
+	except:
 		raise ValueError("Invalid Rational literal value %s" % v)
 
 ###########################################################################################################################
 
 
-class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
+# noinspection PyPep8Naming,PyBroadException
+class OWLRL_Extension(RDFS_OWLRL_Semantics) :
 	"""
 	Additional rules to OWL 2 RL. The initialization method also adds the C{owl:rational} datatype to the set of allowed 
 	datatypes with the L{_strToRational} function as a conversion between the literal form and a Rational. The C{xsd:decimal} datatype
@@ -125,7 +104,7 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 		(hasSelf, rdfType, Property),
 		(hasSelf, domain, Property),
 	]
-	def __init__(self, graph, axioms, daxioms, rdfs = False) :
+	def __init__(self, graph, axioms, daxioms, rdfs=False):
 		"""
 		@param graph: the RDF graph to be extended
 		@type graph: rdflib.Graph
@@ -136,7 +115,7 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 		@param rdfs: whether RDFS extension is done 
 		@type rdfs: boolean
 		"""
-		RDFS_OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs )
+		RDFS_OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
 		self.rdfs = rdfs
 		self.add_new_datatype(ns_owl["rational"], _strToRational, OWL_RL_Datatypes, 
 						      subsumption_dict = OWL_Datatype_Subsumptions, 
@@ -144,41 +123,42 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 						      subsumption_list = [ns_owl["rational"]])
 		
 		self.restricted_datatypes = extract_faceted_datatypes(self, graph)
-		for dt in self.restricted_datatypes :
+		for dt in self.restricted_datatypes:
 			self.add_new_datatype(dt.datatype, dt.toPython, OWL_RL_Datatypes,
 								  subsumption_dict = OWL_Datatype_Subsumptions,
 								  subsumption_key  = dt.datatype,
-								  subsumption_list = [ dt.base_type ])
+								  subsumption_list = [dt.base_type])
 
-	def _subsume_restricted_datatypes(self) :
+	# noinspection PyShadowingNames
+	def _subsume_restricted_datatypes(self):
 		"""
 		A one-time-rule: all the literals are checked whether they are (a) of type restricted by a
 		faceted (restricted) datatype and (b) whether
 		the corresponding value abides to the restrictions. If true, then the literal gets an extra
 		tag as being of type of the restricted datatype, too.
 		"""
-		for rt in self.restricted_datatypes :
+		for rt in self.restricted_datatypes:
 			# This is a recorded restriction. The base type is:
 			base_type = rt.base_type
 			# Look through all the literals; more precisely, through the
 			# proxy bnodes:
-			for bn in self.literal_proxies.bnode_to_lit :
+			for bn in self.literal_proxies.bnode_to_lit:
 				# check if the type of that proxy matches. Note that this also takes
 				# into account the subsumption datatypes, that have been taken
 				# care of by the 'regular' OWL RL process
-				if (bn, rdfType, base_type) in self.graph :
+				if (bn, rdfType, base_type) in self.graph:
 					# yep, that is a good candidate!
 					lt = self.literal_proxies.bnode_to_lit[bn]
 					try :
 						# the conversion or the check may go wrong and raise an exception; then simply move on
 						value = lt.lit.toPython()
-						if rt.checkValue(value) :
+						if rt.checkValue(value):
 							# yep, this is also of type 'rt'
 							self.store_triple((bn, rdfType, rt.datatype))
-					except :
+					except:
 						continue
 
-	def restriction_typing_check(self, v, t) :
+	def restriction_typing_check(self, v, t):
 		"""Helping method to check whether a type statement is in line with a possible
 		restriction. This method is invoked by rule "cls-avf" before setting a type
 		on an allValuesFrom restriction.
@@ -193,10 +173,10 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 		# There are a bunch of possible exceptions here with datatypes, but they can all
 		# be ignored...
 		try :
-			for rt in self.restricted_datatypes :
-				if rt.datatype == t :
+			for rt in self.restricted_datatypes:
+				if rt.datatype == t:
 					# bingo
-					if v in self.literal_proxies.bnode_to_lit :
+					if v in self.literal_proxies.bnode_to_lit:
 						return rt.checkValue(self.literal_proxies.bnode_to_lit[v].lit.toPython())
 					else :
 						return True
@@ -205,11 +185,11 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 		except :
 			return True
 
-	def one_time_rules(self) :
+	def one_time_rules(self):
 		"""
-		This method is invoked only once at the beginning, and prior of, the forward chaing process.
+		This method is invoked only once at the beginning, and prior of, the forward chaining process.
 
-		At present, only the L{subsumption of restricted datatypes<_subsume_restricted_datatypes>} is performed.
+		At present, only the L{subsumption} of restricted datatypes<_subsume_restricted_datatypes>} is performed.
 		"""
 		RDFS_OWLRL_Semantics.one_time_rules(self)
 		# it is important to flush the triples at this point, because
@@ -218,14 +198,14 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 		self.flush_stored_triples()
 		self._subsume_restricted_datatypes()
 
-	def add_axioms(self) :
+	def add_axioms(self):
 		"""
 		Add the L{extra axioms<OWLRL_Extension.extra_axioms>}, related to the self restrictions.
 		"""
 		RDFS_OWLRL_Semantics.add_axioms(self)
 		for t in self.extra_axioms : self.graph.add(t)
 
-	def rules(self, t, cycle_num) :
+	def rules(self, t, cycle_num):
 		"""
 		Go through the additional rules implemented by this module.
 		@param t: a triple (in the form of a tuple)
@@ -234,16 +214,17 @@ class OWLRL_Extension( RDFS_OWLRL_Semantics ) :
 		"""
 		RDFS_OWLRL_Semantics.rules(self, t, cycle_num)
 		z, q, x = t
-		if q == hasSelf :
-			for p in self.graph.objects(z, onProperty) :
-				for y in self.graph.subjects( rdfType, z ) :
+		if q == hasSelf:
+			for p in self.graph.objects(z, onProperty):
+				for y in self.graph.subjects(rdfType, z):
 					self.store_triple((y, p, y))
-				for y1, y2 in self.graph.subject_objects(p) :
+				for y1, y2 in self.graph.subject_objects(p):
 					if y1 == y2 :
 						self.store_triple((y1, rdfType, z))
 
 
-class OWLRL_Extension_Trimming( OWLRL_Extension ) :
+# noinspection PyPep8Naming
+class OWLRL_Extension_Trimming(OWLRL_Extension):
 	"""
 	This Class adds only one feature to L{OWLRL_Extension}: to initialize with a trimming flag set to C{True} by default. 
 	
@@ -261,7 +242,7 @@ class OWLRL_Extension_Trimming( OWLRL_Extension ) :
 	Trimming is the only feature of this class, done in the L{post_process} step. If users extend L{OWLRL_Extension}, this class can be safely mixed in via multiple
 	inheritance.
 	"""
-	def __init__(self, graph, axioms, daxioms, rdfs = False) :
+	def __init__(self, graph, axioms, daxioms, rdfs=False):
 		"""
 		@param graph: the RDF graph to be extended
 		@type graph: rdflib.Graph
@@ -272,7 +253,7 @@ class OWLRL_Extension_Trimming( OWLRL_Extension ) :
 		@param rdfs: whether RDFS extension is done 
 		@type rdfs: boolean
 		"""
-		OWLRL_Extension.__init__(self, graph, axioms, daxioms, rdfs = False)
+		OWLRL_Extension.__init__(self, graph, axioms, daxioms, rdfs=False)
 
 	def post_process(self) :
 		"""
@@ -283,27 +264,27 @@ class OWLRL_Extension_Trimming( OWLRL_Extension ) :
 		self.flush_stored_triples()
 		
 		to_be_removed = set()
-		for t in self.graph :
-			s,p,o = t
+		for t in self.graph:
+			s, p, o = t
 			if s == o :
-				if p == sameAs or p == equivalentClass or p == subClassOf or p == subPropertyOf : to_be_removed.add(t)
-			if (p == subClassOf and (o == Thing or o == Resource)) or (p == rdfType and o == Resource) or (s == Nothing and p == subClassOf) :
+				if p == sameAs or p == equivalentClass or p == subClassOf or p == subPropertyOf:
+					to_be_removed.add(t)
+			if (p == subClassOf and (o == Thing or o == Resource)) or (p == rdfType and o == Resource) or (s == Nothing and p == subClassOf):
 				to_be_removed.add(t)
 		
 		for dt in OWL_RL_Datatypes :
 			# see if this datatype appears explicitly in the graph as the type of a symbol
-			if len([ s for s in self.graph.subjects(rdfType,dt) ]) == 0 :
+			if len([s for s in self.graph.subjects(rdfType, dt)]) == 0:
 				to_be_removed.add((dt, rdfType, Datatype))
 				to_be_removed.add((dt, rdfType, DataRange))
 				
-				for t in self.graph.triples((dt, disjointWith, None)) :
+				for t in self.graph.triples((dt, disjointWith, None)):
 					to_be_removed.add(t)
-				for t in self.graph.triples((None, disjointWith, dt)) :
+				for t in self.graph.triples((None, disjointWith, dt)):
 					to_be_removed.add(t)
-					
-				# RULE prp-ap
 
-		for an in OWLRL_Annotation_properties : self.graph.remove((an, rdfType, AnnotationProperty))
+		for an in OWLRL_Annotation_properties:
+			self.graph.remove((an, rdfType, AnnotationProperty))
 
 		to_be_removed.add((Nothing, rdfType, OWLClass))
 		to_be_removed.add((Nothing, rdfType, Class))
@@ -320,6 +301,7 @@ class OWLRL_Extension_Trimming( OWLRL_Extension ) :
 		to_be_removed.add((DataRange, subClassOf, Datatype))
 		to_be_removed.add((DataRange, equivalentClass, Datatype))
 
-		for t in to_be_removed : self.graph.remove(t)
+		for t in to_be_removed:
+			self.graph.remove(t)
 
 

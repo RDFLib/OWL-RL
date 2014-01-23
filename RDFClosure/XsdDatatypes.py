@@ -37,36 +37,36 @@ _Common_XSD_Datatypes = [
 ]
 
 #: RDFS Datatypes: the basic ones plus the complete set of day/month ones
-RDFS_Datatypes   = _Common_XSD_Datatypes + [ ns_xsd['gYearMonth'], ns_xsd['gMonthDay'], ns_xsd['gYear'], ns_xsd['gDay'], ns_xsd['gMonth'] ]
+RDFS_Datatypes   = _Common_XSD_Datatypes + [ns_xsd['gYearMonth'], ns_xsd['gMonthDay'], ns_xsd['gYear'], ns_xsd['gDay'], ns_xsd['gMonth']]
 
 #: OWL RL Datatypes: the basic ones plus plain literal
-OWL_RL_Datatypes = _Common_XSD_Datatypes + [ ns_rdf['PlainLiteral'] ]
+OWL_RL_Datatypes = _Common_XSD_Datatypes + [ns_rdf['PlainLiteral']]
 
 #: XSD Datatype subsumptions
 _Common_Datatype_Subsumptions = {
-	ns_xsd['dateTimeStamp'] 		: [ ns_xsd['dateTime'] ],
-	ns_xsd['integer'] 				: [ ns_xsd['decimal'] ],
-	ns_xsd['long'] 					: [ ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['int'] 					: [ ns_xsd['long'], ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['short'] 				: [ ns_xsd['int'], ns_xsd['long'], ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['byte'] 					: [ ns_xsd['short'], ns_xsd['int'], ns_xsd['long'], ns_xsd['integer'], ns_xsd['decimal'] ],
+	ns_xsd['dateTimeStamp'] 		: [ns_xsd['dateTime']],
+	ns_xsd['integer'] 				: [ns_xsd['decimal']],
+	ns_xsd['long'] 					: [ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['int'] 					: [ns_xsd['long'], ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['short'] 				: [ns_xsd['int'], ns_xsd['long'], ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['byte'] 					: [ns_xsd['short'], ns_xsd['int'], ns_xsd['long'], ns_xsd['integer'], ns_xsd['decimal']],
 
-	ns_xsd['nonNegativeInteger'] 	: [ ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['positiveInteger'] 		: [ ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['unsignedLong'] 			: [ ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['unsignedInt'] 			: [ ns_xsd['unsignedLong'], ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['unsignedShort'] 		: [ ns_xsd['unsignedInt'], ns_xsd['unsignedLong'], ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['unsignedByte'] 			: [ ns_xsd['unsignedShort'], ns_xsd['unsignedInt'], ns_xsd['unsignedLong'], ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal'] ],
+	ns_xsd['nonNegativeInteger'] 	: [ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['positiveInteger'] 		: [ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['unsignedLong'] 			: [ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['unsignedInt'] 			: [ns_xsd['unsignedLong'], ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['unsignedShort'] 		: [ns_xsd['unsignedInt'], ns_xsd['unsignedLong'], ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['unsignedByte'] 			: [ns_xsd['unsignedShort'], ns_xsd['unsignedInt'], ns_xsd['unsignedLong'], ns_xsd['nonNegativeInteger'], ns_xsd['integer'], ns_xsd['decimal']],
 
-	ns_xsd['nonPositiveInteger'] 	: [ ns_xsd['integer'], ns_xsd['decimal'] ],
-	ns_xsd['negativeInteger'] 		: [ ns_xsd['nonPositiveInteger'], ns_xsd['integer'], ns_xsd['decimal'] ],
+	ns_xsd['nonPositiveInteger'] 	: [ns_xsd['integer'], ns_xsd['decimal']],
+	ns_xsd['negativeInteger'] 		: [ns_xsd['nonPositiveInteger'], ns_xsd['integer'], ns_xsd['decimal']],
 
-	ns_xsd['normalizedString'] 		: [ ns_xsd["string"] ],
-	ns_xsd['token'] 				: [ ns_xsd['normalizedString'], ns_xsd["string"] ],
-	ns_xsd['language'] 				: [ ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"] ],
-	ns_xsd['Name'] 					: [ ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"] ],
-	ns_xsd['NCName'] 				: [ ns_xsd['Name'], ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"] ],
-	ns_xsd['NMTOKEN'] 				: [ ns_xsd['Name'], ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"] ],
+	ns_xsd['normalizedString'] 		: [ns_xsd["string"] ],
+	ns_xsd['token'] 				: [ns_xsd['normalizedString'], ns_xsd["string"]],
+	ns_xsd['language'] 				: [ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"]],
+	ns_xsd['Name'] 					: [ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"]],
+	ns_xsd['NCName'] 				: [ns_xsd['Name'], ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"]],
+	ns_xsd['NMTOKEN'] 				: [ns_xsd['Name'], ns_xsd['token'], ns_xsd['normalizedString'], ns_xsd["string"]],
 }
 
 #: RDFS Datatype subsumptions: at the moment, there is no extra to XSD

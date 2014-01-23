@@ -14,10 +14,6 @@ OWL 2 RL implementation becomes a full extension of RDFS.
 
 """
 
-"""
-$Id: CombinedClosure.py,v 1.7 2011/08/04 12:41:57 ivan Exp $ $Date: 2011/08/04 12:41:57 $
-"""
-
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
@@ -31,6 +27,7 @@ from RDFClosure.OWLRL       import OWLRL_Semantics
 ######################################################################################################
 
 
+# noinspection PyPep8Naming
 class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 	"""Common subclass of the RDFS and OWL 2 RL semantic classes. All methods simply call back
 	to the functions in the superclasses. This may lead to some unnecessary duplication of terms
@@ -51,14 +48,15 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 		(Class, equivalentClass, OWLClass),
 		(DataRange, equivalentClass, Datatype)
 	]
+
 	def __init__(self, graph, axioms, daxioms, rdfs=True):
 		"""
 		@param graph: the RDF graph to be extended
 		@type graph: rdflib.Graph
 		@param axioms: whether (non-datatype) axiomatic triples should be added or not
-		@type axioms: Boolean
+		@type axioms: bool
 		@param daxioms: whether datatype axiomatic triples should be added or not
-		@type daxioms: Boolean
+		@type daxioms: bool
 		@param rdfs: placeholder flag (used in subclassed only, it is always defaulted to True in this class)
 		@type rdfs: boolean
 		"""
@@ -66,7 +64,9 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 		RDFS_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
 		self.rdfs = True
 
-	def add_new_datatype(self, uri, conversion_function, datatype_list, subsumption_dict=None, subsumption_key=None, subsumption_list=None):
+	# noinspection PyMethodMayBeStatic
+	@staticmethod
+	def add_new_datatype(uri, conversion_function, datatype_list, subsumption_dict=None, subsumption_key=None, subsumption_list=None):
 		"""If an extension wants to add new datatypes, this method should be invoked at initialization time.
 		
 		@param uri : URI for the new datatypes, like owl_ns["Rational"]
@@ -79,7 +79,8 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 		"""
 		from DatatypeHandling import AltXSDToPYTHON, use_Alt_lexical_conversions
 		
-		if datatype_list : datatype_list.append(uri)
+		if datatype_list:
+			datatype_list.append(uri)
 		
 		if subsumption_dict and subsumption_list:
 			if subsumption_key:
@@ -119,7 +120,8 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 
 	def one_time_rules(self):
 		"""Adds some extra axioms and calls for the d_axiom part of the OWL Semantics."""
-		for t in self.full_binding_triples : self.store_triple(t)
+		for t in self.full_binding_triples:
+			self.store_triple(t)
 
 		# Note that the RL one time rules include the management of datatype which is a true superset
 		# of the rules in RDFS. It is therefore unnecessary to add those even self.rdfs is True.
