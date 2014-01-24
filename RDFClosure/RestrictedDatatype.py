@@ -32,7 +32,7 @@ The implementation is not 100% complete. Some things that an ideal implementatio
  - handling of non-literals in the facets (ie, if the resource is defined to be of type literal, but whose value
  is defined via a separate 'owl:sameAs' somewhere else)
 
-@requires: U{RDFLib<http://rdflib.net>}, 2.2.2. and higher
+@requires: U{RDFLib<http://rdflib.net>}, 4.0.0 or higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}

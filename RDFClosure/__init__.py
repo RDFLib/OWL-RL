@@ -151,13 +151,13 @@ instead.
 
 The L{convert_graph<convert_graph>} entry point used, for example, by the CGI service, uses this parser.
 
-@requires: U{RDFLib<http://rdflib.net>}, 2.2.2. and higher, including the 3.* line
+@requires: U{RDFLib<http://rdflib.net>}, 4.0.0 and higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 """
 
-__version__ = "4.2.2"
+__version__ = "5.0"
 __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'

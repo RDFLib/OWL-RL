@@ -5,7 +5,7 @@
 This module is brute force implementation of the RDFS semantics on the top of RDFLib (with some caveats, see in the introductory text).
 
 
-@requires: U{RDFLib<http://rdflib.net>}, 2.2.2. and higher
+@requires: U{RDFLib<http://rdflib.net>}, 4.0.0 or higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
