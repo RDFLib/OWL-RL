@@ -152,10 +152,14 @@ instead.
 The L{convert_graph<convert_graph>} entry point used, for example, by the CGI service, uses this parser.
 
 @requires: U{RDFLib<http://rdflib.net>}, 4.0.0 and higher
+@requires: U{rdflib_jsonld
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 """
+
+# TODO: The RDFS side is not prepared for inconsistencies (like OWL is) and RDF1.1. introduces those.
+# Examples: LangString is disjoint from String
 
 __version__ = "5.0"
 __author__ = 'Ivan Herman'
@@ -186,12 +190,24 @@ RDFXML = "xml"
 TURTLE = "turtle"
 JSON   = "json"
 AUTO   = "auto"
+RDFA   = "rdfa"
 
 NONE = "none"
 RDF  = "rdf"
 RDFS = "rdfs"
 OWL  = "owl"
 FULL = "full"
+
+try:
+	from rdflib_jsonld.parser import JsonLDParser
+	from rdflib_jsonld.serializer import JsonLDSerializer
+	from rdflib.plugin import register, Serializer, Parser
+	register('json-ld', Parser, 'rdflib_jsonld.parser', 'JsonLDParser')
+	register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
+	json_ld_available = True
+except:
+	json_ld_available = False
+
 
 ################################################################################################################
 
@@ -205,16 +221,27 @@ def __parse_input(iformat, inp, graph):
 	"""
 	if iformat == AUTO:
 		if inp == "-":
-			format = "n3"
-		else :
-			if inp.endswith('.ttl') or inp.endswith('.n3') :
-				format = "n3"
-			else :
+			format = "turtle"
+		else:
+			if inp.endswith('.ttl') or inp.endswith('.n3'):
+				format = "turtle"
+			elif json_ld_available and (inp.endswith('.json') or inp.endswith('.jsonld')):
+				format = "json-ld"
+			elif inp.endswith('.html'):
+				format = "rdfa1.1"
+			else:
 				format = "xml"
 	elif iformat == TURTLE:
 		format = "n3"
+	elif iformat == RDFA:
+		format = "rdfa1.1"
 	elif iformat == RDFXML:
 		format = "xml"
+	elif iformat == JSON:
+		if json_ld_available:
+			format="json-ld"
+		else:
+			raise Exception("JSON-LD parser is not available")
 	else :
 		raise Exception("Unknown input syntax")
 
@@ -227,7 +254,7 @@ def __parse_input(iformat, inp, graph):
 	graph.parse(source, format=format)
 
 
-def interpret_owl_imports(iformat, graph) :
+def interpret_owl_imports(iformat, graph):
 	"""Interpret the owl import statements. Essentially, recursively merge with all the objects in the owl import statement, and remove the corresponding
 	triples from the graph.
 	
@@ -395,16 +422,6 @@ def convert_graph(options, closureClass=None) :
 	@param closureClass: explicit class reference. If set, this overrides the various different other options to be used as an extension. 
 	"""
 
-	# noinspection PyShadowingNames
-	def __convert_to_turtle(graph):
-		"""Using a non-rdflib Turtle Serializer"""
-		return graph.serialize(format="turtle")
-
-	# noinspection PyShadowingNames
-	def __convert_to_json(graph):
-		"""Using a JSON-LD Serializer"""
-		return graph.serialize(format="json")
-
 	# noinspection PyPep8Naming,PyShadowingNames,PyBroadException,PyUnusedLocal
 	def __convert_to_XML(graph):
 		"""Using a non-rdflib RDF/XML Serializer"""
@@ -468,7 +485,8 @@ def convert_graph(options, closureClass=None) :
 	axioms  = __check_yes_or_true(options.axioms)
 	daxioms = __check_yes_or_true(options.daxioms)
 
-	if owlClosure : interpret_owl_imports(iformat, graph)
+	if owlClosure:
+		interpret_owl_imports(iformat, graph)
 
 	# adds to the 'beauty' of the output
 	graph.bind("owl", "http://www.w3.org/2002/07/owl#")
@@ -481,15 +499,17 @@ def convert_graph(options, closureClass=None) :
 	else :
 		closure_class = return_closure_class(owlClosure, rdfsClosure, owlExtras, trimming)
 
-	DeductiveClosure(closure_class, improved_datatypes=True, rdfs_closure=rdfsClosure, axiomatic_triples=axioms,
-					 datatype_axioms=daxioms).expand(graph)
+	DeductiveClosure(closure_class, improved_datatypes=True, rdfs_closure=rdfsClosure, axiomatic_triples=axioms, datatype_axioms=daxioms).expand(graph)
 
-	if options.format == TURTLE :
-		return __convert_to_turtle(graph)
-	elif options.format == JSON :
-		return __convert_to_json(graph)
-	else :
-		return __convert_to_XML(graph)
+	if options.format == TURTLE:
+		return graph.serialize(format="turtle")
+	elif options.format == JSON:
+		if json_ld_available :
+			return graph.serialize(format="json-ld")
+		else:
+			return graph.serialize(format="turtle")
+	else:
+		return graph.serialize(format="pretty-xml")
 
 
 

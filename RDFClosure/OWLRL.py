@@ -35,7 +35,7 @@ from RDFClosure.AxiomaticTriples	import OWLRL_Datatypes_Disjointness
 
 OWLRL_Annotation_properties = [label, comment, seeAlso, isDefinedBy, deprecated, versionInfo, priorVersion, backwardCompatibleWith, incompatibleWith]
 
-from RDFClosure.XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
+from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
 
 ###########################################################################################################################
 

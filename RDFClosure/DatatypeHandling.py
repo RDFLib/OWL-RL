@@ -579,6 +579,7 @@ AltXSDToPYTHON = {
 	ns_rdf["XMLLiteral"]			: _strToXMLLiteral,
 	ns_xsd["integer"]				: long,
 	ns_xsd["string"]				: lambda v: v,
+	ns_rdf["HTML"]					: lambda v: v,
 	ns_xsd["normalizedString"]		: lambda v: _strToVal_Regexp(v, _re_token),
 
 	# These are RDFS specific...

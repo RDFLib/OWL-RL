@@ -16,9 +16,11 @@ __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 # noinspection PyPep8Naming
-from RDFClosure.RDFS import RDFNS as ns_rdf
-from RDFClosure.RDFS import Literal
-from RDFClosure.RDFS import XMLLiteral
+from .RDFS import RDFNS as ns_rdf
+from .RDFS import Literal
+from .RDFS import XMLLiteral
+from .RDFS import HTMLLiteral
+from .RDFS import LangString
 
 import rdflib
 # noinspection PyPep8Naming
@@ -33,7 +35,7 @@ _Common_XSD_Datatypes = [
 	ns_xsd['token'], ns_xsd['language'], ns_xsd['Name'], ns_xsd['NCName'], ns_xsd['NMTOKEN'],
 	ns_xsd['boolean'], ns_xsd['hexBinary'], ns_xsd['base64Binary'], ns_xsd['anyURI'],
 	ns_xsd['dateTimeStamp'], ns_xsd['dateTime'], ns_xsd['time'], ns_xsd['date'],
-	Literal, XMLLiteral
+	Literal, XMLLiteral, HTMLLiteral, LangString
 ]
 
 #: RDFS Datatypes: the basic ones plus the complete set of day/month ones

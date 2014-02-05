@@ -21,6 +21,8 @@ Alt 		= RDFNS["Alt"]
 Statement 	= RDFNS["Statement"]
 Property 	= RDFNS["Property"]
 XMLLiteral 	= RDFNS["XMLLiteral"]
+HTMLLiteral	= RDFNS["HTML"]
+LangString	= RDFNS["LangString"]
 List 		= RDFNS["List"]
 
 # RDF Properties

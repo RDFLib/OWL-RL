@@ -8,7 +8,7 @@ if platform.node() == 'jay' or platform.node() == 'homer':
 	sys.path.insert(0,"/home/ivan/lib/Python")
 
 from optparse import OptionParser
-from RDFClosure import convert_graph, RDFXML, TURTLE, JSON, AUTO
+from RDFClosure import convert_graph, RDFXML, TURTLE, JSON, AUTO, RDFA
 
 
 def main():
@@ -58,10 +58,10 @@ def main():
 	parser.add_option("-t", action="store_const", dest="trimming", const="yes",
 		               help="trim the output of OWL 2 RL and extension; shorthand for --trimming=yes [default: %default]")
 	
-	parser.add_option("-o", "-s", "--serialization", "--syntax", action="store", dest="format", choices=[TURTLE,JSON,RDFXML], 
+	parser.add_option("-o", "-s", "--serialization", "--syntax", action="store", dest="format", choices=[TURTLE, JSON, RDFXML],
 					   help="output format; argument must be turtle|json|xml [default: %default]")
 	
-	parser.add_option("-i", "--input_syntax", action="store", dest="iformat", choices=[AUTO,TURTLE,RDFXML],
+	parser.add_option("-i", "--input_syntax", action="store", dest="iformat", choices=[AUTO, TURTLE, JSON, RDFA, RDFXML],
 					   help="format of intput; argument must be auto|turtle|xml [default: %default]; auto means that file suffix defines the format. This flag is valid for all input files.")
 
 	(options,args) = parser.parse_args()

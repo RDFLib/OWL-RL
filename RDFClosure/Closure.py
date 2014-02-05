@@ -217,8 +217,8 @@ class Core :
 		if self.axioms:
 			self.add_axioms()
 
-		# Create the bnode proxy structure
-		self.literal_proxies = LiteralProxies(self.graph)
+		# Create the bnode proxy structure for literals
+		self.literal_proxies = LiteralProxies(self.graph, self)
 
 		# Add the datatype axioms, if needed (note that this makes use of the literal proxies, the order of the call is important!
 		if self.daxioms:
