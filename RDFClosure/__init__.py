@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+#
 """
-This module is brute force implementation of the 'finite' version of
-U{RDFS semantics<http://www.w3.org/TR/rdf-mt/>} and of
-U{OWL 2 RL<http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules>}
+This module is brute force implementation of the 'finite' version of U{RDFS semantics<http://www.w3.org/TR/rdf-mt/>}
+and of U{OWL 2 RL<http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules>}
 on the top of RDFLib (with some caveats, see below). Some extensions to these are also implemented.
 Brute force means that, in all cases, simple forward chaining rules are used to extend (recursively) the incoming graph with all triples
 that the rule sets permit (ie, the "deductive closure" of the graph is computed).
@@ -13,6 +13,7 @@ by Herman ter Horst). This means that it adds only those C{rdf:_i} type predicat
 thereby keeping this step finite. For OWL 2 RL, OWL 2 does not define axiomatic triples formally; but they can be deduced from the
 U{OWL 2 RDF Based Semantics<http://www.w3.org/TR/owl2-rdf-based-semantics/>} document and are listed in Appendix 6 (though informally).
 Note, however, that this implementation adds only those triples that refer to OWL terms that are meaningful for the OWL 2 RL case.
+
 
 Package Entry Points
 ====================
@@ -55,28 +56,6 @@ In all three cases there are other dimensions that can control the exact closure
  - for convenience, the so called axiomatic triples (see, eg, the U{axiomatic triples in RDFS<http://www.w3.org/TR/rdf-mt/#rdfs_interp>}) are, by default, I{not} added to the graph closure to reduce the number of generated triples. These can be controlled through a separate initialization argument
  - similarly, the axiomatic triples for D-entailment are separated
 
-Extensions
-----------
-
-The three major entry points (ie, L{RDFS Semantics<RDFSClosure.RDFS_Semantics>}, L{OWL2 RL Semantics<OWLRL.OWLRL_Semantics>},
-and L{RDFS + OWL 2 RL Semantics<CombinedClosure.RDFS_OWLRL_Semantics>}) represent clearly documented rule sets that correspond to various
-inference regimes defined by the RDFS and OWL 2 standards. They can also be viewed as incomplete implementation of a full
-U{OWL 2 specification following the RDF based semantics (a.k.a. “OWL 2 Full”)<http://www.w3.org/TR/owl2-rdf-based-semantics/>}. While the approach of using a simple forward chaining process cannot be used for a complete OWL 2 Full implementations, it is however possible to add some features that, while not
-being mandated by, say, the U{OWL 2 RL<http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules>} specification, are nevertheless
-useful and implementable. This can be done by providing a suitable subclass of the L{RDFS + OWL 2 RL Semantics<CombinedClosure.RDFS_OWLRL_Semantics>}), adding, eg, to
-the set of rules that are implemented.
-
-As an example, this package contains such an L{extension<OWLRLExtras.OWLRL_Extension>} that can also be used by the entry points. The features implemented by this extension, ie, added to the core OWL 2 RL features are:
-
-- self restriction
- - owl:rational datatype
- - datatype restrictions via facets
-
-(There are some minor restriction on the datatype restriction implementation, see the L{description of the corresponding module<RestrictedDatatype>}.)
-
-When initializing this L{extension<OWLRLExtras.OWLRL_Extension>} class, the user can control whether RDFS reasoning should also
-be used or not (default is C{False}).
-
 Some Technical/implementation aspects
 =====================================
 
@@ -96,6 +75,7 @@ class.
 
 The OWL specification includes references to datatypes that are not in the core RDFS specification, consequently not
 directly implemented by RDFLib. These are added in a separate module of the package.
+
 
 Problems with Literals with datatypes
 -------------------------------------
@@ -125,42 +105,47 @@ It is, however, not I{required} to use these methods at all. Ie, the user can us
   DeductiveClosure(improved_datatypes=False).expand(graph)
 which will result in a proper graph expansion except for the datatype specific comparisons which will be incomplete.
 
-Serializer bugs
----------------
 
-During the development of the software a number of small bugs on the RDFLib serializers were found. The alternative RDF/XML
-and Turtle serializers, originally developed for the U{RDFa distiller<http://www.w3.org/2007/08/pyRdfa>}, have been added to this package, too.
 
-The L{convert_graph<convert_graph>} entry point used, for example, by the CGI service, uses these serializers.
+Problems with Literals with datatypes
+-------------------------------------
 
-Turtle Parsing bug
-------------------
+The current distribution of RDFLib is fairly poor in handling datatypes, particularly in checking whether a lexical form
+of a literal is "proper" as for its declared datatype. A typical example is::
+  "-1234"^^xsd:nonNegativeInteger
+which should not be accepted as valid literal. Because the requirements of OWL 2 RL are much stricter in this respect, an alternative set of datatype handling (essentially, conversions) had to be implemented (see the L{XsdDatatypes} module).
 
-Unfortunately, there are some bugs in the underlying Turtle parser, used by RDFLib. All bugs are related to the way common datatypes can be
-abbreviated in Turtle. According to the latest U{Turtle grammar<http://www.w3.org/TeamSubmission/2008/SUBM-turtle-20080114/>}, the following
-abbreviations should happen
+The L{DeductiveClosure<DeductiveClosure>} class has an additional instance variable whether
+the default RDFLib conversion routines should be exchanged against the new ones. If this flag is set to True and instance creation (this is
+the default), then the conversion routines are set back
+to the originals once the expansion is complete, thereby avoiding to influence older application that may not work properly with the
+new set of conversion routines.
 
- - Constants of the form 1234 should be interpreted as xsd integers, which is done correctly by the parser.
- - Constants of the form 1.2345 should be interpreted as xsd:decimal. Unfortunately, the parser interprets them as xsd:double
- - Constants of the form 'true' or 'false' (without the quotes, that is) should be interpreted as xsd:boolean. Instead, they are put as symbols into the default namespace
- - Constants of the form 1.2345E12 should be interpreted as xsd:doubles. Unfortunately, the parser crashes on those
+If the user wants to use these alternative lexical conversions everywhere in the application, then
+the L{use_improved_datatypes_conversions<DeductiveClosure.use_improved_datatypes_conversions>} method can be invoked. That method changes
+the conversion routines and, from that point on, all usage of L{DeductiveClosure<DeductiveClosure>} instances will use the
+improved conversion methods without resetting them. Ie, the code structure can be something like::
+  DeductiveClosure().use_improved_datatypes_conversions()
+  ... RDFLib application
+  DeductiveClosure().expand(graph)
+  ...
+The default situation can be set back using the L{use_rdflib_datatypes_conversions<DeductiveClosure.use_improved_datatypes_conversions>} call.
 
-The current distribution includes a modified version of the RDFLib Turtle parser that takes care of the second and third item. Unfortunately,
-third problem seems to be missing in the core grammar of the parser, and could not be handled. Ie, "1.2345E+12"^^xsd:double should be used
-instead.
+It is, however, not I{required} to use these methods at all. Ie, the user can use::
+  DeductiveClosure(improved_datatypes=False).expand(graph)
+which will result in a proper graph expansion except for the datatype specific comparisons which will be incomplete.
 
-The L{convert_graph<convert_graph>} entry point used, for example, by the CGI service, uses this parser.
 
-@requires: U{RDFLib<http://rdflib.net>}, 4.0.0 and higher
-@requires: U{rdflib_jsonld
+@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
+@requires: U{rdflib_jsonld<https://github.com/RDFLib/rdflib-jsonld>}
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+
 """
 
-# TODO: The RDFS side is not prepared for inconsistencies (like OWL is) and RDF1.1. introduces those.
-# Examples: LangString is disjoint from String
 
+# Examples: LangString is disjoint from String
 __version__ = "5.0"
 __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
@@ -173,9 +158,7 @@ from types import *
 import rdflib
 
 from rdflib import Literal as rdflibLiteral
-from rdflib.namespace import Namespace
 # noinspection PyPep8Naming
-from rdflib.namespace import XSD as ns_xsd
 from rdflib import Graph
 
 import DatatypeHandling, Closure
@@ -400,8 +383,8 @@ def convert_graph(options, closureClass=None) :
 	"""
 	Entry point for external scripts (CGI or command line) to parse an RDF file(s), possibly execute OWL and/or RDFS closures,
 	and serialize back the result in some format.
-	Note that this entry point can be used requiring no entailment at all.
-	Because both the input and the output format for the package can be RDF/XML or Turtle, such usage would
+	Note that this entry point can be used requiring no entailment at all;
+	because both the input and the output format for the package can be RDF/XML or Turtle, such usage would
 	simply mean a format conversion.
 	
 	If OWL 2 RL processing is required, that also means that the owl:imports statements are interpreted. Ie,
@@ -417,22 +400,10 @@ def convert_graph(options, closureClass=None) :
 	  - options.axioms: whether relevant axiomatic triples are added before chaining (can be a boolean, or the strings "yes" or "no")
 	  - options.daxioms: further datatype axiomatic triples are added to the output (can be a boolean, or the strings "yes" or "no")
 	  - options.format: output format, can be "turtle" or "rdfxml"
-	  - options.iformat: input format, can be "turtle", "rdfxml", or "auto". "auto" means that the suffix of the file is considered: '.ttl' is for turtle, rdfxml otherwise
+	  - options.iformat: input format, can be "turtle", "rdfa", "json", "rdfxml", or "auto". "auto" means that the suffix of the file is considered: '.ttl'. '.html', 'json' or '.jsonld' respectively with 'xml' as a fallback
 	  - options.trimming: whether the extension to OWLRL should also include trimming
-	@param closureClass: explicit class reference. If set, this overrides the various different other options to be used as an extension. 
+	@param closureClass: explicit class reference. If set, this overrides the various different other options to be used as an extension.
 	"""
-
-	# noinspection PyPep8Naming,PyShadowingNames,PyBroadException,PyUnusedLocal
-	def __convert_to_XML(graph):
-		"""Using a non-rdflib RDF/XML Serializer"""
-		retval = ""
-		try :
-			retval = graph.serialize(format="pretty-xml")
-		except :
-			# there are cases when the pretty serialization goes wild, eg, when a blank node is used as a class name
-			# as a fall back the ugly but safer simple xml serialization is used
-			retval = graph.serialize(format="xml")
-		return retval
 
 	def __check_yes_or_true(opt) :
 		return opt is True or opt == "yes" or opt == "Yes" or opt == "True" or opt == "true"
@@ -507,7 +478,7 @@ def convert_graph(options, closureClass=None) :
 		if json_ld_available :
 			return graph.serialize(format="json-ld")
 		else:
-			return graph.serialize(format="turtle")
+			raise Exception("JSON-LD serializer is not available")
 	else:
 		return graph.serialize(format="pretty-xml")
 

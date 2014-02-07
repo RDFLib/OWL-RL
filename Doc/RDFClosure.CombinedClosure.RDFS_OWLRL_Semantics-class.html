@@ -131,30 +131,6 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype" class="summary-sig-name">add_new_datatype</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">uri</span>,
-        <span class="summary-sig-arg">conversion_function</span>,
-        <span class="summary-sig-arg">datatype_list</span>,
-        <span class="summary-sig-arg">subsumption_dict</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">subsumption_key</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">subsumption_list</span>=<span class="summary-sig-default">None</span>)</span><br />
-      If an extension wants to add new datatypes, this method should be 
-      invoked at initialization time.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_new_datatype">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#post_process" class="summary-sig-name">post_process</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Do some post-processing step.</td>
           <td align="right" valign="top">
@@ -175,8 +151,8 @@
           <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#rules" class="summary-sig-name">rules</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">t</span>,
         <span class="summary-sig-arg">cycle_num</span>)</span><br />
-      Go through the RDFS entailement rules rdf1, rdfs4-rdfs12, by 
-      extending the graph.</td>
+      Go through the RDFS entailment rules rdf1, rdfs4-rdfs12, by extending
+      the graph.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.rules">source&nbsp;code</a></span>
             
@@ -250,6 +226,9 @@
       <code><a href="RDFClosure.Closure.Core-class.html#pre_process">pre_process</a></code>,
       <code><a href="RDFClosure.Closure.Core-class.html#store_triple">store_triple</a></code>
       </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b>:
+      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#restriction_typing_check">restriction_typing_check</a></code>
+      </p>
     <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b> (private):
       <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_class_axioms" onclick="show_private();">_class_axioms</a></code>,
       <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_classes" onclick="show_private();">_classes</a></code>,
@@ -262,6 +241,47 @@
       <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_property_chain" onclick="show_private();">_property_chain</a></code>,
       <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#_schema_vocabulary" onclick="show_private();">_schema_vocabulary</a></code>
       </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype" class="summary-sig-name">add_new_datatype</a>(<span class="summary-sig-arg">uri</span>,
+        <span class="summary-sig-arg">conversion_function</span>,
+        <span class="summary-sig-arg">datatype_list</span>,
+        <span class="summary-sig-arg">subsumption_dict</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">subsumption_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">subsumption_list</span>=<span class="summary-sig-default">None</span>)</span><br />
+      If an extension wants to add new datatypes, this method should be 
+      invoked at initialization time.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_new_datatype">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
     </td>
   </tr>
 </table>
@@ -286,15 +306,15 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#full_binding_triples" class="summary-name">full_binding_triples</a> = <code title="[(rdflib.URIRef('http://www.w3.org/2002/07/owl#Thing'),
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass'),
-  rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Resource')),
- (rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Class'),
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass'),
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#Class')),
- (rdflib.URIRef('http://www.w3.org/2002/07/owl#DataRange'),
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass'),
-..."><code class="variable-group">[</code><code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002<code class="variable-ellipsis">...</code></code><br />
+        <a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#full_binding_triples" class="summary-name">full_binding_triples</a> = <code title="[(rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#Thing'),
+  rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#equivalentClass')\
+,
+  rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Resource')\
+),
+ (rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Class'),
+  rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#equivalentClass')\
+,
+..."><code class="variable-group">[</code><code class="variable-group">(</code>rdflib.term.URIRef(u'http://www.w3.or<code class="variable-ellipsis">...</code></code><br />
       additional axiom type triples that are added to the combined 
       semantics; these 'bind' the RDFS and the OWL worlds together
     </td>
@@ -317,9 +337,6 @@
       <code><a href="RDFClosure.Closure.Core-class.html#error_messages">error_messages</a></code>,
       <code><a href="RDFClosure.Closure.Core-class.html#graph">graph</a></code>,
       <code><a href="RDFClosure.Closure.Core-class.html#literal_proxies">literal_proxies</a></code>
-      </p>
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b>:
-      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#bnodes">bnodes</a></code>
       </p>
     </td>
   </tr>
@@ -366,8 +383,8 @@
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>graph</code></strong> (rdflib.Graph) - the RDF graph to be extended</li>
-        <li><strong class="pname"><code>axioms</code></strong> (Boolean) - whether (non-datatype) axiomatic triples should be added or not</li>
-        <li><strong class="pname"><code>daxioms</code></strong> (Boolean) - whether datatype axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>axioms</code></strong> (bool) - whether (non-datatype) axiomatic triples should be added or not</li>
+        <li><strong class="pname"><code>daxioms</code></strong> (bool) - whether datatype axiomatic triples should be added or not</li>
         <li><strong class="pname"><code>rdfs</code></strong> (boolean) - placeholder flag (used in subclassed only, it is always defaulted
           to True in this class)</li>
     </ul></dd>
@@ -384,13 +401,13 @@
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_new_datatype</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">uri</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_new_datatype</span>(<span class="sig-arg">uri</span>,
         <span class="sig-arg">conversion_function</span>,
         <span class="sig-arg">datatype_list</span>,
         <span class="sig-arg">subsumption_dict</span>=<span class="sig-default">None</span>,
         <span class="sig-arg">subsumption_key</span>=<span class="sig-default">None</span>,
         <span class="sig-arg">subsumption_list</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">Static Method</em>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="RDFClosure.CombinedClosure-pysrc.html#RDFS_OWLRL_Semantics.add_new_datatype">source&nbsp;code</a></span>&nbsp;
@@ -457,7 +474,7 @@
     </td>
   </tr></table>
   
-  <p>Go through the RDFS entailement rules rdf1, rdfs4-rdfs12, by extending
+  <p>Go through the RDFS entailment rules rdf1, rdfs4-rdfs12, by extending 
   the graph.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
@@ -575,14 +592,14 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">[</code><code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#Thing')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Resource')<code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#Class')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#Class')<code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#DataRange')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op">,</code>
+<code class="variable-group">[</code><code class="variable-group">(</code>rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#Thing')<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Resource')<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Class')<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#equivalentClass')<code class="variable-op"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-op">,</code>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -629,7 +646,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    Generated by Epydoc 3.0.1 on Fri Feb  7 15:00:18 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

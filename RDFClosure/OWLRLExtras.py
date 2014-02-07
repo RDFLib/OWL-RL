@@ -18,7 +18,7 @@ In more details, the rules that are added:
  1. self restriction 1: C{?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y rdf:type ?z. => ?y ?p ?y.}
  2. self restriction 2: C{?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y ?p ?y. => ?y rdf:type ?z. }
 
-@requires: U{RDFLib<http://rdflib.net>}, 4.0.0 or higher
+@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
@@ -33,25 +33,25 @@ import rdflib
 # noinspection PyPep8Naming
 from rdflib.namespace 	import XSD as ns_xsd
 
-from RDFClosure.RDFS	import  Property
+from .RDFS	import  Property
 # noinspection PyPep8Naming
-from RDFClosure.RDFS	import type as rdfType
-from RDFClosure.RDFS 	import Resource, Class, subClassOf, subPropertyOf, domain
-from RDFClosure.RDFS 	import Datatype
+from .RDFS	import type as rdfType
+from .RDFS 	import Resource, Class, subClassOf, subPropertyOf, domain
+from .RDFS 	import Datatype
 
 from fractions import Fraction as Rational
 
-from RDFClosure.DatatypeHandling import AltXSDToPYTHON
+from .DatatypeHandling import AltXSDToPYTHON
 
-from RDFClosure.OWL 				import *
+from .OWL import *
 # noinspection PyPep8Naming
-from RDFClosure.OWL					import OWLNS as ns_owl
-from RDFClosure.CombinedClosure		import RDFS_OWLRL_Semantics
-from RDFClosure.OWLRL				import OWLRL_Annotation_properties
+from .OWL import OWLNS as ns_owl
+from .CombinedClosure import RDFS_OWLRL_Semantics
+from .OWLRL import OWLRL_Annotation_properties
 
-from RDFClosure.XsdDatatypes 		import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
+from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
 
-from RestrictedDatatype 			import extract_faceted_datatypes
+from RestrictedDatatype import extract_faceted_datatypes
 
 ###########################################################################################################################
 # Rational datatype

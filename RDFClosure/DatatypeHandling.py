@@ -12,7 +12,7 @@ Some of these deficiencies are handled by this module. All the functions convert
 python datatype (or return the original string if this is not possible) which will be used, eg,
 for comparisons (equalities). If the lexical value constraints are not met, exceptions are raised.
 
-@requires: U{RDFLib<http://rdflib.net>}, 4.0.0. and higher
+@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}

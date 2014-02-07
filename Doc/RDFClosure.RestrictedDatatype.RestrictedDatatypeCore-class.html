@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>RDFClosure.parsers.N3Parser.N3Parser</title>
+  <title>RDFClosure.RestrictedDatatype.RestrictedDatatypeCore</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -38,9 +38,8 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
-        <a href="RDFClosure.parsers-module.html">Package&nbsp;parsers</a> ::
-        <a href="RDFClosure.parsers.N3Parser-module.html">Module&nbsp;N3Parser</a> ::
-        Class&nbsp;N3Parser
+        <a href="RDFClosure.RestrictedDatatype-module.html">Module&nbsp;RestrictedDatatype</a> ::
+        Class&nbsp;RestrictedDatatypeCore
       </span>
     </td>
     <td>
@@ -50,23 +49,31 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="RDFClosure.parsers.N3Parser.N3Parser-class.html"
+            >]&nbsp;|&nbsp;<a href="RDFClosure.RestrictedDatatype.RestrictedDatatypeCore-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class N3Parser</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.parsers.N3Parser-pysrc.html#N3Parser">source&nbsp;code</a></span></p>
-<pre class="base-tree">
-                  object --+    
-                           |    
-rdflib.syntax.parsers.Parser --+
-                               |
-                              <strong class="uidshort">N3Parser</strong>
-</pre>
+<h1 class="epydoc">Class RestrictedDatatypeCore</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#RestrictedDatatypeCore">source&nbsp;code</a></span></p>
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html">RestrictedDatatype</a></li>  </ul>
+</dd></dl>
 
 <hr />
+<p>An 'abstract' superclass for datatype restrictions. The instance 
+  variables listed here are used in general, without the specificities of 
+  the concrete restricted datatype.</p>
+  <p>This module defines the <a 
+  href="RDFClosure.RestrictedDatatype.RestrictedDatatype-class.html" 
+  class="link">RestrictedDatatype</a> class that corresponds to the 
+  datatypes and their restrictions defined in the OWL 2 standard. Other 
+  modules may subclass this class to define new datatypes with 
+  restrictions.</p>
+
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -90,10 +97,11 @@ rdflib.syntax.parsers.Parser --+
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="RDFClosure.parsers.N3Parser.N3Parser-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      x.__init__(...) initializes x; see x.__class__.__doc__ for signature</td>
+          <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">type_uri</span>,
+        <span class="summary-sig-arg">base_type</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="RDFClosure.parsers.N3Parser-pysrc.html#N3Parser.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#RestrictedDatatypeCore.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -103,15 +111,16 @@ rdflib.syntax.parsers.Parser --+
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
+      <span class="summary-type">boolean</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="RDFClosure.parsers.N3Parser.N3Parser-class.html#parse" class="summary-sig-name">parse</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">source</span>,
-        <span class="summary-sig-arg">graph</span>)</span></td>
+          <td><span class="summary-sig"><a href="RDFClosure.RestrictedDatatype.RestrictedDatatypeCore-class.html#checkValue" class="summary-sig-name">checkValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Check whether the (python) value abides to the constraints defined by
+      the current facets.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="RDFClosure.parsers.N3Parser-pysrc.html#N3Parser.parse">source&nbsp;code</a></span>
+            <span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#RestrictedDatatypeCore.checkValue">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -119,47 +128,47 @@ rdflib.syntax.parsers.Parser --+
       
     </td>
   </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__delattr__</code>,
-      <code>__format__</code>,
-      <code>__getattribute__</code>,
-      <code>__hash__</code>,
-      <code>__new__</code>,
-      <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>,
-      <code>__sizeof__</code>,
-      <code>__str__</code>,
-      <code>__subclasshook__</code>
-      </p>
-    </td>
-  </tr>
 </table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="left"><span class="table-header">Instance Variables</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
+         ><span class="options">[<a href="#section-InstanceVariables"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
     </table>
   </td>
 </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="base_type"></a><span class="summary-name">base_type</span><br />
+      URI of the datatype that is restricted
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="toPython"></a><span class="summary-name">toPython</span><br />
+      function to convert a Literal of the specified type to a Python 
+      value.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="type_uri"></a><span class="summary-name">type_uri</span><br />
+      the URI for this datatype
     </td>
   </tr>
 </table>
@@ -181,52 +190,29 @@ rdflib.syntax.parsers.Parser --+
   </td>
 </tr>
 </table>
-<a name="__init__"></a>
+<a name="checkValue"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
-    <br /><em class="fname">(Constructor)</em>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">checkValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">value</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="RDFClosure.parsers.N3Parser-pysrc.html#N3Parser.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="RDFClosure.RestrictedDatatype-pysrc.html#RestrictedDatatypeCore.checkValue">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>x.__init__(...) initializes x; see x.__class__.__doc__ for 
-  signature</p>
+  <p>Check whether the (python) value abides to the constraints defined by 
+  the current facets.</p>
   <dl class="fields">
-    <dt>Overrides:
-        object.__init__
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
-<a name="parse"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">source</span>,
-        <span class="sig-arg">graph</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="RDFClosure.parsers.N3Parser-pysrc.html#N3Parser.parse">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  
-  <dl class="fields">
-    <dt>Overrides:
-        rdflib.syntax.parsers.Parser.parse
-    </dt>
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>value</code></strong> - the value to be checked</li>
+    </ul></dd>
+    <dt>Returns: boolean</dt>
   </dl>
 </td></tr></table>
 </div>
@@ -257,7 +243,7 @@ rdflib.syntax.parsers.Parser --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    Generated by Epydoc 3.0.1 on Fri Feb  7 15:00:18 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

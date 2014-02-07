@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RDFClosure.RDFS'</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="RDFClosure-module.html">Package&nbsp;RDFClosure</a> ::
+        Module&nbsp;RDFS'
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="RDFClosure.RDFS%27-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module RDFS'</h1><p class="nomargin-top"><span class="codelink"><a href="RDFClosure.RDFS%27-pysrc.html">source&nbsp;code</a></span></p>
+<p>RDF(S) terms. Note that the set of terms is <i>complete</i>, ie, it 
+  includes <i>all</i> OWL 2 terms, regardless of whether the term is used 
+  in OWL 2 RL or not.</p>
+
+<hr />
+<div class="fields">      <p><strong>Requires:</strong>
+        <a href="https://github.com/RDFLib/rdflib" 
+        target="_top">RDFLib</a>, 4.0.0 and higher
+      </p>
+      <p><strong>License:</strong>
+        This software is available for use under the <a 
+        href="http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
+        target="_top">W3C Software License</a>
+      </p>
+      <p><strong>Organization:</strong>
+        <a href="http://www.w3.org" target="_top">World Wide Web 
+        Consortium</a>
+      </p>
+      <p><strong>Author:</strong>
+        <a href="http://ahref=&quot;http://www.w3.org/People/Ivan/&quot;" 
+        target="_top">Ivan Herman</a>
+      </p>
+</div><!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RDFNS"></a><span class="summary-name">RDFNS</span> = <code title="Namespace(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#')">Namespace(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RDFSNS"></a><span class="summary-name">RDFSNS</span> = <code title="Namespace(u'http://www.w3.org/2000/01/rdf-schema#')">Namespace(u'http://www.w3.org/2000/01/rdf-schema#')</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Seq" class="summary-name">Seq</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-sy<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Bag" class="summary-name">Bag</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-sy<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Alt" class="summary-name">Alt</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-sy<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Statement" class="summary-name">Statement</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Statem\
+ent')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Property" class="summary-name">Property</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Proper\
+ty')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-r<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#XMLLiteral" class="summary-name">XMLLiteral</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLit\
+eral')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#HTMLLiteral" class="summary-name">HTMLLiteral</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/2<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#LangString" class="summary-name">LangString</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#LangSt\
+ring')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#List" class="summary-name">List</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#List')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-s<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#subject" class="summary-name">subject</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#subjec\
+t')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rd<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#predicate" class="summary-name">predicate</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#predic\
+ate')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#object" class="summary-name">object</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#object\
+')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#type" class="summary-name">type</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#type')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-s<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#value" class="summary-name">value</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#value'\
+)">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#first" class="summary-name">first</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#first'\
+)">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#rest" class="summary-name">rest</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#rest')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-s<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#nil" class="summary-name">nil</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil')">rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-sy<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Resource" class="summary-name">Resource</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Resource')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Class" class="summary-name">Class</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Class')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-sch<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#subClassOf" class="summary-name">subClassOf</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#subClassOf')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rd<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#subPropertyOf" class="summary-name">subPropertyOf</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#subPropertyO\
+f')">rdflib.term.URIRef(u'http://www.w3.org/2000/01<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#comment" class="summary-name">comment</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#comment')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-s<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#label" class="summary-name">label</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#label')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-sch<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#domain" class="summary-name">domain</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#domain')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-sc<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#range" class="summary-name">range</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#range')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-sch<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#seeAlso" class="summary-name">seeAlso</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#seeAlso')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-s<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#isDefinedBy" class="summary-name">isDefinedBy</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#isDefinedBy'\
+)">rdflib.term.URIRef(u'http://www.w3.org/2000/01/r<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Literal" class="summary-name">Literal</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Literal')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-s<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Container" class="summary-name">Container</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Container')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#ContainerMembershipProperty" class="summary-name">ContainerMembershipProperty</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#ContainerMem\
+bershipProperty')">rdflib.term.URIRef(u'http://www.<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#member" class="summary-name">member</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#member')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-sc<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="RDFClosure.RDFS%27-module.html#Datatype" class="summary-name">Datatype</a> = <code title="rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Datatype')">rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'RDFClosure'"><code class="variable-quote">'</code><code class="variable-string">RDFClosure</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<p class="indent-wrapped-lines"><b>Imports:</b>
+  <span title="rdflib">rdflib</span>,
+  <span title="rdflib.Namespace">Namespace</span>
+</p><br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="Seq"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Seq</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Bag"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Bag</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Alt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Alt</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Statement"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Statement</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Statem<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ent')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Property"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Property</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Proper<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="XMLLiteral"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">XMLLiteral</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLit<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+eral')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="HTMLLiteral"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">HTMLLiteral</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="LangString"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">LangString</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#LangSt<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ring')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="List"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">List</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#List')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="subject"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">subject</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#subjec<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+t')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="predicate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">predicate</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#predic<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ate')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="object"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">object</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#object<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="type"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">type</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="value"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">value</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#value'<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="first"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">first</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#first'<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rest"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">rest</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#rest')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nil"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">nil</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Resource"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Resource</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Resource')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Class"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Class</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Class')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="subClassOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">subClassOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#subClassOf')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="subPropertyOf"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">subPropertyOf</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#subPropertyO<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+f')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="comment"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">comment</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#comment')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="label"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">label</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#label')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="domain"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">domain</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#domain')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="range"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">range</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#range')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="seeAlso"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">seeAlso</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#seeAlso')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="isDefinedBy"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">isDefinedBy</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#isDefinedBy'<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+)
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Literal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Literal</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Literal')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Container"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Container</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Container')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ContainerMembershipProperty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ContainerMembershipProperty</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#ContainerMem<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+bershipProperty')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="member"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">member</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#member')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Datatype"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Datatype</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#Datatype')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="RDFClosure-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Fri Feb  7 15:00:18 2014
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

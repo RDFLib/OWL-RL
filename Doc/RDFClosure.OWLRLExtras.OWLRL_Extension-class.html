@@ -154,9 +154,27 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#add_axioms" class="summary-sig-name">add_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Add the <a 
+      href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#extra_axioms"
+      class="link">extra axioms</a>, related to the self restrictions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.add_axioms">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#one_time_rules" class="summary-sig-name">one_time_rules</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      This method is invoked only once at the beginning, and prior of, the 
-      forward chaing process.</td>
+      This method is invoked only once at the beginning, and prior of, the forward chaining process.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.one_time_rules">source&nbsp;code</a></span>
             
@@ -172,12 +190,13 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#add_axioms" class="summary-sig-name">add_axioms</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Add the <a 
-      href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#extra_axioms"
-      class="link">extra axioms</a>, related to the self restrictions.</td>
+          <td><span class="summary-sig"><a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#restriction_typing_check" class="summary-sig-name">restriction_typing_check</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">v</span>,
+        <span class="summary-sig-arg">t</span>)</span><br />
+      Helping method to check whether a type statement is in line with a 
+      possible restriction.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.add_axioms">source&nbsp;code</a></span>
+            <span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.restriction_typing_check">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -208,7 +227,6 @@
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">CombinedClosure.RDFS_OWLRL_Semantics</a></code></b>:
       <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_d_axioms">add_d_axioms</a></code>,
-      <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype">add_new_datatype</a></code>,
       <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#post_process">post_process</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.Closure.Core-class.html">Closure.Core</a></code></b>:
@@ -235,6 +253,31 @@
     </td>
   </tr>
 </table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html">CombinedClosure.RDFS_OWLRL_Semantics</a></code></b>:
+      <code><a href="RDFClosure.CombinedClosure.RDFS_OWLRL_Semantics-class.html#add_new_datatype">add_new_datatype</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
 <!-- ==================== CLASS VARIABLES ==================== -->
 <a name="section-ClassVariables"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -256,14 +299,15 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#extra_axioms" class="summary-name">extra_axioms</a> = <code title="[(rdflib.URIRef('http://www.w3.org/2002/07/owl#hasSelf'),
-  rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'),
-  rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#Property')\
-),
- (rdflib.URIRef('http://www.w3.org/2002/07/owl#hasSelf'),
-  rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#domain'),
-  rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#Property')\
-)]"><code class="variable-group">[</code><code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#<code class="variable-ellipsis">...</code></code><br />
+        <a href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#extra_axioms" class="summary-name">extra_axioms</a> = <code title="[(rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#hasSelf'),
+  rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\
+'),
+  rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Prop\
+erty')),
+ (rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#hasSelf'),
+  rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#domain'),
+  rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Prop\
+..."><code class="variable-group">[</code><code class="variable-group">(</code>rdflib.term.URIRef(u'http://www.w3.org/2002/0<code class="variable-ellipsis">...</code></code><br />
       additional axioms that have to be added to the deductive closure (in 
       case the axiomatic triples are required)
     </td>
@@ -310,9 +354,6 @@
       <code><a href="RDFClosure.Closure.Core-class.html#error_messages">error_messages</a></code>,
       <code><a href="RDFClosure.Closure.Core-class.html#graph">graph</a></code>,
       <code><a href="RDFClosure.Closure.Core-class.html#literal_proxies">literal_proxies</a></code>
-      </p>
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html">OWLRL.OWLRL_Semantics</a></code></b>:
-      <code><a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#bnodes">bnodes</a></code>
       </p>
     </td>
   </tr>
@@ -391,33 +432,6 @@
   </dl>
 </td></tr></table>
 </div>
-<a name="one_time_rules"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">one_time_rules</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.one_time_rules">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>This method is invoked only once at the beginning, and prior of, the 
-  forward chaing process.</p>
-  <p>At present, only the <a 
-  href="RDFClosure.OWLRLExtras.OWLRL_Extension-class.html#_subsume_restricted_datatypes"
-  class="link" onclick="show_private();">subsumption of restricted 
-  datatypes</a> is performed.</p>
-  <dl class="fields">
-    <dt>Overrides:
-        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#one_time_rules">OWLRL.OWLRL_Semantics.one_time_rules</a>
-    </dt>
-  </dl>
-</td></tr></table>
-</div>
 <a name="add_axioms"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -438,6 +452,69 @@
   <dl class="fields">
     <dt>Overrides:
         <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#add_axioms">OWLRL.OWLRL_Semantics.add_axioms</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="one_time_rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">one_time_rules</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.one_time_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+This method is invoked only once at the beginning, and prior of, the forward chaining process.
+
+At present, only the L{subsumption} of restricted datatypes&lt;_subsume_restricted_datatypes&gt;} is performed.
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#one_time_rules">OWLRL.OWLRL_Semantics.one_time_rules</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="restriction_typing_check"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">restriction_typing_check</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">v</span>,
+        <span class="sig-arg">t</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="RDFClosure.OWLRLExtras-pysrc.html#OWLRL_Extension.restriction_typing_check">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Helping method to check whether a type statement is in line with a 
+  possible restriction. This method is invoked by rule &quot;cls-avf&quot; 
+  before setting a type on an allValuesFrom restriction.</p>
+  <p>The method is a placeholder at this level. It is typically implemented
+  by subclasses for extra checks, eg, for datatype facet checks.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>v</code></strong> - the resource that is to be 'typed'</li>
+        <li><strong class="pname"><code>t</code></strong> - the targeted type (ie, Class)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>boolean</dd>
+    <dt>Overrides:
+        <a href="RDFClosure.OWLRL.OWLRL_Semantics-class.html#restriction_typing_check">OWLRL.OWLRL_Semantics.restriction_typing_check</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -505,14 +582,15 @@
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">[</code><code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#hasSelf')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#Property')<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-<code class="variable-group">)</code><code class="variable-op">,</code>
- <code class="variable-group">(</code>rdflib.URIRef('http://www.w3.org/2002/07/owl#hasSelf')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/2000/01/rdf-schema#domain')<code class="variable-op">,</code>
-  rdflib.URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#Property')<code class="variable-group"></code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
-<code class="variable-group">)</code><code class="variable-group">]</code>
+<code class="variable-group">[</code><code class="variable-group">(</code>rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#hasSelf')<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#type<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+')<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Prop<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+erty')<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-group">(</code>rdflib.term.URIRef(u'http://www.w3.org/2002/07/owl#hasSelf')<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/2000/01/rdf-schema#domain')<code class="variable-op">,</code>
+  rdflib.term.URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#Prop<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -545,7 +623,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:16 2009
+    Generated by Epydoc 3.0.1 on Fri Feb  7 15:00:18 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

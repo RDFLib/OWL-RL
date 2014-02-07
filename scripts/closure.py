@@ -17,7 +17,7 @@ def main():
 	
 	# The 'text' field is not used in the command line, but the CGI environment uses it. This means that there
 	# is no option to change that, but is added to the final option structure
-	parser.set_defaults(format=TURTLE, owlClosure="no", rdfsClosure="no", owlExtras="no", axioms="no", daxioms="no", iformat=AUTO, trimming="no", text=None)
+	parser.set_defaults(format=TURTLE, owlClosure="no", rdfsClosure="no", owlExtras="no", axioms="no", daxioms="no", iformat=AUTO, trimming="no", maximal="no", text=None)
 	
 	parser.add_option("-f", "--file", type="string", dest="source", 
 		               help="input file; should be a .rdf or .ttl file, for RDF/XML or Turtle, respectively. If missing, or if the value is '-' then standard input is used. Usage of this options is not really necessary, the fname in the command lines refer to files by themselves")
@@ -55,6 +55,9 @@ def main():
 	parser.add_option("--trimming", action="store", dest="trimming", choices=["yes","no"], 
 					   help="trim the output of OWL 2 RL and extension; 'yes' is ineffective unless --extras=yes  [default: %default]")
 
+	parser.add_option("-m", "--maximal", action="store_const", dest="maximal", const="yes",
+					  help="maximal possibilities switched on: RDFS, OWL with extensions, and with trimming")
+
 	parser.add_option("-t", action="store_const", dest="trimming", const="yes",
 		               help="trim the output of OWL 2 RL and extension; shorthand for --trimming=yes [default: %default]")
 	
@@ -62,7 +65,7 @@ def main():
 					   help="output format; argument must be turtle|json|xml [default: %default]")
 	
 	parser.add_option("-i", "--input_syntax", action="store", dest="iformat", choices=[AUTO, TURTLE, JSON, RDFA, RDFXML],
-					   help="format of intput; argument must be auto|turtle|xml [default: %default]; auto means that file suffix defines the format. This flag is valid for all input files.")
+					   help="format of input; argument must be auto|turtle|xml|rdfa|json [default: %default]; auto means that file suffix defines the format. This flag is valid for all input files.")
 
 	(options,args) = parser.parse_args()
 	if options.source is None:
@@ -76,6 +79,11 @@ def main():
 	if len(options.sources) == 0:
 		# the default mechanism, ie, to use standard input
 		options.sources = ["-"]
+
+	if options.maximal == "yes":
+		options.trimming   = "yes"
+		options.owlClosure = "yes"
+		options.owlExtras  = "yes"
 			
 	print convert_graph(options)
 

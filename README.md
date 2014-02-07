@@ -30,6 +30,7 @@ This is a major release: the package has been updated to Python 2.7 and RDFLib 4
 - Python 2.7 includes an implementation for rational numbers (under the name ``Fraction``), so the separate module became moot.
 - The ``script`` directory has been moved to the top level of the distribution
 - The RDF1.1 specific datatypes (``LangString`` and ``HTML``) have been added, although the ``HTML`` is simply treated as a text (a reliance on the HTML5 Library may be too much for what this is worth…)
+- The ``closure`` script has now an extra flag (``-m``) to use the "maximal" entailment, i.e., extended OWLRL+RDF with extra trimmings
 
 ### Version 4.2.1
 

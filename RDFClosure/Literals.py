@@ -6,7 +6,7 @@ Separate module to handle literals.
 The issue is that pure literals cannot appear in subject position according to the current rules on RDF. That means that
 different types of conclusions cannot properly finish. The present trick is trying to get around the problem as follows:
 
- 1. For all literals in the graph a bnode is created. The module does not do a full D entailement but just relies on RDFLib's ability to recognize identical literals
+ 1. For all literals in the graph a bnode is created. The module does not do a full D entailment but just relies on RDFLib's ability to recognize identical literals
  2. All those bnodes get a type Literal
  3. All triples with literals are exchanged against a triple with the associated bnode
 
@@ -15,33 +15,25 @@ a bnode representing a literal appear in object position, a triple is generated;
 subject position are removed from the final graph.
 
 
-@requires: U{RDFLib<http://rdflib.net>}, 4.0.0 or higher
+@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
 @license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 
 """
 
-"""
-$Id: Literals.py,v 1.14 2011/08/04 12:41:57 ivan Exp $ $Date: 2011/08/04 12:41:57 $
-"""
-
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
-import rdflib
 from rdflib import BNode
 from rdflib import Literal as rdflibLiteral
-from rdflib import Namespace
 from rdflib.namespace import XSD as ns_xsd
 
-from .RDFS import RDFNS as ns_rdf
 from .RDFS import type
 from .RDFS import Literal
 from .DatatypeHandling import AltXSDToPYTHON
 
-from RDFClosure.OWL				import OWLNS
 
 class _LiteralStructure :
 	"""This class serves as a wrapper around rdflib's Literal, by changing the equality function to a strict 
@@ -49,9 +41,10 @@ class _LiteralStructure :
 	
 	On the other hand, to implement, eg, OWL RL's datatype rules, a should be able to generate 
 	an 'a sameAs b' triple, ie, the distinction should be kept. Hence this class that overrides the equality,
-	and then can be used as a key in a Python dictionary
+	and then can be used as a key in a Python dictionary.
 	"""
-	
+
+	# noinspection PyPep8
 	def __init__(self, lit) :
 		self.lit   = lit
 		self.lex   = str(lit)
@@ -78,7 +71,8 @@ class _LiteralStructure :
 #		except: 
 #			# There might be conversion problems...
 #			return False
-			
+
+	# noinspection PyBroadException
 	def compare_value(self, other) :
 		"""Compare to literal structure instances for equality. Here equality means in the sense of datatype values
 		@return: comparison result
@@ -114,6 +108,7 @@ class _LiteralStructure :
 
 
 class LiteralProxies :
+	# noinspection PyPep8
 	def __init__(self, graph, closure) :
 		"""
 		@param graph: the graph to be modified
@@ -154,22 +149,23 @@ class LiteralProxies :
 					self.lit_to_bnode[obj_st] = bn
 					self.bnode_to_lit[bn] = obj_st
 					# modify the graph
-					to_be_added.append((subj,pred,bn))
+					to_be_added.append((subj, pred, bn))
 					to_be_added.append((bn, type, Literal))
 					# Furthermore: a plain literal should be identified with a corresponding xsd:string and vice versa, 
 					# cf, RDFS Semantics document
-					if obj_st.dt is None and obj_st.lang is None :
-						newLit = rdflibLiteral(obj_st.lex, datatype = ns_xsd["string"])
+					if obj_st.dt is None and obj_st.lang is None:
+						newLit = rdflibLiteral(obj_st.lex, datatype=ns_xsd["string"])
 						new_obj_st = _LiteralStructure(newLit)
 						new_obj_st.dt = ns_xsd["string"]
 						bn2 = BNode()
 						self.lit_to_bnode[new_obj_st] = bn2
 						self.bnode_to_lit[bn2] = new_obj_st
 						to_be_added.append((subj, pred, bn2))
-						to_be_added.append((bn2, type ,Literal))
-					elif obj_st.dt == ns_xsd["string"] :
+						to_be_added.append((bn2, type, Literal))
+					elif obj_st.dt == ns_xsd["string"]:
 						newLit = rdflibLiteral(obj_st.lex, datatype=None)
-						new_obj_st = _LiteralStructure(obj)
+						new_obj_st = _LiteralStructure(newLit)
+						# new_obj_st = _LiteralStructure(obj) # Was this the correct one, or was this an old bug?
 						new_obj_st.dt = None
 						bn2 = BNode()
 						self.lit_to_bnode[new_obj_st] = bn2
@@ -178,7 +174,7 @@ class LiteralProxies :
 						to_be_added.append((bn2, type, Literal))
 		
 		# Do the real modifications
-		self._massageGraph(to_be_removed,to_be_added)
+		self._massageGraph(to_be_removed, to_be_added)
 		
 	def restore(self) :
 		"""
@@ -208,7 +204,7 @@ class LiteralProxies :
 				to_be_added.append((subj, pred, lit))
 				
 		# Do the real modifications
-		self._massageGraph(to_be_removed,to_be_added)
+		self._massageGraph(to_be_removed, to_be_added)
 		
 	def _massageGraph(self, to_be_removed, to_be_added) :
 		"""

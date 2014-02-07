@@ -70,7 +70,7 @@
       boolean.
     </li>
   </ol>
-  <p>Some of these defficiencies are handled by this module. All the 
+  <p>Some of these deficiencies are handled by this module. All the 
   functions convert the lexical value into a python datatype (or return the
   original string if this is not possible) which will be used, eg, for 
   comparisons (equalities). If the lexical value constraints are not met, 
@@ -78,8 +78,8 @@
 
 <hr />
 <div class="fields">      <p><strong>Requires:</strong>
-        <a href="http://rdflib.net" target="_top">RDFLib</a>, 2.2.2. and 
-        higher
+        <a href="https://github.com/RDFLib/rdflib" 
+        target="_top">RDFLib</a>, 4.0.0 and higher
       </p>
       <p><strong>License:</strong>
         This software is available for use under the <a 
@@ -307,7 +307,7 @@
         <tr>
           <td><span class="summary-sig"><a href="RDFClosure.DatatypeHandling-module.html#_strToDateTimeAndStamp" class="summary-sig-name" onclick="show_private();">_strToDateTimeAndStamp</a>(<span class="summary-sig-arg">incoming_v</span>,
         <span class="summary-sig-arg">timezone_required</span>=<span class="summary-sig-default">False</span>)</span><br />
-      Test (and convert) datetime and datetimestamp values.</td>
+      Test (and convert) datetime and date timestamp values.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="RDFClosure.DatatypeHandling-pysrc.html#_strToDateTimeAndStamp">source&nbsp;code</a></span>
             
@@ -375,7 +375,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="RDFClosure.DatatypeHandling-module.html#_strTogYear" class="summary-sig-name" onclick="show_private();">_strTogYear</a>(<span class="summary-sig-arg">v</span>)</span><br />
-      Test gYearMonth value</td>
+      Test gYear value</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="RDFClosure.DatatypeHandling-pysrc.html#_strTogYear">source&nbsp;code</a></span>
             
@@ -576,13 +576,6 @@
 /2002/copyright-software-20021231'"><code class="variable-quote">u'</code><code class="variable-string">W3C&#174; SOFTWARE NOTICE AND LICENSE, http://www.w</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="Decimal_available"></a><span class="summary-name">Decimal_available</span> = <code title="True">True</code>
-    </td>
-  </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -736,7 +729,7 @@ e_ex), ns_xsd [&quot;NCName&quot;]: lambda v: _strToVal_Regexp(v, _re_NCName, re
 al&quot;]: _strToPlainLiteral, ns_xsd [&quot;boolean&quot;]: _strToBool, ns_xsd [&quot;dec\
 imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&quot;base6\
 4Binary&quot;]: _strToBase64Binary, ns_xsd [&quot;double&quot;]: _strToDouble, ns_xsd\
-..."><code class="variable-group">{</code>rdflib.URIRef('http://www.w3.org/1999/02/22-<code class="variable-ellipsis">...</code></code>
+..."><code class="variable-group">{</code>rdflib.term.URIRef(u'http://www.w3.org/1999/<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -748,13 +741,11 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
   </tr>
 </table>
 <p class="indent-wrapped-lines"><b>Imports:</b>
-  <span title="rdflib.RDF.RDFNS">ns_rdf</span>,
-  <span title="rdflib.Literal.XSDToPython">XSDToPython</span>,
-  <span title="rdflib.Literal.Literal">Literal</span>,
-  <span title="rdflib.Literal._toPythonMapping">_toPythonMapping</span>,
-  <span title="rdflib.Literal._PythonToXSD">_PythonToXSD</span>,
-  <span title="rdflib.Literal._XSD_NS">ns_xsd</span>,
-  <span title="rdflib">rdflib</span>,
+  <span title="RDFClosure.RDFS.RDFNS">ns_rdf</span>,
+  <span title="rdflib.term.XSDToPython">XSDToPython</span>,
+  <span title="rdflib.term.Literal">Literal</span>,
+  <span title="rdflib.term._toPythonMapping">_toPythonMapping</span>,
+  <span title="rdflib.namespace.XSD">ns_xsd</span>,
   <span title="datetime">datetime</span>,
   <span title="time">time</span>,
   <span title="re">re</span>,
@@ -859,8 +850,7 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>v</code></strong> - the literal string defined as decimal @return Decimal if the 
-          local python version is &gt;= 2.4, float otherwise</li>
+        <li><strong class="pname"><code>v</code></strong> - the literal string defined as decimal @return Decimal</li>
     </ul></dd>
     <dt>Raises:</dt>
     <dd><ul class="nomargin-top">
@@ -981,12 +971,11 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
   exception if the number is outside the permitted range, ie, 1.0E+310 and 
   1.0E-330. To be on the safe side (python does not have double!) Decimals 
   are used if possible. Upper and lower values, as required by xsd, are 
-  checked.</p>
+  checked (and these fixed values are the reasons why Decimal is used!)</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>v</code></strong> - the literal string defined as a double @return Decimal if the 
-          local python version is &gt;= 2.4, float otherwise</li>
+        <li><strong class="pname"><code>v</code></strong> - the literal string defined as a double @return Decimal</li>
     </ul></dd>
     <dt>Raises:</dt>
     <dd><ul class="nomargin-top">
@@ -1011,7 +1000,8 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
   
   <p>Test and convert a float value into Decimal or (python) float. Raises 
   an exception if the number is outside the permitted range, ie, 1.0E+40 
-  and 1.0E-50.</p>
+  and 1.0E-50. (And these fixed values are the reasons why Decimal is 
+  used!)</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1068,18 +1058,18 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
     </td>
   </tr></table>
   
-  <p>Test (and convert) datetime and datetimestamp values.</p>
+  <p>Test (and convert) datetime and date timestamp values.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>incoming_v</code></strong> - the literal string defined as the date and time</li>
-        <li><strong class="pname"><code>timezone_required</code></strong> - whether the timezone is required (ie, for datetimestamp) or not 
+        <li><strong class="pname"><code>timezone_required</code></strong> - whether the timezone is required (ie, for date timestamp) or not 
           @return datetime</li>
     </ul></dd>
     <dt>Returns: datetime.datetime</dt>
     <dt>Raises:</dt>
     <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - invalid datetime or datetimestamp</li>
+        <li><code><strong class='fraise'>ValueError</strong></code> - invalid datetime or date timestamp</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -1107,7 +1097,7 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
     </ul></dd>
     <dt>Raises:</dt>
     <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - invalid datetime or datetimestamp</li>
+        <li><code><strong class='fraise'>ValueError</strong></code> - invalid datetime or date timestamp</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -1135,7 +1125,7 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
     </ul></dd>
     <dt>Raises:</dt>
     <dd><ul class="nomargin-top">
-        <li><code><strong class='fraise'>ValueError</strong></code> - invalid datetime or datetimestamp</li>
+        <li><code><strong class='fraise'>ValueError</strong></code> - invalid datetime or date timestamp</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -1181,7 +1171,7 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
     </td>
   </tr></table>
   
-  <p>Test gYearMonth value</p>
+  <p>Test gYear value</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1563,7 +1553,7 @@ imal&quot;]: _strToDecimal, ns_xsd [&quot;anyURI&quot;]: _strToAnyURI, ns_xsd [&
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Nov 26 16:36:15 2009
+    Generated by Epydoc 3.0.1 on Fri Feb  7 15:00:18 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
