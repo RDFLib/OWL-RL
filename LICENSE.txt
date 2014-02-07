@@ -3,11 +3,3 @@ RDFClosure is released under the W3C© SOFTWARE NOTICE AND LICENSE, see:
 http://href="http//www.w3.org/Consortium/Legal/2002/copyright-software-20021231%22
 
 for further details.
-
-For an ease of installation, the distribution also includes:
-
-- the rational.py module, see http://www.nmt.edu/tcc/help/lang/python/examples/rational/
-- slightly changed (improved...) versions of the RDF/XML and Turtle serializers of the RDFLib package, see rdflib.net.
-- bug fix version of the n3p parser of the RDFLib package, see rdflib.net
-
-The licence for those packages and modules are separate from the rest of the modules.
