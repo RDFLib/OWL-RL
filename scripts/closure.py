@@ -17,7 +17,7 @@ def main():
 	
 	# The 'text' field is not used in the command line, but the CGI environment uses it. This means that there
 	# is no option to change that, but is added to the final option structure
-	parser.set_defaults(format=TURTLE, owlClosure="yes", rdfsClosure="no", owlExtras="no", axioms="no", daxioms="no", iformat=AUTO, trimming="no", text=None)
+	parser.set_defaults(format=TURTLE, owlClosure="no", rdfsClosure="no", owlExtras="no", axioms="no", daxioms="no", iformat=AUTO, trimming="no", text=None)
 	
 	parser.add_option("-f", "--file", type="string", dest="source", 
 		               help="input file; should be a .rdf or .ttl file, for RDF/XML or Turtle, respectively. If missing, or if the value is '-' then standard input is used. Usage of this options is not really necessary, the fname in the command lines refer to files by themselves")
