@@ -58,6 +58,7 @@ from rdflib	import Literal as rdflibLiteral
 from rdflib.namespace import XSD as ns_xsd
 
 from DatatypeHandling import AltXSDToPYTHON
+from . import text_type
 
 #: Constant for datatypes using min, max (inclusive and exclusive):
 MIN_MAX					= 0
@@ -196,9 +197,9 @@ def extract_faceted_datatypes(core, graph):
 										# it is caught some lines below anyway...
 										try :
 											if lit.datatype is None or lit.datatype == ns_xsd["string"]:
-												final_facets.append((facet, str(lit)))
+												final_facets.append((facet, text_type(lit)))
 											else :
-												final_facets.append((facet, AltXSDToPYTHON[lit.datatype](str(lit))))
+												final_facets.append((facet, AltXSDToPYTHON[lit.datatype](text_type(lit))))
 										except Exception, msg :
 											core.add_error(msg)
 											continue
@@ -381,7 +382,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
 		@rtype: boolean
 		"""
 		if isinstance(value, rdflibLiteral) :
-			val = str(value)
+			val = text_type(value)
 		else :
 			val = value
 		if self.minLength is not None :
@@ -396,7 +397,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
 		@rtype: boolean
 		"""
 		if isinstance(value, rdflibLiteral):
-			val = str(value)
+			val = text_type(value)
 		else :
 			val = value
 		if self.maxLength is not None:
@@ -411,7 +412,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
 		@rtype: boolean
 		"""
 		if isinstance(value, rdflibLiteral):
-			val = str(value)
+			val = text_type(value)
 		else :
 			val = value
 		if self.length is not None:
@@ -426,7 +427,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
 		@rtype: boolean
 		"""
 		if isinstance(value, rdflibLiteral):
-			val = str(value)
+			val = text_type(value)
 		else :
 			val = value
 		for p in self.pattern :

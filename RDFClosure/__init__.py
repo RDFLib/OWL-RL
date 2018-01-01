@@ -151,8 +151,13 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+import sys
 import StringIO
 from types import *
+if sys.version_info < (3,):
+    text_type = unicode
+else:
+    text_type = str
 
 # noinspection PyPackageRequirements,PyPackageRequirements,PyPackageRequirements
 import rdflib
@@ -259,7 +264,7 @@ def interpret_owl_imports(iformat, graph):
 		# this is not 100% kosher. The expected object for an import statement is a URI. However,
 			# on local usage, a string would also make sense, so I do that one, too
 			if isinstance(uri, rdflibLiteral):
-				__parse_input(iformat, str(uri), graph)
+				__parse_input(iformat, text_type(uri), graph)
 			else :
 				__parse_input(iformat, uri, graph)
 			#4. start all over again to see if import statements have been imported
