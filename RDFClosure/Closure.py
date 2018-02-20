@@ -13,7 +13,7 @@ The generic superclasses for various rule based semantics and the possible exten
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
 from rdflib import BNode
@@ -194,7 +194,7 @@ class Core :
 		(s, p, o) = t
 		if not(isinstance(s, rdflibLiteral) or isinstance(p, rdflibLiteral)) and t not in self.graph:
 			if self._debug or offlineGeneration:
-				print t
+				print(t)
 			self.added_triples.add(t)
 
 	# noinspection PyAttributeOutsideInit
@@ -239,7 +239,7 @@ class Core :
 
 			# DEBUG: print the cycle number out
 			if self._debug:
-				print "----- Cycle #:%d" % cycle_num
+				print("----- Cycle #:%d" % cycle_num)
 
 			# go through all rules, and collect the replies (to see whether any change has been done)
 			# the new triples to be added are collected separately not to interfere with

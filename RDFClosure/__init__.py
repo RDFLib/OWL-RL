@@ -149,13 +149,13 @@ which will result in a proper graph expansion except for the datatype specific c
 __version__ = "5.0"
 __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import sys
-import StringIO
+import io
 from types import *
 if sys.version_info < (3,):
-    text_type = unicode
+    text_type = str
 else:
     text_type = str
 
@@ -166,12 +166,12 @@ from rdflib import Literal as rdflibLiteral
 # noinspection PyPep8Naming
 from rdflib import Graph
 
-import DatatypeHandling, Closure
-from OWLRLExtras import OWLRL_Extension, OWLRL_Extension_Trimming
-from OWLRL import OWLRL_Semantics
-from RDFSClosure import RDFS_Semantics
-from CombinedClosure import RDFS_OWLRL_Semantics
-from OWL import imports
+from . import DatatypeHandling, Closure
+from .OWLRLExtras import OWLRL_Extension, OWLRL_Extension_Trimming
+from .OWLRL import OWLRL_Semantics
+from .RDFSClosure import RDFS_Semantics
+from .CombinedClosure import RDFS_OWLRL_Semantics
+from .OWL import imports
 
 ################################################################################################################
 RDFXML = "xml"
@@ -340,7 +340,7 @@ class DeductiveClosure:
 		if closure_class is None :
 			self.closure_class = None
 		else :
-			if not isinstance(closure_class, ClassType):
+			if not isinstance(closure_class, type):
 				raise ValueError("The closure type argument must be a class reference")
 			else :
 				self.closure_class = closure_class
@@ -445,7 +445,7 @@ def convert_graph(options, closureClass=None) :
 
 	# add the possible extra text (ie, the text input on the HTML page)
 	if options.text is not None:
-		graph.parse(StringIO.StringIO(options.text), format="n3")
+		graph.parse(io.StringIO(options.text), format="n3")
 
 	# Get all the options right
 	# noinspection PyPep8Naming

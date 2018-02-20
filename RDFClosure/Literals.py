@@ -24,7 +24,7 @@ subject position are removed from the final graph.
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 from rdflib import BNode
 from rdflib import Literal as rdflibLiteral
@@ -137,7 +137,7 @@ class LiteralProxies :
 				# Check if a BNode has already been associated with that literal
 				obj_st = _LiteralStructure(obj)
 				found = False
-				for l in self.lit_to_bnode.keys() :					
+				for l in list(self.lit_to_bnode.keys()) :					
 					if obj_st.lex == l.lex and obj_st.dt == l.dt and obj_st.lang == l.lang :
 						t1 = (subj, pred, self.lit_to_bnode[l])
 						to_be_added.append(t1)

@@ -14,7 +14,7 @@ This module is brute force implementation of the RDFS semantics on the top of RD
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 from RDFClosure.RDFS 	import Property, type
 from RDFClosure.RDFS 	import Resource, Class, subClassOf, subPropertyOf, domain, range
@@ -58,7 +58,7 @@ class RDFS_Semantics(Core):
 		"""
 		for t in RDFS_Axiomatic_Triples:
 			self.graph.add(t)
-		for i in xrange(1, self.IMaxNum + 1):
+		for i in range(1, self.IMaxNum + 1):
 			ci = ns_rdf[("_%d" % i)]
 			self.graph.add((ci, type, Property))
 			self.graph.add((ci, domain, Resource))
@@ -67,7 +67,7 @@ class RDFS_Semantics(Core):
 
 	def add_d_axioms(self):
 		"""This is not really complete, because it just uses the comparison possibilities that rdflib provides."""
-		literals = self.literal_proxies.lit_to_bnode.keys()
+		literals = list(self.literal_proxies.lit_to_bnode.keys())
 		# #1
 		for lt in literals:
 			if lt.dt is not None:
@@ -86,8 +86,8 @@ class RDFS_Semantics(Core):
 		"""
 		# There is also a hidden sameAs rule in RDF Semantics: if a literal appears in a triple, and another one has the same value,
 		# then the triple should be duplicated with the other value.
-		for lt1 in self.literal_proxies.lit_to_bnode.keys():
-			for lt2 in self.literal_proxies.lit_to_bnode.keys():
+		for lt1 in list(self.literal_proxies.lit_to_bnode.keys()):
+			for lt2 in list(self.literal_proxies.lit_to_bnode.keys()):
 				if lt1 != lt2:
 					try:
 						lt1_d = lt1.lit.toPython()

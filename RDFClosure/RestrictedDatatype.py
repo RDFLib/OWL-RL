@@ -41,13 +41,13 @@ The implementation is not 100% complete. Some things that an ideal implementatio
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import re
 
-from OWL import *
+from .OWL import *
 # noinspection PyPep8Naming,PyPep8Naming
-from OWL import OWLNS as ns_owl
+from .OWL import OWLNS as ns_owl
 from RDFClosure.RDFS import Datatype
 from RDFClosure.RDFS import type
 # noinspection PyPep8Naming
@@ -57,8 +57,9 @@ from rdflib	import Literal as rdflibLiteral
 # noinspection PyPep8Naming
 from rdflib.namespace import XSD as ns_xsd
 
-from DatatypeHandling import AltXSDToPYTHON
+from .DatatypeHandling import AltXSDToPYTHON
 from . import text_type
+from functools import reduce
 
 #: Constant for datatypes using min, max (inclusive and exclusive):
 MIN_MAX					= 0
@@ -87,7 +88,7 @@ Datatypes_per_facets = {
 }
 
 #: a simple list containing C{all} datatypes that may have a facet
-facetable_datatypes = reduce(lambda x, y: x + y, Datatypes_per_facets.values())
+facetable_datatypes = reduce(lambda x, y: x + y, list(Datatypes_per_facets.values()))
 
 #######################################################################################################
 
@@ -112,7 +113,7 @@ def _lit_to_value(dt, v):
 	
 	# look at the different facet categories and try to find which is
 	# is, if any, the one that is of relevant for this literal
-	for cat in Datatypes_per_facets.keys():
+	for cat in list(Datatypes_per_facets.keys()):
 		if dt.base_type in Datatypes_per_facets[cat]:
 			# yep, this is to be checked.
 			if not dt.checkValue(value) :
@@ -200,13 +201,13 @@ def extract_faceted_datatypes(core, graph):
 												final_facets.append((facet, text_type(lit)))
 											else :
 												final_facets.append((facet, AltXSDToPYTHON[lit.datatype](text_type(lit))))
-										except Exception, msg :
+										except Exception as msg :
 											core.add_error(msg)
 											continue
 								# We do have everything we need:
 							new_datatype = RestrictedDatatype(dtype, base_type, final_facets)
 							retval.append(new_datatype)
-		except Exception, msg:
+		except Exception as msg:
 			#import sys
 			#print sys.exc_info()
 			#print sys.exc_type
@@ -314,7 +315,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
 										RestrictedDatatype._check_length, RestrictedDatatype._check_lang_range]
 		}
 		self.check_methods = []
-		for cat in Datatypes_per_facets.keys():
+		for cat in list(Datatypes_per_facets.keys()):
 			if self.base_type in Datatypes_per_facets[cat]:
 				self.check_methods = facet_to_method[cat]
 				break

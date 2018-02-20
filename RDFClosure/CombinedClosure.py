@@ -16,7 +16,7 @@ OWL 2 RL implementation becomes a full extension of RDFS.
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 from RDFClosure.RDFS import Resource, Class, Datatype
 from RDFClosure.OWL  import OWLClass, Thing, equivalentClass, DataRange
@@ -77,7 +77,7 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 		@param subsumption_key  : key in the dictionary, if None, the uri parameter is used
 		@param subsumption_list : list of subsumptions associated to a subsumption key (ie, all datatypes that are superclasses of the new datatype)
 		"""
-		from DatatypeHandling import AltXSDToPYTHON, use_Alt_lexical_conversions
+		from .DatatypeHandling import AltXSDToPYTHON, use_Alt_lexical_conversions
 		
 		if datatype_list:
 			datatype_list.append(uri)

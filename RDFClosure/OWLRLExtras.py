@@ -27,7 +27,7 @@ In more details, the rules that are added:
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
 # noinspection PyPep8Naming
@@ -51,7 +51,7 @@ from .OWLRL import OWLRL_Annotation_properties
 
 from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
 
-from RestrictedDatatype import extract_faceted_datatypes
+from .RestrictedDatatype import extract_faceted_datatypes
 
 ###########################################################################################################################
 # Rational datatype

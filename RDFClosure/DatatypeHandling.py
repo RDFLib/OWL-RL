@@ -20,7 +20,7 @@ for comparisons (equalities). If the lexical value constraints are not met, exce
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 # noinspection PyPep8Naming
 from RDFClosure.RDFS import RDFNS as ns_rdf
@@ -128,9 +128,9 @@ def _strToAnyURI(v) :
 	@return the incoming value
 	@raise ValueError: invalid URI value
 	"""
-	import urlparse
+	import urllib.parse
 	if len(v) == 0 : return v
-	if urlparse.urlsplit(v)[0] != "":
+	if urllib.parse.urlsplit(v)[0] != "":
 		# this means that there is a proper scheme, the URI should be kosher
 		return v
 	else :
@@ -279,7 +279,7 @@ def _strToHexBinary(v):
 	length = len(v)
 	if (length / 2) * 2 != length :
 		raise ValueError("Invalid hex binary number %s" % v)
-	return long(v, 16)
+	return int(v, 16)
 
 #################################### Datetime, date timestamp, etc ################################
 
@@ -562,22 +562,22 @@ AltXSDToPYTHON = {
 	ns_xsd["double"]				: _strToDouble,
 	ns_xsd["float"]					: _strToFloat,
 	ns_xsd["byte"]					: lambda v: _strToBoundNumeral(v, _limits_byte, int),
-	ns_xsd["int"]					: lambda v: _strToBoundNumeral(v, _limits_int, long),
-	ns_xsd["long"]					: lambda v: _strToBoundNumeral(v, _limits_long, long),
-	ns_xsd["positiveInteger"]		: lambda v: _strToBoundNumeral(v, _limits_positiveInteger, long),
-	ns_xsd["nonPositiveInteger"]	: lambda v: _strToBoundNumeral(v, _limits_nonPositiveInteger, long),
-	ns_xsd["negativeInteger"]		: lambda v: _strToBoundNumeral(v, _limits_negativeInteger, long),
-	ns_xsd["nonNegativeInteger"]	: lambda v: _strToBoundNumeral(v, _limits_nonNegativeInteger, long),
+	ns_xsd["int"]					: lambda v: _strToBoundNumeral(v, _limits_int, int),
+	ns_xsd["long"]					: lambda v: _strToBoundNumeral(v, _limits_long, int),
+	ns_xsd["positiveInteger"]		: lambda v: _strToBoundNumeral(v, _limits_positiveInteger, int),
+	ns_xsd["nonPositiveInteger"]	: lambda v: _strToBoundNumeral(v, _limits_nonPositiveInteger, int),
+	ns_xsd["negativeInteger"]		: lambda v: _strToBoundNumeral(v, _limits_negativeInteger, int),
+	ns_xsd["nonNegativeInteger"]	: lambda v: _strToBoundNumeral(v, _limits_nonNegativeInteger, int),
 	ns_xsd["short"]					: lambda v: _strToBoundNumeral(v, _limits_short, int),
 	ns_xsd["unsignedByte"]			: lambda v: _strToBoundNumeral(v, _limits_unsignedByte, int),
 	ns_xsd["unsignedShort"]			: lambda v: _strToBoundNumeral(v, _limits_unsignedShort, int),
-	ns_xsd["unsignedInt"]			: lambda v: _strToBoundNumeral(v, _limits_unsignedInt, long),
-	ns_xsd["unsignedLong"]			: lambda v: _strToBoundNumeral(v, _limits_unsignedLong, long),
+	ns_xsd["unsignedInt"]			: lambda v: _strToBoundNumeral(v, _limits_unsignedInt, int),
+	ns_xsd["unsignedLong"]			: lambda v: _strToBoundNumeral(v, _limits_unsignedLong, int),
 	ns_xsd["hexBinary"]				: _strToHexBinary,
 	ns_xsd["dateTime"]				: lambda v: _strToDateTimeAndStamp(v, False),
 	ns_xsd["dateTimeStamp"]			: lambda v: _strToDateTimeAndStamp(v, True),
 	ns_rdf["XMLLiteral"]			: _strToXMLLiteral,
-	ns_xsd["integer"]				: long,
+	ns_xsd["integer"]				: int,
 	ns_xsd["string"]				: lambda v: v,
 	ns_rdf["HTML"]					: lambda v: v,
 	ns_xsd["normalizedString"]		: lambda v: _strToVal_Regexp(v, _re_token),
@@ -614,8 +614,8 @@ if __name__ == '__main__' :
 	string   = sys.argv[2]
 	datatype = ns_xsd[dtype]
 	result = AltXSDToPYTHON[datatype](string)
-	print type(result)
-	print result
+	print(type(result))
+	print(result)
 
 
 

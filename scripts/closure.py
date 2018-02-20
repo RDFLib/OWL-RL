@@ -85,7 +85,7 @@ def main():
 		options.owlClosure = "yes"
 		options.owlExtras  = "yes"
 			
-	print convert_graph(options)
+	print(convert_graph(options))
 
 
 # The standard startup idiom...

@@ -19,7 +19,7 @@ have had a role in the deduction steps only).
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
 from rdflib import BNode
@@ -182,7 +182,7 @@ class OWLRL_Semantics(Core):
 		# RULE dt-type2: for all explicit literals the corresponding bnode should get the right type
 		# definition. The 'implicit' dictionary is also filled on the fly
 		# RULE dt-not-type: see whether an explicit literal is valid in terms of the defined datatype
-		for lt in self.literal_proxies.lit_to_bnode.keys():
+		for lt in list(self.literal_proxies.lit_to_bnode.keys()):
 			# note that all non-RL datatypes are ignored
 			if lt.dt is not None and lt.dt in OWL_RL_Datatypes:
 				bn = self.literal_proxies.lit_to_bnode[lt]
@@ -204,8 +204,8 @@ class OWLRL_Semantics(Core):
 		# RULE dt-eq
 		# Try to compare literals whether they are different or not. If they are different, then an explicit
 		# different from statement should be added, if they are identical, then an equality should be added
-		for lt1 in self.literal_proxies.lit_to_bnode.keys():
-			for lt2 in self.literal_proxies.lit_to_bnode.keys() :
+		for lt1 in list(self.literal_proxies.lit_to_bnode.keys()):
+			for lt2 in list(self.literal_proxies.lit_to_bnode.keys()) :
 				if lt1 != lt2:
 					try :
 						lt1_d = lt1.lit.toPython()
@@ -250,7 +250,7 @@ class OWLRL_Semantics(Core):
 		# under discussion right now. The optimized version uses only what is really in use
 		for dt in OWL_RL_Datatypes:
 			self.store_triple((dt,type,Datatype))
-		for dts in explicit.values():
+		for dts in list(explicit.values()):
 			for dt in dts:
 				self.store_triple((dt, type, Datatype))
 
@@ -400,9 +400,9 @@ class OWLRL_Semantics(Core):
 			m2 = [i for i in self.graph.objects(x, distinctMembers)]
 			for y in m1 + m2:
 				zis = self._list(y)
-				for i in xrange(0, len(zis) - 1):
+				for i in range(0, len(zis) - 1):
 					zi = zis[i]
-					for j in xrange(i+1, len(zis) - 1):
+					for j in range(i+1, len(zis) - 1):
 						zj = zis[j]
 						if ((zi, sameAs, zj) in self.graph or (zj, sameAs, zi) in self.graph) and zi != zj:
 							self.add_error("'sameAs' and 'AllDifferent' cannot be used on the same subject-object pair: (%s, %s)" % (zi,zj))
@@ -485,9 +485,9 @@ class OWLRL_Semantics(Core):
 				x = p
 				for y in self.graph.objects(x, members):
 					pis = self._list(y)
-					for i in xrange(0,len(pis) - 1):
+					for i in range(0,len(pis) - 1):
 						pi = pis[i]
-						for j in xrange(i+1,len(pis) - 1):
+						for j in range(i+1,len(pis) - 1):
 							pj = pis[j]
 							for x,y in self.graph.subject_objects(pi):
 								if (x, pj, y) in self.graph :
@@ -567,7 +567,7 @@ class OWLRL_Semantics(Core):
 							# 'calculate' the keys for the y values and see if there is a match
 							for vals in valueList:
 								same = True
-								for i in xrange(0,len(pis) - 1):
+								for i in range(0,len(pis) - 1):
 									if (y, pis[i], vals[i]) not in self.graph :
 										same = False
 										# No use going with this property line
@@ -780,7 +780,7 @@ class OWLRL_Semantics(Core):
 			for y in self.graph.objects(x, members):
 				classes = self._list(y)
 				if len(classes) > 0:
-					for i in xrange(0, len(classes) - 1):
+					for i in range(0, len(classes) - 1):
 						cl1 = classes[i]
 						for z in self.graph.subjects(type,cl1):
 							for cl2 in classes[(i + 1):]:

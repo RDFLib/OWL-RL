@@ -13,7 +13,7 @@ Axiomatic triples to be (possibly) added to the final graph.
 
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = u'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
 from RDFClosure.RDFS import Seq, Bag, Alt, Statement, Property, XMLLiteral, List
@@ -23,7 +23,7 @@ from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, comment,
 from RDFClosure.RDFS import seeAlso, isDefinedBy, Literal, Container, ContainerMembershipProperty, member, Datatype
 
 from rdflib.namespace 	import XSD as ns_xsd
-from OWL import *
+from .OWL import *
 
 #: Simple RDF axiomatic triples (typing of subject, predicate, first, rest, etc)
 _Simple_RDF_axiomatic_triples = [
