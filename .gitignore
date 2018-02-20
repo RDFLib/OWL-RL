@@ -1,0 +1,6 @@
+# Jetbrains editors
+.idea/
+
+* Python
+*.pyc
+.pytest_cache
