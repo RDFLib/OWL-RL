@@ -3,6 +3,6 @@
 
 * Python
 *.pyc
-.pytest_cache
+.pytest_cache/
 # 2to3
 *.bak

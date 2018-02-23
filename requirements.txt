@@ -1,2 +1,3 @@
 pytest
 rdflib
+rdflib-jsonld
