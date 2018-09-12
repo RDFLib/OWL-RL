@@ -127,7 +127,11 @@ class LiteralProxies:
                 # Test the validity of the datatype
                 if obj.datatype:
                     try:
-                        AltXSDToPYTHON[obj.datatype](text_type(obj))
+                        converter = AltXSDToPYTHON[obj.datatype]
+                    except KeyError:
+                        converter = lambda v: v
+                    try:
+                        converter(text_type(obj))
                     except ValueError:
                         closure.add_error("Lexical value of the literal '%s' does not match its datatype (%s)" %
                                           (text_type(obj), obj.datatype))
