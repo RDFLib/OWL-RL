@@ -13,16 +13,18 @@ A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inferenc
 
 - ./doc: (epydoc) documentation of the classes and functions
 
-The package requires Python version 2.7 or higher; it depends on [RDFLib](https://github.com/RDFLib); version 4 or higher is required. It has not been tested on Python 3. 
+The package requires Python version 3.5 or higher; it depends on [RDFLib](https://github.com/RDFLib); version 4.2.2 or higher is required. If you need the python 2.7.x compatible version, see the @/py2 branch in this repository.
 
 For the details on RDFS, see the [RDF Semantics Specification](http://www.w3.org/TR/rdf11-mt/); for OWL 2 RL, see the [OWL 2 Profile specification](http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules)
 
 
 ## Release notes (starting from version 3)
 
-### Version 4
+### Version 4/5
 
-This is a major release: the package has been updated to Python 2.7 and RDFLib 4. Some important changes:
+This is a major release: the package has been updated to Python 2.7 and RDFLib 4 (and to Python 3.5 in v5.0.0).  
+
+Some important changes:  
 
 - The local parser and serializer implementations have been removed; the package relies fully on RDFLib
 - If the extra JSON-LD parser and serializer is available, that format may also be used both for input and output
@@ -33,6 +35,16 @@ This is a major release: the package has been updated to Python 2.7 and RDFLib 4
 - The ``script`` directory has been moved to the top level of the distribution
 - The RDF1.1 specific datatypes (``LangString`` and ``HTML``) have been added, although the ``HTML`` is simply treated as a text (a reliance on the HTML5 Library may be too much for what this is worth…)
 - The ``closure`` script has now an extra flag (``-m``) to use the "maximal" entailment, i.e., extended OWLRL+RDF with extra trimmings
+
+
+### Version 5.0.0
+
+Changes:
+
+  - Port to Python3. Minimum recommended version is now Python v3.5.
+  - Fixed a bug where the inferencing process would crash if the engine encountered a literal node that has a datatype 
+  for which it does not have a hardcoded converter.
+
 
 ### Version 4.2.1
 
