@@ -118,8 +118,8 @@ class LiteralProxies:
         self.bnode_to_lit = {}
         self.graph = graph
         
-        to_be_removed = []
-        to_be_added = []
+        to_be_removed = set()
+        to_be_added = set()
         for t in self.graph:
             (subj, pred, obj) = t
             # This is supposed to be a "proper" graph, so only the obj may be a literal
@@ -137,15 +137,14 @@ class LiteralProxies:
                                           (text_type(obj), obj.datatype))
 
                 # In any case, this should be removed:
-                if t not in to_be_removed:
-                    to_be_removed.append(t)
+                to_be_removed.add(t)
                 # Check if a BNode has already been associated with that literal
                 obj_st = _LiteralStructure(obj)
                 found = False
                 for l in list(self.lit_to_bnode.keys()):
                     if obj_st.lex == l.lex and obj_st.dt == l.dt and obj_st.lang == l.lang:
                         t1 = (subj, pred, self.lit_to_bnode[l])
-                        to_be_added.append(t1)
+                        to_be_added.add(t1)
                         found = True
                         break
                 if not found:
@@ -155,8 +154,8 @@ class LiteralProxies:
                     self.lit_to_bnode[obj_st] = bn
                     self.bnode_to_lit[bn] = obj_st
                     # modify the graph
-                    to_be_added.append((subj, pred, bn))
-                    to_be_added.append((bn, type, Literal))
+                    to_be_added.add((subj, pred, bn))
+                    to_be_added.add((bn, type, Literal))
                     # Furthermore: a plain literal should be identified with a corresponding xsd:string and vice versa, 
                     # cf, RDFS Semantics document
                     if obj_st.dt is None and obj_st.lang is None:
@@ -166,8 +165,8 @@ class LiteralProxies:
                         bn2 = BNode()
                         self.lit_to_bnode[new_obj_st] = bn2
                         self.bnode_to_lit[bn2] = new_obj_st
-                        to_be_added.append((subj, pred, bn2))
-                        to_be_added.append((bn2, type, Literal))
+                        to_be_added.add((subj, pred, bn2))
+                        to_be_added.add((bn2, type, Literal))
                     elif obj_st.dt == ns_xsd["string"]:
                         newLit = rdflibLiteral(obj_st.lex, datatype=None)
                         new_obj_st = _LiteralStructure(newLit)
@@ -176,8 +175,8 @@ class LiteralProxies:
                         bn2 = BNode()
                         self.lit_to_bnode[new_obj_st] = bn2
                         self.bnode_to_lit[bn2] = new_obj_st
-                        to_be_added.append((subj, pred, bn2))
-                        to_be_added.append((bn2, type, Literal))
+                        to_be_added.add((subj, pred, bn2))
+                        to_be_added.add((bn2, type, Literal))
         
         # Do the real modifications
         self._massageGraph(to_be_removed, to_be_added)
@@ -187,8 +186,8 @@ class LiteralProxies:
         This method is to be invoked at the end of the forward chain processing. It restores literals (whenever
         possible) to their original self...
         """    
-        to_be_removed = []
-        to_be_added = []
+        to_be_removed = set()
+        to_be_added = set()
         for t in self.graph:
             (subj, pred, obj) = t
             # The two cases, namely when the literal appears in subject or object positions, should be treated
@@ -197,20 +196,18 @@ class LiteralProxies:
                 # well... there may be to cases here: either this is the original tuple stating that
                 # this bnode is a literal, or it is the result of an inference. In both cases, the tuple must
                 # be removed from the result without any further action
-                if t not in to_be_removed:
-                    to_be_removed.append(t)
+                to_be_removed.add(t)
             elif obj in self.bnode_to_lit:
                 # This is where the exchange should take place: put back the real literal into the graph, removing the
                 # proxy one
-                if t not in to_be_removed:
-                    to_be_removed.append(t)
+                to_be_removed.add(t)
                 # This is an additional thing due to the latest change of literal handling in RDF concepts.
                 # If a literal is an xsd:string then a plain literal is put in its place for the purpose of
                 # serialization...
                 lit = self.bnode_to_lit[obj].lit
                 if lit.datatype is not None and lit.datatype == ns_xsd["string"]:
                     lit = rdflibLiteral(text_type(lit))
-                to_be_added.append((subj, pred, lit))
+                to_be_added.add((subj, pred, lit))
                 
         # Do the real modifications
         self._massageGraph(to_be_removed, to_be_added)
