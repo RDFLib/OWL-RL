@@ -185,7 +185,7 @@ class OWLRL_Semantics(Core):
         # RULE dt-type2: for all explicit literals the corresponding bnode should get the right type
         # definition. The 'implicit' dictionary is also filled on the fly
         # RULE dt-not-type: see whether an explicit literal is valid in terms of the defined datatype
-        for lt in list(self.literal_proxies.lit_to_bnode.keys()):
+        for lt in self.literal_proxies.lit_to_bnode:
             # note that all non-RL datatypes are ignored
             if lt.dt is not None and lt.dt in OWL_RL_Datatypes:
                 bn = self.literal_proxies.lit_to_bnode[lt]
