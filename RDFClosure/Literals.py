@@ -143,7 +143,7 @@ class LiteralProxies:
                 obj_st = _LiteralStructure(obj)
                 found = False
                 for l in self.lit_to_bnode:
-                    if obj_st.lex == l.lex and obj_st.dt == l.dt and obj_st.lang == l.lang:
+                    if obj_st == l:
                         t1 = (subj, pred, self.lit_to_bnode[l])
                         to_be_added.append(t1)
                         found = True
