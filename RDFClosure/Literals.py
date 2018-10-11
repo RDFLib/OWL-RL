@@ -36,6 +36,9 @@ from .RDFS import Literal
 from .DatatypeHandling import AltXSDToPYTHON
 
 
+identity = lambda v: v
+
+
 class _LiteralStructure:
     """This class serves as a wrapper around rdflib's Literal, by changing the equality function to a strict 
     identity of datatypes and lexical values.
@@ -126,10 +129,7 @@ class LiteralProxies:
             if isinstance(obj, rdflibLiteral):
                 # Test the validity of the datatype
                 if obj.datatype:
-                    try:
-                        converter = AltXSDToPYTHON[obj.datatype]
-                    except KeyError:
-                        converter = lambda v: v
+                    converter = AltXSDToPYTHON.get(obj.datatype, identity)
                     try:
                         converter(text_type(obj))
                     except ValueError:
@@ -142,7 +142,7 @@ class LiteralProxies:
                 # Check if a BNode has already been associated with that literal
                 obj_st = _LiteralStructure(obj)
                 found = False
-                for l in list(self.lit_to_bnode.keys()):
+                for l in self.lit_to_bnode:
                     if obj_st.lex == l.lex and obj_st.dt == l.dt and obj_st.lang == l.lang:
                         t1 = (subj, pred, self.lit_to_bnode[l])
                         to_be_added.append(t1)
