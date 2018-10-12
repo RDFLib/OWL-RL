@@ -121,62 +121,62 @@ class LiteralProxies:
         self.bnode_to_lit = {}
         self.graph = graph
         
-        to_be_removed = set()
         to_be_added = set()
-        for t in self.graph:
-            (subj, pred, obj) = t
-            # This is supposed to be a "proper" graph, so only the obj may be a literal
-            if isinstance(obj, rdflibLiteral):
-                # Test the validity of the datatype
-                if obj.datatype:
-                    converter = AltXSDToPYTHON.get(obj.datatype, identity)
-                    try:
-                        converter(text_type(obj))
-                    except ValueError:
-                        closure.add_error("Lexical value of the literal '%s' does not match its datatype (%s)" %
-                                          (text_type(obj), obj.datatype))
 
-                # In any case, this should be removed:
-                to_be_removed.add(t)
-                # Check if a BNode has already been associated with that literal
-                obj_st = _LiteralStructure(obj)
-                found = False
-                for l in self.lit_to_bnode:
-                    if obj_st == l:
-                        t1 = (subj, pred, self.lit_to_bnode[l])
-                        to_be_added.add(t1)
-                        found = True
-                        break
-                if not found:
-                    # the bnode has to be created
-                    bn = BNode()
-                    # store this in the internal administration
-                    self.lit_to_bnode[obj_st] = bn
-                    self.bnode_to_lit[bn] = obj_st
-                    # modify the graph
-                    to_be_added.add((subj, pred, bn))
-                    to_be_added.add((bn, type, Literal))
-                    # Furthermore: a plain literal should be identified with a corresponding xsd:string and vice versa, 
-                    # cf, RDFS Semantics document
-                    if obj_st.dt is None and obj_st.lang is None:
-                        newLit = rdflibLiteral(obj_st.lex, datatype=ns_xsd["string"])
-                        new_obj_st = _LiteralStructure(newLit)
-                        new_obj_st.dt = ns_xsd["string"]
-                        bn2 = BNode()
-                        self.lit_to_bnode[new_obj_st] = bn2
-                        self.bnode_to_lit[bn2] = new_obj_st
-                        to_be_added.add((subj, pred, bn2))
-                        to_be_added.add((bn2, type, Literal))
-                    elif obj_st.dt == ns_xsd["string"]:
-                        newLit = rdflibLiteral(obj_st.lex, datatype=None)
-                        new_obj_st = _LiteralStructure(newLit)
-                        # new_obj_st = _LiteralStructure(obj) # Was this the correct one, or was this an old bug?
-                        new_obj_st.dt = None
-                        bn2 = BNode()
-                        self.lit_to_bnode[new_obj_st] = bn2
-                        self.bnode_to_lit[bn2] = new_obj_st
-                        to_be_added.add((subj, pred, bn2))
-                        to_be_added.add((bn2, type, Literal))
+        # This is supposed to be a "proper" graph, so get the triples which
+        # object is a literal. All of them will be removed from graph and
+        # replaced with the ones stored in `to_be_added` variable.
+        to_be_removed = [t for t in self.graph if isinstance(t[2], rdflibLiteral)]
+        for t in to_be_removed:
+            (subj, pred, obj) = t
+            # Test the validity of the datatype
+            if obj.datatype:
+                converter = AltXSDToPYTHON.get(obj.datatype, identity)
+                try:
+                    converter(text_type(obj))
+                except ValueError:
+                    closure.add_error("Lexical value of the literal '%s' does not match its datatype (%s)" %
+                                      (text_type(obj), obj.datatype))
+
+            # Check if a BNode has already been associated with that literal
+            obj_st = _LiteralStructure(obj)
+            found = False
+            for l in self.lit_to_bnode:
+                if obj_st == l:
+                    t1 = (subj, pred, self.lit_to_bnode[l])
+                    to_be_added.add(t1)
+                    found = True
+                    break
+            if not found:
+                # the bnode has to be created
+                bn = BNode()
+                # store this in the internal administration
+                self.lit_to_bnode[obj_st] = bn
+                self.bnode_to_lit[bn] = obj_st
+                # modify the graph
+                to_be_added.add((subj, pred, bn))
+                to_be_added.add((bn, type, Literal))
+                # Furthermore: a plain literal should be identified with a corresponding xsd:string and vice versa, 
+                # cf, RDFS Semantics document
+                if obj_st.dt is None and obj_st.lang is None:
+                    newLit = rdflibLiteral(obj_st.lex, datatype=ns_xsd["string"])
+                    new_obj_st = _LiteralStructure(newLit)
+                    new_obj_st.dt = ns_xsd["string"]
+                    bn2 = BNode()
+                    self.lit_to_bnode[new_obj_st] = bn2
+                    self.bnode_to_lit[bn2] = new_obj_st
+                    to_be_added.add((subj, pred, bn2))
+                    to_be_added.add((bn2, type, Literal))
+                elif obj_st.dt == ns_xsd["string"]:
+                    newLit = rdflibLiteral(obj_st.lex, datatype=None)
+                    new_obj_st = _LiteralStructure(newLit)
+                    # new_obj_st = _LiteralStructure(obj) # Was this the correct one, or was this an old bug?
+                    new_obj_st.dt = None
+                    bn2 = BNode()
+                    self.lit_to_bnode[new_obj_st] = bn2
+                    self.bnode_to_lit[bn2] = new_obj_st
+                    to_be_added.add((subj, pred, bn2))
+                    to_be_added.add((bn2, type, Literal))
         
         # Do the real modifications
         self._massageGraph(to_be_removed, to_be_added)
