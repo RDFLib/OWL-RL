@@ -140,14 +140,11 @@ class LiteralProxies:
 
             # Check if a BNode has already been associated with that literal
             obj_st = _LiteralStructure(obj)
-            found = False
-            for l in self.lit_to_bnode:
-                if obj_st == l:
-                    t1 = (subj, pred, self.lit_to_bnode[l])
-                    to_be_added.add(t1)
-                    found = True
-                    break
-            if not found:
+            items = (b for l, b in self.lit_to_bnode.items() if l == obj_st)
+            l_bnode = next(items, None)
+            if l_bnode:
+                to_be_added.add((subj, pred, l_bnode))
+            else:
                 # the bnode has to be created
                 bn = BNode()
                 # store this in the internal administration
