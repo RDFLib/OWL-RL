@@ -26,6 +26,8 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+from functools import partial
+
 from rdflib import BNode
 from rdflib import Literal as rdflibLiteral
 from rdflib.namespace import XSD as ns_xsd
@@ -122,6 +124,7 @@ class LiteralProxies:
         self.graph = graph
         
         to_be_added = set()
+        _add_bnode = partial(add_bnode, self, to_be_added)
 
         # This is supposed to be a "proper" graph, so get the triples which
         # object is a literal. All of them will be removed from graph and
@@ -148,35 +151,20 @@ class LiteralProxies:
                     found = True
                     break
             if not found:
-                # the bnode has to be created
-                bn = BNode()
-                # store this in the internal administration
-                self.lit_to_bnode[obj_st] = bn
-                self.bnode_to_lit[bn] = obj_st
-                # modify the graph
-                to_be_added.add((subj, pred, bn))
-                to_be_added.add((bn, type, Literal))
+                _add_bnode(subj, pred, obj_st)
                 # Furthermore: a plain literal should be identified with a corresponding xsd:string and vice versa, 
                 # cf, RDFS Semantics document
                 if obj_st.dt is None and obj_st.lang is None:
                     newLit = rdflibLiteral(obj_st.lex, datatype=ns_xsd["string"])
                     new_obj_st = _LiteralStructure(newLit)
                     new_obj_st.dt = ns_xsd["string"]
-                    bn2 = BNode()
-                    self.lit_to_bnode[new_obj_st] = bn2
-                    self.bnode_to_lit[bn2] = new_obj_st
-                    to_be_added.add((subj, pred, bn2))
-                    to_be_added.add((bn2, type, Literal))
+                    _add_bnode(subj, pred, new_obj_st)
                 elif obj_st.dt == ns_xsd["string"]:
                     newLit = rdflibLiteral(obj_st.lex, datatype=None)
                     new_obj_st = _LiteralStructure(newLit)
                     # new_obj_st = _LiteralStructure(obj) # Was this the correct one, or was this an old bug?
                     new_obj_st.dt = None
-                    bn2 = BNode()
-                    self.lit_to_bnode[new_obj_st] = bn2
-                    self.bnode_to_lit[bn2] = new_obj_st
-                    to_be_added.add((subj, pred, bn2))
-                    to_be_added.add((bn2, type, Literal))
+                    _add_bnode(subj, pred, new_obj_st)
         
         # Do the real modifications
         self._massageGraph(to_be_removed, to_be_added)
@@ -222,3 +210,17 @@ class LiteralProxies:
             self.graph.remove(t)
         for t in to_be_added:
             self.graph.add(t)
+
+
+def add_bnode(proxy, to_be_added, subj, pred, obj):
+    """
+    Create and add BNode for a literal and register the new object within
+    `LiteralProxies` class data structures.
+    """
+    bn = BNode()
+    # store this in the internal administration
+    proxy.lit_to_bnode[obj] = bn
+    proxy.bnode_to_lit[bn] = obj
+    # modify the graph
+    to_be_added.add((subj, pred, bn))
+    to_be_added.add((bn, type, Literal))
