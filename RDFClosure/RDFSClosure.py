@@ -18,6 +18,8 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+from itertools import product
+
 from RDFClosure.RDFS import Property, type
 from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, domain, range
 from RDFClosure.RDFS import Literal, ContainerMembershipProperty, member, Datatype
@@ -70,11 +72,11 @@ class RDFS_Semantics(Core):
 
     def add_d_axioms(self):
         """This is not really complete, because it just uses the comparison possibilities that rdflib provides."""
-        literals = list(self.literal_proxies.lit_to_bnode.keys())
         # #1
-        for lt in literals:
-            if lt.dt is not None:
-                self.graph.add((self.literal_proxies.lit_to_bnode[lt], type, lt.dt))
+        items = self.literal_proxies.lit_to_bnode.items()
+        items = ((lt, bn) for lt, bn in items if lt.dt is not None)
+        for lt, bn in items:
+            self.graph.add((bn, type, lt.dt))
 
         for t in RDFS_D_Axiomatic_Triples:
             self.graph.add(t)
@@ -90,24 +92,24 @@ class RDFS_Semantics(Core):
         """
         # There is also a hidden sameAs rule in RDF Semantics: if a literal appears in a triple, and another one has
         # the same value, then the triple should be duplicated with the other value.
-        for lt1 in list(self.literal_proxies.lit_to_bnode.keys()):
-            for lt2 in list(self.literal_proxies.lit_to_bnode.keys()):
-                if lt1 != lt2:
-                    try:
-                        lt1_d = lt1.lit.toPython()
-                        lt2_d = lt2.lit.toPython()
-                        if lt1_d == lt2_d:
-                            # In OWL, this line is simply stating a sameAs for the corresponding BNodes, and then let
-                            # the usual rules take effect. In RDFS this is not possible, so the sameAs rule is,
-                            # essentially replicated...
-                            bn1 = self.literal_proxies.lit_to_bnode[lt1]
-                            bn2 = self.literal_proxies.lit_to_bnode[lt2]
-                            for (s, p, o) in self.graph.triples((None, None, bn1)):
-                                self.graph.add((s, p, bn2))
-                    except:
-                        # there may be a problem with one of the python conversions; the rule is imply ignored
-                        # raise e
-                        pass
+        literals = self.literal_proxies.lit_to_bnode
+        items = ((lt1, lt2) for lt1, lt2 in product(literals, literals) if lt1 != lt2)
+        for lt1, lt2 in items:
+            try:
+                lt1_d = lt1.lit.toPython()
+                lt2_d = lt2.lit.toPython()
+                if lt1_d == lt2_d:
+                    # In OWL, this line is simply stating a sameAs for the corresponding BNodes, and then let
+                    # the usual rules take effect. In RDFS this is not possible, so the sameAs rule is,
+                    # essentially replicated...
+                    bn1 = self.literal_proxies.lit_to_bnode[lt1]
+                    bn2 = self.literal_proxies.lit_to_bnode[lt2]
+                    for (s, p, o) in self.graph.triples((None, None, bn1)):
+                        self.graph.add((s, p, bn2))
+            except:
+                # there may be a problem with one of the python conversions; the rule is imply ignored
+                # raise e
+                pass
 
     def rules(self, t, cycle_num):
         """

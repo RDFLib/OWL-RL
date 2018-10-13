@@ -138,7 +138,7 @@ def _lit_to_value(dt, v):
     
     # look at the different facet categories and try to find which is
     # is, if any, the one that is of relevant for this literal
-    for cat in list(Datatypes_per_facets.keys()):
+    for cat in Datatypes_per_facets:
         if dt.base_type in Datatypes_per_facets[cat]:
             # yep, this is to be checked.
             if not dt.checkValue(value):
@@ -370,7 +370,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             ]
         }
         self.check_methods = []
-        for cat in list(Datatypes_per_facets.keys()):
+        for cat in Datatypes_per_facets:
             if self.base_type in Datatypes_per_facets[cat]:
                 self.check_methods = facet_to_method[cat]
                 break
