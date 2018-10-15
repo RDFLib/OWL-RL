@@ -4,6 +4,12 @@ Test for OWL 2 RL/RDF rules from
     Table 8. The Semantics of Datatypes
 
 https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
+
+NOTE: The following axioms are skipped on purpose
+
+- dt-type2
+- dt-eq
+- dt-diff
 """
 
 from rdflib import Graph, Literal, Namespace, RDF, XSD, RDFS
@@ -53,13 +59,17 @@ def test_dt_type1():
     assert (XSD.dateTime, RDF.type, RDFS.Datatype) in g
     assert (XSD.dateTimeStamp, RDF.type, RDFS.Datatype) in g
     
-def test_dt_type2():
+def test_dt_not_type():
     """
-    Test dt-type2 for OWL 2 RL.
+    Test dt-not-type for OWL 2 RL.
     """
+    m_one = Literal(-1, datatype=XSD.nonNegativeInteger)
+
     g = Graph()
-    g.add((T.A, T.prop, Literal(-1, datatype=XSD.nonNegativeInteger)))
+    g.add((T.A, T.prop, m_one))
     RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    assert (m_one, RDF.type, XSD.nonNegativeInteger) not in g
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
