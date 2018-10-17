@@ -58,7 +58,7 @@ def test_dt_type1():
     assert (XSD.anyURI, RDF.type, RDFS.Datatype) in g
     assert (XSD.dateTime, RDF.type, RDFS.Datatype) in g
     assert (XSD.dateTimeStamp, RDF.type, RDFS.Datatype) in g
-    
+
 def test_dt_not_type():
     """
     Test dt-not-type for OWL 2 RL.

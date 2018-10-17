@@ -24,8 +24,6 @@ from rdflib import Namespace
 from RDFClosure.RDFS import RDFNS as ns_rdf
 from RDFClosure.RDFS import type
 
-from RDFClosure.Literals import LiteralProxies
-
 debugGlobal = False
 offlineGeneration = False
 
@@ -42,8 +40,6 @@ class Core:
     There are some methods that are implemented in the subclasses only, ie, this class cannot be used by itself!
 
     @ivar IMaxNum: maximal index of C{rdf:_i} occurrence in the graph
-    @ivar literal_proxies: L{Literal Proxies with BNodes<RDFClosure.Literals.LiteralProxies>} for the graph
-    @type literal_proxies: L{LiteralProxies<RDFClosure.Literals.LiteralProxies>}
     @ivar graph: the real graph
     @type graph: rdflib.Graph
     @ivar axioms: whether axioms should be added or not
@@ -152,19 +148,6 @@ class Core:
         """
         pass
 
-    # noinspection PyBroadException
-    def get_literal_value(self, node):
-        """
-        Return the literal value corresponding to a Literal node. Used in error messages.
-        @param node: literal node
-        @return: the literal value itself
-        """
-        try:
-            return self.literal_proxies.bnode_to_lit[node].lex
-        except:
-            # TODO: implement
-            return "????"
-
     # noinspection PyAttributeOutsideInit
     def empty_stored_triples(self):
         """
@@ -220,9 +203,6 @@ class Core:
         if self.axioms:
             self.add_axioms()
 
-        # Create the bnode proxy structure for literals
-        self.literal_proxies = LiteralProxies(self.graph, self)
-
         # Add the datatype axioms, if needed (note that this makes use of the literal proxies, the order of the call
         # is important!
         if self.daxioms:
@@ -260,9 +240,6 @@ class Core:
 
             for t in self.added_triples:
                 self.graph.add(t)
-
-        # All done, but we should restore the literals from their proxies
-        self.literal_proxies.restore()
 
         self.post_process()
         self.flush_stored_triples()

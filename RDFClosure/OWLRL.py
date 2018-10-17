@@ -22,6 +22,8 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+from collections import defaultdict
+
 import rdflib
 from rdflib import BNode
 
@@ -38,6 +40,11 @@ OWLRL_Annotation_properties = [label, comment, seeAlso, isDefinedBy, deprecated,
                                backwardCompatibleWith, incompatibleWith]
 
 from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
+from .DatatypeHandling import AltXSDToPYTHON
+
+
+identity = lambda v: v
+
 
 #######################################################################################################################
 
@@ -142,21 +149,11 @@ class OWLRL_Semantics(Core):
         """
         # noinspection PyShadowingNames
         def _add_to_explicit(s, o):
-            if s not in explicit:
-                explicit[s] = []
-            if o not in explicit[s]:
-                explicit[s].append(o)
+            explicit[s].add(o)
 
         # noinspection PyShadowingNames
         def _append_to_explicit(s, o):
-            if s not in explicit:
-                explicit[s] = []
-            for d in explicit[o]:
-                if d not in explicit[s]:
-                    explicit[s].append(d)
-
-        def _add_to_used_datatypes(d):
-            used_datatypes.add(d)
+            explicit[s].add(o)
 
         # noinspection PyShadowingNames
         def _handle_subsumptions(r, dt):
@@ -164,7 +161,7 @@ class OWLRL_Semantics(Core):
                 for new_dt in OWL_Datatype_Subsumptions[dt]:
                     self.store_triple((r, type, new_dt))
                     self.store_triple((new_dt, type, Datatype))
-                    _add_to_used_datatypes(new_dt)
+                    used_datatypes.add(new_dt)
 
         # For processing later:
         # implicit object->datatype relationships: these come from real literals which are represented by
@@ -173,7 +170,7 @@ class OWLRL_Semantics(Core):
 
         # explicit object->datatype relationships: those that came from an object being typed as a datatype
         # or a sameAs. The values are arrays of datatypes to which the resource belong
-        explicit = {}
+        explicit = defaultdict(set)
 
         # datatypes in use by the graph (directly or indirectly). This will be used at the end to add the
         # necessary disjointness statements (but not more
@@ -185,51 +182,56 @@ class OWLRL_Semantics(Core):
         # RULE dt-type2: for all explicit literals the corresponding bnode should get the right type
         # definition. The 'implicit' dictionary is also filled on the fly
         # RULE dt-not-type: see whether an explicit literal is valid in terms of the defined datatype
-        for lt in self.literal_proxies.lit_to_bnode:
-            # note that all non-RL datatypes are ignored
-            if lt.dt is not None and lt.dt in OWL_RL_Datatypes:
-                bn = self.literal_proxies.lit_to_bnode[lt]
-                # add the explicit typing triple
-                self.store_triple((bn, type, lt.dt))
-                if bn not in implicit:
-                    implicit[bn] = lt.dt
-                _add_to_used_datatypes(lt.dt)
+        literals = set(
+            o for s, p, o in self.graph
+            if isinstance(o, rdflib.Literal)
+                and o.datatype in OWL_RL_Datatypes
+        )
+        for lt in literals: #     # note that all non-RL datatypes are ignored
+            # add the explicit typing triple
+            self.store_triple((lt, type, lt.datatype))
+            implicit[lt] = lt.datatype
+            used_datatypes.add(lt.datatype)
 
-                # for dt-not-type
-                # This is a dirty trick: rdflib's Literal includes a method that raises an exception if the
-                # lexical value cannot be mapped on the value space.
-                try:
-                    val = lt.lit.toPython()
-                except:
-                    self.add_error("Literal's lexical value and datatype do not match: (%s,%s)" % (lt.lex, lt.dt))
+            # for dt-not-type
+            # This is a dirty trick: rdflib's Literal includes a method that raises an exception if the
+            # lexical value cannot be mapped on the value space.
+            converter = AltXSDToPYTHON.get(lt.datatype, identity)
+            try:
+                converter(str(lt))
+            except ValueError:
+                self.add_error(
+                    "Lexical value of the literal '%s' does not match" \
+                    " its datatype (%s)" % (lt, lt.datatype)
+                )
 
         # RULE dt-diff
         # RULE dt-eq
         # Try to compare literals whether they are different or not. If they are different, then an explicit
         # different from statement should be added, if they are identical, then an equality should be added
-        for lt1 in list(self.literal_proxies.lit_to_bnode.keys()):
-            for lt2 in list(self.literal_proxies.lit_to_bnode.keys()):
-                if lt1 != lt2:
-                    try:
-                        lt1_d = lt1.lit.toPython()
-                        lt2_d = lt2.lit.toPython()
-                        #if lt1_d != lt2_d:
-                        #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], differentFrom, self.literal_
-                        # proxies.lit_to_bnode[lt2]))
-                        #else:
-                        #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], sameAs, self.literal_
-                        # proxies.lit_to_bnode[lt2]))
-                    except:
-                        # there may be a problem with one of the python conversion, but that should have been taken
-                        # care of already
-                        pass
+        # for lt1 in list(self.literal_proxies.lit_to_bnode.keys()):
+        #     for lt2 in list(self.literal_proxies.lit_to_bnode.keys()):
+        #         if lt1 != lt2:
+        #             try:
+        #                 lt1_d = lt1.lit.toPython()
+        #                 lt2_d = lt2.lit.toPython()
+        #                 #if lt1_d != lt2_d:
+        #                 #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], differentFrom, self.literal_
+        #                 # proxies.lit_to_bnode[lt2]))
+        #                 #else:
+        #                 #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], sameAs, self.literal_
+        #                 # proxies.lit_to_bnode[lt2]))
+        #             except:
+        #                 # there may be a problem with one of the python conversion, but that should have been taken
+        #                 # care of already
+        #                 pass
 
         # Other datatype definitions can come from explicitly defining some nodes as datatypes (though rarely used,
         # it is perfectly possible...
         # there may be explicit relationships set in the graph, too!
         for (s, p, o) in self.graph.triples((None, type, None)):
             if o in OWL_RL_Datatypes:
-                _add_to_used_datatypes(o)
+                used_datatypes.add(o)
                 if s not in implicit:
                     _add_to_explicit(s, o)
 
@@ -269,8 +271,7 @@ class OWLRL_Semantics(Core):
             for dt in dtypes:
                 _handle_subsumptions(r, dt)
                         
-        for r in implicit:
-            dt = implicit[r]
+        for r, dt in implicit.items():
             _handle_subsumptions(r, dt)
 
         # Last step: add the datatype disjointness relationships. This is done only for
