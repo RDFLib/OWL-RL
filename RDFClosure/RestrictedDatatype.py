@@ -51,7 +51,7 @@ from .OWL import *
 # noinspection PyPep8Naming,PyPep8Naming
 from .OWL import OWLNS as ns_owl
 from RDFClosure.RDFS import Datatype
-from RDFClosure.RDFS import type
+from RDFClosure.RDFS import rdf_type
 # noinspection PyPep8Naming
 from RDFClosure.RDFS import RDFNS as ns_rdf
 
@@ -201,7 +201,7 @@ def extract_faceted_datatypes(core, graph):
     @return: array of L{RestrictedDatatype} instances
     """
     retval = []
-    for dtype in graph.subjects(type, Datatype):
+    for dtype in graph.subjects(rdf_type, Datatype):
         base_type = None
         facets = []
         try:

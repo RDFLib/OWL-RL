@@ -22,7 +22,7 @@ from rdflib import Namespace
 
 # noinspection PyPep8Naming
 from RDFClosure.RDFS import RDFNS as ns_rdf
-from RDFClosure.RDFS import type
+from RDFClosure.RDFS import rdf_type
 
 debugGlobal = False
 offlineGeneration = False
@@ -252,5 +252,5 @@ class Core:
             self.graph.bind("err","http://www.daml.org/2002/03/agents/agent-ont#")
             for m in self.error_messages:
                 message = BNode()
-                self.graph.add((message, type, ERRNS['ErrorMessage']))
+                self.graph.add((message, rdf_type, ERRNS['ErrorMessage']))
                 self.graph.add((message, ERRNS['error'], rdflibLiteral(m)))
