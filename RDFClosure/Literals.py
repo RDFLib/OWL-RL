@@ -33,7 +33,7 @@ from rdflib import Literal as rdflibLiteral
 from rdflib.namespace import XSD as ns_xsd
 
 from . import text_type
-from .RDFS import type
+from .RDFS import rdf_type
 from .RDFS import Literal
 from .DatatypeHandling import AltXSDToPYTHON
 
@@ -220,4 +220,4 @@ def add_bnode(proxy, to_be_added, subj, pred, obj):
     proxy.bnode_to_lit[bn] = obj
     # modify the graph
     to_be_added.add((subj, pred, bn))
-    to_be_added.add((bn, type, Literal))
+    to_be_added.add((bn, rdf_type, Literal))
