@@ -36,8 +36,8 @@ from rdflib.namespace import XSD as ns_xsd
 
 from .RDFS import Property
 # noinspection PyPep8Naming
-from .RDFS import type as rdfType
-from .RDFS import Resource, Class, subClassOf, subPropertyOf, domain
+from .RDFS import rdf_type
+from .RDFS import Resource, Class, subClassOf, subPropertyOf, rdfs_domain
 from .RDFS import Datatype
 
 from fractions import Fraction as Rational
@@ -105,8 +105,8 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
     @type restricted_datatypes: array of L{restricted datatype<RestrictedDatatype.RestrictedDatatype>} instances
     """
     extra_axioms = [
-        (hasSelf, rdfType, Property),
-        (hasSelf, domain, Property),
+        (hasSelf, rdf_type, Property),
+        (hasSelf, rdfs_domain, Property),
     ]
 
     def __init__(self, graph, axioms, daxioms, rdfs=False):
@@ -151,7 +151,7 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
                 # check if the type of that proxy matches. Note that this also takes
                 # into account the subsumption datatypes, that have been taken
                 # care of by the 'regular' OWL RL process
-                if (bn, rdfType, base_type) in self.graph:
+                if (bn, rdf_type, base_type) in self.graph:
                     # yep, that is a good candidate!
                     lt = self.literal_proxies.bnode_to_lit[bn]
                     try:
@@ -159,7 +159,7 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
                         value = lt.lit.toPython()
                         if rt.checkValue(value):
                             # yep, this is also of type 'rt'
-                            self.store_triple((bn, rdfType, rt.datatype))
+                            self.store_triple((bn, rdf_type, rt.datatype))
                     except:
                         continue
 
@@ -222,11 +222,11 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         z, q, x = t
         if q == hasSelf:
             for p in self.graph.objects(z, onProperty):
-                for y in self.graph.subjects(rdfType, z):
+                for y in self.graph.subjects(rdf_type, z):
                     self.store_triple((y, p, y))
                 for y1, y2 in self.graph.subject_objects(p):
                     if y1 == y2:
-                        self.store_triple((y1, rdfType, z))
+                        self.store_triple((y1, rdf_type, z))
 
 
 # noinspection PyPep8Naming
@@ -285,15 +285,15 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
                 if p == sameAs or p == equivalentClass or p == subClassOf or p == subPropertyOf:
                     to_be_removed.add(t)
             if (p == subClassOf and (o == Thing or o == Resource)) \
-                    or (p == rdfType and o == Resource) \
+                    or (p == rdf_type and o == Resource) \
                     or (s == Nothing and p == subClassOf):
                 to_be_removed.add(t)
         
         for dt in OWL_RL_Datatypes:
             # see if this datatype appears explicitly in the graph as the type of a symbol
-            if len([s for s in self.graph.subjects(rdfType, dt)]) == 0:
-                to_be_removed.add((dt, rdfType, Datatype))
-                to_be_removed.add((dt, rdfType, DataRange))
+            if len([s for s in self.graph.subjects(rdf_type, dt)]) == 0:
+                to_be_removed.add((dt, rdf_type, Datatype))
+                to_be_removed.add((dt, rdf_type, DataRange))
                 
                 for t in self.graph.triples((dt, disjointWith, None)):
                     to_be_removed.add(t)
@@ -301,12 +301,12 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
                     to_be_removed.add(t)
 
         for an in OWLRL_Annotation_properties:
-            self.graph.remove((an, rdfType, AnnotationProperty))
+            self.graph.remove((an, rdf_type, AnnotationProperty))
 
-        to_be_removed.add((Nothing, rdfType, OWLClass))
-        to_be_removed.add((Nothing, rdfType, Class))
-        to_be_removed.add((Thing, rdfType, OWLClass))
-        to_be_removed.add((Thing, rdfType, Class))
+        to_be_removed.add((Nothing, rdf_type, OWLClass))
+        to_be_removed.add((Nothing, rdf_type, Class))
+        to_be_removed.add((Thing, rdf_type, OWLClass))
+        to_be_removed.add((Thing, rdf_type, Class))
         to_be_removed.add((Thing, equivalentClass, Resource))
         to_be_removed.add((Resource, equivalentClass, Thing))
         to_be_removed.add((OWLClass, equivalentClass, Class))

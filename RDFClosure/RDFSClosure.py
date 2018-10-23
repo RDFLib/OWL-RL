@@ -20,8 +20,8 @@ __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/L
 
 from itertools import product
 
-from RDFClosure.RDFS import Property, type
-from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, domain, range
+from RDFClosure.RDFS import Property, rdf_type
+from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, rdfs_domain, rdfs_range
 from RDFClosure.RDFS import Literal, ContainerMembershipProperty, member, Datatype
 # noinspection PyPep8Naming
 from RDFClosure.RDFS import RDFNS as ns_rdf
@@ -65,10 +65,10 @@ class RDFS_Semantics(Core):
             self.graph.add(t)
         for i in range(1, self.IMaxNum + 1):
             ci = ns_rdf[("_%d" % i)]
-            self.graph.add((ci, type, Property))
-            self.graph.add((ci, domain, Resource))
-            self.graph.add((ci, range, Resource))
-            self.graph.add((ci, type, ContainerMembershipProperty))
+            self.graph.add((ci, rdf_type, Property))
+            self.graph.add((ci, rdfs_domain, Resource))
+            self.graph.add((ci, rdfs_range, Resource))
+            self.graph.add((ci, rdf_type, ContainerMembershipProperty))
 
     def add_d_axioms(self):
         """This is not really complete, because it just uses the comparison possibilities that rdflib provides."""
@@ -76,7 +76,7 @@ class RDFS_Semantics(Core):
         items = self.literal_proxies.lit_to_bnode.items()
         items = ((lt, bn) for lt, bn in items if lt.dt is not None)
         for lt, bn in items:
-            self.graph.add((bn, type, lt.dt))
+            self.graph.add((bn, rdf_type, lt.dt))
 
         for t in RDFS_D_Axiomatic_Triples:
             self.graph.add(t)
@@ -119,21 +119,21 @@ class RDFS_Semantics(Core):
         """
         s, p, o = t
         # rdf1
-        self.store_triple((p, type, Property))
+        self.store_triple((p, rdf_type, Property))
         # rdfs4a
         if cycle_num == 1:
-            self.store_triple((s, type, Resource))
+            self.store_triple((s, rdf_type, Resource))
         # rdfs4b
         if cycle_num == 1:
-            self.store_triple((o, type, Resource))
-        if p == domain:
+            self.store_triple((o, rdf_type, Resource))
+        if p == rdfs_domain:
             # rdfs2
             for uuu, Y, yyy in self.graph.triples((None, s, None)):
-                self.store_triple((uuu, type, o))
-        if p == range:
+                self.store_triple((uuu, rdf_type, o))
+        if p == rdfs_range:
             # rdfs3
             for uuu, Y, vvv in self.graph.triples((None, s, None)):
-                self.store_triple((vvv, type, o))
+                self.store_triple((vvv, rdf_type, o))
         if p == subPropertyOf:
             # rdfs5
             for Z, Y, xxx in self.graph.triples((o, subPropertyOf, None)):
@@ -141,23 +141,23 @@ class RDFS_Semantics(Core):
             # rdfs7
             for zzz, Z, www in self.graph.triples((None, s, None)):
                 self.store_triple((zzz, o, www))
-        if p == type and o == Property:
+        if p == rdf_type and o == Property:
             # rdfs6
             self.store_triple((s, subPropertyOf, s))
-        if p == type and o == Class:
+        if p == rdf_type and o == Class:
             # rdfs8
             self.store_triple((s, subClassOf, Resource))
             # rdfs10
             self.store_triple((s, subClassOf, s))
         if p == subClassOf:
             # rdfs9
-            for vvv, Y, Z in self.graph.triples((None, type, s)):
-                self.store_triple((vvv, type, o))
+            for vvv, Y, Z in self.graph.triples((None, rdf_type, s)):
+                self.store_triple((vvv, rdf_type, o))
             # rdfs11
             for Z, Y, xxx in self.graph.triples((o, subClassOf, None)):
                 self.store_triple((s, subClassOf, xxx))
-        if p == type and o == ContainerMembershipProperty:
+        if p == rdf_type and o == ContainerMembershipProperty:
             # rdfs12
             self.store_triple((s, subPropertyOf, member))
-        if p == type and o == Datatype:
+        if p == rdf_type and o == Datatype:
             self.store_triple((s, subClassOf, Literal))
