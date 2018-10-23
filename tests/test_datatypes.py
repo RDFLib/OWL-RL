@@ -58,6 +58,21 @@ def test_dt_type1():
     assert (XSD.anyURI, RDF.type, RDFS.Datatype) in g
     assert (XSD.dateTime, RDF.type, RDFS.Datatype) in g
     assert (XSD.dateTimeStamp, RDF.type, RDFS.Datatype) in g
+
+def test_dt_type2():
+    """
+    Test dt-type2 for OWL 2 RL.
+    """
+    p_one = Literal(1, datatype=XSD.positiveInteger)
+
+    g = Graph()
+    g.add((T.A, T.prop, p_one))
+    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    assert (T.A, T.prop, p_one) in g
+    from pprint import pprint
+    pprint(list(g))
+    assert (p_one, RDF.type, XSD.positiveInteger) in g
     
 def test_dt_not_type():
     """
