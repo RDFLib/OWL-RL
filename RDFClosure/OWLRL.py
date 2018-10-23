@@ -22,6 +22,8 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+from itertools import product
+
 import rdflib
 from rdflib import BNode
 
@@ -207,22 +209,22 @@ class OWLRL_Semantics(Core):
         # RULE dt-eq
         # Try to compare literals whether they are different or not. If they are different, then an explicit
         # different from statement should be added, if they are identical, then an equality should be added
-        for lt1 in list(self.literal_proxies.lit_to_bnode.keys()):
-            for lt2 in list(self.literal_proxies.lit_to_bnode.keys()):
-                if lt1 != lt2:
-                    try:
-                        lt1_d = lt1.lit.toPython()
-                        lt2_d = lt2.lit.toPython()
-                        #if lt1_d != lt2_d:
-                        #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], differentFrom, self.literal_
-                        # proxies.lit_to_bnode[lt2]))
-                        #else:
-                        #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], sameAs, self.literal_
-                        # proxies.lit_to_bnode[lt2]))
-                    except:
-                        # there may be a problem with one of the python conversion, but that should have been taken
-                        # care of already
-                        pass
+        literals = self.literal_proxies.lit_to_bnode
+        items = ((lt1, lt2) for lt1, lt2 in product(literals, literals) if lt1 != lt2)
+        for lt1, lt2 in items:
+            try:
+                lt1_d = lt1.lit.toPython()
+                lt2_d = lt2.lit.toPython()
+                #if lt1_d != lt2_d:
+                #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], differentFrom, self.literal_
+                # proxies.lit_to_bnode[lt2]))
+                #else:
+                #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], sameAs, self.literal_
+                # proxies.lit_to_bnode[lt2]))
+            except:
+                # there may be a problem with one of the python conversion, but that should have been taken
+                # care of already
+                pass
 
         # Other datatype definitions can come from explicitly defining some nodes as datatypes (though rarely used,
         # it is perfectly possible...
