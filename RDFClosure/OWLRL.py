@@ -210,7 +210,6 @@ class OWLRL_Semantics(Core):
         # RULE dt-eq
         # Try to compare literals whether they are different or not. If they are different, then an explicit
         # different from statement should be added, if they are identical, then an equality should be added
-        literals = self.literal_proxies.lit_to_bnode
         items = ((lt1, lt2) for lt1, lt2 in product(literals, literals) if lt1 != lt2)
         for lt1, lt2 in items:
             try:
