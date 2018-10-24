@@ -174,7 +174,7 @@ class OWLRL_Semantics(Core):
         explicit = defaultdict(set)
 
         # datatypes in use by the graph (directly or indirectly). This will be used at the end to add the
-        # necessary disjointness statements (but not more
+        # necessary disjointness statements (but not more)
         used_datatypes = set()
 
         # the real literals from the original graph:
@@ -188,7 +188,7 @@ class OWLRL_Semantics(Core):
             if isinstance(o, rdflib.Literal)
                 and o.datatype in OWL_RL_Datatypes
         )
-        for lt in literals: #     # note that all non-RL datatypes are ignored
+        for lt in literals:  # note that all non-RL datatypes are ignored
             # add the explicit typing triple
             self.store_triple((lt, rdf_type, lt.datatype))
             implicit[lt] = lt.datatype
