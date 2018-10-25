@@ -70,8 +70,6 @@ def test_dt_type2():
     RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
 
     assert (T.A, T.prop, p_one) in g
-    from pprint import pprint
-    pprint(list(g))
     assert (p_one, RDF.type, XSD.positiveInteger) in g
     
 def test_dt_not_type():
