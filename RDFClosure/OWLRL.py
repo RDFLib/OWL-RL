@@ -251,7 +251,7 @@ class OWLRL_Semantics(Core):
         # under discussion right now. The optimized version uses only what is really in use
         for dt in OWL_RL_Datatypes:
             self.store_triple((dt, rdf_type, Datatype))
-        for dts in list(explicit.values()):
+        for dts in explicit.values():
             for dt in dts:
                 self.store_triple((dt, rdf_type, Datatype))
 
