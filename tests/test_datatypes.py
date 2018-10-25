@@ -7,7 +7,6 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 
 NOTE: The following axioms are skipped on purpose
 
-- dt-type2
 - dt-eq
 - dt-diff
 """
@@ -21,7 +20,7 @@ T = Namespace('http://test.org/')
 
 def test_dt_type1():
     """
-    Test dt-type1 for OWL 2 RL.
+    Test dt-type1 rule for OWL 2 RL.
     """
     g = Graph()
     RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
@@ -61,7 +60,7 @@ def test_dt_type1():
 
 def test_dt_type2():
     """
-    Test dt-type2 for OWL 2 RL.
+    Test dt-type2 rule for OWL 2 RL.
     """
     p_one = Literal(1, datatype=XSD.positiveInteger)
 
@@ -74,7 +73,7 @@ def test_dt_type2():
     
 def test_dt_not_type():
     """
-    Test dt-not-type for OWL 2 RL.
+    Test dt-not-type rule for OWL 2 RL.
     """
     m_one = Literal(-1, datatype=XSD.nonNegativeInteger)
 
