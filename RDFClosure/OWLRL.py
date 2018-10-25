@@ -164,35 +164,29 @@ class OWLRL_Semantics(Core):
                     self.store_triple((new_dt, rdf_type, Datatype))
                     used_datatypes.add(new_dt)
 
-        # For processing later:
-        # implicit object->datatype relationships: these come from real literals which are represented by
-        # an internal bnode
-        implicit = {}
 
         # explicit object->datatype relationships: those that came from an object being typed as a datatype
         # or a sameAs. The values are arrays of datatypes to which the resource belong
         explicit = defaultdict(set)
 
+        # For processing later:
+        # implicit object->datatype relationships: these come from real
+        # literals which are present in the graph
+        implicit = {
+            o: o.datatype for s, p, o in self.graph
+            if isinstance(o, rdflib.Literal) and o.datatype in OWL_RL_Datatypes
+        }
+
         # datatypes in use by the graph (directly or indirectly). This will be used at the end to add the
         # necessary disjointness statements (but not more)
-        used_datatypes = set()
-
-        # the real literals from the original graph:
-        # literals = self.literal_proxies.lit_to_bnode.keys()
+        used_datatypes = set(implicit.values())
 
         # RULE dt-type2: for all explicit literals the corresponding bnode should get the right type
         # definition. The 'implicit' dictionary is also filled on the fly
         # RULE dt-not-type: see whether an explicit literal is valid in terms of the defined datatype
-        literals = set(
-            o for s, p, o in self.graph
-            if isinstance(o, rdflib.Literal)
-                and o.datatype in OWL_RL_Datatypes
-        )
-        for lt in literals:  # note that all non-RL datatypes are ignored
+        for lt in implicit:  # note that all non-RL datatypes are ignored
             # add the explicit typing triple
             self.store_triple((lt, rdf_type, lt.datatype))
-            implicit[lt] = lt.datatype
-            used_datatypes.add(lt.datatype)
 
             # for dt-not-type
             # This is a dirty trick: rdflib's Literal includes a method that raises an exception if the
@@ -210,7 +204,7 @@ class OWLRL_Semantics(Core):
         # RULE dt-eq
         # Try to compare literals whether they are different or not. If they are different, then an explicit
         # different from statement should be added, if they are identical, then an equality should be added
-        items = ((lt1, lt2) for lt1, lt2 in product(literals, literals) if lt1 != lt2)
+        items = ((lt1, lt2) for lt1, lt2 in product(implicit, implicit) if lt1 != lt2)
         for lt1, lt2 in items:
             try:
                 lt1_d = lt1.lit.toPython()
