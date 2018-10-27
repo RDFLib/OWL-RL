@@ -693,22 +693,19 @@ class OWLRL_Semantics(Core):
             #
             # The construct should lead to an integer. Something may go wrong along the line
             # leading to an exception...
-            val = -1
-            try:
-                val = int(self.literal_proxies.bnode_to_lit[x].lit)
-            except:
-                pass
             xx = c
-            if val == 0:
+            if x.value == 0:
                 # RULES cls-maxqc1 and cls-maxqc2 folded in one
                 for pp in self.graph.objects(xx, onProperty):
                     for cc in self.graph.objects(xx, onClass):
                         for u, y in self.graph.subject_objects(pp):
                             # This should not occur:
-                            if (u, rdf_type, xx) in self.graph and (cc == Thing or (y, rdf_type, cc) in self.graph):
-                                self.add_error("Erroneous usage of maximum qualified cardinality with %s, %s, and %s" 
+                            if (y, rdf_type, cc) in self.graph \
+                                    or cc == Thing and (u, rdf_type, xx) in self.graph:
+
+                                self.add_error("Erroneous usage of maximum qualified cardinality with %s, %s and %s"
                                                % (xx, cc, y))
-            elif val == 1:
+            elif x.value == 1:
                 # RULE cls-maxqc3 and cls-maxqc4 folded in one
                 for pp in self.graph.objects(xx, onProperty):
                     for cc in self.graph.objects(xx, onClass):
