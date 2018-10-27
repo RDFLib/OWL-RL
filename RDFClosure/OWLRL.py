@@ -202,23 +202,8 @@ class OWLRL_Semantics(Core):
 
         # RULE dt-diff
         # RULE dt-eq
-        # Try to compare literals whether they are different or not. If they are different, then an explicit
-        # different from statement should be added, if they are identical, then an equality should be added
-        items = ((lt1, lt2) for lt1, lt2 in product(implicit, implicit) if lt1 != lt2)
-        for lt1, lt2 in items:
-            try:
-                lt1_d = lt1.lit.toPython()
-                lt2_d = lt2.lit.toPython()
-                #if lt1_d != lt2_d:
-                #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], differentFrom, self.literal_
-                # proxies.lit_to_bnode[lt2]))
-                #else:
-                #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], sameAs, self.literal_
-                # proxies.lit_to_bnode[lt2]))
-            except:
-                # there may be a problem with one of the python conversion, but that should have been taken
-                # care of already
-                pass
+        # Compare literals whether they are different or not. This rules
+        # are skipped on purpose at the moment.
 
         # Other datatype definitions can come from explicitly defining some nodes as datatypes (though rarely used,
         # it is perfectly possible...
