@@ -92,3 +92,44 @@ def test_cls_maxqc2():
 
     )
     assert expected == result
+
+def test_cls_maxqc3():
+    """
+    Test cls-maxqc3 rule for OWL 2 RL.
+
+    If::
+
+        T(?x, owl:maxQualifiedCardinality, "1"^^xsd:nonNegativeInteger)
+        T(?x, owl:onProperty, ?p)
+        T(?x, owl:onClass, ?c)
+        T(?u, rdf:type, ?x)
+        T(?u, ?p, ?y1)
+        T(?y1, rdf:type, ?c)
+        T(?u, ?p, ?y2)
+        T(?y2, rdf:type, ?c)
+
+    then::
+
+        T(?y1, owl:sameAs, ?y2)
+    """
+    g = Graph()
+
+    x = T.x
+    p = T.p
+    c = T.C
+    u = T.u
+    y1 = T.y
+    y2 = T.y
+
+    g.add((x, OWL.maxQualifiedCardinality, Literal(1)))
+    g.add((x, OWL.onProperty, p))
+    g.add((x, OWL.onClass, c))
+    g.add((u, RDF.type, x))
+    g.add((u, p, y1))
+    g.add((y1, RDF.type, c))
+    g.add((u, p, y2))
+    g.add((y2, RDF.type, c))
+
+    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    assert (y1, OWL.sameAs, y2) in g
