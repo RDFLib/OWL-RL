@@ -721,6 +721,9 @@ class OWLRL_Semantics(Core):
                                             if y1 != y2 and (y2, rdf_type, cc) in self.graph:
                                                 self.store_triple((y1, sameAs, y2))
 
+            # TODO: what if x.value not in (0, 1)? according to the spec
+            # the cardinality shall be no more than 1, so ad an # error?
+
         # RULE cls-oo
         elif p == oneOf:
             for y in self._list(x):

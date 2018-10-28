@@ -118,8 +118,8 @@ def test_cls_maxqc3():
     p = T.p
     c = T.C
     u = T.u
-    y1 = T.y
-    y2 = T.y
+    y1 = T.y1
+    y2 = T.y2
 
     g.add((x, OWL.maxQualifiedCardinality, Literal(1)))
     g.add((x, OWL.onProperty, p))
@@ -133,3 +133,40 @@ def test_cls_maxqc3():
     RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
 
     assert (y1, OWL.sameAs, y2) in g
+
+def test_cls_maxqc4():
+    """
+    Test cls-maxqc4 rule for OWL 2 RL.
+
+    If::
+
+        T(?x, owl:maxQualifiedCardinality, "1"^^xsd:nonNegativeInteger)
+        T(?x, owl:onProperty, ?p)
+        T(?x, owl:onClass, owl:Thing)
+        T(?u, rdf:type, ?x)
+        T(?u, ?p, ?y1)
+        T(?u, ?p, ?y2)
+
+    then::
+
+        T(?y1, owl:sameAs, ?y2)
+    """
+    g = Graph()
+
+    x = T.x
+    p = T.p
+    u = T.u
+    y1 = T.y1
+    y2 = T.y2
+
+    g.add((x, OWL.maxQualifiedCardinality, Literal(1)))
+    g.add((x, OWL.onProperty, p))
+    g.add((x, OWL.onClass, OWL.Thing))
+    g.add((u, RDF.type, x))
+    g.add((u, p, y1))
+    g.add((u, p, y2))
+
+    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    assert (y1, OWL.sameAs, y2) in g
+
