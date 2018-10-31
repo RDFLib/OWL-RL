@@ -371,10 +371,8 @@ class OWLRL_Semantics(Core):
                 self.store_triple((ss, pp, s))
             # RULE eq-diff1
             if (s, differentFrom, o) in self.graph or (o, differentFrom, s) in self.graph:
-                s_e = self._get_resource_or_literal(s)
-                o_e = self._get_resource_or_literal(o)
                 self.add_error("'sameAs' and 'differentFrom' cannot be used on the same subject-object pair: (%s, %s)" 
-                               % (s_e, o_e))
+                               % (s, o))
 
         # RULES eq-diff2 and eq-diff3
         if p == rdf_type and o == AllDifferent:
