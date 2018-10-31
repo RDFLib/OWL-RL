@@ -13,6 +13,44 @@ import RDFClosure
 DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
 T = Namespace('http://test.org/')
 
+def test_cls_maxc1():
+    """
+    Test cls-maxc1 rule for OWL 2 RL.
+
+    If::
+
+        T(?x, owl:maxCardinality, "0"^^xsd:nonNegativeInteger)
+        T(?x, owl:onProperty, ?p)
+        T(?u, rdf:type, ?x)
+        T(?u, ?p, ?y)
+
+    then::
+
+        false
+    """
+    g = Graph()
+
+    x = T.x
+    p = T.p
+    c = T.C
+    u = T.u
+    y = T.y
+
+    g.add((x, OWL.maxCardinality, Literal(0)))
+    g.add((x, OWL.onProperty, p))
+    g.add((x, OWL.onClass, c))
+    g.add((u, RDF.type, x))
+    g.add((u, p, y))
+
+    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    result = next(g.objects(predicate=DAML.error))
+    expected = Literal(
+        'Erroneous usage of maximum cardinality with'
+        + ' http://test.org/x and http://test.org/y'
+    )
+    assert expected == result
+
 def test_cls_maxqc1():
     """
     Test cls-maxqc1 rule for OWL 2 RL.

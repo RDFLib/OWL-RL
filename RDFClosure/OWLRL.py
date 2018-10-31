@@ -664,20 +664,15 @@ class OWLRL_Semantics(Core):
             #
             # The construct should lead to an integer. Something may go wrong along the line
             # leading to an exception...
-            val = -1
-            try:
-                val = int(self.literal_proxies.bnode_to_lit[x].lit)
-            except:
-                pass
             xx = c
-            if val == 0:
+            if x.value == 0:
                 # RULE cls-maxc1
                 for pp in self.graph.objects(xx, onProperty):
                     for u, y in self.graph.subject_objects(pp):
                         # This should not occur:
                         if (u, rdf_type, xx) in self.graph:
-                            self.add_error("Erroneous usage of maximum cardinality with %s, %s" % (xx, y))
-            elif val == 1:
+                            self.add_error("Erroneous usage of maximum cardinality with %s and %s" % (xx, y))
+            elif x.value == 1:
                 # RULE cls-maxc2
                 for pp in self.graph.objects(xx, onProperty):
                     for u, y1 in self.graph.subject_objects(pp):
