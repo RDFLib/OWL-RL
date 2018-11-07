@@ -750,7 +750,7 @@ class OWLRL_Semantics(Core):
             for x in self.graph.subjects(rdf_type, c1):
                 if (x, rdf_type, c2) in self.graph:
                     self.add_error("Disjoint classes %s and %s have a common individual %s" 
-                                   % (c1, c2, self._get_resource_or_literal(x)))
+                                   % (c1, c2, x))
 
         # RULE cax-adc
         elif p == rdf_type and c2 == AllDisjointClasses:
