@@ -90,12 +90,6 @@ class OWLRL_Semantics(Core):
         """
         return [ch for ch in self.graph.items(l)]
 
-    def _get_resource_or_literal(self, node):
-        if node in self.literal_proxies.bnode_to_lit:
-            return "'" + self.literal_proxies.bnode_to_lit[node].lex + "'"
-        else:
-            return node
-
     def post_process(self):
         """
         Remove triples with bnode predicates. The Bnodes in the graph are collected in the first cycle run.
@@ -642,7 +636,7 @@ class OWLRL_Semantics(Core):
                             self.store_triple((v, rdf_type, y))
                         else:
                             self.add_error("Violation of type restriction for allValuesFrom in %s for datatype %s on "
-                                           "value %s" % (pp, y, self._get_resource_or_literal(v)))
+                                           "value %s" % (pp, y, v))
 
         # RULES cls-hv1 and cls-hv2
         elif p == hasValue:

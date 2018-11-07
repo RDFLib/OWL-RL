@@ -10,6 +10,8 @@ from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
 
 import RDFClosure
 
+from unittest import mock
+
 DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
 T = Namespace('http://test.org/')
 
@@ -47,7 +49,7 @@ def test_cls_maxc1():
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
         'Erroneous usage of maximum cardinality with'
-        + ' http://test.org/x and http://test.org/y'
+        ' http://test.org/x and http://test.org/y'
     )
     assert expected == result
 
@@ -122,7 +124,7 @@ def test_cls_maxqc1():
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
         'Erroneous usage of maximum qualified cardinality with'
-        + ' http://test.org/x, http://test.org/C and http://test.org/y'
+        ' http://test.org/x, http://test.org/C and http://test.org/y'
     )
     assert expected == result
 
@@ -242,4 +244,77 @@ def test_cls_maxqc4():
     RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
 
     assert (y1, OWL.sameAs, y2) in g
+
+def test_cls_avf():
+    """
+    Test for cls-avf rule for OWL 2 RL.
+
+    If::
+
+        T(?x, owl:allValuesFrom, ?y)
+        T(?x, owl:onProperty, ?p)
+        T(?u, rdf:type, ?x)
+        T(?u, ?p, ?v)
+
+    and type restriction *valid*, then::
+
+        T(?v, rdf:type, ?y)
+    """
+    g = Graph()
+
+    x = T.x
+    p = T.p
+    u = T.u
+    y = T.y
+    v = T.v
+
+    g.add((x, OWL.allValuesFrom, y))
+    g.add((x, OWL.onProperty, p))
+    g.add((u, RDF.type, x))
+    g.add((u, p, v))
+
+    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    assert (v, RDF.type, y) in g
+
+@mock.patch.object(RDFClosure.OWLRL_Semantics, 'restriction_typing_check')
+def test_cls_avf_error(mock_rtc):
+    """
+    Test restriction type check for cls-avf rule for OWL 2 RL.
+
+    If::
+
+        T(?x, owl:allValuesFrom, ?y)
+        T(?x, owl:onProperty, ?p)
+        T(?u, rdf:type, ?x)
+        T(?u, ?p, ?v)
+
+    and type restriction *invalid*, then::
+
+        false
+    """
+    g = Graph()
+
+    x = T.x
+    p = T.p
+    u = T.u
+    y = T.y
+    v = T.v
+
+    g.add((x, OWL.allValuesFrom, y))
+    g.add((x, OWL.onProperty, p))
+    g.add((u, RDF.type, x))
+    g.add((u, p, v))
+
+    # trigger invalid restriction type
+    mock_rtc.return_value = False
+
+    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+
+    result = next(g.objects(predicate=DAML.error))
+    expected = Literal(
+        'Violation of type restriction for allValuesFrom in http://test.org/p'
+        ' for datatype http://test.org/y on value http://test.org/v'
+    )
+    assert expected == result
 
