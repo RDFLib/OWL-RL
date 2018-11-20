@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>OWL-RL Documentation &mdash; OWL-RL 5.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> OWL-RL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">OWL-RL Documentation</a><ul>
+<li><a class="reference internal" href="#owl-rl">OWL-RL</a><ul>
+<li><a class="reference internal" href="#release-notes-starting-from-version-3">Release notes (starting from version 3)</a><ul>
+<li><a class="reference internal" href="#version-4-5">Version 4/5</a></li>
+<li><a class="reference internal" href="#version-5-0-0">Version 5.0.0</a></li>
+<li><a class="reference internal" href="#version-4-2-1">Version 4.2.1</a></li>
+<li><a class="reference internal" href="#version-4-2">Version 4.2</a></li>
+<li><a class="reference internal" href="#version-4-1">Version 4.1</a></li>
+<li><a class="reference internal" href="#version-4-0">Version 4.0</a></li>
+<li><a class="reference internal" href="#version-3-2">Version 3.2</a></li>
+<li><a class="reference internal" href="#version-3-1">Version 3.1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">OWL-RL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>OWL-RL Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="owl-rl-documentation">
+<h1>OWL-RL Documentation<a class="headerlink" href="#owl-rl-documentation" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://dx.doi.org/10.5281/zenodo.14543"><img alt="Original Author DOI" src="https://zenodo.org/badge/9385/RDFLib/OWL-RL.svg" /></a></p>
+<div class="section" id="owl-rl">
+<h2>OWL-RL<a class="headerlink" href="#owl-rl" title="Permalink to this headline">¶</a></h2>
+<p>A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining. The distribution contains:</p>
+<p><strong>OWL-RL</strong>: the Python library. You should copy the directory somewhere into your <code class="code docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>. Alternatively, you can also run the <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> script in the directory.</p>
+<ul class="simple">
+<li><code class="code docutils literal notranslate"><span class="pre">scripts/RDFConvertService.py</span></code>: can be used as a CGI script to invoke the library. It may have to be adapted to the local server setup.</li>
+<li><code class="code docutils literal notranslate"><span class="pre">scripts/closure.py</span></code>: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with <code class="code docutils literal notranslate"><span class="pre">-h</span></code> to get the available flags.</li>
+<li>./doc: (epydoc) documentation of the classes and functions.</li>
+</ul>
+<p>The package requires Python version 3.5 or higher; it depends on <a class="reference external" href="https://github.com/RDFLib">RDFLib</a>; version 4.2.2 or higher is required. If you need the python 2.7.x compatible version, see the &#64;/py2 branch in this repository.</p>
+<p>For the details on RDFS, see the <a class="reference external" href="http://www.w3.org/TR/rdf11-mt/">RDF Semanics Specification</a>; for OWL 2 RL, see the <a class="reference external" href="http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules">OWL 2 Profile specification</a>.</p>
+<div class="section" id="release-notes-starting-from-version-3">
+<h3>Release notes (starting from version 3)<a class="headerlink" href="#release-notes-starting-from-version-3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="version-4-5">
+<h4>Version 4/5<a class="headerlink" href="#version-4-5" title="Permalink to this headline">¶</a></h4>
+<p>This is a major release: the package has been updated to Python 2.7 and RDFLib 4 (and to Python 3.5 in v5.0.0).</p>
+<p>Some important changes:</p>
+<ul class="simple">
+<li>The local parser and serializer implementations have been removed; the package relies fully on RDFLib.</li>
+<li>If the extra JSON-LD parser and serializer is available, that format may also be used both for input and output.</li>
+<li>RDFa as a possible input format has been added.</li>
+<li>The datatype part has been reworked to adapt itself to the way RDFLib handles datatypes.</li>
+<li>The <code class="code docutils literal notranslate"><span class="pre">Literal</span></code> class has been adapted to the latest versions of RDFLib’s <code class="code docutils literal notranslate"><span class="pre">Literal</span></code> (there is no <code class="code docutils literal notranslate"><span class="pre">cmp_value</span></code> any more, only value)</li>
+<li>Python 2.7 includes an implementation for rational numbers (under the name <code class="code docutils literal notranslate"><span class="pre">Fraction</span></code>), so the separate module became moot.</li>
+<li>The <code class="code docutils literal notranslate"><span class="pre">script</span></code> directory has been moved to the top level of the distribution.</li>
+<li>The RDF1.1 specific datatypes (<code class="code docutils literal notranslate"><span class="pre">LangString</span></code> and <code class="code docutils literal notranslate"><span class="pre">HTML</span></code>) have been added, although the <code class="code docutils literal notranslate"><span class="pre">HTML</span></code>  is simply treated as a text (a reliance on the HTML5 Library may be too much for what this is worth…)</li>
+<li>The <code class="code docutils literal notranslate"><span class="pre">closure</span></code> script has now an extra flag (<code class="code docutils literal notranslate"><span class="pre">-m</span></code>) to use the “maximal” entailment, i.e., extended OWLRL+RDF with extra trimmings.</li>
+</ul>
+</div>
+<div class="section" id="version-5-0-0">
+<h4>Version 5.0.0<a class="headerlink" href="#version-5-0-0" title="Permalink to this headline">¶</a></h4>
+<p>Changes:</p>
+<ul class="simple">
+<li>Port to Python3. Minimum recommended version is now Python v3.5.</li>
+<li>Fixed a bug where the inferencing process would crash if the engine encountered a literal node that has a datatype for which it does not have a hardcoded converter.</li>
+</ul>
+</div>
+<div class="section" id="version-4-2-1">
+<h4>Version 4.2.1<a class="headerlink" href="#version-4-2-1" title="Permalink to this headline">¶</a></h4>
+<p>Changes:</p>
+<ul class="simple">
+<li>Per error report of Michael Schneider: if a class name is a blank node, the XML serialization went wrong. In case of exception, the fall back is to use the pure xml rather than the pretty xml; that works. There was also a ‘trimming’ argument missing in case of a pure format conversion that led to an exception, that is handled, too.</li>
+</ul>
+</div>
+<div class="section" id="version-4-2">
+<h4>Version 4.2<a class="headerlink" href="#version-4-2" title="Permalink to this headline">¶</a></h4>
+<p>Changes:</p>
+<ul class="simple">
+<li>I exchanged rdflib Graph usage to rdflib ConjunctiveGraph. It avoids issues around deprecation and is also a possible entry point for named graphs.</li>
+<li>Added an extra check in the allValuesFrom handling for datatype restrictions. This does not affect pure OWLRL but is used by the extras that implement facets.</li>
+<li>The RestrictedDatatype class has now a ‘Core’ superclass; this can be used by other restricted datatypes that are not necessarily defined in OWL 2</li>
+</ul>
+</div>
+<div class="section" id="version-4-1">
+<h4>Version 4.1<a class="headerlink" href="#version-4-1" title="Permalink to this headline">¶</a></h4>
+<p>Changes:</p>
+<ul class="simple">
+<li>On advise from Dominique, the error message in the CGI script uses cgi.escape on the text input before displaying it.</li>
+<li>‘Trimming’ has been added to the command line options</li>
+<li>Adaptation to rdflib 2.4.2 (or even 2.4.1?): the <code class="code docutils literal notranslate"><span class="pre">Literal._PythonToXSD</span></code> changed its structure from a dictionary to a list of tuples; <code class="code docutils literal notranslate"><span class="pre">DatatypeHandling.use_Alt_lexical_conversions()</span></code> had to change.</li>
+</ul>
+</div>
+<div class="section" id="version-4-0">
+<h4>Version 4.0<a class="headerlink" href="#version-4-0" title="Permalink to this headline">¶</a></h4>
+<p>Changes:</p>
+<ul class="simple">
+<li>The top level <code class="code docutils literal notranslate"><span class="pre">__init__</span></code> file has been reorganized, so that the package can be used as a module for applications in RDFLib. There is a top level class (<code class="code docutils literal notranslate"><span class="pre">DeductiveClosure</span></code>) that can be invoked from an RDFLib application and the old entry point (<code class="code docutils literal notranslate"><span class="pre">convert_graph</span></code>) relies on that.</li>
+<li>New class have been added to cover a combined RDFS + OWL 2 RL closure (Michael Schneider’s idea).</li>
+<li>An extension mechanism has been built in from bottom up; user can define his/her own rules via an extension class that is given as a parameter to the core closure class.</li>
+<li>Using the extension mechanism a separate OWLRLExtras module has been added to implement, eg, self restriction, rational datatype.</li>
+<li>In the closure class the array of temporarily stored tuples has been exchanged against a set; in other words, checking whether the tuple is to be stored already is now done by the built-in set operation. It became much faster…</li>
+<li>The input argument has changed from ‘source’ to ‘sources’; ie, several input files can be given to the service at the same time (eg, a separate URI for the data and the ontology, respectively).</li>
+<li>Added the implementation of owl:imports.</li>
+<li>Added an implemenatation for the datatype restrictions.</li>
+<li><dl class="first docutils">
+<dt>Bugs:</dt>
+<dd><ul class="first last">
+<li>there was an optimization in the datatype handling of OWLRL that excluded subsumptions for ‘implicit’ literals, ie, literals that are given datatypes via the ^^ formalism (and not via sameAs and explicit datatype definitions). But this excluded proper inferences for existential restrictions…:-(</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>handler for the <code class="code docutils literal notranslate"><span class="pre">xsd:normalizedString</span></code> datatype was missing.</li>
+</ul>
+</div>
+<div class="section" id="version-3-2">
+<h4>Version 3.2<a class="headerlink" href="#version-3-2" title="Permalink to this headline">¶</a></h4>
+<p>Note: this version passes the full batch of official OWL Full/RL tests uploaded by Michael Schneider to the OWL Working Group site. The difference, in this respect, between this version and version 3.1 is the handling of datatypes (which was only rudimentary in 3.1)</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Bugs:</dt>
+<dd><ul class="first last">
+<li>the rules on dt-diff/dt-eq were missing in the implementation. (My mistake: I did not realize that ( owl:sameAs “adfa”) was a possible setups whereby those rules do come in even in practice, so I did not implement them thinking that the results would not appear in the final code anyway due to a literal appearing in a subject position. Clearly an error in judgement.)</li>
+<li><code class="code docutils literal notranslate"><span class="pre">PlainLiteral</span></code> was in a wrong namespace in the OWLRL file:-(</li>
+<li>Added an explicit handling for virtually all data types, to check the lexical values. (This is, in fact, a RDFLib deficiency for most cases, except those that came in via OWL, like PlainLiteral…)</li>
+<li>Added a note referring to a Turtle parser bug…</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="version-3-1">
+<h4>Version 3.1<a class="headerlink" href="#version-3-1" title="Permalink to this headline">¶</a></h4>
+<p>Note: this version passes the first, basic batch of official OWL Full/RL tests uploaded by Michael Schneider to the OWL Working Group site.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Bugs:</dt>
+<dd><ul class="first simple">
+<li>if the URI of a predicate did not correspond to a defined namespace, the extra namespace declaration did not appear in the pretty xml output. Typical situation: the user defines a namespace without trailing ‘#’ or ‘/’, but uses the prefix nevertheless; this ends up in a URI for, say, a predicate or a type that cannot be represented in XML. The proper approach is then to add a new prefix with ‘<a class="reference external" href="http://">http://</a>’ and use that in the output.</li>
+</ul>
+<p>The original XML serialization of RDFLib does that; the PrettyXMLSerialization did not. The pretty XML serialization is based on the one of RDFLib, and has therefore inherited this bug.</p>
+<ul class="last simple">
+<li>the axiomatic expression for (byte subclass short) was misspelled to (byte subclass byte)</li>
+<li>the axiomatic triples added automatically should say (Thing type <code class="code docutils literal notranslate"><span class="pre">owl:Class</span></code>) (and not <code class="code docutils literal notranslate"><span class="pre">rdfs:Class</span></code> as before). Also, (Nothing type <code class="code docutils literal notranslate"><span class="pre">owl:Class</span></code>) was missing there.</li>
+<li><code class="code docutils literal notranslate"><span class="pre">rdf:text</span></code> changed to <code class="code docutils literal notranslate"><span class="pre">rdf:PlainLiteral</span></code> (in the axiomatic triples), as a result of the OWL WG on changing the name.</li>
+<li>missing subclass relationship for dateTimeStamp vs dateTime.</li>
+<li>there was an optimization that added Datatype triples only for those datatypes that appeared as part of a literal in the input graph. However, the rule set requires those triples to be added no matter what. At the moment, this is pending (there are discussions in the group on this).</li>
+<li>the set of triples declaring annotation properties were missing</li>
+<li>error message for asymmetric properties was bogus (has <code class="code docutils literal notranslate"><span class="pre">%p</span></code> instead of <code class="code docutils literal notranslate"><span class="pre">%s</span></code> in the text).</li>
+<li>there was a leftover error message via exceptions for <code class="code docutils literal notranslate"><span class="pre">owl:Nothing</span></code> check.</li>
+<li>rule <code class="code docutils literal notranslate"><span class="pre">scm-eqc2</span></code> was missing :-(</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>New Features:</dt>
+<dd><ul class="first simple">
+<li>added some support to booleans; essentially introducing a stronger check (according to XSD the <code class="code docutils literal notranslate"><span class="pre">&quot;111&quot;^xsd:boolean</span></code> is not a valid boolean values, though RDFLib accepts it as such…).</li>
+<li>triples with a bnode predicate were systematically filtered out when added to a graph. However, incoming ontologies may include statements like ‘[ owl:inverseOf P]’, and processing those through the rule set requires to allow such triples during deduction. Lucklily RDFLib is relaxed on that. So such ‘generalized’ triples are now allowed during the forward chaining and are filtered out only once, right before serialization.</li>
+<li><dl class="first docutils">
+<dt>some improvements on the datatype handling:</dt>
+<dd><ul class="first last">
+<li>adding type relationships to super(data)types. For example, if the original graph includes (<code class="code docutils literal notranslate"><span class="pre">&lt;B&gt;</span> <span class="pre">rdf:type</span> <span class="pre">xsd:short</span></code>), then the triple (<code class="code docutils literal notranslate"><span class="pre">&lt;B&gt;</span> <span class="pre">rdf:type</span> <span class="pre">xsd:integer</span></code>), etc, is also added. As an optimization the (<code class="code docutils literal notranslate"><span class="pre">xsd:short</span> <span class="pre">rdfs:subClassOf</span> <span class="pre">xsd:integer</span></code>) triples are not added, but the direct datatyping is done instead.</li>
+<li>adding disjointness information on datatypes on top of the hierarchy. This means that inconsistencies of the sort <code class="code docutils literal notranslate"><span class="pre">&lt;B&gt;</span> <span class="pre">ex:prop</span> <span class="pre">123</span> <span class="pre">.</span> <span class="pre">&lt;B&gt;</span> <span class="pre">ex:prop</span> <span class="pre">&quot;1&quot;^^xsd:boolean</span></code>. will be detected (integers and booleans must be disjoing per XSD; the explicit type relationships and the disjointness of some data types will trigger the necessary rules).</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Note that, mainly the first rule, is really useful when generic nodes are used as datatypes, as opposed to explicit literals.</p>
+<ul class="last simple">
+<li>added the possibility to set the input format explicitly, and changed the RDFConvert script accordingly (the service is not yet changed…).</li>
+<li>added the possibility to consume standard input.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, CSIRO Land and Water
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
