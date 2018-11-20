@@ -9,9 +9,25 @@ OWL-RL Documentation
 
 .. include:: ../../README.rst
 
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Getting Started:
+
+   installation
+   usage
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Modules API
+
+   RDFClosure
+   RDFSClosure
+   OWLRL
+   CombinedClosure
+   Closure
+   Literals
+   XsdDatatypes
 
 
 
