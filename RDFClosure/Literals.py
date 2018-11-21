@@ -6,21 +6,30 @@ Separate module to handle literals.
 The issue is that pure literals cannot appear in subject position according to the current rules on RDF. That means that
 different types of conclusions cannot properly finish. The present trick is trying to get around the problem as follows:
 
- 1. For all literals in the graph a bnode is created. The module does not do a full D entailment but just relies on
- RDFLib's ability to recognize identical literals
- 2. All those bnodes get a type Literal
- 3. All triples with literals are exchanged against a triple with the associated bnode
+#. For all literals in the graph a bnode is created. The module does not do a full D entailment but just relies on RDFLib's ability to recognize identical literals
+#. All those bnodes get a type Literal
+#. All triples with literals are exchanged against a triple with the associated bnode
 
 The inferences are then calculated with the modified Graph. At the end of the process, the above steps are done
 backwards: for all triples where a bnode representing a literal appear in object position, a triple is generated;
 however, all triples where the bnode appears in a subject position are removed from the final graph.
 
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software
-License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 """
 __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
@@ -42,7 +51,8 @@ identity = lambda v: v
 
 
 class _LiteralStructure:
-    """This class serves as a wrapper around rdflib's Literal, by changing the equality function to a strict 
+    """
+    This class serves as a wrapper around rdflib's Literal, by changing the equality function to a strict
     identity of datatypes and lexical values.
     
     On the other hand, to implement, eg, OWL RL's datatype rules, a should be able to generate 
@@ -115,6 +125,11 @@ class _LiteralStructure:
 
 class LiteralProxies:
     # noinspection PyPep8
+    """
+
+    :param graph: The graph to be modified.
+    :param closure: ..
+    """
     def __init__(self, graph, closure):
         """
         @param graph: the graph to be modified
@@ -212,7 +227,7 @@ class LiteralProxies:
 def add_bnode(proxy, to_be_added, subj, pred, obj):
     """
     Create and add BNode for a literal and register the new object within
-    `LiteralProxies` class data structures.
+    the :class:`.LiteralProxies` class data structures.
     """
     bn = BNode()
     # store this in the internal administration

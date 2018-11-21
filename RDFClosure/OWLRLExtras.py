@@ -4,25 +4,35 @@
 """
 
 Extension to OWL 2 RL, ie, some additional rules added to the system from OWL 2 Full. It is implemented through
-the L{OWLRL_Extension} class, whose reference has to be passed to the relevant semantic class (ie, either the OWL 2 RL
+the :class:`.OWLRL_Extension` class, whose reference has to be passed to the relevant semantic class (i.e., either the OWL 2 RL
 or the combined closure class) as an 'extension'.
 
 The added rules and features are:
 
- - self restriction
- - owl:rational datatype
- - datatype restrictions via facets
+    - self restriction
+    - owl:rational datatype
+    - datatype restrictions via facets
  
 In more details, the rules that are added:
 
- 1. self restriction 1: C{?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y rdf:type ?z. => ?y ?p ?y.}
- 2. self restriction 2: C{?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y ?p ?y. => ?y rdf:type ?z. }
+    1. self restriction 1: :code:`?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y rdf:type ?z. => ?y ?p ?y.`
+    2. self restriction 2: :code:`?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y ?p ?y. => ?y rdf:type ?z.`
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software
-License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 
 """
 
@@ -91,18 +101,19 @@ def _strToRational(v):
 # noinspection PyPep8Naming,PyBroadException
 class OWLRL_Extension(RDFS_OWLRL_Semantics):
     """
-    Additional rules to OWL 2 RL. The initialization method also adds the C{owl:rational} datatype to the set of
-    allowed datatypes with the L{_strToRational} function as a conversion between the literal form and a Rational. The
-    C{xsd:decimal} datatype is also set to be a subclass of C{owl:rational}. Furthermore, the restricted datatypes are
-    extracted from the graph using a L{separate method in a different
-    module<RestrictedDatatype.extract_faceted_datatypes>}, and all those datatypes are also added to the set of allowed
+    Additional rules to OWL 2 RL. The initialization method also adds the :code:`owl:rational` datatype to the set of
+    allowed datatypes with the :py:func:`._strToRational` function as a conversion between the literal form and a Rational. The
+    :code:`xsd:decimal` datatype is also set to be a subclass of :code:`owl:rational`. Furthermore, the restricted datatypes are
+    extracted from the graph using a separate method in a different module
+    (:py:func:`.RestrictedDatatype.extract_faceted_datatypes`), and all those datatypes are also added to the set of allowed
     datatypes. In the case of the restricted datatypes and extra subsumption relationship is set up between the
     restricted and the base datatypes.
 
-    @cvar extra_axioms: additional axioms that have to be added to the deductive closure (in case the axiomatic triples
-    are required)
-    @ivar restricted_datatypes: list of the datatype restriction
-    @type restricted_datatypes: array of L{restricted datatype<RestrictedDatatype.RestrictedDatatype>} instances
+    :cvar extra_axioms: Additional axioms that have to be added to the deductive closure (in case the axiomatic triples
+        are required).
+
+    :var restricted_datatypes: list of the datatype restriction from :class:`.RestrictedDatatype`.
+    :type restricted_datatypes: list of L{restricted datatype<RestrictedDatatype.RestrictedDatatype>} instances
     """
     extra_axioms = [
         (hasSelf, rdf_type, Property),
@@ -164,15 +175,18 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
                         continue
 
     def restriction_typing_check(self, v, t):
-        """Helping method to check whether a type statement is in line with a possible
+        """
+        Helping method to check whether a type statement is in line with a possible
         restriction. This method is invoked by rule "cls-avf" before setting a type
         on an allValuesFrom restriction.
         
         The method is a placeholder at this level. It is typically implemented by subclasses for
-        extra checks, eg, for datatype facet checks.
-        @param v: the resource that is to be 'typed'
-        @param t: the targeted type (ie, Class)
-        @return: boolean
+        extra checks, e.g., for datatype facet checks.
+
+        :param v: the resource that is to be 'typed'.
+        :param t: the targeted type (i.e., Class).
+        :return: Boolean.
+        :rtype: bool
         """
         # Look through the restricted datatypes to see if 't' corresponds to one of those...
         # There are a bunch of possible exceptions here with datatypes, but they can all
@@ -205,7 +219,7 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
 
     def add_axioms(self):
         """
-        Add the L{extra axioms<OWLRL_Extension.extra_axioms>}, related to the self restrictions.
+        Add the :class:`.OWLRL_Extension.extra_axioms`, related to the self restrictions.
         """
         RDFS_OWLRL_Semantics.add_axioms(self)
         for t in self.extra_axioms:
@@ -214,9 +228,13 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
     def rules(self, t, cycle_num):
         """
         Go through the additional rules implemented by this module.
-        @param t: a triple (in the form of a tuple)
-        @param cycle_num: which cycle are we in, starting with 1. This value is forwarded to all local rules; it is
-        also used locally to collect the bnodes in the graph.
+
+        :param t: A triple (in the form of a tuple).
+        :type t: tuple
+
+        :param cycle_num: Which cycle are we in, starting with 1. This value is forwarded to all local rules; it is
+            also used locally to collect the bnodes in the graph.
+        :type cycle_num: int
         """
         RDFS_OWLRL_Semantics.rules(self, t, cycle_num)
         z, q, x = t
@@ -232,29 +250,37 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
 # noinspection PyPep8Naming
 class OWLRL_Extension_Trimming(OWLRL_Extension):
     """
-    This Class adds only one feature to L{OWLRL_Extension}: to initialize with a trimming flag set to C{True} by
+    This Class adds only one feature to :class:`.OWLRL_Extension`: to initialize with a trimming flag set to :code:`True` by
     default.
     
-    This is pretty experimental and probably contentious: this class I{removes} a number of triples from the Graph at
+    This is pretty experimental and probably contentious: this class *removes* a number of triples from the Graph at
     the very end of the processing steps. These triples are either the by-products of the deductive closure calculation
-    or are axiom like triples that are added following the rules of OWL 2 RL. While these triples I{are necessary} for
+    or are axiom like triples that are added following the rules of OWL 2 RL. While these triples *are necessary* for
     the correct inference of really 'useful' triples, they may not be of interest for the application for the end
     result. The triples that are removed are of the form (following a SPARQL-like notation):
     
-     - C{?x owl:sameAs ?x}, C{?x rdfs:subClassOf ?x}, C{?x rdfs:subPropertyOf ?x}, C{?x owl:equivalentClass ?x} type
-     triples
-     - C{?x rdfs:subClassOf rdf:Resource}, C{?x rdfs:subClassOf owl:Thing}, C{?x rdf:type rdf:Resource}, C{owl:Nothing
-     rdfs:subClassOf ?x} type triples
-     - For a datatype that does I{not} appear explicitly in a type assignments (ie, in a C{?x rdf:type dt}) the
-     corresponding C{dt rdf:type owl:Datatype} and C{dt rdf:type owl:DataRange} triples, as well as the disjointness
-     statements with other datatypes
-     - annotation property axioms
-     - a number of axiomatic triples on C{owl:Thing}, C{owl:Nothing} and C{rdf:Resource} (eg, C{owl:Nothing rdf:type
-     owl:Class}, C{owl:Thing owl:equivalentClass rdf:Resource}, etc.)
+    - :code:`?x owl:sameAs ?x`, :code:`?x rdfs:subClassOf ?x`, :code:`?x rdfs:subPropertyOf ?x`, :code:`?x owl:equivalentClass ?x` type triples.
+
+    - :code:`?x rdfs:subClassOf rdf:Resource`, :code:`?x rdfs:subClassOf owl:Thing`, :code:`?x rdf:type rdf:Resource`, :code:`owl:Nothing rdfs:subClassOf ?x` type triples.
+
+    - For a datatype that does *not* appear explicitly in a type assignments (ie, in a :code:`?x rdf:type dt`) the corresponding :code:`dt rdf:type owl:Datatype` and :code:`dt rdf:type owl:DataRange` triples, as well as the disjointness statements with other datatypes.
+    - annotation property axioms.
+    - a number of axiomatic triples on :code:`owl:Thing`, :code:`owl:Nothing` and :code:`rdf:Resource` (eg, :code:`owl:Nothing rdf:type owl:Class`, :code:`owl:Thing owl:equivalentClass rdf:Resource`, etc).
     
-    Trimming is the only feature of this class, done in the L{post_process} step. If users extend L{OWLRL_Extension},
-    this class can be safely mixed in via multiple
-    inheritance.
+    Trimming is the only feature of this class, done in the :py:meth:`.post_process` step. If users extend :class:`OWLRL_Extension`,
+    this class can be safely mixed in via multiple inheritance.
+
+    :param graph: The RDF graph to be extended.
+    :type graph: :class:`rdflib.Graph`
+
+    :param axioms: Whether (non-datatype) axiomatic triples should be added or not.
+    :type axioms: bool
+
+    :param daxioms: Whether datatype axiomatic triples should be added or not.
+    :type daxioms: bool
+
+    :param rdfs: Whether RDFS extension is done.
+    :type rdfs: bool
     """
     def __init__(self, graph, axioms, daxioms, rdfs=False):
         """
@@ -271,9 +297,8 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
 
     def post_process(self):
         """
-        Do some post-processing step performing the trimming of the graph. See the L{class
-        description<OWLRL_Extension_Trimming>} for further details.
-        
+        Do some post-processing step performing the trimming of the graph. See the :class:`.OWLRL_Extension_Trimming`
+        class for further details.
         """
         OWLRL_Extension.post_process(self)
         self.flush_stored_triples()

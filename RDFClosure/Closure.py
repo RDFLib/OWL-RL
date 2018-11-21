@@ -4,10 +4,21 @@
 """
 The generic superclasses for various rule based semantics and the possible extensions.
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 
 """
 
@@ -33,34 +44,56 @@ offlineGeneration = False
 ######################################################################################################
 # noinspection PyMethodMayBeStatic,PyPep8Naming,PyPep8Naming
 class Core:
-    """Core of the semantics management, dealing with the RDFS and other Semantic triples. The only
+    """
+    Core of the semantics management, dealing with the RDFS and other Semantic triples. The only
     reason to have it in a separate class is for an easier maintainability.
 
     This is a common superclass only. In the present module, it is subclassed by
-    a L{RDFS Closure<RDFClosure.RDFSClosure.RDFS_Semantics>} class and a L{OWL RL
-    Closure<RDFClosure.OWLRL.OWLRL_Semantics>} classes.
+    a :class:`.RDFSClosure.RDFS_Semantics` class and a :class:`.OWLRL.OWLRL_Semantics` classes.
     There are some methods that are implemented in the subclasses only, ie, this class cannot be used by itself!
 
-    @ivar IMaxNum: maximal index of C{rdf:_i} occurrence in the graph
-    @ivar literal_proxies: L{Literal Proxies with BNodes<RDFClosure.Literals.LiteralProxies>} for the graph
-    @type literal_proxies: L{LiteralProxies<RDFClosure.Literals.LiteralProxies>}
-    @ivar graph: the real graph
-    @type graph: rdflib.Graph
-    @ivar axioms: whether axioms should be added or not
-    @type axioms: boolean
-    @ivar daxioms: whether datatype axioms should be added or not
-    @type daxioms: boolean
-    @ivar added_triples: triples added to the graph, conceptually, during one processing cycle
-    @type added_triples: set of triples
-    @ivar error_messages: error messages (typically inconsistency messages in OWL RL) found during processing. These
-    are added to the final graph at the very end as separate BNodes with error messages
-    @type error_messages: array of strings
-    @ivar rdfs: whether RDFS inference is also done (used in subclassed only)
-    @type rdfs: boolean
+    :param graph: The RDF graph to be extended.
+    :type graph: :class:`rdflib.Graph`
+
+    :param axioms: Whether axioms should be added or not.
+    :type axioms: bool
+
+    :param daxioms: Whether datatype axioms should be added or not.
+    :type daxioms: bool
+
+    :param rdfs: Whether RDFS inference is also done (used in subclassed only).
+    :type rdfs: bool
+
+    :var IMaxNum: Maximal index of :code:`rdf:_i` occurrence in the graph.
+    :type IMaxNum: int
+
+    :var literal_proxies: :class:`.Literals.LiteralProxies` for the graph.
+    :type literal_proxies: :class:`.Literals.LiteralProxies`
+
+    :var graph: The real graph.
+    :type graph: :class:`rdflib.Graph`
+
+    :var axioms: Whether axioms should be added or not.
+    :type axioms: bool
+
+    :var daxioms: Whether datatype axioms should be added or not.
+    :type daxioms: bool
+
+    :var added_triples: Triples added to the graph, conceptually, during one processing cycle.
+    :type added_triples: set of triples
+
+    :var error_messages: Error messages (typically inconsistency messages in OWL RL) found during processing. These
+        are added to the final graph at the very end as separate BNodes with error messages.
+    :type error_messages: list of str
+
+    :var rdfs: Whether RDFS inference is also done (used in subclassed only).
+    :type rdfs: bool
     """
     # noinspection PyUnusedLocal
     def __init__(self, graph, axioms, daxioms, rdfs=False):
         """
+        The parameter descriptions here are from the old documentation.
+
         @param graph: the RDF graph to be extended
         @type graph: rdflib.Graph
         @param axioms: whether axioms should be added or not
@@ -98,8 +131,9 @@ class Core:
     def add_error(self, message):
         """
         Add an error message
-        @param message: error message
-        @type message: string
+
+        :param message: Error message.
+        :type message: str
         """
         if message not in self.error_messages:
             self.error_messages.append(message)
@@ -123,24 +157,29 @@ class Core:
         """
         The core processing cycles through every tuple in the graph and dispatches it to the various methods
         implementing a specific group of rules. By default, this method raises an exception; indeed, subclasses
-        I{must} add content to by overriding it.
-        @param t: one triple on which to apply the rules
-        @type t: tuple
-        @param cycle_num: which cycle are we in, starting with 1. This value is forwarded to all local rules; it is
-        also used locally to collect the bnodes in the graph.
+        *must* add content to by overriding it.
+
+        :param t: One triple on which to apply the rules.
+        :type t: tuple
+
+        :param cycle_num: Which cycle are we in, starting with 1. This value is forwarded to all local rules; it is
+            also used locally to collect the bnodes in the graph.
+        :type cycle_num: int
         """
         raise Exception("This method should not be called directly; subclasses should override it")
 
     def add_axioms(self):
         """
         Add axioms.
-        This is only a placeholder and raises an exception by default; subclasses I{must} fill this with real content
+
+        This is only a placeholder and raises an exception by default; subclasses *must* fill this with real content
         """
         raise Exception("This method should not be called directly; subclasses should override it")
 
     def add_d_axioms(self):
         """
         Add d axioms.
+
         This is only a placeholder and raises an exception by default; subclasses I{must} fill this with real content
         """
         raise Exception("This method should not be called directly; subclasses should override it")
@@ -156,8 +195,10 @@ class Core:
     def get_literal_value(self, node):
         """
         Return the literal value corresponding to a Literal node. Used in error messages.
-        @param node: literal node
-        @return: the literal value itself
+
+        :param node: Literal node.
+
+        :return: the literal value itself
         """
         try:
             return self.literal_proxies.bnode_to_lit[node].lex
@@ -168,13 +209,13 @@ class Core:
     # noinspection PyAttributeOutsideInit
     def empty_stored_triples(self):
         """
-        Empty the internal store for triples
+        Empty the internal store for triples.
         """
         self.added_triples = set()
         
     def flush_stored_triples(self):
         """
-        Send the stored triples to the graph, and empty the container
+        Send the stored triples to the graph, and empty the container.
         """
         for t in self.added_triples:
             self.graph.add(t)
@@ -183,7 +224,7 @@ class Core:
     def store_triple(self, t):
         """
         In contrast to its name, this does not yet add anything to the graph itself, it just stores the tuple in an
-        L{internal set<Core.added_triples>}. (It is important for this to be a set: some of the rules in the various
+        internal set (:code:`Core.added_triples`). (It is important for this to be a set: some of the rules in the various
         closures may generate the same tuples several times.) Before adding the tuple to the set, the method checks
         whether the tuple is in the final graph already (if yes, it is not added to the set).
 
@@ -191,8 +232,8 @@ class Core:
         graph at the end of such a cycle. If the set is actually empty at that point, this means that the cycle has not
         added any new triple, and the full processing can stop.
 
-        @param t: the triple to be added to the graph, unless it is already there
-        @type t: a 3-element tuple of (s,p,o)
+        :param t: The triple to be added to the graph, unless it is already there
+        :type t: tuple (s,p,o)
         """
         (s, p, o) = t
         if not(isinstance(s, rdflibLiteral) or isinstance(p, rdflibLiteral)) and t not in self.graph:
@@ -205,8 +246,8 @@ class Core:
         """
         Generate the closure the graph. This is the real 'core'.
 
-        The processing rules store new triples via the L{separate method<store_triple>} which stores
-        them in the L{added_triples<added_triples>} array. If that array is emtpy at the end of a cycle,
+        The processing rules store new triples via the separate method :func:`.Core.store_triple` which stores
+        them in the :code:`added_triples` array. If that array is empty at the end of a cycle,
         it means that the whole process can be stopped.
 
         If required, the relevant axiomatic triples are added to the graph before processing in cycles. Similarly

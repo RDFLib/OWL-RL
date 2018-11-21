@@ -5,19 +5,28 @@
 Most of the XSD datatypes are handled directly by RDFLib. However, in some cases, that is not good enough. There are two
 major reasons for this:
 
- 1. Some datatypes are missing from RDFLib and required by OWL 2 RL and/or RDFS
- 2. In other cases, though the datatype is present, RDFLib is fairly lax in checking the lexical value of those
- datatypes. Typical case is boolean.
+#. Some datatypes are missing from RDFLib and required by OWL 2 RL and/or RDFS.
+#. In other cases, though the datatype is present, RDFLib is fairly lax in checking the lexical value of those datatypes. Typical case is boolean.
 
 Some of these deficiencies are handled by this module. All the functions convert the lexical value into a
-python datatype (or return the original string if this is not possible) which will be used, eg,
+python datatype (or return the original string if this is not possible) which will be used, e.g.,
 for comparisons (equalities). If the lexical value constraints are not met, exceptions are raised.
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software
-License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 """
 
 __author__ = 'Ivan Herman'
@@ -37,9 +46,13 @@ from decimal import Decimal
 
 # noinspection PyMissingConstructor,PyPep8Naming
 class _namelessTZ(datetime.tzinfo):
-    """(Nameless) timezone object. The python datetime object requires timezones as
+    """
+    (Nameless) timezone object. The python datetime object requires timezones as
     a specific object added to the conversion, rather than the explicit hour and minute
     difference used by XSD. This class is used to wrap around the hour/minute values.
+
+    :param hours: Hour offset.
+    :param minutes: Minute offset
     """
     def __init__(self, hours, minutes):
         """
@@ -591,9 +604,10 @@ def _strToPlainLiteral(v):
             except:
                 raise ValueError("Invalid plain literal %s" % v)
 
+
 #####################################################################################
 #: Replacement of RDFLib's conversion function. Each entry assigns a function to an XSD datatype, attempting to convert
-# a string to a Python datatype (or raise an exception if some problem is found)
+#: a string to a Python datatype (or raise an exception if some problem is found)
 AltXSDToPYTHON = {
     ns_xsd["language"]: lambda v: _strToVal_Regexp(v, _re_language),
     ns_xsd["NMTOKEN"]: lambda v: _strToVal_Regexp(v, _re_NMTOKEN, re.U),
@@ -639,19 +653,19 @@ AltXSDToPYTHON = {
 }
 
 
-# noinspection PyPep8Naming
 def use_Alt_lexical_conversions():
-    """Registering the datatypes item for RDFLib, ie, bind the dictionary values. The 'bind' method of RDFLib adds
-    extra datatypes to the registered ones in RDFLib, though the table used here (ie, L{AltXSDToPYTHON}) actually
-    overrides all of the default conversion routines. The method also add a Decimal entry to the PythonToXSD array of
+    """
+    Registering the datatypes item for RDFLib, ie, bind the dictionary values. The 'bind' method of RDFLib adds
+    extra datatypes to the registered ones in RDFLib, though the table used here (I.e., :py:data:`.AltXSDToPYTHON`) actually
+    overrides all of the default conversion routines. The method also add a Decimal entry to the :code:`PythonToXSD` list of
     RDFLib.
     """
     _toPythonMapping.update(AltXSDToPYTHON)
 
 
-# noinspection PyPep8Naming
 def use_RDFLib_lexical_conversions():
-    """Restore the original (ie, RDFLib) set of lexical conversion routines.
+    """
+    Restore the original (ie, RDFLib) set of lexical conversion routines.
     """
     _toPythonMapping.update(XSDToPython)
 
