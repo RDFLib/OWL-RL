@@ -28,6 +28,7 @@ OWL-RL Documentation
    CombinedClosure
    DatatypeHandling
    Literals
+   OWL
    RDFSClosure
    OWLRL
    XsdDatatypes
