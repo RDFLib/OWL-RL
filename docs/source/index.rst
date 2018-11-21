@@ -20,7 +20,7 @@ OWL-RL Documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: Modules API
+   :caption: Modules
 
    RDFClosure
    AxiomaticTriples
@@ -30,7 +30,8 @@ OWL-RL Documentation
    Literals
    OWL
    OWLRL
+   OWLRLExtras
    RDFSClosure
    XsdDatatypes
-   OWLRLExtras
+   RestrictedDatatype
 
