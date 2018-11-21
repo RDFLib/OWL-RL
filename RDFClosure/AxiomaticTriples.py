@@ -36,7 +36,7 @@ from RDFClosure.RDFS import seeAlso, isDefinedBy, Literal, Container, ContainerM
 from rdflib.namespace     import XSD as ns_xsd
 from .OWL import *
 
-#: Simple RDF axiomatic triples (typing of subject, predicate, first, rest, etc)
+# Simple RDF axiomatic triples (typing of subject, predicate, first, rest, etc)
 _Simple_RDF_axiomatic_triples = [
     (rdf_type, rdf_type, Property),
     (rdf_subject, rdf_type, Property),
@@ -48,7 +48,7 @@ _Simple_RDF_axiomatic_triples = [
     (nil, rdf_type, List),
 ]
 
-#: RDFS axiomatic triples (domain and range, as well as class setting for a number of RDFS symbols)
+# RDFS axiomatic triples (domain and range, as well as class setting for a number of RDFS symbols)
 _RDFS_axiomatic_triples = [
     (rdf_type, rdfs_domain, Resource),
     (rdfs_domain, rdfs_domain, Property),
@@ -159,6 +159,7 @@ RDFS_D_Axiomatic_Triples_subclasses = [
     (ns_xsd['dateTimeStamp'], subClassOf, ns_xsd['dateTime']),
 ]
 
+#:
 RDFS_D_Axiomatic_Triples_types = [
     (ns_xsd['integer'], rdf_type, Datatype),
     (ns_xsd['decimal'], rdf_type, Datatype),
@@ -195,7 +196,7 @@ RDFS_D_Axiomatic_Triples_types = [
 
 RDFS_D_Axiomatic_Triples = RDFS_D_Axiomatic_Triples_types + RDFS_D_Axiomatic_Triples_subclasses
 
-#: OWL Class axiomatic triples: definition of special classes
+# OWL Class axiomatic triples: definition of special classes
 _OWL_axiomatic_triples_Classes = [
     (AllDifferent, rdf_type, Class),
     (AllDifferent, subClassOf, Resource),
@@ -593,6 +594,7 @@ _OWL_D_Axiomatic_Triples_types = [
     (ns_rdf['PlainLiteral'], rdf_type, Datatype)
 ]
 
+#:
 OWL_D_Axiomatic_Triples_subclasses = [
     (ns_xsd['string'], subClassOf, ns_rdf['PlainLiteral']),
     (ns_xsd['normalizedString'], subClassOf, ns_rdf['PlainLiteral']),
@@ -602,6 +604,7 @@ OWL_D_Axiomatic_Triples_subclasses = [
     (ns_xsd['NMTOKEN'], subClassOf, ns_rdf['PlainLiteral'])
 ]
 
+#:
 OWLRL_Datatypes_Disjointness = [
     (ns_xsd["anyURI"], disjointWith, ns_xsd['base64Binary']),
     (ns_xsd["anyURI"], disjointWith, ns_xsd['boolean']),
@@ -667,7 +670,7 @@ OWLRL_Datatypes_Disjointness = [
 ]
 
 #: OWL RL D Axiomatic triples: combination of the RDFS ones, plus some extra statements on ranges and domains, plus
-# some OWL specific datatypes
+#: some OWL specific datatypes
 OWLRL_D_Axiomatic_Triples = RDFS_D_Axiomatic_Triples + _OWL_D_Axiomatic_Triples_types + \
                             OWL_D_Axiomatic_Triples_subclasses + OWLRL_Datatypes_Disjointness
 

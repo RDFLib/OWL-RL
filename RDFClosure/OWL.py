@@ -24,7 +24,7 @@ import rdflib
 from rdflib	import Namespace
 
 
-#: The OWL namespace as used for RDFLib
+# The OWL namespace as used for RDFLib
 OWLNS = Namespace("http://www.w3.org/2002/07/owl#")
 
 annotatedSource = OWLNS["annotatedSource"]

@@ -11,6 +11,10 @@ DatatypeHandling
 AltXSDToPYTHON Table
 --------------------
 
+.. note:: The code below is not extracted automatically from the source code.
+
+    If there are any errors, please make a pull request or an issue: https://github.com/RDFLib/OWL-RL
+
 .. code-block:: python
 
     AltXSDToPYTHON = {
@@ -56,3 +60,5 @@ AltXSDToPYTHON Table
         ns_xsd["gDay"]: _strTogDay,
         ns_xsd["gMonth"]: _strTogMonth,
     }
+
+.. seealso:: View the source code :ref:`DatatypeHandling`.

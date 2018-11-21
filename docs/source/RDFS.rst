@@ -1,14 +1,15 @@
-OWL
-===
+RDFS
+====
 
-.. automodule:: RDFClosure.OWL
+.. automodule:: RDFClosure.RDFS
     :members:
     :undoc-members:
     :inherited-members:
     :show-inheritance:
 
+
 Source code
 -----------
 
-.. literalinclude:: ../../RDFClosure/OWL.py
+.. literalinclude:: ../../RDFClosure/RDFS.py
     :linenos:

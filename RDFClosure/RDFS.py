@@ -1,12 +1,22 @@
 """
-RDF(S) terms. Note that the set of terms is I{complete}, ie, it includes I{all} OWL 2 terms, regardless of whether the
+RDF(S) terms. Note that the set of terms is *complete*, i.e., it includes *all* OWL 2 terms, regardless of whether the
 term is used in OWL 2 RL or not.
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software
-License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 """
 
 import rdflib

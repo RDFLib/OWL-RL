@@ -653,7 +653,6 @@ AltXSDToPYTHON = {
 }
 
 
-# noinspection PyPep8Naming
 def use_Alt_lexical_conversions():
     """
     Registering the datatypes item for RDFLib, ie, bind the dictionary values. The 'bind' method of RDFLib adds
@@ -664,7 +663,6 @@ def use_Alt_lexical_conversions():
     _toPythonMapping.update(AltXSDToPYTHON)
 
 
-# noinspection PyPep8Naming
 def use_RDFLib_lexical_conversions():
     """
     Restore the original (ie, RDFLib) set of lexical conversion routines.
