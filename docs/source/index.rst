@@ -23,10 +23,11 @@ OWL-RL Documentation
    :caption: Modules API
 
    RDFClosure
+   AxiomaticTriples
+   Closure
    RDFSClosure
    OWLRL
    CombinedClosure
-   Closure
    Literals
    XsdDatatypes
    OWLRLExtras
