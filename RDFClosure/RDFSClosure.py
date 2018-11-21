@@ -59,7 +59,8 @@ class RDFS_Semantics(Core):
         Core.__init__(self, graph, axioms, daxioms, rdfs)
 
     def add_axioms(self):
-        """Add axioms
+        """
+        Add axioms
         """
         for t in RDFS_Axiomatic_Triples:
             self.graph.add(t)
@@ -71,7 +72,9 @@ class RDFS_Semantics(Core):
             self.graph.add((ci, rdf_type, ContainerMembershipProperty))
 
     def add_d_axioms(self):
-        """This is not really complete, because it just uses the comparison possibilities that rdflib provides."""
+        """
+        This is not really complete, because it just uses the comparison possibilities that RDFLib provides.
+        """
         # #1
         items = self.literal_proxies.lit_to_bnode.items()
         items = ((lt, bn) for lt, bn in items if lt.dt is not None)

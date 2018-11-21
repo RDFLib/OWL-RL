@@ -92,7 +92,7 @@ class OWLRL_Semantics(Core):
 
     def post_process(self):
         """
-        Remove triples with bnode predicates. The Bnodes in the graph are collected in the first cycle run.
+        Remove triples with Bnode predicates. The Bnodes in the graph are collected in the first cycle run.
         """
         to_be_removed = []
         for b in self.bnodes:
@@ -117,15 +117,18 @@ class OWLRL_Semantics(Core):
             self.graph.add(t)
         
     def restriction_typing_check(self, v, t):
-        """Helping method to check whether a type statement is in line with a possible
+        """
+        Helping method to check whether a type statement is in line with a possible
         restriction. This method is invoked by rule "cls-avf" before setting a type
         on an allValuesFrom restriction.
         
         The method is a placeholder at this level. It is typically implemented by subclasses for
         extra checks, eg, for datatype facet checks.
-        @param v: the resource that is to be 'typed'
-        @param t: the targeted type (ie, Class)
-        @return: boolean
+
+        :param v: The resource that is to be 'typed'.
+        :param t: The targeted type (ie, Class).
+        :return: Boolean.
+        :rtype: bool
         """
         return True
 

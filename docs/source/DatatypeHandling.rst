@@ -1,7 +1,7 @@
-CombinedClosure
-===============
+DatatypeHandling
+================
 
-.. automodule:: RDFClosure.CombinedClosure
+.. automodule:: RDFClosure.DatatypeHandling
     :members:
     :undoc-members:
     :inherited-members:

@@ -25,9 +25,10 @@ OWL-RL Documentation
    RDFClosure
    AxiomaticTriples
    Closure
+   CombinedClosure
+   DatatypeHandling
    RDFSClosure
    OWLRL
-   CombinedClosure
    Literals
    XsdDatatypes
    OWLRLExtras
