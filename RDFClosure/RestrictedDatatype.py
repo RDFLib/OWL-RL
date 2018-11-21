@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 #
 """
-Module to datatype restrictions, ie, data ranges.
+Module to datatype restrictions, i.e., data ranges.
  
 The module implements the following aspects of datatype restrictions:
 
- - a new datatype is created run-time and added to the allowed and accepted datatypes; literals are checked whether
- they abide to the restrictions
- - the new datatype is defined to be a 'subClass' of the restricted datatype
- - literals of the restricted datatype and that abide to the restrictions defined by the facets are also assigned to
- be of the new type
+    - a new datatype is created run-time and added to the allowed and accepted datatypes; literals are checked whether they abide to the restrictions
+    - the new datatype is defined to be a 'subClass' of the restricted datatype
+    - literals of the restricted datatype and that abide to the restrictions defined by the facets are also assigned to be of the new type
  
 The last item is important to handle the following structures::
+
  ex:RE a owl:Restriction ;
     owl:onProperty ex:p ;
     owl:someValuesFrom [
@@ -24,21 +23,31 @@ The last item is important to handle the following structures::
     ]
  .
  ex:q ex:p "abcd"^^xsd:string.
-In the case above the system can then infer that C{ex:q} is also of type C{ex:RE}.
 
-Datatype restrictions are used by the L{OWL RL Extensions<OWLRLExtras.OWLRL_Extension>} extension class.
+In the case above the system can then infer that :code:`ex:q` is also of type :code:`ex:RE`.
 
-The implementation is not 100% complete. Some things that an ideal implementation should do are not done yet like:
+Datatype restrictions are used by the :class:`.OWLRLExtras.OWLRL_Extension` extension class.
 
- - checking whether a facet is of a datatype that is allowed for that facet
- - handling of non-literals in the facets (ie, if the resource is defined to be of type literal, but whose value
- is defined via a separate 'owl:sameAs' somewhere else)
+The implementation is **not** 100% complete. Some things that an ideal implementation should do are not done yet like:
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software
-License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+    - checking whether a facet is of a datatype that is allowed for that facet
+    - handling of non-literals in the facets (ie, if the resource is defined to be of type literal, but whose value is defined via a separate :code:`owl:sameAs` somewhere else)
+
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 
 """
 __author__ = 'Ivan Herman'
@@ -116,22 +125,25 @@ facetable_datatypes = reduce(lambda x, y: x + y, list(Datatypes_per_facets.value
 
 #######################################################################################################
 
-
+#:
 def _lit_to_value(dt, v):
     """
     This method is used to convert a string to a value with facet checking. RDF Literals are converted to
     Python values using this method; if there is a problem, an exception is raised (and caught higher
     up to generate an error message).
     
-    The method is the equivalent of all the methods in the L{DatatypeHandling} module, and is registered
+    The method is the equivalent of all the methods in the :mod:`.DatatypeHandling` module, and is registered
     to the system run time, as new restricted datatypes are discovered.
     
-    (Technically, the registration is done via a C{lambda v: _lit_to_value(self,v)} setting from within a
-    L{RestrictedDatatype} instance)
-    @param dt: faceted datatype
-    @type dt: L{RestrictedDatatype}
-    @param v: literal to be converted and checked
-    @raise ValueError: invalid literal value
+    (Technically, the registration is done via a :code:`lambda v: _lit_to_value(self,v)` setting from within a
+    :class:`.RestrictedDatatype` instance).
+
+    :param dt: Faceted datatype.
+    :type dt: :class:`RestrictedDatatype`
+
+    :param v: Literal to be converted and checked.
+
+    :raise ValueError: Invalid literal value.
     """
     # This may raise an exception...
     value = dt.converter(v)
@@ -194,11 +206,16 @@ def _lang_range_check(range, lang):
 
 def extract_faceted_datatypes(core, graph):
     """
-    Extractions of restricted (ie, faceted) datatypes from the graph.
-    @param core: the core closure instance that is being handled
-    @type core: L{Closure.Core}
-    @param graph: RDFLib graph
-    @return: array of L{RestrictedDatatype} instances
+    Extractions of restricted (i.e., faceted) datatypes from the graph.
+
+    :param core: The core closure instance that is being handled.
+    :type core: :class:`.Closure.Core`
+
+    :param graph: RDFLib graph.
+    :type graph: :class:`RDFLib.Graph`
+
+    :return: List of :class:`.RestrictedDatatype` instances.
+    :rtype: list
     """
     retval = []
     for dtype in graph.subjects(rdf_type, Datatype):
@@ -249,14 +266,18 @@ def extract_faceted_datatypes(core, graph):
 
 # noinspection PyPep8Naming
 class RestrictedDatatypeCore:
-    """An 'abstract' superclass for datatype restrictions. The instance variables listed here are
+    """
+    An 'abstract' superclass for datatype restrictions. The instance variables listed here are
     used in general, without the specificities of the concrete restricted datatype.
     
-    This module defines the L{RestrictedDatatype} class that corresponds to the datatypes and their restrictions
+    This module defines the :class:`.RestrictedDatatype` class that corresponds to the datatypes and their restrictions
     defined in the OWL 2 standard. Other modules may subclass this class to define new datatypes with restrictions.
-    @ivar type_uri : the URI for this datatype
-    @ivar base_type: URI of the datatype that is restricted
-    @ivar toPython : function to convert a Literal of the specified type to a Python value.
+
+    :ivar type_uri: The URI for this datatype.
+
+    :ivar base_type: URI of the datatype that is restricted.
+
+    :ivar toPython: Function to convert a Literal of the specified type to a Python value.
     """
     def __init__(self, type_uri, base_type):
         self.datatype = type_uri
@@ -265,9 +286,10 @@ class RestrictedDatatypeCore:
         
     def checkValue(self, value):
         """
-        Check whether the (python) value abides to the constraints defined by the current facets.
-        @param value: the value to be checked
-        @rtype: boolean
+        Check whether the (Python) value abides to the constraints defined by the current facets.
+
+        :param value: The value to be checked.
+        :rtype: bool
         """
         raise Exception("This class should not be used by itself, only via its subclasses!")
 
@@ -276,32 +298,39 @@ class RestrictedDatatypeCore:
 class RestrictedDatatype(RestrictedDatatypeCore):
     """
     Implementation of a datatype with facets, ie, datatype with restrictions.
+
+    :param type_uri: URI of the datatype being defined.
+    :param base_type: URI of the base datatype, ie, the one being restricted.
+    :param facets: List of :code:`(facetURI, value)` pairs.
     
-    @ivar datatype : the URI for this datatype
-    @ivar base_type: URI of the datatype that is restricted
-    @ivar converter: method to convert a literal of the base type to a Python value (drawn from L{DatatypeHandling
-    .AltXSDToPYTHON})
-    @ivar minExclusive: value for the C{xsd:minExclusive} facet, initialized to C{None} and set to the right value if
-    a facet is around
-    @ivar minInclusive: value for the C{xsd:minInclusive} facet, initialized to C{None} and set to the right value if
-    a facet is around
-    @ivar maxExclusive: value for the C{xsd:maxExclusive} facet, initialized to C{None} and set to the right value if
-    a facet is around
-    @ivar maxInclusive: value for the C{xsd:maxInclusive} facet, initialized to C{None} and set to the right value if
-    a facet is around
-    @ivar minLength: value for the C{xsd:minLength} facet, initialized to C{None} and set to the right value if a facet
-    is around
-    @ivar maxLength: value for the C{xsd:maxLength} facet, initialized to C{None} and set to the right value if a facet
-    is around
-    @ivar length: value for the C{xsd:length} facet, initialized to C{None} and set to the right value if a facet is
-    around
-    @ivar pattern: array of patterns for the C{xsd:pattern} facet, initialized to C{[]} and set to the right value if a
-    facet is around
-    @ivar langRange: array of language ranges for the C{rdf:langRange} facet, initialized to C{[]} and set to the right
-    value if a facet is around
-    @ivar check_methods: list of class methods that are relevant for the given C{base_type}
-    @ivar toPython: function to convert a Literal of the specified type to a Python value. Is defined by C{lambda v:
-     _lit_to_value(self, v)}, see L{_lit_to_value}
+    :ivar datatype : The URI for this datatype.
+
+    :ivar base_type: URI of the datatype that is restricted.
+
+    :ivar converter: Method to convert a literal of the base type to a Python value (:code:`DatatypeHandling.AltXSDToPYTHON`).
+
+    :ivar minExclusive: Value for the :code`xsd:minExclusive` facet, initialized to :code:`None` and set to the right value if
+        a facet is around.
+    :ivar minInclusive: Value for the :code:`xsd:minInclusive` facet, initialized to :code:`None` and set to the right value if
+        a facet is around.
+    :ivar maxExclusive: Value for the :code:`xsd:maxExclusive` facet, initialized to :code:`None` and set to the right value if
+        a facet is around.
+    :ivar maxInclusive: Value for the :code:`xsd:maxInclusive` facet, initialized to :code:`None` and set to the right value if
+        a facet is around.
+    :ivar minLength: Value for the :code:`xsd:minLength` facet, initialized to :code:`None` and set to the right value if a facet
+        is around.
+    :ivar maxLength: Value for the :code:`xsd:maxLength` facet, initialized to :code:`None` and set to the right value if a facet
+        is around.
+    :ivar length: Value for the :code:`xsd:length` facet, initialized to :code:`None` and set to the right value if a facet is
+        around.
+    :ivar pattern: Array of patterns for the :code:`xsd:pattern` facet, initialized to :code:`[]` and set to the right value if a
+        facet is around.
+    :ivar langRange: Array of language ranges for the :code:`rdf:langRange` facet, initialized to :code:`[]` and set to the right
+        value if a facet is around.
+    :ivar check_methods: List of class methods that are relevant for the given :code:`base_type`.
+
+    :ivar toPython: Function to convert a Literal of the specified type to a Python value. Is defined by :code:`lambda v:
+        _lit_to_value(self, v)`, see :py:func:`._lit_to_value`.
     """
     
     def __init__(self, type_uri, base_type, facets):
@@ -379,9 +408,10 @@ class RestrictedDatatype(RestrictedDatatypeCore):
 
     def checkValue(self, value):
         """
-        Check whether the (python) value abides to the constraints defined by the current facets.
-        @param value: the value to be checked
-        @rtype: boolean
+        Check whether the (Python) value abides to the constraints defined by the current facets.
+
+        :param value: The value to be checked.
+        :rtype: bool
         """
         for method in self.check_methods:
             if not method(self, value):

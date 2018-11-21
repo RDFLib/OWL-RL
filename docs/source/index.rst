@@ -33,6 +33,6 @@ OWL-RL Documentation
    OWLRLExtras
    RDFS
    RDFSClosure
-   XsdDatatypes
    RestrictedDatatype
+   XsdDatatypes
 
