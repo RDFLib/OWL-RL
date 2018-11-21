@@ -16,6 +16,7 @@ OWL-RL Documentation
 
    installation
    usage
+   indices_and_tables
 
 .. toctree::
    :maxdepth: 2
@@ -28,12 +29,5 @@ OWL-RL Documentation
    Closure
    Literals
    XsdDatatypes
+   OWLRLExtras
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

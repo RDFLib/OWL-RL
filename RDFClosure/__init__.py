@@ -256,15 +256,19 @@ def __parse_input(iformat, inp, graph):
 
 
 def interpret_owl_imports(iformat, graph):
-    """Interpret the owl import statements. Essentially, recursively merge with all the objects in the owl import
+    """
+    Interpret the owl import statements. Essentially, recursively merge with all the objects in the owl import
     statement, and remove the corresponding triples from the graph.
 
-    This method can be used by an application prior to expansion. It is I{not} done by the the L{DeductiveClosure}
+    This method can be used by an application prior to expansion. It is *not* done by the the :class:`.DeductiveClosure`
     class.
 
-    @param iformat: input format; can be one of L{AUTO}, L{TURTLE}, or L{RDFXML}. L{AUTO} means that the suffix of the
-    file name or URI will decide: '.ttl' means Turtle, RDF/XML otherwise.
-    @param graph: the RDFLib Graph instance to parse into.
+    :param iformat: Input format; can be one of :code:`AUTO`, :code:`TURTLE`, or :code:`RDFXML`. :code:`AUTO` means that
+    the suffix of the file name or URI will decide: '.ttl' means Turtle, RDF/XML otherwise.
+    :type iformat: str
+
+    :param graph: The RDFLib Graph instance to parse into.
+    :type graph: :class:`RDFLib.Graph`
     """
     while True:
         # 1. collect the import statements:
@@ -289,18 +293,24 @@ def interpret_owl_imports(iformat, graph):
 def return_closure_class(owl_closure, rdfs_closure, owl_extras, trimming=False):
     """
     Return the right semantic extension class based on three possible choices (this method is here to help potential
-    users, the result can be
-    fed into a L{DeductiveClosure} instance at initialization)
-    @param owl_closure: whether OWL 2 RL deductive closure should be calculated
-    @type owl_closure: boolean
-    @param rdfs_closure: whether RDFS deductive closure should be calculated. In case C{owl_closure==True}, this
-    parameter should also be used in the initialization of L{DeductiveClosure}
-    @type rdfs_closure: boolean
-    @param owl_extras: whether the extra possibilities (rational datatype, etc) should be added to an OWL 2 RL
-    deductive closure. This parameter has no effect in case C{owl_closure==False}.
-    @param trimming: whether extra trimming is done on the OWL RL + Extension output
-    @return: deductive class reference or None
-    @rtype: Class type
+    users, the result can be fed into a :class:`DeductiveClosure` instance at initialization).
+
+    :param owl_closure: Whether OWL 2 RL deductive closure should be calculated.
+    :type owl_closure: bool
+
+    :param rdfs_closure: Whether RDFS deductive closure should be calculated. In case :code:`owl_closure==True`, this
+        parameter should also be used in the initialization of :class:`DeductiveClosure`.
+    :type rdfs_closure: bool
+
+    :param owl_extras: Whether the extra possibilities (rational datatype, etc) should be added to an OWL 2 RL
+        deductive closure. This parameter has no effect in case :code:`owl_closure==False`.
+    :type owl_extras: bool
+
+    :param trimming: Whether extra trimming is done on the OWL RL + Extension output.
+    :type trimming: bool
+
+    :return: Deductive class reference or None.
+    :rtype: :class:`.DeductiveClosure` or None
     """
     if owl_closure:
         if owl_extras:
@@ -323,46 +333,68 @@ def return_closure_class(owl_closure, rdfs_closure, owl_extras, trimming=False):
 class DeductiveClosure:
     """
     Entry point to generate the deductive closure of a graph. The exact choice deductive
-    closure is controlled by a class reference. The important initialization parameter is the C{closure_class}: a Class
-    object referring to a subclass of L{Closure.Core}. Although this package includes a number of such subclasses
-    (L{OWLRL_Semantics}, L{RDFS_Semantics}, L{RDFS_OWLRL_Semantics}, and L{OWLRL_Extension}), the user can use his/her
+    closure is controlled by a class reference. The important initialization parameter is the :code:`closure_class`, a Class
+    object referring to a subclass of :class:`.Closure.Core`. Although this package includes a number of such subclasses
+    :class:`.OWLRL_Semantics`, :class:`.RDFS_Semantics`, :class:`.RDFS_OWLRL_Semantics`, and :class:`.OWLRL_Extension`, the user can use his/her
     own if additional rules are implemented.
 
-    Note that owl:imports statements are I{not} interpreted in this class, that has to be done beforehand on the graph
+    Note that :code:`owl:imports` statements are *not* interpreted in this class, that has to be done beforehand on the graph
     that is to be expanded.
 
-    @ivar rdfs_closure: Whether the RDFS closure should also be executed. Default: False.
-    @type rdfs_closure: boolean
-    @ivar axiomatic_triples: Whether relevant axiomatic triples are added before chaining, except for datatype axiomatic
-    triples. Default: False.
-    @type axiomatic_triples: boolean
-    @ivar datatype_axioms: Whether further datatype axiomatic triples are added to the output. Default: false.
-    @type datatype_axioms: boolean
-    @ivar closure_class: the class instance used to expand the graph
-    @type closure_class: L{Closure.Core}
-    @cvar improved_datatype_generic: Whether the improved set of lexical-to-Python conversions should be used for
-    datatype handling I{in general}, ie, not only for a particular instance and not only for inference purposes.
-    Default: False.
-    @type improved_datatype_generic: boolean
+    :param closure_class: A closure class reference.
+    :type closure_class: subclass of :class:`.Closure.Core`
+
+    :param improved_datatypes: Whether the improved set of lexical-to-Python conversions should be used for datatype handling. See the introduction for more details. Default: True.
+    :type improved_datatypes: bool
+
+    :param rdfs_closure: Whether the RDFS closure should also be executed. Default: False.
+    :type rdfs_closure: bool
+
+    :param axiomatic_triples: Whether relevant axiomatic triples are added before chaining, except for datatype axiomatic triples. Default: False.
+    :type axiomatic_triples: bool
+
+    :param datatype_axioms: Whether further datatype axiomatic triples are added to the output. Default: false.
+    :type datatype_axioms: bool
+
+    :var improved_datatype_generic: Whether the improved set of lexical-to-Python conversions should be used for datatype handling *in general*, I.e., not only for a particular instance and not only for inference purposes. Default: False.
+    :type improved_Datatype_generic: bool
     """
+
+    # This is the original set of param definitions in the class definition
+    #
+    # @ivar rdfs_closure: Whether the RDFS closure should also be executed. Default: False.
+    # @type rdfs_closure: boolean
+    # @ivar axiomatic_triples: Whether relevant axiomatic triples are added before chaining, except for datatype axiomatic
+    # triples. Default: False.
+    # @type axiomatic_triples: boolean
+    # @ivar datatype_axioms: Whether further datatype axiomatic triples are added to the output. Default: false.
+    # @type datatype_axioms: boolean
+    # @ivar closure_class: the class instance used to expand the graph
+    # @type closure_class: L{Closure.Core}
+    # @cvar improved_datatype_generic: Whether the improved set of lexical-to-Python conversions should be used for
+    # datatype handling I{in general}, ie, not only for a particular instance and not only for inference purposes.
+    # Default: False.
+    # @type improved_datatype_generic: boolean
+
     improved_datatype_generic = False
 
     def __init__(self, closure_class, improved_datatypes=True, rdfs_closure=False, axiomatic_triples=False,
                  datatype_axioms=False):
-        """
-        @param closure_class: a closure class reference.
-        @type closure_class: subclass of L{Closure.Core}
-        @param rdfs_closure: whether RDFS rules are executed or not
-        @type rdfs_closure: boolean
-        @param axiomatic_triples: Whether relevant axiomatic triples are added before chaining, except for datatype
-        axiomatic triples. Default: False.
-        @type axiomatic_triples: boolean
-        @param datatype_axioms: Whether further datatype axiomatic triples are added to the output. Default: false.
-        @type datatype_axioms: boolean
-        @param improved_datatypes: Whether the improved set of lexical-to-Python conversions should be used for
-        datatype handling. See the introduction for more details. Default: True.
-        @type improved_datatypes: boolean
-        """
+        # This is the original set of param definitions in the __init__
+        #
+        # @param closure_class: a closure class reference.
+        # @type closure_class: subclass of L{Closure.Core}
+        # @param rdfs_closure: whether RDFS rules are executed or not
+        # @type rdfs_closure: boolean
+        # @param axiomatic_triples: Whether relevant axiomatic triples are added before chaining, except for datatype
+        # axiomatic triples. Default: False.
+        # @type axiomatic_triples: boolean
+        # @param datatype_axioms: Whether further datatype axiomatic triples are added to the output. Default: false.
+        # @type datatype_axioms: boolean
+        # @param improved_datatypes: Whether the improved set of lexical-to-Python conversions should be used for
+        # datatype handling. See the introduction for more details. Default: True.
+        # @type improved_datatypes: boolean
+
         if closure_class is None:
             self.closure_class = None
         else:
@@ -378,8 +410,9 @@ class DeductiveClosure:
     def expand(self, graph):
         """
         Expand the graph using forward chaining, and with the relevant closure type.
-        @param graph: the RDF graph
-        @type graph: rdflib.Graph
+
+        :param graph: The RDF graph.
+        :type graph: :class:`rdflib.Graph`
         """
         if (not DeductiveClosure.improved_datatype_generic) and self.improved_datatypes:
             DatatypeHandling.use_Alt_lexical_conversions()
@@ -414,32 +447,77 @@ def convert_graph(options, closureClass=None):
     """
     Entry point for external scripts (CGI or command line) to parse an RDF file(s), possibly execute OWL and/or RDFS
     closures, and serialize back the result in some format.
+
     Note that this entry point can be used requiring no entailment at all;
     because both the input and the output format for the package can be RDF/XML or Turtle, such usage would
     simply mean a format conversion.
 
-    If OWL 2 RL processing is required, that also means that the owl:imports statements are interpreted. Ie,
+    If OWL 2 RL processing is required, that also means that the :code:`owl:imports` statements are interpreted. I.e.,
     ontologies can be spread over several files. Note, however, that the output of the process would then include all
     imported ontologies, too.
 
-    @param options: object with specific attributes, namely:
-      - options.sources: list of uris or file names for the source data; for each one if the name ends with 'ttl', it is
-        considered to be turtle, RDF/XML otherwise (this can be overwritten by the options.iformat, though)
-      - options.text: direct Turtle encoding of a graph as a text string (useful, eg, for a CGI call using a text field)
-      - options.owlClosure: can be yes or no
-      - options.rdfsClosure: can be yes or no
-      - options.owlExtras: can be yes or no; whether the extra rules beyond OWL 2 RL are used or not.
-      - options.axioms: whether relevant axiomatic triples are added before chaining (can be a boolean, or the strings
-        "yes" or "no")
-      - options.daxioms: further datatype axiomatic triples are added to the output (can be a boolean, or the strings
-        "yes" or "no")
-      - options.format: output format, can be "turtle" or "rdfxml"
-      - options.iformat: input format, can be "turtle", "rdfa", "json", "rdfxml", or "auto". "auto" means that the
-        suffix of the file is considered: '.ttl'. '.html', 'json' or '.jsonld' respectively with 'xml' as a fallback
-      - options.trimming: whether the extension to OWLRL should also include trimming
-    @param closureClass: explicit class reference. If set, this overrides the various different other options to be
+    :param options: Object with specific attributes.
+    :type options: object
+
+    :param options.sources: List of uris or file names for the source data; for each one if the name ends with 'ttl', it
+        is considered to be turtle, RDF/XML otherwise (this can be overwritten by the options.iformat, though)
+    :type options.sources: list
+
+    :param options.text: Direct Turtle encoding of a graph as a text string (useful, eg, for a CGI call using a text
+        field).
+    :type options.text: str
+
+    :param options.owlClosure: Can be yes or no.
+    :type options.owlClosure: bool
+
+    :param options.rdfsClosure: Can be yes or no.
+    :type options.rdfsClosure: bool
+
+    :param options.owlExtras: Can be yes or no; whether the extra rules beyond OWL 2 RL are used or not.
+    :type options.owlExtras: bool
+
+    :param options.axioms: Whether relevant axiomatic triples are added before chaining (can be a boolean, or the
+        strings "yes" or "no").
+    :type options.axioms: bool
+
+    :param options.daxioms: Further datatype axiomatic triples are added to the output (can be a boolean, or the strings
+        "yes" or "no").
+    :type options.daxioms: bool
+
+    :param options.format: Output format, can be "turtle" or "rdfxml".
+    :type options.format: str
+
+    :param options.iformat: Input format, can be "turtle", "rdfa", "json", "rdfxml", or "auto". "auto" means that the
+        suffix of the file is considered: '.ttl'. '.html', 'json' or '.jsonld' respectively with 'xml' as a fallback.
+    :type options.iformat: str
+
+    :param options.trimming: Whether the extension to OWLRL should also include trimming.
+    :type options.trimming: bool
+
+    :param closureClass: Explicit class reference. If set, this overrides the various different other options to be
         used as an extension.
+    :type closureClass: TODO(edmond.chuc@csiro.au): What class is this supposed to be?
     """
+
+    # Original parameter definitions from old documentation.
+    #
+    # @param options: object with specific attributes, namely:
+    #   - options.sources: list of uris or file names for the source data; for each one if the name ends with 'ttl', it is
+    #     considered to be turtle, RDF/XML otherwise (this can be overwritten by the options.iformat, though)
+    #   - options.text: direct Turtle encoding of a graph as a text string (useful, eg, for a CGI call using a text field)
+    #   - options.owlClosure: can be yes or no
+    #   - options.rdfsClosure: can be yes or no
+    #   - options.owlExtras: can be yes or no; whether the extra rules beyond OWL 2 RL are used or not.
+    #   - options.axioms: whether relevant axiomatic triples are added before chaining (can be a boolean, or the strings
+    #     "yes" or "no")
+    #   - options.daxioms: further datatype axiomatic triples are added to the output (can be a boolean, or the strings
+    #     "yes" or "no")
+    #   - options.format: output format, can be "turtle" or "rdfxml"
+    #   - options.iformat: input format, can be "turtle", "rdfa", "json", "rdfxml", or "auto". "auto" means that the
+    #     suffix of the file is considered: '.ttl'. '.html', 'json' or '.jsonld' respectively with 'xml' as a fallback
+    #   - options.trimming: whether the extension to OWLRL should also include trimming
+    # @param closureClass: explicit class reference. If set, this overrides the various different other options to be
+    #     used as an extension.
 
     def __check_yes_or_true(opt):
         return opt is True or opt == "yes" or opt == "Yes" or opt == "True" or opt == "true"
