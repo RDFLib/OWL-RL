@@ -2,19 +2,29 @@
 # -*- coding: utf-8 -*-
 #
 """
-This module is a C{brute force} implementation of the OWL 2 RL profile.
+This module is a **brute force** implementation of the OWL 2 RL profile.
 
-RDFLib works with 'generalized' RDF, meaning that triples with a BNode predicate are I{allowed}. This is good because, 
-eg, some of the triples generated for RDF from an OWL 2 functional syntax might look like '[ owl:inverseOf p]', and the 
+RDFLib works with 'generalized' RDF, meaning that triples with a BNode predicate are *allowed*. This is good because,
+e.g., some of the triples generated for RDF from an OWL 2 functional syntax might look like :code:`[ owl:inverseOf p ]`, and the
 RL rules would then operate on such generalized triple. However, as a last, post processing steps, these triples are 
 removed from the graph before serialization to produce 'standard' RDF (which is o.k. for RL, too, because the 
 consequent triples are all right, generalized triples might have had a role in the deduction steps only).
 
-@requires: U{RDFLib<https://github.com/RDFLib/rdflib>}, 4.0.0 and higher
-@license: This software is available for use under the U{W3C Software 
-License<http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231>}
-@organization: U{World Wide Web Consortium<http://www.w3.org>}
-@author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
+**Requires**: `RDFLib`_, 4.0.0 and higher.
+
+.. _RDFLib: https://github.com/RDFLib/rdflib
+
+**License**: This software is available for use under the `W3C Software License`_.
+
+.. _W3C Software License: http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+
+**Organization**: `World Wide Web Consortium`_
+
+.. _World Wide Web Consortium: http://www.w3.org
+
+**Author**: `Ivan Herman`_
+
+.. _Ivan Herman: http://www.w3.org/People/Ivan/
 
 """
 
@@ -51,15 +61,32 @@ from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
 # This helps in referring back to the spec...
 # noinspection PyPep8Naming, PyPep8Naming, PyBroadException
 class OWLRL_Semantics(Core):
-    """OWL 2 RL Semantics class, ie, implementation of the OWL 2 RL closure graph.
+    """
+    OWL 2 RL Semantics class, i.e., implementation of the OWL 2 RL closure graph.
 
-    Note that the module does I{not} implement the so called Datatype entailment rules, simply because the underlying 
-    RDFLib does not implement the datatypes (ie, RDFLib will not make the literal "1.00" and "1.00000" identical, 
-    although even with all the ambiguities on datatypes, this I{should} be made equal...). Also, the so-called 
-    extensional entailment rules (Section 7.3.1 in the RDF Semantics document) have not been implemented either.
+    .. note:: Note that the module does *not* implement the so called Datatype entailment rules, simply because the underlying
+        RDFLib does not implement the datatypes (i.e., RDFLib will not make the literal "1.00" and "1.00000" identical,
+        although even with all the ambiguities on datatypes, this *should* be made equal...).
 
-    The comments and references to the various rule follow the names as used in the U{OWL 2 RL
-    document<http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules>}.
+        Also, the so-called extensional entailment rules (Section 7.3.1 in the RDF Semantics document) have not been
+        implemented either.
+
+    The comments and references to the various rule follow the names as used in the `OWL 2 RL
+    document`_.
+
+    .. _OWL 2 RL document: http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
+
+    :param graph: The RDF graph to be extended.
+    :type graph: :class:`rdflib.Graph`
+
+    :param axioms: Whether (non-datatype) axiomatic triples should be added or not.
+    :type axioms: bool
+
+    :param daxioms: Whether datatype axiomatic triples should be added or not.
+    :type daxioms: bool
+
+    :param rdfs: Whether RDFS inference is also done (used in subclassed only).
+    :type rdfs: bool
     """
     def __init__(self, graph, axioms, daxioms, rdfs=None):
         """
@@ -123,7 +150,7 @@ class OWLRL_Semantics(Core):
         on an allValuesFrom restriction.
         
         The method is a placeholder at this level. It is typically implemented by subclasses for
-        extra checks, eg, for datatype facet checks.
+        extra checks, e.g., for datatype facet checks.
 
         :param v: The resource that is to be 'typed'.
         :param t: The targeted type (ie, Class).
@@ -140,10 +167,9 @@ class OWLRL_Semantics(Core):
 
         These are: cls-thing, cls-nothing1, prp-ap, dt-types1, dt-types2, dt-eq, dt-diff.
 
-        Note, however, that the dt-* are executed only partially, limited by the possibilities offered by RDFLib. These 
-        may not cover all the edge cases of OWL RL. Especially, dt-not-type has not (yet?) been implemented (I wonder 
-        whether RDFLib should not raise
-        exception for those anyway...
+        .. note:: Note, however, that the dt-* are executed only partially, limited by the possibilities offered by RDFLib. These
+            may not cover all the edge cases of OWL RL. Especially, dt-not-type has not (yet?) been implemented (I wonder
+            whether RDFLib should not raise exception for those anyway...
         """
         # noinspection PyShadowingNames
         def _add_to_explicit(s, o):
@@ -315,9 +341,10 @@ class OWLRL_Semantics(Core):
         """
         Go through the various rule groups, as defined in the OWL-RL profile text and implemented via
         local methods. (The calling cycle takes every tuple in the graph.)
-        @param t: a triple (in the form of a tuple)
-        @param cycle_num: which cycle are we in, starting with 1. This value is forwarded to all local rules; it is 
-        also used locally to collect the bnodes in the graph.
+
+        :param t: A triple (in the form of a tuple).
+        :param cycle_num: Which cycle are we in, starting with 1. This value is forwarded to all local rules; it is
+            also used locally to collect the bnodes in the graph.
         """
         if cycle_num == 1:
             for r in t:
