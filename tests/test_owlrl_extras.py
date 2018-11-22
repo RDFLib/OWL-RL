@@ -11,7 +11,7 @@ T = Namespace('http://test.org/')
 
 def test_one_time_rules():
     """
-    Test RDFS closure one time rules.
+    Test OWL 2 RL extras closure one time rules.
     """
     data = """
     @prefix : <http://test.org/> .

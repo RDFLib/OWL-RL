@@ -739,7 +739,7 @@ class OWLRL_Semantics(Core):
                                                 self.store_triple((y1, sameAs, y2))
 
             # TODO: what if x.value not in (0, 1)? according to the spec
-            # the cardinality shall be no more than 1, so ad an # error?
+            # the cardinality shall be no more than 1, so add an # error?
 
         # RULE cls-oo
         elif p == oneOf:
