@@ -38,14 +38,14 @@ from itertools import product
 import rdflib
 from rdflib import BNode
 
-from RDFClosure.RDFS import Property, rdf_type
-from RDFClosure.RDFS import subClassOf, subPropertyOf, comment, label, rdfs_domain, rdfs_range
-from RDFClosure.RDFS import seeAlso, isDefinedBy, Datatype
+from owlrl.RDFS import Property, rdf_type
+from owlrl.RDFS import subClassOf, subPropertyOf, comment, label, rdfs_domain, rdfs_range
+from owlrl.RDFS import seeAlso, isDefinedBy, Datatype
 
-from RDFClosure.OWL import *
-from RDFClosure.Closure import Core
-from RDFClosure.AxiomaticTriples import OWLRL_Axiomatic_Triples, OWLRL_D_Axiomatic_Triples
-from RDFClosure.AxiomaticTriples import OWLRL_Datatypes_Disjointness
+from owlrl.OWL import *
+from owlrl.Closure import Core
+from owlrl.AxiomaticTriples import OWLRL_Axiomatic_Triples, OWLRL_D_Axiomatic_Triples
+from owlrl.AxiomaticTriples import OWLRL_Datatypes_Disjointness
 
 OWLRL_Annotation_properties = [label, comment, seeAlso, isDefinedBy, deprecated, versionInfo, priorVersion, 
                                backwardCompatibleWith, incompatibleWith]

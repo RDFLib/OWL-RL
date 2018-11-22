@@ -22,7 +22,7 @@ OWL-RL Documentation
    :maxdepth: 2
    :caption: Modules
 
-   RDFClosure
+   owlrl
    AxiomaticTriples
    Closure
    CombinedClosure

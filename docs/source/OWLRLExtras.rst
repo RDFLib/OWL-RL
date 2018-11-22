@@ -1,7 +1,7 @@
 OWLRLExtras
 ===========
 
-.. automodule:: RDFClosure.OWLRLExtras
+.. automodule:: owlrl.OWLRLExtras
     :members:
     :undoc-members:
     :inherited-members:

@@ -30,11 +30,11 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
-from RDFClosure.RDFS import Resource, Class, Datatype
-from RDFClosure.OWL import OWLClass, Thing, equivalentClass, DataRange
+from owlrl.RDFS import Resource, Class, Datatype
+from owlrl.OWL import OWLClass, Thing, equivalentClass, DataRange
 
-from RDFClosure.RDFSClosure import RDFS_Semantics
-from RDFClosure.OWLRL import OWLRL_Semantics
+from owlrl.RDFSClosure import RDFS_Semantics
+from owlrl.OWLRL import OWLRL_Semantics
 
 ######################################################################################################
 

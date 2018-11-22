@@ -1,4 +1,4 @@
-RDFClosure is released under the W3C© SOFTWARE NOTICE AND LICENSE, see:
+owlrl is released under the W3C© SOFTWARE NOTICE AND LICENSE, see:
 
 http://href="http//www.w3.org/Consortium/Legal/2002/copyright-software-20021231%22
 

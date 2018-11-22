@@ -31,14 +31,14 @@ __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/L
 import rdflib
 from itertools import product
 
-from RDFClosure.RDFS import Property, rdf_type
-from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, rdfs_domain, rdfs_range
-from RDFClosure.RDFS import Literal, ContainerMembershipProperty, member, Datatype
+from owlrl.RDFS import Property, rdf_type
+from owlrl.RDFS import Resource, Class, subClassOf, subPropertyOf, rdfs_domain, rdfs_range
+from owlrl.RDFS import Literal, ContainerMembershipProperty, member, Datatype
 # noinspection PyPep8Naming
-from RDFClosure.RDFS import RDFNS as ns_rdf
+from owlrl.RDFS import RDFNS as ns_rdf
 
-from RDFClosure.Closure import Core
-from RDFClosure.AxiomaticTriples import RDFS_Axiomatic_Triples, RDFS_D_Axiomatic_Triples
+from owlrl.Closure import Core
+from owlrl.AxiomaticTriples import RDFS_Axiomatic_Triples, RDFS_D_Axiomatic_Triples
 
 
 ######################################################################################################

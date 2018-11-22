@@ -3,4 +3,4 @@ Usage
 
 *Coming soon.*
 
-.. note:: Refer to :class:`RDFClosure` for package entry details, etc.
+.. note:: Refer to :class:`owlrl` for package entry details, etc.

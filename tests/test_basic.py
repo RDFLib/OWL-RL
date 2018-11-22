@@ -1,9 +1,9 @@
 import rdflib
 import sys
 import os
-# add path for the RDFClosure module
+# add path for the owlrl module
 sys.path.append(os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
-import RDFClosure
+import owlrl
 
 
 def test_basic():
@@ -36,7 +36,7 @@ def test_basic():
     assert cnt == 0
 
     # expand the graph with OWL-RL semantics
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     # run a SELECT query for grandParents, should find 7 results
     q = '''

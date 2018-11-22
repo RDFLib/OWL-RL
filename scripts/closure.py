@@ -9,7 +9,7 @@ if platform.node() == 'jay' or platform.node() == 'homer':
     sys.path.insert(0,"/home/ivan/lib/Python")
 
 from optparse import OptionParser
-from RDFClosure import convert_graph, RDFXML, TURTLE, JSON, AUTO, RDFA
+from owlrl import convert_graph, RDFXML, TURTLE, JSON, AUTO, RDFA
 
 
 def main():

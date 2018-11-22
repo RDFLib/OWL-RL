@@ -1,7 +1,7 @@
 CombinedClosure
 ===============
 
-.. automodule:: RDFClosure.CombinedClosure
+.. automodule:: owlrl.CombinedClosure
     :members:
     :undoc-members:
     :inherited-members:

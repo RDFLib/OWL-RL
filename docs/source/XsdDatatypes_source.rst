@@ -3,5 +3,5 @@
 XsdDatatypes.py
 ---------------
 
-.. literalinclude:: ../../RDFClosure/XsdDatatypes.py
+.. literalinclude:: ../../owlrl/XsdDatatypes.py
     :linenos:

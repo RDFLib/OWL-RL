@@ -1,7 +1,7 @@
-RDFClosure.Closure
-==================
+owlrl.Closure
+=============
 
-.. automodule:: RDFClosure.Closure
+.. automodule:: owlrl.Closure
 
    
    

@@ -32,8 +32,8 @@ from rdflib import Literal as rdflibLiteral
 from rdflib import Namespace
 
 # noinspection PyPep8Naming
-from RDFClosure.RDFS import RDFNS as ns_rdf
-from RDFClosure.RDFS import rdf_type
+from owlrl.RDFS import RDFNS as ns_rdf
+from owlrl.RDFS import rdf_type
 
 debugGlobal = False
 offlineGeneration = False

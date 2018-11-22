@@ -34,7 +34,7 @@ __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 # noinspection PyPep8Naming
-from RDFClosure.RDFS import RDFNS as ns_rdf
+from owlrl.RDFS import RDFNS as ns_rdf
 
 from rdflib.term import XSDToPython, Literal, _toPythonMapping
 # noinspection PyPep8Naming

@@ -26,7 +26,7 @@ author = 'CSIRO Land and Water'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '5.0'
+release = '5.1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -45,7 +45,7 @@ extensions = [
     'sphinx.ext.autosummary'
 ]
 
-# generate classes and add to the toctree. See RDFClosure.rst for example usage.
+# generate classes and add to the toctree. See owlrl.rst for example usage.
 # autodoc_default_flags = ['members']
 autosummary_generate = True
 

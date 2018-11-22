@@ -27,11 +27,11 @@ __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import rdflib
-from RDFClosure.RDFS import Seq, Bag, Alt, Statement, Property, XMLLiteral, List
-from RDFClosure.RDFS import RDFNS as ns_rdf
-from RDFClosure.RDFS import rdf_subject, rdf_predicate, rdf_object, rdf_type, value, first, rest, nil
-from RDFClosure.RDFS import Resource, Class, subClassOf, subPropertyOf, comment, label, rdfs_domain, rdfs_range
-from RDFClosure.RDFS import seeAlso, isDefinedBy, Literal, Container, ContainerMembershipProperty, member, Datatype
+from owlrl.RDFS import Seq, Bag, Alt, Statement, Property, XMLLiteral, List
+from owlrl.RDFS import RDFNS as ns_rdf
+from owlrl.RDFS import rdf_subject, rdf_predicate, rdf_object, rdf_type, value, first, rest, nil
+from owlrl.RDFS import Resource, Class, subClassOf, subPropertyOf, comment, label, rdfs_domain, rdfs_range
+from owlrl.RDFS import seeAlso, isDefinedBy, Literal, Container, ContainerMembershipProperty, member, Datatype
 
 from rdflib.namespace     import XSD as ns_xsd
 from .OWL import *

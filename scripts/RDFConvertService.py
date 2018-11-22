@@ -1,7 +1,7 @@
 #!/usr/bin/python2.4
 # -*- coding: utf-8 -*-
 """
-Possible CGI entry point for the RDFClosure package.
+Possible CGI entry point for the owl package.
 
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 @license: This software is available for use under the
@@ -27,7 +27,7 @@ if sys.platform == "win32" :
     sys.path.insert(0, "C:\\Documents and Settings\\Ivan Herman\\My Documents\\Lib\\Python")
     sys.path.insert(0, "C:\\Documents and Settings\\Ivan Herman\\My Documents\\Lib\\Python\\rdlib-2.4.2")
 
-from RDFClosure import convert_graph, RDFXML, TURTLE, AUTO
+from owlrl import convert_graph, RDFXML, TURTLE, AUTO
 
 # ---------------------------------------------------------------------------------------------------------------------
 
