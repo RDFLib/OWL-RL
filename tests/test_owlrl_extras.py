@@ -5,7 +5,7 @@ Unit tests for OWL RL extras closure.
 import io
 from rdflib import Graph, BNode, Literal, Namespace, OWL, RDF, RDFS, XSD
 
-import RDFClosure
+import owlrl
 
 T = Namespace('http://test.org/')
 
@@ -34,6 +34,6 @@ def test_one_time_rules():
     g.add((lt, RDF.type, XSD.integer))
     g.add((T.a, T.p, lt))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Extension).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Extension).expand(g)
 
     assert (lt, RDF.type, T.t) in g

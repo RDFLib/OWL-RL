@@ -4,7 +4,7 @@ Unit tests for RDFS closure.
 
 from rdflib import Graph, Literal, Namespace, RDF, XSD
 
-import RDFClosure
+import owlrl
 
 from unittest import mock
 
@@ -22,7 +22,7 @@ def test_one_time_rules():
     g.add((T.a1, T.p, lt1))
     g.add((T.a2, T.p, lt2))
 
-    RDFClosure.DeductiveClosure(RDFClosure.RDFS_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.RDFS_Semantics).expand(g)
 
     assert (T.a1, T.p, lt2) in g
     assert (T.a2, T.p, lt1) in g
@@ -37,8 +37,8 @@ def test_d_axioms():
     g.add((T.a2, T.p, Literal('11', datatype=XSD.string)))
     g.add((T.a3, T.p, Literal('t')))  # no datatype
 
-    RDFClosure.DeductiveClosure(
-        RDFClosure.RDFS_Semantics,
+    owlrl.DeductiveClosure(
+        owlrl.RDFS_Semantics,
         datatype_axioms=True
     ).expand(g)
 

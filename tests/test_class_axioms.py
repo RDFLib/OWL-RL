@@ -8,7 +8,7 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 
 from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
 
-import RDFClosure
+import owlrl
 
 from unittest import mock
 
@@ -39,7 +39,7 @@ def test_cax_dw():
     g.add((x, RDF.type, c1))
     g.add((x, RDF.type, c2))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(

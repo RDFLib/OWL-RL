@@ -8,7 +8,7 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 
 from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
 
-import RDFClosure
+import owlrl
 
 DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
 T = Namespace('http://test.org/')
@@ -34,7 +34,7 @@ def test_eq_diff1():
     g.add((x, OWL.sameAs, y))
     g.add((x, OWL.differentFrom, y))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     result = g.objects(predicate=DAML.error)
     expected = Literal(

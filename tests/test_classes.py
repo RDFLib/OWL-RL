@@ -8,7 +8,7 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 
 from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
 
-import RDFClosure
+import owlrl
 
 from unittest import mock
 
@@ -44,7 +44,7 @@ def test_cls_maxc1():
     g.add((u, RDF.type, x))
     g.add((u, p, y))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
@@ -83,7 +83,7 @@ def test_cls_maxc2():
     g.add((u, p, y1))
     g.add((u, p, y2))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (y1, OWL.sameAs, y2) in g
 
@@ -119,7 +119,7 @@ def test_cls_maxqc1():
     g.add((u, p, y))
     g.add((y, RDF.type, c))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
@@ -157,7 +157,7 @@ def test_cls_maxqc2():
     g.add((u, RDF.type, x))
     g.add((u, p, y))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
@@ -205,7 +205,7 @@ def test_cls_maxqc3():
     g.add((u, p, y2))
     g.add((y2, RDF.type, c))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (y1, OWL.sameAs, y2) in g
 
@@ -241,7 +241,7 @@ def test_cls_maxqc4():
     g.add((u, p, y1))
     g.add((u, p, y2))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (y1, OWL.sameAs, y2) in g
 
@@ -273,11 +273,11 @@ def test_cls_avf():
     g.add((u, RDF.type, x))
     g.add((u, p, v))
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (v, RDF.type, y) in g
 
-@mock.patch.object(RDFClosure.OWLRL_Semantics, 'restriction_typing_check')
+@mock.patch.object(owlrl.OWLRL_Semantics, 'restriction_typing_check')
 def test_cls_avf_error(mock_rtc):
     """
     Test restriction type check for cls-avf rule for OWL 2 RL.
@@ -309,7 +309,7 @@ def test_cls_avf_error(mock_rtc):
     # trigger invalid restriction type
     mock_rtc.return_value = False
 
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
