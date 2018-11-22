@@ -65,9 +65,6 @@ class Core:
     :var IMaxNum: Maximal index of :code:`rdf:_i` occurrence in the graph.
     :type IMaxNum: int
 
-    :var literal_proxies: :class:`.Literals.LiteralProxies` for the graph.
-    :type literal_proxies: :class:`.Literals.LiteralProxies`
-
     :var graph: The real graph.
     :type graph: :class:`rdflib.Graph`
 
