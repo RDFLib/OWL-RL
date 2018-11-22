@@ -216,7 +216,7 @@ class Core:
         :type t: tuple (s,p,o)
         """
         (s, p, o) = t
-        if not(isinstance(s, rdflibLiteral) or isinstance(p, rdflibLiteral)) and t not in self.graph:
+        if not isinstance(p, rdflibLiteral) and t not in self.graph:
             if self._debug or offlineGeneration:
                 print(t)
             self.added_triples.add(t)
