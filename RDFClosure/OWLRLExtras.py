@@ -153,24 +153,21 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         the corresponding value abides to the restrictions. If true, then the literal gets an extra
         tag as being of type of the restricted datatype, too.
         """
+        literals = self._literals()
         for rt in self.restricted_datatypes:
             # This is a recorded restriction. The base type is:
             base_type = rt.base_type
-            # Look through all the literals; more precisely, through the
-            # proxy bnodes:
-            for bn in self.literal_proxies.bnode_to_lit:
-                # check if the type of that proxy matches. Note that this also takes
+            # Look through all the literals
+            for lt in literals:
+                # check if the type of that literal matches. Note that this also takes
                 # into account the subsumption datatypes, that have been taken
                 # care of by the 'regular' OWL RL process
-                if (bn, rdf_type, base_type) in self.graph:
-                    # yep, that is a good candidate!
-                    lt = self.literal_proxies.bnode_to_lit[bn]
+                if (lt, rdf_type, base_type) in self.graph:
                     try:
                         # the conversion or the check may go wrong and raise an exception; then simply move on
-                        value = lt.lit.toPython()
-                        if rt.checkValue(value):
+                        if rt.checkValue(lt.toPython()):
                             # yep, this is also of type 'rt'
-                            self.store_triple((bn, rdf_type, rt.datatype))
+                            self.store_triple((lt, rdf_type, rt.datatype))
                     except:
                         continue
 
