@@ -1,7 +1,7 @@
 RDFS
 ====
 
-.. automodule:: RDFClosure.RDFS
+.. automodule:: owlrl.RDFS
     :members:
     :undoc-members:
     :inherited-members:
@@ -11,5 +11,5 @@ RDFS
 Source code
 -----------
 
-.. literalinclude:: ../../RDFClosure/RDFS.py
+.. literalinclude:: ../../owlrl/RDFS.py
     :linenos:

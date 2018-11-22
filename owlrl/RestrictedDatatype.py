@@ -59,17 +59,16 @@ import re
 from .OWL import *
 # noinspection PyPep8Naming,PyPep8Naming
 from .OWL import OWLNS as ns_owl
-from RDFClosure.RDFS import Datatype
-from RDFClosure.RDFS import rdf_type
+from owlrl.RDFS import Datatype
+from owlrl.RDFS import rdf_type
 # noinspection PyPep8Naming
-from RDFClosure.RDFS import RDFNS as ns_rdf
+from owlrl.RDFS import RDFNS as ns_rdf
 
 from rdflib import Literal as rdflibLiteral
 # noinspection PyPep8Naming
 from rdflib.namespace import XSD as ns_xsd
 
 from .DatatypeHandling import AltXSDToPYTHON
-from . import text_type
 from functools import reduce
 
 #: Constant for datatypes using min, max (inclusive and exclusive):
@@ -242,10 +241,10 @@ def extract_faceted_datatypes(core, graph):
                                         # it is caught some lines below anyway...
                                         try:
                                             if lit.datatype is None or lit.datatype == ns_xsd["string"]:
-                                                final_facets.append((facet, text_type(lit)))
+                                                final_facets.append((facet, str(lit)))
                                             else:
                                                 final_facets.append(
-                                                    (facet, AltXSDToPYTHON[lit.datatype](text_type(lit)))
+                                                    (facet, AltXSDToPYTHON[lit.datatype](str(lit)))
                                                 )
                                         except Exception as msg:
                                             core.add_error(msg)
@@ -469,7 +468,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
         @rtype: boolean
         """
         if isinstance(value, rdflibLiteral):
-            val = text_type(value)
+            val = str(value)
         else:
             val = value
         if self.minLength is not None:
@@ -484,7 +483,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
         @rtype: boolean
         """
         if isinstance(value, rdflibLiteral):
-            val = text_type(value)
+            val = str(value)
         else:
             val = value
         if self.maxLength is not None:
@@ -499,7 +498,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
         @rtype: boolean
         """
         if isinstance(value, rdflibLiteral):
-            val = text_type(value)
+            val = str(value)
         else:
             val = value
         if self.length is not None:
@@ -514,7 +513,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
         @rtype: boolean
         """
         if isinstance(value, rdflibLiteral):
-            val = text_type(value)
+            val = str(value)
         else:
             val = value
         for p in self.pattern:

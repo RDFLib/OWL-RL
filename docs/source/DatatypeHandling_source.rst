@@ -3,5 +3,5 @@
 DatatypeHandling.py
 -------------------
 
-.. literalinclude:: ../../RDFClosure/DatatypeHandling.py
+.. literalinclude:: ../../owlrl/DatatypeHandling.py
     :linenos:

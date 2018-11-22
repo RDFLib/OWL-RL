@@ -1,7 +1,7 @@
 DatatypeHandling
 ================
 
-.. automodule:: RDFClosure.DatatypeHandling
+.. automodule:: owlrl.DatatypeHandling
     :members:
     :undoc-members:
     :inherited-members:

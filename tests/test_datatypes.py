@@ -13,7 +13,7 @@ NOTE: The following axioms are skipped on purpose
 
 from rdflib import Graph, Literal, Namespace, RDF, XSD, RDFS
 
-import RDFClosure
+import owlrl
 
 DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
 T = Namespace('http://test.org/')
@@ -23,7 +23,7 @@ def test_dt_type1():
     Test dt-type1 rule for OWL 2 RL.
     """
     g = Graph()
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (RDF.PlainLiteral, RDF.type, RDFS.Datatype) in g
     assert (RDF.XMLLiteral, RDF.type, RDFS.Datatype) in g
@@ -66,7 +66,7 @@ def test_dt_type2():
 
     g = Graph()
     g.add((T.A, T.prop, p_one))
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (T.A, T.prop, p_one) in g
     assert (p_one, RDF.type, XSD.positiveInteger) in g
@@ -79,7 +79,7 @@ def test_dt_not_type():
 
     g = Graph()
     g.add((T.A, T.prop, m_one))
-    RDFClosure.DeductiveClosure(RDFClosure.OWLRL_Semantics).expand(g)
+    owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     assert (m_one, RDF.type, XSD.nonNegativeInteger) not in g
 

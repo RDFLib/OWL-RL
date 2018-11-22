@@ -3,5 +3,5 @@
 AxiomaticTriples.py
 -------------------
 
-.. literalinclude:: ../../RDFClosure/AxiomaticTriples.py
+.. literalinclude:: ../../owlrl/AxiomaticTriples.py
     :linenos:

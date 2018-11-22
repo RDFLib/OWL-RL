@@ -1,7 +1,7 @@
 AxiomaticTriples
 ================
 
-.. automodule:: RDFClosure.AxiomaticTriples
+.. automodule:: owlrl.AxiomaticTriples
     :members:
     :undoc-members:
     :inherited-members:

@@ -1,7 +1,7 @@
 XsdDatatypes
 ============
 
-.. automodule:: RDFClosure.XsdDatatypes
+.. automodule:: owlrl.XsdDatatypes
     :members:
     :undoc-members:
     :inherited-members:

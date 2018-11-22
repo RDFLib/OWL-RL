@@ -41,7 +41,6 @@ from rdflib import BNode
 from rdflib import Literal as rdflibLiteral
 from rdflib.namespace import XSD as ns_xsd
 
-from . import text_type
 from .RDFS import rdf_type
 from .RDFS import Literal
 from .DatatypeHandling import AltXSDToPYTHON
@@ -63,7 +62,7 @@ class _LiteralStructure:
     # noinspection PyPep8
     def __init__(self, lit):
         self.lit = lit
-        self.lex = text_type(lit)
+        self.lex = str(lit)
         self.dt = lit.datatype
         self.lang = lit.language
         self.value = lit.value
@@ -151,10 +150,10 @@ class LiteralProxies:
             if obj.datatype:
                 converter = AltXSDToPYTHON.get(obj.datatype, identity)
                 try:
-                    converter(text_type(obj))
+                    converter(str(obj))
                 except ValueError:
                     closure.add_error("Lexical value of the literal '%s' does not match its datatype (%s)" %
-                                      (text_type(obj), obj.datatype))
+                                      (str(obj), obj.datatype))
 
             # Check if a BNode has already been associated with that literal
             obj_st = _LiteralStructure(obj)
@@ -206,7 +205,7 @@ class LiteralProxies:
                 # serialization...
                 lit = self.bnode_to_lit[obj].lit
                 if lit.datatype is not None and lit.datatype == ns_xsd["string"]:
-                    lit = rdflibLiteral(text_type(lit))
+                    lit = rdflibLiteral(str(lit))
                 to_be_added.add((subj, pred, lit))
                 
         # Do the real modifications

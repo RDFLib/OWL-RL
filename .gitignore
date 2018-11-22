@@ -10,3 +10,7 @@
 /venv/
 
 docs/build/
+
+build/
+dist/
+*.egg-info/

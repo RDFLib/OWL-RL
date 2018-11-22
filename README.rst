@@ -29,6 +29,37 @@ View the **OWL-RL documentation** online: http://owl-rl.readthedocs.io/
 Release notes (starting from version 3)
 ---------------------------------------
 
+
+v5.1.0
+~~~~~~
+
+Changes:
+
+* Rename module from RDFClosure to owlrl
+
+* Published on PyPI!
+
+* Fixed bugs caused by python3 automatic conversion (like :code:`range` being a variabe, not a function)
+
+* Added some basic tests (more tests coming!)
+
+* Started foundational work to remove :code:`LiteralProxies` in the future (thanks :code:`@wrobell`)
+
+* Simplified some sections of the code (thanks :code:`@wrobell`)
+
+
+
+Version 5.0.0
+~~~~~~~~~~~~~
+
+Changes:
+
+* Port to Python3. Minimum recommended version is now Python v3.5.
+
+* Fixed a bug where the inferencing process would crash if the engine encountered a literal node that has a datatype for which it does not have a hardcoded converter.
+
+
+
 Version 4/5
 ~~~~~~~~~~~
 
@@ -54,14 +85,6 @@ Some important changes:
 
 * The :code:`closure` script has now an extra flag (:code:`-m`) to use the "maximal" entailment, i.e., extended OWLRL+RDF with extra trimmings.
 
-Version 5.0.0
-~~~~~~~~~~~~~
-
-Changes:
-
-* Port to Python3. Minimum recommended version is now Python v3.5.
-
-* Fixed a bug where the inferencing process would crash if the engine encountered a literal node that has a datatype for which it does not have a hardcoded converter.
 
 Version 4.2.1
 ~~~~~~~~~~~~~

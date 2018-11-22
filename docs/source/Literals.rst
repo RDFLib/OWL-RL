@@ -1,7 +1,7 @@
 Literals
 ========
 
-.. automodule:: RDFClosure.Literals
+.. automodule:: owlrl.Literals
     :members:
     :undoc-members:
     :inherited-members:

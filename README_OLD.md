@@ -5,7 +5,7 @@
 
 A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining. The distribution contains:
 
-* ``RDFClosure``: the Python library. You should copy the directory somewhere into your ``PYTHONPATH``. Alternatively, you can also run the ``python setup.py install`` script in the directory.
+* ``owlrl``: the Python library. You should copy the directory somewhere into your ``PYTHONPATH``. Alternatively, you can also run the ``python setup.py install`` script in the directory.
 
 * ``scripts/RDFConvertService.py``: can be used as a CGI script to invoke the library. It may have to be adapted to the local server setup.
 

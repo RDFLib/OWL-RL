@@ -1,7 +1,7 @@
 Closure
 =======
 
-.. automodule:: RDFClosure.Closure
+.. automodule:: owlrl.Closure
     :members:
     :undoc-members:
     :inherited-members:

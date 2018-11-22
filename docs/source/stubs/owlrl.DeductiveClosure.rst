@@ -1,7 +1,7 @@
-RDFClosure.DeductiveClosure
-===========================
+owlrl.DeductiveClosure
+======================
 
-.. currentmodule:: RDFClosure
+.. currentmodule:: owlrl
 
 .. autoclass:: DeductiveClosure
 

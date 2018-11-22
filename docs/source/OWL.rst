@@ -1,7 +1,7 @@
 OWL
 ===
 
-.. automodule:: RDFClosure.OWL
+.. automodule:: owlrl.OWL
     :members:
     :undoc-members:
     :inherited-members:
@@ -10,5 +10,5 @@ OWL
 Source code
 -----------
 
-.. literalinclude:: ../../RDFClosure/OWL.py
+.. literalinclude:: ../../owlrl/OWL.py
     :linenos:

@@ -1,7 +1,7 @@
-RDFClosure
-==========
+owlrl
+=====
 
-.. automodule:: RDFClosure
+.. automodule:: owlrl
 
    
    
