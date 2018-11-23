@@ -1,7 +1,10 @@
-|Original Author DOI|
+|Original Author DOI| |PyPI badge|
 
 .. |Original Author DOI| image:: https://zenodo.org/badge/9385/RDFLib/OWL-RL.svg
     :target: http://dx.doi.org/10.5281/zenodo.14543
+
+.. |PyPI badge| image:: https://badge.fury.io/py/owlrl.svg
+    :target: https://badge.fury.io/py/owlrl
 
 
 OWL-RL
