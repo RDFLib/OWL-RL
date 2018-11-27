@@ -35,8 +35,6 @@ from rdflib import Namespace
 from owlrl.RDFS import RDFNS as ns_rdf
 from owlrl.RDFS import rdf_type
 
-from owlrl.Literals import LiteralProxies
-
 debugGlobal = False
 offlineGeneration = False
 
@@ -66,9 +64,6 @@ class Core:
 
     :var IMaxNum: Maximal index of :code:`rdf:_i` occurrence in the graph.
     :type IMaxNum: int
-
-    :var literal_proxies: :class:`.Literals.LiteralProxies` for the graph.
-    :type literal_proxies: :class:`.Literals.LiteralProxies`
 
     :var graph: The real graph.
     :type graph: :class:`rdflib.Graph`
@@ -191,21 +186,6 @@ class Core:
         """
         pass
 
-    # noinspection PyBroadException
-    def get_literal_value(self, node):
-        """
-        Return the literal value corresponding to a Literal node. Used in error messages.
-
-        :param node: Literal node.
-
-        :return: the literal value itself
-        """
-        try:
-            return self.literal_proxies.bnode_to_lit[node].lex
-        except:
-            # TODO: implement
-            return "????"
-
     # noinspection PyAttributeOutsideInit
     def empty_stored_triples(self):
         """
@@ -236,7 +216,7 @@ class Core:
         :type t: tuple (s,p,o)
         """
         (s, p, o) = t
-        if not(isinstance(s, rdflibLiteral) or isinstance(p, rdflibLiteral)) and t not in self.graph:
+        if not isinstance(p, rdflibLiteral) and t not in self.graph:
             if self._debug or offlineGeneration:
                 print(t)
             self.added_triples.add(t)
@@ -260,9 +240,6 @@ class Core:
         # be added.
         if self.axioms:
             self.add_axioms()
-
-        # Create the bnode proxy structure for literals
-        self.literal_proxies = LiteralProxies(self.graph, self)
 
         # Add the datatype axioms, if needed (note that this makes use of the literal proxies, the order of the call
         # is important!
@@ -301,9 +278,6 @@ class Core:
 
             for t in self.added_triples:
                 self.graph.add(t)
-
-        # All done, but we should restore the literals from their proxies
-        self.literal_proxies.restore()
 
         self.post_process()
         self.flush_stored_triples()

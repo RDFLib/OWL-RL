@@ -32,6 +32,7 @@ __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
+from collections import defaultdict
 from itertools import product
 
 import rdflib
@@ -50,6 +51,11 @@ OWLRL_Annotation_properties = [label, comment, seeAlso, isDefinedBy, deprecated,
                                backwardCompatibleWith, incompatibleWith]
 
 from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
+from .DatatypeHandling import AltXSDToPYTHON
+
+
+identity = lambda v: v
+
 
 #######################################################################################################################
 
@@ -111,12 +117,6 @@ class OWLRL_Semantics(Core):
         """
         return [ch for ch in self.graph.items(l)]
 
-    def _get_resource_or_literal(self, node):
-        if node in self.literal_proxies.bnode_to_lit:
-            return "'" + self.literal_proxies.bnode_to_lit[node].lex + "'"
-        else:
-            return node
-
     def post_process(self):
         """
         Remove triples with Bnode predicates. The Bnodes in the graph are collected in the first cycle run.
@@ -173,21 +173,11 @@ class OWLRL_Semantics(Core):
         """
         # noinspection PyShadowingNames
         def _add_to_explicit(s, o):
-            if s not in explicit:
-                explicit[s] = []
-            if o not in explicit[s]:
-                explicit[s].append(o)
+            explicit[s].add(o)
 
         # noinspection PyShadowingNames
         def _append_to_explicit(s, o):
-            if s not in explicit:
-                explicit[s] = []
-            for d in explicit[o]:
-                if d not in explicit[s]:
-                    explicit[s].append(d)
-
-        def _add_to_used_datatypes(d):
-            used_datatypes.add(d)
+            explicit[s].add(o)
 
         # noinspection PyShadowingNames
         def _handle_subsumptions(r, dt):
@@ -195,72 +185,55 @@ class OWLRL_Semantics(Core):
                 for new_dt in OWL_Datatype_Subsumptions[dt]:
                     self.store_triple((r, rdf_type, new_dt))
                     self.store_triple((new_dt, rdf_type, Datatype))
-                    _add_to_used_datatypes(new_dt)
+                    used_datatypes.add(new_dt)
 
-        # For processing later:
-        # implicit object->datatype relationships: these come from real literals which are represented by
-        # an internal bnode
-        implicit = {}
 
         # explicit object->datatype relationships: those that came from an object being typed as a datatype
         # or a sameAs. The values are arrays of datatypes to which the resource belong
-        explicit = {}
+        explicit = defaultdict(set)
+
+        # For processing later:
+        # implicit object->datatype relationships: these come from real
+        # literals which are present in the graph
+        implicit = {
+            o: o.datatype for s, p, o in self.graph
+            if isinstance(o, rdflib.Literal) and o.datatype in OWL_RL_Datatypes
+        }
 
         # datatypes in use by the graph (directly or indirectly). This will be used at the end to add the
-        # necessary disjointness statements (but not more
-        used_datatypes = set()
-
-        # the real literals from the original graph:
-        # literals = self.literal_proxies.lit_to_bnode.keys()
+        # necessary disjointness statements (but not more)
+        used_datatypes = set(implicit.values())
 
         # RULE dt-type2: for all explicit literals the corresponding bnode should get the right type
         # definition. The 'implicit' dictionary is also filled on the fly
         # RULE dt-not-type: see whether an explicit literal is valid in terms of the defined datatype
-        for lt in self.literal_proxies.lit_to_bnode:
-            # note that all non-RL datatypes are ignored
-            if lt.dt is not None and lt.dt in OWL_RL_Datatypes:
-                bn = self.literal_proxies.lit_to_bnode[lt]
-                # add the explicit typing triple
-                self.store_triple((bn, rdf_type, lt.dt))
-                if bn not in implicit:
-                    implicit[bn] = lt.dt
-                _add_to_used_datatypes(lt.dt)
+        for lt in implicit:  # note that all non-RL datatypes are ignored
+            # add the explicit typing triple
+            self.store_triple((lt, rdf_type, lt.datatype))
 
-                # for dt-not-type
-                # This is a dirty trick: rdflib's Literal includes a method that raises an exception if the
-                # lexical value cannot be mapped on the value space.
-                try:
-                    val = lt.lit.toPython()
-                except:
-                    self.add_error("Literal's lexical value and datatype do not match: (%s,%s)" % (lt.lex, lt.dt))
+            # for dt-not-type
+            # This is a dirty trick: rdflib's Literal includes a method that raises an exception if the
+            # lexical value cannot be mapped on the value space.
+            converter = AltXSDToPYTHON.get(lt.datatype, identity)
+            try:
+                converter(str(lt))
+            except ValueError:
+                self.add_error(
+                    "Lexical value of the literal '%s' does not match" \
+                    " its datatype (%s)" % (lt, lt.datatype)
+                )
 
         # RULE dt-diff
         # RULE dt-eq
-        # Try to compare literals whether they are different or not. If they are different, then an explicit
-        # different from statement should be added, if they are identical, then an equality should be added
-        literals = self.literal_proxies.lit_to_bnode
-        items = ((lt1, lt2) for lt1, lt2 in product(literals, literals) if lt1 != lt2)
-        for lt1, lt2 in items:
-            try:
-                lt1_d = lt1.lit.toPython()
-                lt2_d = lt2.lit.toPython()
-                #if lt1_d != lt2_d:
-                #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], differentFrom, self.literal_
-                # proxies.lit_to_bnode[lt2]))
-                #else:
-                #    self.store_triple((self.literal_proxies.lit_to_bnode[lt1], sameAs, self.literal_
-                # proxies.lit_to_bnode[lt2]))
-            except:
-                # there may be a problem with one of the python conversion, but that should have been taken
-                # care of already
-                pass
+        # Compare literals whether they are different or not. This rules
+        # are skipped on purpose at the moment.
 
         # Other datatype definitions can come from explicitly defining some nodes as datatypes (though rarely used,
         # it is perfectly possible...
         # there may be explicit relationships set in the graph, too!
         for (s, p, o) in self.graph.triples((None, rdf_type, None)):
             if o in OWL_RL_Datatypes:
-                _add_to_used_datatypes(o)
+                used_datatypes.add(o)
                 if s not in implicit:
                     _add_to_explicit(s, o)
 
@@ -286,7 +259,7 @@ class OWLRL_Semantics(Core):
         # under discussion right now. The optimized version uses only what is really in use
         for dt in OWL_RL_Datatypes:
             self.store_triple((dt, rdf_type, Datatype))
-        for dts in list(explicit.values()):
+        for dts in explicit.values():
             for dt in dts:
                 self.store_triple((dt, rdf_type, Datatype))
 
@@ -300,8 +273,7 @@ class OWLRL_Semantics(Core):
             for dt in dtypes:
                 _handle_subsumptions(r, dt)
                         
-        for r in implicit:
-            dt = implicit[r]
+        for r, dt in implicit.items():
             _handle_subsumptions(r, dt)
 
         # Last step: add the datatype disjointness relationships. This is done only for
@@ -423,10 +395,8 @@ class OWLRL_Semantics(Core):
                 self.store_triple((ss, pp, s))
             # RULE eq-diff1
             if (s, differentFrom, o) in self.graph or (o, differentFrom, s) in self.graph:
-                s_e = self._get_resource_or_literal(s)
-                o_e = self._get_resource_or_literal(o)
                 self.add_error("'sameAs' and 'differentFrom' cannot be used on the same subject-object pair: (%s, %s)" 
-                               % (s_e, o_e))
+                               % (s, o))
 
         # RULES eq-diff2 and eq-diff3
         if p == rdf_type and o == AllDifferent:
@@ -696,7 +666,7 @@ class OWLRL_Semantics(Core):
                             self.store_triple((v, rdf_type, y))
                         else:
                             self.add_error("Violation of type restriction for allValuesFrom in %s for datatype %s on "
-                                           "value %s" % (pp, y, self._get_resource_or_literal(v)))
+                                           "value %s" % (pp, y, v))
 
         # RULES cls-hv1 and cls-hv2
         elif p == hasValue:
@@ -716,20 +686,15 @@ class OWLRL_Semantics(Core):
             #
             # The construct should lead to an integer. Something may go wrong along the line
             # leading to an exception...
-            val = -1
-            try:
-                val = int(self.literal_proxies.bnode_to_lit[x].lit)
-            except:
-                pass
             xx = c
-            if val == 0:
+            if x.value == 0:
                 # RULE cls-maxc1
                 for pp in self.graph.objects(xx, onProperty):
                     for u, y in self.graph.subject_objects(pp):
                         # This should not occur:
                         if (u, rdf_type, xx) in self.graph:
-                            self.add_error("Erroneous usage of maximum cardinality with %s, %s" % (xx, y))
-            elif val == 1:
+                            self.add_error("Erroneous usage of maximum cardinality with %s and %s" % (xx, y))
+            elif x.value == 1:
                 # RULE cls-maxc2
                 for pp in self.graph.objects(xx, onProperty):
                     for u, y1 in self.graph.subject_objects(pp):
@@ -745,22 +710,19 @@ class OWLRL_Semantics(Core):
             #
             # The construct should lead to an integer. Something may go wrong along the line
             # leading to an exception...
-            val = -1
-            try:
-                val = int(self.literal_proxies.bnode_to_lit[x].lit)
-            except:
-                pass
             xx = c
-            if val == 0:
+            if x.value == 0:
                 # RULES cls-maxqc1 and cls-maxqc2 folded in one
                 for pp in self.graph.objects(xx, onProperty):
                     for cc in self.graph.objects(xx, onClass):
                         for u, y in self.graph.subject_objects(pp):
                             # This should not occur:
-                            if (u, rdf_type, xx) in self.graph and (cc == Thing or (y, rdf_type, cc) in self.graph):
-                                self.add_error("Erroneous usage of maximum qualified cardinality with %s, %s, and %s" 
+                            if (y, rdf_type, cc) in self.graph \
+                                    or cc == Thing and (u, rdf_type, xx) in self.graph:
+
+                                self.add_error("Erroneous usage of maximum qualified cardinality with %s, %s and %s"
                                                % (xx, cc, y))
-            elif val == 1:
+            elif x.value == 1:
                 # RULE cls-maxqc3 and cls-maxqc4 folded in one
                 for pp in self.graph.objects(xx, onProperty):
                     for cc in self.graph.objects(xx, onClass):
@@ -775,6 +737,9 @@ class OWLRL_Semantics(Core):
                                         for y2 in self.graph.objects(u, pp):
                                             if y1 != y2 and (y2, rdf_type, cc) in self.graph:
                                                 self.store_triple((y1, sameAs, y2))
+
+            # TODO: what if x.value not in (0, 1)? according to the spec
+            # the cardinality shall be no more than 1, so add an # error?
 
         # RULE cls-oo
         elif p == oneOf:
@@ -815,7 +780,7 @@ class OWLRL_Semantics(Core):
             for x in self.graph.subjects(rdf_type, c1):
                 if (x, rdf_type, c2) in self.graph:
                     self.add_error("Disjoint classes %s and %s have a common individual %s" 
-                                   % (c1, c2, self._get_resource_or_literal(x)))
+                                   % (c1, c2, x))
 
         # RULE cax-adc
         elif p == rdf_type and c2 == AllDisjointClasses:
