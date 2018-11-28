@@ -1,4 +1,4 @@
-#!/usr/bin/python2.4
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Possible CGI entry point for the owl package.
@@ -16,17 +16,10 @@ $Id: RDFConvertService.py,v 1.3 2009/07/10 08:45:14 ivan Exp $
 __version__ = "4.0"
 
 import sys
-
 import cgi
-import cgitb; cgitb.enable()
+import cgitb
+cgitb.enable()
 form = cgi.FieldStorage()
-
-if sys.platform == "win32" :
-    # this is my local machine
-    sys.path.insert(0, "C:\\Documents and Settings\\Ivan Herman\\My Documents\\W3C\\dev\\2004\\PythonLib-IH")
-    sys.path.insert(0, "C:\\Documents and Settings\\Ivan Herman\\My Documents\\Lib\\Python")
-    sys.path.insert(0, "C:\\Documents and Settings\\Ivan Herman\\My Documents\\Lib\\Python\\rdlib-2.4.2")
-
 from owlrl import convert_graph, RDFXML, TURTLE, AUTO
 
 # ---------------------------------------------------------------------------------------------------------------------

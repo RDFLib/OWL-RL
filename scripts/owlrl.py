@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from optparse import OptionParser
 from owlrl import convert_graph, RDFXML, TURTLE, JSON, AUTO, RDFA
 

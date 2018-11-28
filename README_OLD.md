@@ -9,7 +9,7 @@ A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inferenc
 
 * ``scripts/RDFConvertService.py``: can be used as a CGI script to invoke the library. It may have to be adapted to the local server setup.
 
-* ``scripts/closure.py``: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with ``-h`` to get the available flags.
+* ``scripts/owlrl.py``: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with ``-h`` to get the available flags.
 
 - ./doc: (epydoc) documentation of the classes and functions
 
