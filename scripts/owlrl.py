@@ -1,13 +1,5 @@
-#!/usr/bin/env python
-import sys
-# You may want to adapt this to your environment...
-import sys
-import platform
-if platform.node() == 'jay' or platform.node() == 'homer':
-    # this is the server on W3C
-    sys.path.insert(0,"/home/ivan/W3C/dev/2004/PythonLib-IH")
-    sys.path.insert(0,"/home/ivan/lib/Python")
-
+#!/usr/bin/env python3
+#
 from optparse import OptionParser
 from owlrl import convert_graph, RDFXML, TURTLE, JSON, AUTO, RDFA
 
