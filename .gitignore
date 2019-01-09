@@ -13,4 +13,6 @@ docs/build/
 
 build/
 dist/
+deb_dist/
+sdist/
 *.egg-info/

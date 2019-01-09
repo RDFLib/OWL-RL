@@ -38,7 +38,7 @@ with open_local(['requirements.txt']) as req:
 setup(
     name='owlrl',
     packages=['owlrl'],
-    scripts=['scripts/owlrl.py', 'scripts/RDFConvertService.py'],
+    scripts=['scripts/owlrl', 'scripts/RDFConvertService'],
     package_dir={'owlrl': './owlrl'},
     version=version,
     description='OWL-RL and RDFS based RDF Closure inferencing',

@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+v5.2.1 (Unreleased)
+~~~~~~
+
+Changes:
+
+* Added stdeb.cfg file, and notes in requirements-dev.txt for building a debian package
+
+* Removed the .py extension from the files in the scripts directory
+
+* Added a short procedure at the top of the owlrl script that removes the script's directory from the sys.path and adds the correct directory
+
+* Same change as above but for the RDFConvertService script
+
+
 v5.2.0
 ~~~~~~
 

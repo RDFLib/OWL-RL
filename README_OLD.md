@@ -7,9 +7,9 @@ A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inferenc
 
 * ``owlrl``: the Python library. You should copy the directory somewhere into your ``PYTHONPATH``. Alternatively, you can also run the ``python setup.py install`` script in the directory.
 
-* ``scripts/RDFConvertService.py``: can be used as a CGI script to invoke the library. It may have to be adapted to the local server setup.
+* ``scripts/RDFConvertService``: can be used as a CGI script to invoke the library. It may have to be adapted to the local server setup.
 
-* ``scripts/owlrl.py``: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with ``-h`` to get the available flags.
+* ``scripts/owlrl`: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with ``-h`` to get the available flags.
 
 - ./doc: (epydoc) documentation of the classes and functions
 
