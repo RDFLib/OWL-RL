@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: latin-1 -*-
-import codecs
 import re
 import os
+import io
 from setuptools import setup
 
 def open_local(paths, mode='r', encoding='utf8'):
@@ -10,7 +10,7 @@ def open_local(paths, mode='r', encoding='utf8'):
         os.path.abspath(os.path.dirname(__file__)),
         *paths
     )
-    return codecs.open(path, mode, encoding)
+    return io.open(path, mode, encoding=encoding)
 
 
 with open_local(['owlrl', '__init__.py'], encoding='utf-8') as fp:
