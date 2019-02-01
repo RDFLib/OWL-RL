@@ -41,7 +41,7 @@ setup(
     scripts=['scripts/owlrl', 'scripts/RDFConvertService'],
     package_dir={'owlrl': './owlrl'},
     version=version,
-    description='OWL-RL and RDFS based RDF Closure inferencing',
+    description='OWL-RL and RDFS based RDF Closure inferencing for python',
     author='Ivan Herman',
     author_email='ivan@ivan-herman.net',
     maintainer='Nicholas Car',
