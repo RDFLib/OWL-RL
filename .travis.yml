@@ -26,13 +26,18 @@ before_install:
 - mkdir -p /tmp/output
 - chmod 777 /tmp/output
 - docker pull ashleysommer/stdeb3:$DEBIAN_VERSION
+- echo "from ashleysommer/stdeb3:$DEBIAN_VERSION" > ./Dockerfile.deploy
+- echo "USER root" >> ./Dockerfile.deploy
+- echo "RUN apt-get install -y python3-rdflib python3-pytest" >> ./Dockerfile.deploy
+- echo "USER stdeb3" >> ./Dockerfile.deploy
+- docker build -t temp_image -f ./Dockerfile.deploy .
 before_script:
 - docker run -v /tmp/secret_key.asc:/tmp/secret_key.asc
   -e PYTHON_PROJECT_GIT="https://github.com/${REPO}.git" -e PYTHON_PROJECT_BRANCH="${BRANCH}"
   -v /tmp/output:/home/stdeb3/output -e GPG_SECRET_KEY="/tmp/secret_key.asc"
   -e GPG_SECRET_KEY_PASSPHRASE="${GPG_SECRET_KEY_PASSPHRASE}"
   -e STDEB3_SIGN_RESULTS="$STDEB3_SIGN_RESULTS" -e STDEB3_EXTRA_ARGS="$STDEB3_EXTRA_ARGS"
-  -t -i ashleysommer/stdeb3:$DEBIAN_VERSION
+  -t -i temp_image
 - ls -lah /tmp/output
 deploy:
   provider: releases
