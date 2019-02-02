@@ -73,7 +73,7 @@ setup(
         'Operating System :: OS Independent'
     ],
     install_requires=requirements,
-    tests_require=requirements,
+    tests_require=['pytest']+requirements,
     dependency_links=dependency_links
 )
 
