@@ -16,3 +16,5 @@ dist/
 deb_dist/
 sdist/
 *.egg-info/
+
+owlrl*.tar.gz
