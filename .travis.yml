@@ -6,15 +6,11 @@ env:
   global:
   - secure: AaCd9t6t+vQqtlBQ59kS/Qs4coAQGXeV7l09dGvXGFzqzY9Fh0RMQDp/O0KfRt6CufRaj0fjZiuyVY8cpB46VOPZQt90nWn/OOn+mOxRMQh/H70jvK8+bBSoBqFyFVbql1FYnwjGKdCGQjOwCy2aOj3hwx3aD3mbxBbK7mYK+4zqgOI3v1OG2LXrhZ6Zzbz2lavBh1zo4W8mS123LsK4jJ7U1IptUCiyQ+RXu7lUrfLIGawh3uYW0iW64ZkssfktSPdFoKdCIJrVmX0u0efBwxsJLyGs37hEzC7c0dJyOhSDvVKNf6PVc/T4MeOGoWDgqTSp8YLhCIEKleEFyQvniGfXgMCoFHSJoViPeN7FRZAmANTg58nbo36mUqFdKSWovbP1Swni0A2brz92YqyCeABbwfjeQMXDC+ecQ5yyAv5R1p84PKVSB36F6ehV67u73EhAF5j1aqwxy5IMWDhZ/rE+tIpbLkX4aryGO/jktygz6Xl4acc99F9p83moEHVmukIx0plU9RBQCbpFEA6WBVmXHIyfYwhYJsV71arhYAG2kUWaJTREMJS4TUFUSAm+JwvjanKG2YE7jpC6K5pnBeNhVzueJ7il4KCWmPucJU+6vtN9GMDVkdOyuT5ieWKqlQkQi0L6QpB36pP+SsOmHsg+IQSdjQw6ZZzCEa99lRw=
   matrix:
-  - DEBIAN_VERSION=jessie STDEB3_SIGN_RESULTS=0 STDEB3_EXTRA_ARGS=""
-  - DEBIAN_VERSION=stretch STDEB3_SIGN_RESULTS=1 STDEB3_EXTRA_ARGS="--dh-min=10.2.5
-    --dh-compat=10"
-  - DEBIAN_VERSION=buster STDEB3_SIGN_RESULTS=1 STDEB3_EXTRA_ARGS="--dh-min=11.5.2
-    --dh-compat=11"
-  - DEBIAN_VERSION=xenial STDEB3_SIGN_RESULTS=0 STDEB3_EXTRA_ARGS="--dh-min=9.20160115ubuntu3
-    --dh-compat=9"
-  - DEBIAN_VERSION=bionic STDEB3_SIGN_RESULTS=1 STDEB3_EXTRA_ARGS="--dh-min=11.1.6
-    --dh-compat=11"
+  - DEBIAN_VERSION=jessie STDEB3_SIGN_RESULTS=0 STDEB3_EXTRA_ARGS="--x-python3-version=\">=3.4\""
+  - DEBIAN_VERSION=stretch STDEB3_SIGN_RESULTS=1 STDEB3_EXTRA_ARGS="--dh-min=10.2.5 --dh-compat=10"
+  - DEBIAN_VERSION=buster STDEB3_SIGN_RESULTS=1 STDEB3_EXTRA_ARGS="--dh-min=11.5.2 --dh-compat=11"
+  - DEBIAN_VERSION=xenial STDEB3_SIGN_RESULTS=0 STDEB3_EXTRA_ARGS="--dh-min=9.20160115ubuntu3 --dh-compat=9"
+  - DEBIAN_VERSION=bionic STDEB3_SIGN_RESULTS=1 STDEB3_EXTRA_ARGS="--dh-min=11.1.6 --dh-compat=11"
 before_install:
 - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH;
   else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
@@ -32,16 +28,15 @@ before_install:
 - echo "USER stdeb3" >> ./Dockerfile.deploy
 - docker build -t temp_image -f ./Dockerfile.deploy .
 before_script:
-- docker run -v /tmp/secret_key.asc:/tmp/secret_key.asc
-  -e PYTHON_PROJECT_GIT="https://github.com/${REPO}.git" -e PYTHON_PROJECT_BRANCH="${BRANCH}"
-  -v /tmp/output:/home/stdeb3/output -e GPG_SECRET_KEY="/tmp/secret_key.asc"
-  -e GPG_SECRET_KEY_PASSPHRASE="${GPG_SECRET_KEY_PASSPHRASE}"
-  -e STDEB3_SIGN_RESULTS="$STDEB3_SIGN_RESULTS" -e STDEB3_EXTRA_ARGS="$STDEB3_EXTRA_ARGS"
-  -t -i temp_image
+- docker run -v /tmp/secret_key.asc:/tmp/secret_key.asc -e PYTHON_PROJECT_GIT="https://github.com/${REPO}.git"
+  -e PYTHON_PROJECT_BRANCH="${BRANCH}" -v /tmp/output:/home/stdeb3/output -e GPG_SECRET_KEY="/tmp/secret_key.asc"
+  -e GPG_SECRET_KEY_PASSPHRASE="${GPG_SECRET_KEY_PASSPHRASE}" -e STDEB3_SIGN_RESULTS="$STDEB3_SIGN_RESULTS"
+  -e STDEB3_EXTRA_ARGS="$STDEB3_EXTRA_ARGS" -t -i temp_image
 - ls -lah /tmp/output
 deploy:
   provider: releases
-  api_key: temp
+  api_key:
+    secure: mirLAZthXhPLGFuur2MELGMpdpVIUQPzqTbpffYz+RrB/MPQ8KLMAD+LjsM9WOSFV05qNSuaHSlcQLglfSkqi0fuZ+ce0SlNSgdgbwS1euNSuHRIpD7jj7XOSD60bgIaV8x0X9QOC5pLjXUJ7WImdi4eSA56ndU1Vo6mHhYfTffSlGABecb1Skda91tQwHqpVA0M5ISpYL97XxZG6unfb3fUaiUBh/0s+t/0gb7IGcmReijh47XCuSd0QMM3/nfpZHIFTbtIYYSF3DyoJKQ3E83bvR54xzP++HyTFaEwqw1ktQ+4X48Qe5evkabu2iAg3jdMrm5d2uH3Y0vUfnnUtx3kbe5U9eTL35itN3p2lYvJBV56St8iLgM4ZMVD0o8CX8NJN6Lx5vLlLQzGMXD6KMLdPNtuuHlYbgt8bjt5yudBDILb4kYc1+cTqXE9VLdeCF93XPU0L9B4QNzRQIq09apauKgYLGWauMeBnmpNATBN+j3M0fa9qiqzInL7E0LneucJP6hZ5KOzMr4kllV5au7M5JP1QSGcpLYVi3TfQjzKLIYY5sijLZugLvO0Ylpmq/Unft64TdFvy+OH8pvSO5kJauYgzLSrWmZuViKUvbv97PeRfaMa9gtQOO052w1lBOzg9S4WoQE7vFJbjbCC9XtAkCDlAlhBaxWJ8yqAR80=
   overwrite: true
   file_glob: true
   file: /tmp/output/*.deb
