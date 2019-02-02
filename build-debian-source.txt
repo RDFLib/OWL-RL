@@ -20,7 +20,7 @@ If you want to build the binary package yourself, proceed to next section.
 
 next step cannot be in activated local venv!
 $ deactivate
-$ fakeroot dh --with python3 build
+$ fakeroot dh --with python3 --buildsystem=pybuild build
 check the files in ./build/ look good, then
-$ fakeroot dh --with python3 binary
+$ fakeroot dh --with python3 --buildsystem=pybuild binary
 
