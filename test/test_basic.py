@@ -9,7 +9,11 @@ import owlrl
 def test_basic():
     # create an RDF graph, load a simple OWL ontology and data
     g = rdflib.Graph()
-    g.parse('relatives.ttl', format='turtle')
+    try:
+        g.parse('relatives.ttl', format='turtle')
+    except FileNotFoundError:
+        # This test might be run from the parent directory root
+        g.parse('test/relatives.ttl', format='turtle')
 
     # run a simple SPARQL query against it, no inferencing, should find 15 results
     q = '''
