@@ -73,6 +73,7 @@ setup(
         'Operating System :: OS Independent'
     ],
     install_requires=requirements,
+    tests_require=requirements,
     dependency_links=dependency_links
 )
 
