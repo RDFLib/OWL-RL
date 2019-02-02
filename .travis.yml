@@ -27,7 +27,6 @@ before_install:
 - chmod 777 /tmp/output
 - docker pull ashleysommer/stdeb3:$DEBIAN_VERSION
 before_script:
-- echo "REPO=$REPO, TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
 - docker run -v /tmp/secret_key.asc:/tmp/secret_key.asc
   -e PYTHON_PROJECT_GIT="https://github.com/${REPO}.git" -e PYTHON_PROJECT_BRANCH="${BRANCH}"
   -v /tmp/output:/home/stdeb3/output -e GPG_SECRET_KEY="/tmp/secret_key.asc"
