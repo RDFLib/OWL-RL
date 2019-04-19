@@ -104,7 +104,7 @@ def main():
         options.owlClosure = "yes"
         options.owlExtras = "yes"
             
-    print(convert_graph(options))
+    print(convert_graph(options).decode('utf-8'))
 
 
 # The standard startup idiom...
