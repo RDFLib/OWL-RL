@@ -2,22 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
-
-# prevent accidentally importing `_this_` file when calling
-# `from owlrl import ...` below.
-HERE_DIR = os.path.abspath(os.path.dirname(__file__))
-if HERE_DIR in sys.path:
-    sys.path.remove(HERE_DIR)
-
-# Add 'owlrl' module from the parent directory into the path if it exists.
-PARENT_DIR = os.path.dirname(HERE_DIR)
-parent_dir_list = os.listdir(PARENT_DIR)
-if 'owlrl' in parent_dir_list:
-    possible_owlrl = os.path.join(PARENT_DIR, 'owlrl')
-    if os.path.isdir(possible_owlrl):
-        sys.path.append(possible_owlrl)
-
 from optparse import OptionParser
 from owlrl import convert_graph, RDFXML, TURTLE, JSON, AUTO, RDFA
 
