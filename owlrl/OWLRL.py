@@ -717,8 +717,8 @@ class OWLRL_Semantics(Core):
                     for cc in self.graph.objects(xx, onClass):
                         for u, y in self.graph.subject_objects(pp):
                             # This should not occur:
-                            if (y, rdf_type, cc) in self.graph \
-                                    or cc == Thing and (u, rdf_type, xx) in self.graph:
+                            if ((y, rdf_type, cc) in self.graph \
+                                    or cc == Thing) and (u, rdf_type, xx) in self.graph:
 
                                 self.add_error("Erroneous usage of maximum qualified cardinality with %s, %s and %s"
                                                % (xx, cc, y))
