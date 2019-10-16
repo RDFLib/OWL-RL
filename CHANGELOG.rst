@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v5.2.1 (Unreleased)
+v5.2.1
 ~~~~~~
 
 Changes:
@@ -10,9 +10,11 @@ Changes:
 
 * Removed the .py extension from the files in the scripts directory
 
-* Added a short procedure at the top of the owlrl script that removes the script's directory from the sys.path and adds the correct directory
-
 * Same change as above but for the RDFConvertService script
+
+* Fix Qualified Max Cardinality 0 Bug
+
+* Fix output printing of owlrl commandline script
 
 
 v5.2.0
