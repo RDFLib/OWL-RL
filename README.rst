@@ -22,7 +22,7 @@ The package requires Python version 3.5 or higher; it depends on `RDFLib`_; vers
 
 .. _RDFLib: https://github.com/RDFLib
 
-For the details on RDFS, see the `RDF Semanics Specification`_; for OWL 2 RL, see the `OWL 2 Profile specification`_.
+For the details on RDFS, see the `RDF Semantics Specification`_; for OWL 2 RL, see the `OWL 2 Profile specification`_.
 
 .. _RDF Semanics Specification: http://www.w3.org/TR/rdf11-mt/
 .. _OWL 2 Profile specification: http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
