@@ -8,10 +8,8 @@
 .. |PyPI badge| image:: https://badge.fury.io/py/owlrl.svg
     :target: https://badge.fury.io/py/owlrl
 
-.. |OWL-RL Logo| image:: OWL-RL.png
+.. |OWL-RL Logo| image:: OWL-RL-250.png
     :target: http://owl-rl.readthedocs.io/
-    :width: 250px
-    :height: 250px
 
 
 OWL-RL
