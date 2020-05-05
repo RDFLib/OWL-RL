@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'OWL-RL'
-copyright = '2018, CSIRO Land and Water'
-author = 'CSIRO Land and Water'
+copyright = '2020, RDFlib developers'
+author = 'RDFlib developers'
 
 # The short X.Y version
 version = ''
@@ -104,6 +104,8 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+
+html_logo = "../../OWL-RL.png"
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
