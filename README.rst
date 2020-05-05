@@ -10,6 +10,8 @@
 
 .. |OWL-RL Logo| image:: OWL-RL.png
     :target: http://owl-rl.readthedocs.io/
+    :width: 250px
+    :height: 250px
 
 
 OWL-RL
