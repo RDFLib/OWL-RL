@@ -1,7 +1,7 @@
-OWLRL
+owlrl
 =====
 
-.. automodule:: owlrl.OWLRL
+.. automodule:: owlrl
     :members:
     :undoc-members:
     :inherited-members:
