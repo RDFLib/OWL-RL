@@ -135,13 +135,9 @@ which will result in a proper graph expansion except for the datatype specific c
 
 
 **Requires**:
-    * `RDFLib`_, 4.0.0 and higher.
+    * `RDFLib`_, 6.0.0 and higher.
 
     .. _RDFLib: https://github.com/RDFLib/rdflib
-
-    * `rdflib_jsonld`_
-
-    .. _rdflib_jsonld: https://github.com/RDFLib/rdflib-jsonld
 
 **License**: This software is available for use under the `W3C Software License`_
 
@@ -194,16 +190,6 @@ RDFS = "rdfs"
 OWL  = "owl"
 FULL = "full"
 
-try:
-    from rdflib_jsonld.parser import JsonLDParser
-    from rdflib_jsonld.serializer import JsonLDSerializer
-    from rdflib.plugin import register, Serializer, Parser
-    register('json-ld', Parser, 'rdflib_jsonld.parser', 'JsonLDParser')
-    register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
-    json_ld_available = True
-except:
-    json_ld_available = False
-
 
 ################################################################################################################
 
@@ -223,7 +209,7 @@ def __parse_input(iformat, inp, graph):
         else:
             if inp.endswith('.ttl') or inp.endswith('.n3'):
                 format = "turtle"
-            elif json_ld_available and (inp.endswith('.json') or inp.endswith('.jsonld')):
+            elif inp.endswith('.json') or inp.endswith('.jsonld'):
                 format = "json-ld"
             elif inp.endswith('.html'):
                 format = "rdfa1.1"
@@ -236,10 +222,7 @@ def __parse_input(iformat, inp, graph):
     elif iformat == RDFXML:
         format = "xml"
     elif iformat == JSON:
-        if json_ld_available:
-            format = "json-ld"
-        else:
-            raise Exception("JSON-LD parser is not available")
+        format = "json-ld"
     else:
         raise Exception("Unknown input syntax")
 
@@ -587,9 +570,6 @@ def convert_graph(options, closureClass=None):
     if options.format == TURTLE:
         return graph.serialize(format="turtle")
     elif options.format == JSON:
-        if json_ld_available:
-            return graph.serialize(format="json-ld")
-        else:
-            raise Exception("JSON-LD serializer is not available")
+        return graph.serialize(format="json-ld")
     else:
         return graph.serialize(format="pretty-xml")

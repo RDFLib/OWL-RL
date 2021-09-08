@@ -3,7 +3,7 @@
 """
 Lists of XSD datatypes and their mutual relationships
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

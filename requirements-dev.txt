@@ -1,8 +1,7 @@
 pytest
 sphinx
 sphinx_rtd_theme
-rdflib>=4.2.2
-rdflib-jsonld
+rdflib>=6.0.0
 wheel
 twine
 
@@ -10,4 +9,3 @@ twine
 #stdeb
 
 #Note, stdeb requires debian tools dpkg-buildpackage, python3-all, and debhelper (use apt-get)
-

@@ -33,7 +33,7 @@ The implementation is **not** 100% complete. Some things that an ideal implement
     - checking whether a facet is of a datatype that is allowed for that facet
     - handling of non-literals in the facets (ie, if the resource is defined to be of type literal, but whose value is defined via a separate :code:`owl:sameAs` somewhere else)
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

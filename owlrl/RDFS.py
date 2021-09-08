@@ -2,7 +2,7 @@
 RDF(S) terms. Note that the set of terms is *complete*, i.e., it includes *all* OWL 2 terms, regardless of whether the
 term is used in OWL 2 RL or not.
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

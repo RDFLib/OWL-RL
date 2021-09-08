@@ -17,7 +17,7 @@ In more details, the rules that are added:
     1. self restriction 1: :code:`?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y rdf:type ?z. => ?y ?p ?y.`
     2. self restriction 2: :code:`?z owl:hasSelf ?x. ?x owl:onProperty ?p. ?y ?p ?y. => ?y rdf:type ?z.`
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

@@ -11,7 +11,7 @@ Some of these deficiencies are handled by this module. All the functions convert
 python datatype (or return the original string if this is not possible) which will be used, e.g.,
 for comparisons (equalities). If the lexical value constraints are not met, exceptions are raised.
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

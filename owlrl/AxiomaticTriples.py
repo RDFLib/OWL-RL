@@ -3,7 +3,7 @@
 """
 Axiomatic triples to be (possibly) added to the final graph.
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 
@@ -672,6 +672,3 @@ OWLRL_Datatypes_Disjointness = [
 #: some OWL specific datatypes
 OWLRL_D_Axiomatic_Triples = RDFS_D_Axiomatic_Triples + _OWL_D_Axiomatic_Triples_types + \
                             OWL_D_Axiomatic_Triples_subclasses + OWLRL_Datatypes_Disjointness
-
-
-

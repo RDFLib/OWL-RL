@@ -10,7 +10,7 @@ RL rules would then operate on such generalized triple. However, as a last, post
 removed from the graph before serialization to produce 'standard' RDF (which is o.k. for RL, too, because the 
 consequent triples are all right, generalized triples might have had a role in the deduction steps only).
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

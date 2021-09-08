@@ -7,7 +7,7 @@ The two are very close but there are some rules in RDFS that are not in OWL 2 RL
 triples concerning the container membership properties). Using this closure class the
 OWL 2 RL implementation becomes a full extension of RDFS.
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 6.0.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

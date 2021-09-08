@@ -23,7 +23,7 @@ A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inferenc
 
 * :code:`scripts/owlrl`: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with :code:`-h` to get the available flags.
 
-The package requires Python version 3.5 or higher; it depends on `RDFLib`_; version 4.2.2 or higher is required. If you need the python 2.7.x compatible version, see the @/py2 branch in this repository.
+The package requires Python version 3.5 or higher; it depends on `RDFLib`_; version 6.0.0 or higher is required. If you need the python 2.7.x compatible version, see the @/py2 branch in this repository.
 
 .. _RDFLib: https://github.com/RDFLib
 
