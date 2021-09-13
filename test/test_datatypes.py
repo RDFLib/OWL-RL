@@ -15,8 +15,9 @@ from rdflib import Graph, Literal, Namespace, RDF, XSD, RDFS
 
 import owlrl
 
-DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
-T = Namespace('http://test.org/')
+DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
+T = Namespace("http://test.org/")
+
 
 def test_dt_type1():
     """
@@ -58,6 +59,7 @@ def test_dt_type1():
     assert (XSD.dateTime, RDF.type, RDFS.Datatype) in g
     assert (XSD.dateTimeStamp, RDF.type, RDFS.Datatype) in g
 
+
 def test_dt_type2():
     """
     Test dt-type2 rule for OWL 2 RL.
@@ -70,7 +72,8 @@ def test_dt_type2():
 
     assert (T.A, T.prop, p_one) in g
     assert (p_one, RDF.type, XSD.positiveInteger) in g
-    
+
+
 def test_dt_not_type():
     """
     Test dt-not-type rule for OWL 2 RL.
@@ -82,12 +85,12 @@ def test_dt_not_type():
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
     # TODO, we know this one fails. It is not supposed to.
-    #assert (m_one, RDF.type, XSD.nonNegativeInteger) not in g
+    # assert (m_one, RDF.type, XSD.nonNegativeInteger) not in g
     assert True
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
-        'Lexical value of the literal \'-1\' does not match its datatype'
-        ' (http://www.w3.org/2001/XMLSchema#nonNegativeInteger)'    
+        "Lexical value of the literal '-1' does not match its datatype"
+        " (http://www.w3.org/2001/XMLSchema#nonNegativeInteger)"
     )
     assert expected == result

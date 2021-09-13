@@ -28,14 +28,15 @@ for comparisons (equalities). If the lexical value constraints are not met, exce
 .. _Ivan Herman: http://www.w3.org/People/Ivan/
 """
 
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 # noinspection PyPep8Naming
 from owlrl.RDFS import RDFNS as ns_rdf
 
 from rdflib.term import XSDToPython, Literal, _toPythonMapping
+
 # noinspection PyPep8Naming
 from rdflib.namespace import XSD as ns_xsd
 
@@ -53,6 +54,7 @@ class _namelessTZ(datetime.tzinfo):
     :param hours: Hour offset.
     :param minutes: Minute offset
     """
+
     def __init__(self, hours, minutes):
         """
         @param hours: hour offset
@@ -78,7 +80,7 @@ def _returnTimeZone(incoming_v):
     @return (v,timezone) tuple; 'v' is the input string with the timezone info cut off, 'timezone' is a L{_namelessTZ}
     instance or None
     """
-    if incoming_v[-1] == 'Z':
+    if incoming_v[-1] == "Z":
         v = incoming_v[:-1]
         tzone = _namelessTZ(0, 0)
     else:
@@ -89,7 +91,7 @@ def _returnTimeZone(incoming_v):
             tzone = None
         else:
             hours = int(match.groups()[1])
-            if match.groups()[0] == '-':
+            if match.groups()[0] == "-":
                 hours = -hours - 1
             minutes = int(match.groups()[2])
             v = incoming_v[:-6]
@@ -125,7 +127,7 @@ def _strToDecimal(v):
     @raise ValueError: invalid decimal value
     """
     # check whether the lexical form of 'v' is o.k.
-    if v.find('E') != -1 or v.find('e') != -1:
+    if v.find("E") != -1 or v.find("e") != -1:
         # this is an invalid lexical form, though would be accepted by Python
         raise ValueError("Invalid decimal literal value %s" % v)
     else:
@@ -133,10 +135,10 @@ def _strToDecimal(v):
 
 
 # ANY URIS ##################################################
-#: set of characters allowed in a hexadecimal number
-_hexc = ['A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f']
-#: set of numerals
-_numb = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+# set of characters allowed in a hexadecimal number
+_hexc = ["A", "B", "C", "D", "E", "F", "a", "b", "c", "d", "e", "f"]
+# set of numerals
+_numb = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 # noinspection PyPep8Naming
 def _strToAnyURI(v):
     """Rudimentary test for the AnyURI value. If it is a relative URI, then some tests are done to filter out
@@ -147,6 +149,7 @@ def _strToAnyURI(v):
     @raise ValueError: invalid URI value
     """
     import urllib.parse
+
     if len(v) == 0:
         return v
     if urllib.parse.urlsplit(v)[0] != "":
@@ -158,12 +161,16 @@ def _strToAnyURI(v):
         # all others are o.k.
         # if it begins with a % then it should be followed by two hexa characters,
         # otherwise it is also a bug
-        if v[0] == '%':
-            if len(v) >= 3 and (v[1] in _hexc or v[1] in _numb) and (v[2] in _hexc or v[2] in _numb):
+        if v[0] == "%":
+            if (
+                len(v) >= 3
+                and (v[1] in _hexc or v[1] in _numb)
+                and (v[2] in _hexc or v[2] in _numb)
+            ):
                 return v
             else:
                 raise ValueError("Invalid IRI %s" % v)
-        elif v[0] == '?' or v[0] == ':':
+        elif v[0] == "?" or v[0] == ":":
             raise ValueError("Invalid IRI %s" % v)
         else:
             return v
@@ -179,7 +186,8 @@ def _strToBase64Binary(v):
     @raise ValueError: invalid base 64 binary value
     """
     import base64
-    if v.replace('=', 'x').replace('+', 'y').replace('/', 'z').isalnum():
+
+    if v.replace("=", "x").replace("+", "y").replace("/", "z").isalnum():
         try:
             return base64.standard_b64decode(v)
         except:
@@ -189,51 +197,51 @@ def _strToBase64Binary(v):
 
 
 # Numerical types ##################################################
-#: limits for unsigned bytes
+# limits for unsigned bytes
 _limits_unsignedByte = [-1, 256]
 
 
-#: limits for bytes
+# limits for bytes
 _limits_byte = [-129, 128]
 
 
-#: limits for unsigned int
+# limits for unsigned int
 _limits_unsignedInt = [-1, 4294967296]
 
 
-#: limits for int
+# limits for int
 _limits_int = [-2147483649, 2147483648]
 
 
-#: limits for unsigned short
+# limits for unsigned short
 _limits_unsignedShort = [-1, 65536]
 
 
-#: limits for short
+# limits for short
 _limits_short = [-32769, 32768]
 
 
-#: limits for unsigned long
+# limits for unsigned long
 _limits_unsignedLong = [-1, 18446744073709551616]
 
 
-#: limits for long
+# limits for long
 _limits_long = [-9223372036854775809, 9223372036854775808]
 
 
-#: limits for positive integer
+# limits for positive integer
 _limits_positiveInteger = [0, None]
 
 
-#: limits for non positive integer
+# limits for non positive integer
 _limits_nonPositiveInteger = [None, 1]
 
 
-#: limits for non negative integer
+# limits for non negative integer
 _limits_nonNegativeInteger = [-1, None]
 
 
-#: limits for negative integer
+# limits for negative integer
 _limits_negativeInteger = [None, 0]
 
 
@@ -247,7 +255,9 @@ def _strToBoundNumeral(v, interval, conversion):
     """
     try:
         i = conversion(v)
-        if (interval[0] is None or interval[0] < i) and (interval[1] is None or i < interval[1]):
+        if (interval[0] is None or interval[0] < i) and (
+            interval[1] is None or i < interval[1]
+        ):
             return i
     except:
         pass
@@ -354,11 +364,26 @@ def _strToDateTimeAndStamp(incoming_v, timezone_required=False):
     try:
         tstr = time.strptime(final_v, "%Y-%m-%dT%H:%M:%S")
         if tzone is not None:
-            return datetime.datetime(tstr.tm_year, tstr.tm_mon, tstr.tm_mday, tstr.tm_hour, tstr.tm_min, tstr.tm_sec,
-                                     milliseconds, tzone)
+            return datetime.datetime(
+                tstr.tm_year,
+                tstr.tm_mon,
+                tstr.tm_mday,
+                tstr.tm_hour,
+                tstr.tm_min,
+                tstr.tm_sec,
+                milliseconds,
+                tzone,
+            )
         else:
-            return datetime.datetime(tstr.tm_year, tstr.tm_mon, tstr.tm_mday, tstr.tm_hour, tstr.tm_min, tstr.tm_sec,
-                                     milliseconds)
+            return datetime.datetime(
+                tstr.tm_year,
+                tstr.tm_mon,
+                tstr.tm_mday,
+                tstr.tm_hour,
+                tstr.tm_min,
+                tstr.tm_sec,
+                milliseconds,
+            )
     except:
         raise ValueError("Invalid datetime %s" % incoming_v)
 
@@ -393,7 +418,9 @@ def _strToTime(incoming_v):
     try:
         tstr = time.strptime(final_v, "%H:%M:%S")
         if tzone is not None:
-            return datetime.time(tstr.tm_hour, tstr.tm_min, tstr.tm_sec, milliseconds, tzone)
+            return datetime.time(
+                tstr.tm_hour, tstr.tm_min, tstr.tm_sec, milliseconds, tzone
+            )
         else:
             return datetime.time(tstr.tm_hour, tstr.tm_min, tstr.tm_sec, milliseconds)
     except:
@@ -414,7 +441,7 @@ def _strToDate(incoming_v):
 
     # This may raise an exception...
     try:
-        tstr = time.strptime(final_v,"%Y-%m-%d")
+        tstr = time.strptime(final_v, "%Y-%m-%d")
         return datetime.date(tstr.tm_year, tstr.tm_mon, tstr.tm_mday)
     except:
         raise ValueError("Invalid date %s" % incoming_v)
@@ -432,7 +459,7 @@ def _strTogYearMonth(v):
     @raise ValueError: invalid value
     """
     try:
-        time.strptime(v+"-01", "%Y-%m-%d")
+        time.strptime(v + "-01", "%Y-%m-%d")
         return v
     except:
         raise ValueError("Invalid gYearMonth %s" % v)
@@ -446,7 +473,7 @@ def _strTogYear(v):
     @raise ValueError: invalid value
     """
     try:
-        time.strptime(v+"-01-01", "%Y-%m-%d")
+        time.strptime(v + "-01-01", "%Y-%m-%d")
         return v
     except:
         raise ValueError("Invalid gYear %s" % v)
@@ -503,6 +530,7 @@ def _strToXMLLiteral(v):
     @raise ValueError: incorrect xml string
     """
     import xml.dom.minidom
+
     try:
         dom = xml.dom.minidom.parseString(v)
         return dom.toxml()
@@ -511,26 +539,26 @@ def _strToXMLLiteral(v):
 
 
 # language, NMTOKEN, NAME, etc #########################
-#: regular expression for a 'language' datatype
+# regular expression for a 'language' datatype
 _re_language = "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
 
 
-#: regexp for NMTOKEN. It must be used with a re.U flag (the '(?U' regexp form did not work. It may depend on the
+# regexp for NMTOKEN. It must be used with a re.U flag (the '(?U' regexp form did not work. It may depend on the
 # locale...)
 _re_NMTOKEN = "[\w:_.\-]+"
 
 
-#: characters not permitted at a starting position for Name (otherwise Name is like NMTOKEN
-_re_Name_ex = ['.', '-'] + _numb
+# characters not permitted at a starting position for Name (otherwise Name is like NMTOKEN
+_re_Name_ex = [".", "-"] + _numb
 
 
-#: regexp for NCName. It must be used with a re.U flag (the '(?U' regexp form did not work. It may depend on the
+# regexp for NCName. It must be used with a re.U flag (the '(?U' regexp form did not work. It may depend on the
 # locale...)
 _re_NCName = "[\w_.\-]+"
 
 
-#: characters not permitted at a starting position for NCName
-_re_NCName_ex = ['.', '-'] + _numb
+# characters not permitted at a starting position for NCName
+_re_NCName_ex = [".", "-"] + _numb
 
 
 # noinspection PyDefaultArgument,PyPep8Naming,PyPep8Naming
@@ -552,7 +580,7 @@ def _strToVal_Regexp(v, regexp, flag=0, excludeStart=[]):
         return v
 
 
-#: Disallowed characters in a token or a normalized string, as a regexp
+# Disallowed characters in a token or a normalized string, as a regexp
 _re_token = "[^\n\t\r]+"
 
 
@@ -567,7 +595,7 @@ def _strToToken(v):
         return v
     # filter out the case when there are new lines and similar (if there is a problem, an exception is raised)
     _strToVal_Regexp(v, _re_token)
-    v1 = ' '.join(v.strip().split())
+    v1 = " ".join(v.strip().split())
     # normalize the string, and see if the result is the same:
     if len(v1) == len(v):
         # no characters lost, ie, no unnecessary spaces
@@ -586,11 +614,11 @@ def _strToPlainLiteral(v):
     """
     reg = "(.*)@([^@]*)"
     # a plain literal must match this regexp!
-    match = re.match(reg,v)
+    match = re.match(reg, v)
     if match is None:
         raise ValueError("Invalid plain literal %s" % v)
     else:
-        lit  = match.groups()[0]
+        lit = match.groups()[0]
         if len(match.groups()) == 1 or match.groups()[1] == "":
             # no language tag
             return Literal(lit)
@@ -599,14 +627,14 @@ def _strToPlainLiteral(v):
             # check if this is a correct language tag. Note that can raise an exception!
             try:
                 lang = _strToVal_Regexp(lang, _re_language)
-                return Literal(lit,lang=lang.lower())
+                return Literal(lit, lang=lang.lower())
             except:
                 raise ValueError("Invalid plain literal %s" % v)
 
 
 #####################################################################################
-#: Replacement of RDFLib's conversion function. Each entry assigns a function to an XSD datatype, attempting to convert
-#: a string to a Python datatype (or raise an exception if some problem is found)
+# Replacement of RDFLib's conversion function. Each entry assigns a function to an XSD datatype, attempting to convert
+# a string to a Python datatype (or raise an exception if some problem is found)
 AltXSDToPYTHON = {
     ns_xsd["language"]: lambda v: _strToVal_Regexp(v, _re_language),
     ns_xsd["NMTOKEN"]: lambda v: _strToVal_Regexp(v, _re_NMTOKEN, re.U),
@@ -623,13 +651,23 @@ AltXSDToPYTHON = {
     ns_xsd["byte"]: lambda v: _strToBoundNumeral(v, _limits_byte, int),
     ns_xsd["int"]: lambda v: _strToBoundNumeral(v, _limits_int, int),
     ns_xsd["long"]: lambda v: _strToBoundNumeral(v, _limits_long, int),
-    ns_xsd["positiveInteger"]: lambda v: _strToBoundNumeral(v, _limits_positiveInteger, int),
-    ns_xsd["nonPositiveInteger"]: lambda v: _strToBoundNumeral(v, _limits_nonPositiveInteger, int),
-    ns_xsd["negativeInteger"]: lambda v: _strToBoundNumeral(v, _limits_negativeInteger, int),
-    ns_xsd["nonNegativeInteger"]: lambda v: _strToBoundNumeral(v, _limits_nonNegativeInteger, int),
+    ns_xsd["positiveInteger"]: lambda v: _strToBoundNumeral(
+        v, _limits_positiveInteger, int
+    ),
+    ns_xsd["nonPositiveInteger"]: lambda v: _strToBoundNumeral(
+        v, _limits_nonPositiveInteger, int
+    ),
+    ns_xsd["negativeInteger"]: lambda v: _strToBoundNumeral(
+        v, _limits_negativeInteger, int
+    ),
+    ns_xsd["nonNegativeInteger"]: lambda v: _strToBoundNumeral(
+        v, _limits_nonNegativeInteger, int
+    ),
     ns_xsd["short"]: lambda v: _strToBoundNumeral(v, _limits_short, int),
     ns_xsd["unsignedByte"]: lambda v: _strToBoundNumeral(v, _limits_unsignedByte, int),
-    ns_xsd["unsignedShort"]: lambda v: _strToBoundNumeral(v, _limits_unsignedShort, int),
+    ns_xsd["unsignedShort"]: lambda v: _strToBoundNumeral(
+        v, _limits_unsignedShort, int
+    ),
     ns_xsd["unsignedInt"]: lambda v: _strToBoundNumeral(v, _limits_unsignedInt, int),
     ns_xsd["unsignedLong"]: lambda v: _strToBoundNumeral(v, _limits_unsignedLong, int),
     ns_xsd["hexBinary"]: _strToHexBinary,
@@ -640,7 +678,6 @@ AltXSDToPYTHON = {
     ns_xsd["string"]: lambda v: v,
     ns_rdf["HTML"]: lambda v: v,
     ns_xsd["normalizedString"]: lambda v: _strToVal_Regexp(v, _re_token),
-
     # These are RDFS specific...
     ns_xsd["time"]: _strToTime,
     ns_xsd["date"]: _strToDate,
@@ -668,12 +705,14 @@ def use_RDFLib_lexical_conversions():
     """
     _toPythonMapping.update(XSDToPython)
 
+
 #######################################################################################
 # This module can pretty much tested individually...
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     dtype = sys.argv[1]
     string = sys.argv[2]
     datatype = ns_xsd[dtype]

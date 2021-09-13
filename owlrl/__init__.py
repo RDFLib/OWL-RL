@@ -158,19 +158,24 @@ which will result in a proper graph expansion except for the datatype specific c
 """
 
 # Examples: LangString is disjoint from String
-__version__ = '5.2.2'
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__version__ = "5.2.2"
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import sys
 import io
-if sys.version_info < (3, 5, ):
+
+if sys.version_info < (
+    3,
+    5,
+):
     raise RuntimeError("This version of owl-rl cannot be used in python < 3.5")
 # noinspection PyPackageRequirements,PyPackageRequirements,PyPackageRequirements
 import rdflib
 from rdflib import __version__ as rdflib_version
 from rdflib import Literal as rdflibLiteral
+
 # noinspection PyPep8Naming
 from rdflib import Graph
 
@@ -184,14 +189,14 @@ from .OWL import imports
 ################################################################################################################
 RDFXML = "xml"
 TURTLE = "turtle"
-JSON   = "json"
-AUTO   = "auto"
-RDFA   = "rdfa"
+JSON = "json"
+AUTO = "auto"
+RDFA = "rdfa"
 
 NONE = "none"
-RDF  = "rdf"
+RDF = "rdf"
 RDFS = "rdfs"
-OWL  = "owl"
+OWL = "owl"
 FULL = "full"
 
 if int(rdflib_version[0]) >= 6:
@@ -201,8 +206,9 @@ else:
         from rdflib_jsonld.parser import JsonLDParser
         from rdflib_jsonld.serializer import JsonLDSerializer
         from rdflib.plugin import register, Serializer, Parser
-        register('json-ld', Parser, 'rdflib_jsonld.parser', 'JsonLDParser')
-        register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
+
+        register("json-ld", Parser, "rdflib_jsonld.parser", "JsonLDParser")
+        register("json-ld", Serializer, "rdflib_jsonld.serializer", "JsonLDSerializer")
         json_ld_available = True
     except:
         json_ld_available = False
@@ -224,11 +230,13 @@ def __parse_input(iformat, inp, graph):
         if inp == "-":
             format = "turtle"
         else:
-            if inp.endswith('.ttl') or inp.endswith('.n3'):
+            if inp.endswith(".ttl") or inp.endswith(".n3"):
                 format = "turtle"
-            elif json_ld_available and (inp.endswith('.json') or inp.endswith('.jsonld')):
+            elif json_ld_available and (
+                inp.endswith(".json") or inp.endswith(".jsonld")
+            ):
                 format = "json-ld"
-            elif inp.endswith('.html'):
+            elif inp.endswith(".html"):
                 format = "rdfa1.1"
             else:
                 format = "xml"
@@ -249,6 +257,7 @@ def __parse_input(iformat, inp, graph):
     if inp == "-":
         # standard input is used
         import sys
+
         source = sys.stdin
     else:
         source = inp
@@ -378,8 +387,14 @@ class DeductiveClosure:
 
     improved_datatype_generic = False
 
-    def __init__(self, closure_class, improved_datatypes=True, rdfs_closure=False, axiomatic_triples=False,
-                 datatype_axioms=False):
+    def __init__(
+        self,
+        closure_class,
+        improved_datatypes=True,
+        rdfs_closure=False,
+        axiomatic_triples=False,
+        datatype_axioms=False,
+    ):
         # This is the original set of param definitions in the __init__
         #
         # @param closure_class: a closure class reference.
@@ -418,7 +433,9 @@ class DeductiveClosure:
             DatatypeHandling.use_Alt_lexical_conversions()
 
         if self.closure_class is not None:
-            self.closure_class(graph, self.axiomatic_triples, self.datatype_axioms, self.rdfs_closure).closure()
+            self.closure_class(
+                graph, self.axiomatic_triples, self.datatype_axioms, self.rdfs_closure
+            ).closure()
 
         if (not DeductiveClosure.improved_datatype_generic) and self.improved_datatypes:
             DatatypeHandling.use_RDFLib_lexical_conversions()
@@ -438,6 +455,7 @@ class DeductiveClosure:
         """
         DeductiveClosure.improved_datatype_generic = False
         DatatypeHandling.use_RDFLib_lexical_conversions()
+
 
 ###############################################################################################################
 
@@ -520,12 +538,20 @@ def convert_graph(options, closureClass=None):
     #     used as an extension.
 
     def __check_yes_or_true(opt):
-        return opt is True or opt == "yes" or opt == "Yes" or opt == "True" or opt == "true"
+        return (
+            opt is True
+            or opt == "yes"
+            or opt == "Yes"
+            or opt == "True"
+            or opt == "true"
+        )
 
     import warnings
 
     warnings.filterwarnings("ignore")
-    if len(options.sources) == 0 and (options.text is None or len(options.text.strip()) == 0):
+    if len(options.sources) == 0 and (
+        options.text is None or len(options.text.strip()) == 0
+    ):
         raise Exception("No graph specified either via a URI or text")
 
     graph = Graph()
@@ -582,10 +608,17 @@ def convert_graph(options, closureClass=None):
     if closureClass is not None:
         closure_class = closureClass
     else:
-        closure_class = return_closure_class(owlClosure, rdfsClosure, owlExtras, trimming)
+        closure_class = return_closure_class(
+            owlClosure, rdfsClosure, owlExtras, trimming
+        )
 
-    DeductiveClosure(closure_class, improved_datatypes=True, rdfs_closure=rdfsClosure, axiomatic_triples=axioms,
-                     datatype_axioms=daxioms).expand(graph)
+    DeductiveClosure(
+        closure_class,
+        improved_datatypes=True,
+        rdfs_closure=rdfsClosure,
+        axiomatic_triples=axioms,
+        datatype_axioms=daxioms,
+    ).expand(graph)
 
     if options.format == TURTLE:
         return graph.serialize(format="turtle")

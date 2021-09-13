@@ -21,9 +21,9 @@ The generic superclasses for various rule based semantics and the possible exten
 
 """
 
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import rdflib
 from rdflib import BNode
@@ -83,6 +83,7 @@ class Core:
     :var rdfs: Whether RDFS inference is also done (used in subclassed only).
     :type rdfs: bool
     """
+
     # noinspection PyUnusedLocal
     def __init__(self, graph, axioms, daxioms, rdfs=False):
         """
@@ -116,7 +117,7 @@ class Core:
         self.graph = graph
         self.axioms = axioms
         self.daxioms = daxioms
-        
+
         self.rdfs = rdfs
 
         self.error_messages = []
@@ -160,7 +161,9 @@ class Core:
             also used locally to collect the bnodes in the graph.
         :type cycle_num: int
         """
-        raise Exception("This method should not be called directly; subclasses should override it")
+        raise Exception(
+            "This method should not be called directly; subclasses should override it"
+        )
 
     def add_axioms(self):
         """
@@ -168,7 +171,9 @@ class Core:
 
         This is only a placeholder and raises an exception by default; subclasses *must* fill this with real content
         """
-        raise Exception("This method should not be called directly; subclasses should override it")
+        raise Exception(
+            "This method should not be called directly; subclasses should override it"
+        )
 
     def add_d_axioms(self):
         """
@@ -176,7 +181,9 @@ class Core:
 
         This is only a placeholder and raises an exception by default; subclasses I{must} fill this with real content
         """
-        raise Exception("This method should not be called directly; subclasses should override it")
+        raise Exception(
+            "This method should not be called directly; subclasses should override it"
+        )
 
     def one_time_rules(self):
         """
@@ -191,7 +198,7 @@ class Core:
         Empty the internal store for triples.
         """
         self.added_triples = set()
-        
+
     def flush_stored_triples(self):
         """
         Send the stored triples to the graph, and empty the container.
@@ -260,7 +267,7 @@ class Core:
 
             # DEBUG: print the cycle number out
             if self._debug:
-                print("----- Cycle #:%d" % cycle_num)
+                print("----- Cycle #%d" % cycle_num)
 
             # go through all rules, and collect the replies (to see whether any change has been done)
             # the new triples to be added are collected separately not to interfere with
@@ -286,8 +293,8 @@ class Core:
             # I am not sure this is the right vocabulary to use for this purpose, but I haven't found anything!
             # I could, of course, come up with my own, but I am not sure that would be kosher...
             ERRNS = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-            self.graph.bind("err","http://www.daml.org/2002/03/agents/agent-ont#")
+            self.graph.bind("err", "http://www.daml.org/2002/03/agents/agent-ont#")
             for m in self.error_messages:
                 message = BNode()
-                self.graph.add((message, rdf_type, ERRNS['ErrorMessage']))
-                self.graph.add((message, ERRNS['error'], rdflibLiteral(m)))
+                self.graph.add((message, rdf_type, ERRNS["ErrorMessage"]))
+                self.graph.add((message, ERRNS["error"], rdflibLiteral(m)))

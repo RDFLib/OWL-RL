@@ -23,16 +23,24 @@ introductory text).
 
 """
 
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import rdflib
 from itertools import product
 
 from owlrl.RDFS import Property, rdf_type
-from owlrl.RDFS import Resource, Class, subClassOf, subPropertyOf, rdfs_domain, rdfs_range
+from owlrl.RDFS import (
+    Resource,
+    Class,
+    subClassOf,
+    subPropertyOf,
+    rdfs_domain,
+    rdfs_range,
+)
 from owlrl.RDFS import Literal, ContainerMembershipProperty, member, Datatype
+
 # noinspection PyPep8Naming
 from owlrl.RDFS import RDFNS as ns_rdf
 
@@ -71,6 +79,7 @@ class RDFS_Semantics(Core):
     :param rdfs: Whether RDFS inference is also done (used in subclassed only).
     :type rdfs: bool
     """
+
     def __init__(self, graph, axioms, daxioms, rdfs):
         """
         @param graph: the RDF graph to be extended
@@ -122,7 +131,11 @@ class RDFS_Semantics(Core):
         # There is also a hidden sameAs rule in RDF Semantics: if a literal appears in a triple, and another one has
         # the same value, then the triple should be duplicated with the other value.
         literals = self._literals()
-        items = ((lt1, lt2) for lt1, lt2 in product(literals, literals) if lt1.value == lt2.value)
+        items = (
+            (lt1, lt2)
+            for lt1, lt2 in product(literals, literals)
+            if lt1.value == lt2.value
+        )
         for lt1, lt2 in items:
             # In OWL, this line is simply stating a sameAs for the
             # corresponding literals, and then let the usual rules take
@@ -133,13 +146,13 @@ class RDFS_Semantics(Core):
 
     def rules(self, t, cycle_num):
         """
-            Go through the RDFS entailment rules rdf1, rdfs4-rdfs12, by extending the graph.
+        Go through the RDFS entailment rules rdf1, rdfs4-rdfs12, by extending the graph.
 
-            :param t: A triple (in the form of a tuple).
-            :type t: tuple
+        :param t: A triple (in the form of a tuple).
+        :type t: tuple
 
-            :param cycle_num: Which cycle are we in, starting with 1. Can be used for some (though minor) optimization.
-            :type cycle_num: int
+        :param cycle_num: Which cycle are we in, starting with 1. Can be used for some (though minor) optimization.
+        :type cycle_num: int
         """
         s, p, o = t
         # rdf1
@@ -191,4 +204,3 @@ class RDFS_Semantics(Core):
         Get all literals defined in the graph.
         """
         return set(o for s, p, o in self.graph if isinstance(o, rdflib.Literal))
-

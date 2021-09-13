@@ -25,9 +25,9 @@ OWL 2 RL implementation becomes a full extension of RDFS.
 
 """
 
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 from owlrl.RDFS import Resource, Class, Datatype
 from owlrl.OWL import OWLClass, Thing, equivalentClass, DataRange
@@ -46,7 +46,7 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
     and rules, but it it not so bad. Also, the additional identification defined for OWL Full,
     ie, Resource being the same as Thing and OWL and RDFS classes being identical are added to the
     triple store.
-    
+
     Note that this class is also a possible user extension point: subclasses can be created that
     extend the standard functionality by extending this class. This class *always*} performs RDFS inferences.
     Subclasses have to set the :code:`self.rdfs` flag explicitly to the requested value if that is to be controlled.
@@ -70,10 +70,11 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
         :code:`True`, subclasses may explicitly change it at initialization time.
     :type rdfs: bool
     """
+
     full_binding_triples = [
         (Thing, equivalentClass, Resource),
         (Class, equivalentClass, OWLClass),
-        (DataRange, equivalentClass, Datatype)
+        (DataRange, equivalentClass, Datatype),
     ]
 
     def __init__(self, graph, axioms, daxioms, rdfs=True):
@@ -93,11 +94,17 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
 
     # noinspection PyMethodMayBeStatic
     @staticmethod
-    def add_new_datatype(uri, conversion_function, datatype_list, subsumption_dict=None, subsumption_key=None,
-                         subsumption_list=None):
+    def add_new_datatype(
+        uri,
+        conversion_function,
+        datatype_list,
+        subsumption_dict=None,
+        subsumption_key=None,
+        subsumption_list=None,
+    ):
         """
         If an extension wants to add new datatypes, this method should be invoked at initialization time.
-        
+
         :param uri: URI for the new datatypes, like owl_ns["Rational"].
 
         :param conversion_function: A function converting the lexical representation of the datatype to a Python value,
@@ -117,16 +124,16 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
         :type subsumption_list: list
         """
         from .DatatypeHandling import AltXSDToPYTHON, use_Alt_lexical_conversions
-        
+
         if datatype_list:
             datatype_list.append(uri)
-        
+
         if subsumption_dict and subsumption_list:
             if subsumption_key:
                 subsumption_dict[subsumption_key] = subsumption_list
             else:
                 subsumption_dict[uri] = subsumption_list
-        
+
         AltXSDToPYTHON[uri] = conversion_function
         use_Alt_lexical_conversions()
 

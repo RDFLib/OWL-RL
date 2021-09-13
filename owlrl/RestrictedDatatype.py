@@ -50,63 +50,64 @@ The implementation is **not** 100% complete. Some things that an ideal implement
 .. _Ivan Herman: http://www.w3.org/People/Ivan/
 
 """
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import re
 
 from .OWL import *
+
 # noinspection PyPep8Naming,PyPep8Naming
 from .OWL import OWLNS as ns_owl
 from owlrl.RDFS import Datatype
 from owlrl.RDFS import rdf_type
+
 # noinspection PyPep8Naming
 from owlrl.RDFS import RDFNS as ns_rdf
 
 from rdflib import Literal as rdflibLiteral
+
 # noinspection PyPep8Naming
 from rdflib.namespace import XSD as ns_xsd
 
 from .DatatypeHandling import AltXSDToPYTHON
 from functools import reduce
 
-#: Constant for datatypes using min, max (inclusive and exclusive):
+# Constant for datatypes using min, max (inclusive and exclusive):
 MIN_MAX = 0
-#: Constant for datatypes using length, minLength, and maxLength (and nothing else)
+# Constant for datatypes using length, minLength, and maxLength (and nothing else)
 LENGTH = 1
-#: Constant for datatypes using length, minLength, maxLength, and pattern
+# Constant for datatypes using length, minLength, maxLength, and pattern
 LENGTH_AND_PATTERN = 2
-#: Constant for datatypes using length, minLength, maxLength, pattern, and lang range
+# Constant for datatypes using length, minLength, maxLength, pattern, and lang range
 LENGTH_PATTERN_LRANGE = 3
 
-#: Dictionary of all the datatypes, keyed by category
+# Dictionary of all the datatypes, keyed by category
 Datatypes_per_facets = {
-    MIN_MAX: [ns_owl["rational"],
-              ns_xsd["decimal"],
-              ns_xsd["integer"],
-              ns_xsd["nonNegativeInteger"],
-              ns_xsd["nonPositiveInteger"],
-              ns_xsd["positiveInteger"],
-              ns_xsd["negativeInteger"],
-              ns_xsd["long"],
-              ns_xsd["short"],
-              ns_xsd["byte"],
-              ns_xsd["unsignedLong"],
-              ns_xsd["unsignedInt"],
-              ns_xsd["unsignedShort"],
-              ns_xsd["unsignedByte"],
-              ns_xsd["double"],
-              ns_xsd["float"],
-              ns_xsd["dateTime"],
-              ns_xsd["dateTimeStamp"],
-              ns_xsd["time"],
-              ns_xsd["date"]
-              ],
-    LENGTH: [
-        ns_xsd["hexBinary"],
-        ns_xsd["base64Binary"]
+    MIN_MAX: [
+        ns_owl["rational"],
+        ns_xsd["decimal"],
+        ns_xsd["integer"],
+        ns_xsd["nonNegativeInteger"],
+        ns_xsd["nonPositiveInteger"],
+        ns_xsd["positiveInteger"],
+        ns_xsd["negativeInteger"],
+        ns_xsd["long"],
+        ns_xsd["short"],
+        ns_xsd["byte"],
+        ns_xsd["unsignedLong"],
+        ns_xsd["unsignedInt"],
+        ns_xsd["unsignedShort"],
+        ns_xsd["unsignedByte"],
+        ns_xsd["double"],
+        ns_xsd["float"],
+        ns_xsd["dateTime"],
+        ns_xsd["dateTimeStamp"],
+        ns_xsd["time"],
+        ns_xsd["date"],
     ],
+    LENGTH: [ns_xsd["hexBinary"], ns_xsd["base64Binary"]],
     LENGTH_AND_PATTERN: [
         ns_xsd["anyURI"],
         ns_xsd["string"],
@@ -114,26 +115,26 @@ Datatypes_per_facets = {
         ns_xsd["Name"],
         ns_xsd["NCName"],
         ns_xsd["language"],
-        ns_xsd["normalizedString"]
+        ns_xsd["normalizedString"],
     ],
-    LENGTH_PATTERN_LRANGE: [ns_rdf["plainLiteral"]]
+    LENGTH_PATTERN_LRANGE: [ns_rdf["plainLiteral"]],
 }
 
-#: a simple list containing C{all} datatypes that may have a facet
+# a simple list containing C{all} datatypes that may have a facet
 facetable_datatypes = reduce(lambda x, y: x + y, list(Datatypes_per_facets.values()))
 
 #######################################################################################################
 
-#:
+#
 def _lit_to_value(dt, v):
     """
     This method is used to convert a string to a value with facet checking. RDF Literals are converted to
     Python values using this method; if there is a problem, an exception is raised (and caught higher
     up to generate an error message).
-    
+
     The method is the equivalent of all the methods in the :mod:`.DatatypeHandling` module, and is registered
     to the system run time, as new restricted datatypes are discovered.
-    
+
     (Technically, the registration is done via a :code:`lambda v: _lit_to_value(self,v)` setting from within a
     :class:`.RestrictedDatatype` instance).
 
@@ -146,14 +147,16 @@ def _lit_to_value(dt, v):
     """
     # This may raise an exception...
     value = dt.converter(v)
-    
+
     # look at the different facet categories and try to find which is
     # is, if any, the one that is of relevant for this literal
     for cat in Datatypes_per_facets:
         if dt.base_type in Datatypes_per_facets[cat]:
             # yep, this is to be checked.
             if not dt.checkValue(value):
-                raise ValueError("Literal value %s does not fit the faceted datatype %s" % (v, dt))
+                raise ValueError(
+                    "Literal value %s does not fit the faceted datatype %s" % (v, dt)
+                )
     # got here, everything should be fine
     return value
 
@@ -168,23 +171,24 @@ def _lang_range_check(range, lang):
     @param lang: language tag
     @rtype: boolean
     """
+
     def _match(r, l):
         """Matching of a range and language item: either range is a wildcard or the two are equal
         @param r: language range item
         @param l: language tag item
         @rtype: boolean
         """
-        return r == '*' or r == l
-    
-    rangeList = range.strip().lower().split('-')
-    langList = lang.strip().lower().split('-')
+        return r == "*" or r == l
+
+    rangeList = range.strip().lower().split("-")
+    langList = lang.strip().lower().split("-")
     if not _match(rangeList[0], langList[0]):
         return False
-    
+
     rI = 1
     rL = 1
     while rI < len(rangeList):
-        if rangeList[rI] == '*':
+        if rangeList[rI] == "*":
             rI += 1
             continue
         if rL >= len(langList):
@@ -199,6 +203,7 @@ def _lang_range_check(range, lang):
             rL += 1
             continue
     return True
+
 
 #######################################################################################################
 
@@ -224,13 +229,18 @@ def extract_faceted_datatypes(core, graph):
             base_types = [x for x in graph.objects(dtype, onDatatype)]
             if len(base_types) > 0:
                 if len(base_types) > 1:
-                    raise Exception("Several base datatype for the same restriction %s" % dtype)
+                    raise Exception(
+                        "Several base datatype for the same restriction %s" % dtype
+                    )
                 else:
                     base_type = base_types[0]
                     if base_type in facetable_datatypes:
                         rlists = [x for x in graph.objects(dtype, withRestrictions)]
                         if len(rlists) > 1:
-                            raise Exception("More than one facet lists for the same restriction %s" % dtype)
+                            raise Exception(
+                                "More than one facet lists for the same restriction %s"
+                                % dtype
+                            )
                         elif len(rlists) > 0:
                             final_facets = []
                             for r in graph.items(rlists[0]):
@@ -240,17 +250,27 @@ def extract_faceted_datatypes(core, graph):
                                         # note that this call may lead to an exception, but that is fine,
                                         # it is caught some lines below anyway...
                                         try:
-                                            if lit.datatype is None or lit.datatype == ns_xsd["string"]:
+                                            if (
+                                                lit.datatype is None
+                                                or lit.datatype == ns_xsd["string"]
+                                            ):
                                                 final_facets.append((facet, str(lit)))
                                             else:
                                                 final_facets.append(
-                                                    (facet, AltXSDToPYTHON[lit.datatype](str(lit)))
+                                                    (
+                                                        facet,
+                                                        AltXSDToPYTHON[lit.datatype](
+                                                            str(lit)
+                                                        ),
+                                                    )
                                                 )
                                         except Exception as msg:
                                             core.add_error(msg)
                                             continue
                                 # We do have everything we need:
-                            new_datatype = RestrictedDatatype(dtype, base_type, final_facets)
+                            new_datatype = RestrictedDatatype(
+                                dtype, base_type, final_facets
+                            )
                             retval.append(new_datatype)
         except Exception as msg:
             # import sys
@@ -268,7 +288,7 @@ class RestrictedDatatypeCore:
     """
     An 'abstract' superclass for datatype restrictions. The instance variables listed here are
     used in general, without the specificities of the concrete restricted datatype.
-    
+
     This module defines the :class:`.RestrictedDatatype` class that corresponds to the datatypes and their restrictions
     defined in the OWL 2 standard. Other modules may subclass this class to define new datatypes with restrictions.
 
@@ -278,11 +298,12 @@ class RestrictedDatatypeCore:
 
     :ivar toPython: Function to convert a Literal of the specified type to a Python value.
     """
+
     def __init__(self, type_uri, base_type):
         self.datatype = type_uri
         self.base_type = base_type
         self.toPython = None
-        
+
     def checkValue(self, value):
         """
         Check whether the (Python) value abides to the constraints defined by the current facets.
@@ -290,7 +311,9 @@ class RestrictedDatatypeCore:
         :param value: The value to be checked.
         :rtype: bool
         """
-        raise Exception("This class should not be used by itself, only via its subclasses!")
+        raise Exception(
+            "This class should not be used by itself, only via its subclasses!"
+        )
 
 
 # noinspection PyPep8Naming
@@ -301,7 +324,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
     :param type_uri: URI of the datatype being defined.
     :param base_type: URI of the base datatype, ie, the one being restricted.
     :param facets: List of :code:`(facetURI, value)` pairs.
-    
+
     :ivar datatype : The URI for this datatype.
 
     :ivar base_type: URI of the datatype that is restricted.
@@ -331,7 +354,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
     :ivar toPython: Function to convert a Literal of the specified type to a Python value. Is defined by :code:`lambda v:
         _lit_to_value(self, v)`, see :py:func:`._lit_to_value`.
     """
-    
+
     def __init__(self, type_uri, base_type, facets):
         """
         @param type_uri: URI of the datatype being defined
@@ -353,57 +376,69 @@ class RestrictedDatatype(RestrictedDatatypeCore):
         self.pattern = []
         self.langRange = []
         for (facet, value) in facets:
-            if facet == ns_xsd["minInclusive"] and (self.minInclusive is None or self.minInclusive < value):
+            if facet == ns_xsd["minInclusive"] and (
+                self.minInclusive is None or self.minInclusive < value
+            ):
                 self.minInclusive = value
-            elif facet == ns_xsd["minExclusive"] and (self.minExclusive is None or self.minExclusive < value):
+            elif facet == ns_xsd["minExclusive"] and (
+                self.minExclusive is None or self.minExclusive < value
+            ):
                 self.minExclusive = value
-            elif facet == ns_xsd["maxInclusive"] and (self.maxInclusive is None or value < self.maxInclusive):
+            elif facet == ns_xsd["maxInclusive"] and (
+                self.maxInclusive is None or value < self.maxInclusive
+            ):
                 self.maxInclusive = value
-            elif facet == ns_xsd["maxExclusive"] and (self.maxExclusive is None or value < self.maxExclusive):
+            elif facet == ns_xsd["maxExclusive"] and (
+                self.maxExclusive is None or value < self.maxExclusive
+            ):
                 self.maxExclusive = value
             elif facet == ns_rdf["langRange"]:
                 self.langRange.append(value)
             elif facet == ns_xsd["length"]:
                 self.length = value
-            elif facet == ns_xsd["maxLength"] and (self.maxLength is None or value < self.maxLength):
+            elif facet == ns_xsd["maxLength"] and (
+                self.maxLength is None or value < self.maxLength
+            ):
                 self.maxLength = value
-            elif facet == ns_xsd["minLength"] and (self.minLength is None or value > self.minLength):
+            elif facet == ns_xsd["minLength"] and (
+                self.minLength is None or value > self.minLength
+            ):
                 self.minLength = value
             elif facet == ns_xsd["pattern"]:
                 self.pattern.append(re.compile(value))
-            
+
         # Choose the methods that are relevant for this datatype, based on the base type
         facet_to_method = {
             MIN_MAX: [
                 RestrictedDatatype._check_max_exclusive,
                 RestrictedDatatype._check_min_exclusive,
                 RestrictedDatatype._check_max_inclusive,
-                RestrictedDatatype._check_min_inclusive
+                RestrictedDatatype._check_min_inclusive,
             ],
             LENGTH: [
                 RestrictedDatatype._check_min_length,
                 RestrictedDatatype._check_max_length,
-                RestrictedDatatype._check_length
+                RestrictedDatatype._check_length,
             ],
             LENGTH_AND_PATTERN: [
                 RestrictedDatatype._check_min_length,
                 RestrictedDatatype._check_max_length,
                 RestrictedDatatype._check_length,
-                RestrictedDatatype._check_pattern],
+                RestrictedDatatype._check_pattern,
+            ],
             LENGTH_PATTERN_LRANGE: [
                 RestrictedDatatype._check_min_length,
                 RestrictedDatatype._check_max_length,
                 RestrictedDatatype._check_length,
-                RestrictedDatatype._check_lang_range
-            ]
+                RestrictedDatatype._check_lang_range,
+            ],
         }
         self.check_methods = []
         for cat in Datatypes_per_facets:
             if self.base_type in Datatypes_per_facets[cat]:
                 self.check_methods = facet_to_method[cat]
                 break
-        self.toPython = lambda v:\
-            _lit_to_value(self, v)
+        self.toPython = lambda v: _lit_to_value(self, v)
 
     def checkValue(self, value):
         """
@@ -427,7 +462,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             return self.minExclusive < value
         else:
             return True
-                    
+
     def _check_min_inclusive(self, value):
         """
         Check  the (python) value against min inclusive facet.
@@ -438,7 +473,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             return self.minInclusive <= value
         else:
             return True
-                    
+
     def _check_max_exclusive(self, value):
         """
         Check  the (python) value against max exclusive facet.
@@ -449,7 +484,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             return value < self.maxExclusive
         else:
             return True
-                    
+
     def _check_max_inclusive(self, value):
         """
         Check  the (python) value against max inclusive facet.
@@ -460,7 +495,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             return value <= self.maxInclusive
         else:
             return True
-        
+
     def _check_min_length(self, value):
         """
         Check  the (python) value against minimum length facet.
@@ -490,7 +525,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             return self.maxLength >= len(val)
         else:
             return True
-        
+
     def _check_length(self, value):
         """
         Check  the (python) value against exact length facet.
@@ -505,7 +540,7 @@ class RestrictedDatatype(RestrictedDatatypeCore):
             return self.length == len(val)
         else:
             return True
-        
+
     def _check_pattern(self, value):
         """
         Check  the (python) value against array of regular expressions.

@@ -6,14 +6,13 @@ Test for OWL 2 RL/RDF rules from
 https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
 """
 
-from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
+from rdflib import Graph, Literal, Namespace, RDF, OWL
 
 import owlrl
 
-from unittest import mock
+DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
+T = Namespace("http://test.org/")
 
-DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
-T = Namespace('http://test.org/')
 
 def test_cax_dw():
     """
@@ -43,7 +42,7 @@ def test_cax_dw():
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
-        'Disjoint classes http://test.org/c1 and http://test.org/c2'
-        ' have a common individual http://test.org/x'
+        "Disjoint classes http://test.org/c1 and http://test.org/c2"
+        " have a common individual http://test.org/x"
     )
     assert expected == result

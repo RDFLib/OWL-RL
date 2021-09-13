@@ -10,8 +10,9 @@ from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
 
 import owlrl
 
-DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
-T = Namespace('http://test.org/')
+DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
+T = Namespace("http://test.org/")
+
 
 def test_eq_diff1():
     """
@@ -38,13 +39,12 @@ def test_eq_diff1():
 
     result = g.objects(predicate=DAML.error)
     expected = Literal(
-        '\'sameAs\' and \'differentFrom\' cannot be used on the same' \
-        + ' subject-object pair:'
+        "'sameAs' and 'differentFrom' cannot be used on the same"
+        + " subject-object pair:"
     )
-    
+
     # expect multiple error messages for pairs (x, y), (x, x) and (y, y)
     # due to contradiction:
     #
     #    x == y and x != y => x != x and y != y and x == x and y == y
     assert all(r.startswith(expected) for r in result)
-

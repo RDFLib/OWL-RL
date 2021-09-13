@@ -19,9 +19,7 @@ whether the term is used in OWL 2 RL or not.
 .. _Ivan Herman: http://www.w3.org/People/Ivan/
 """
 
-
-import rdflib
-from rdflib	import Namespace
+from rdflib import Namespace
 
 
 # The OWL namespace as used for RDFLib

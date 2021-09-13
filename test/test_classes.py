@@ -6,14 +6,15 @@ Test for OWL 2 RL/RDF rules from
 https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
 """
 
-from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
+from unittest import mock
+
+from rdflib import Graph, Literal, Namespace, RDF, OWL
 
 import owlrl
 
-from unittest import mock
+DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
+T = Namespace("http://test.org/")
 
-DAML = Namespace('http://www.daml.org/2002/03/agents/agent-ont#')
-T = Namespace('http://test.org/')
 
 def test_cls_maxc1():
     """
@@ -48,10 +49,11 @@ def test_cls_maxc1():
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
-        'Erroneous usage of maximum cardinality with'
-        ' http://test.org/x and http://test.org/y'
+        "Erroneous usage of maximum cardinality with"
+        " http://test.org/x and http://test.org/y"
     )
     assert expected == result
+
 
 def test_cls_maxc2():
     """
@@ -123,10 +125,11 @@ def test_cls_maxqc1():
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
-        'Erroneous usage of maximum qualified cardinality with'
-        ' http://test.org/x, http://test.org/C and http://test.org/y'
+        "Erroneous usage of maximum qualified cardinality with"
+        " http://test.org/x, http://test.org/C and http://test.org/y"
     )
     assert expected == result
+
 
 def test_cls_maxqc2():
     """
@@ -161,12 +164,12 @@ def test_cls_maxqc2():
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
-        'Erroneous usage of maximum qualified cardinality with'
-        + ' http://test.org/x, http://www.w3.org/2002/07/owl#Thing and'
-        + ' http://test.org/y'
-
+        "Erroneous usage of maximum qualified cardinality with"
+        + " http://test.org/x, http://www.w3.org/2002/07/owl#Thing and"
+        + " http://test.org/y"
     )
     assert expected == result
+
 
 def test_cls_maxqc3():
     """
@@ -209,6 +212,7 @@ def test_cls_maxqc3():
 
     assert (y1, OWL.sameAs, y2) in g
 
+
 def test_cls_maxqc4():
     """
     Test cls-maxqc4 rule for OWL 2 RL.
@@ -245,6 +249,7 @@ def test_cls_maxqc4():
 
     assert (y1, OWL.sameAs, y2) in g
 
+
 def test_cls_avf():
     """
     Test for cls-avf rule for OWL 2 RL.
@@ -277,7 +282,8 @@ def test_cls_avf():
 
     assert (v, RDF.type, y) in g
 
-@mock.patch.object(owlrl.OWLRL_Semantics, 'restriction_typing_check')
+
+@mock.patch.object(owlrl.OWLRL_Semantics, "restriction_typing_check")
 def test_cls_avf_error(mock_rtc):
     """
     Test restriction type check for cls-avf rule for OWL 2 RL.
@@ -313,8 +319,7 @@ def test_cls_avf_error(mock_rtc):
 
     result = next(g.objects(predicate=DAML.error))
     expected = Literal(
-        'Violation of type restriction for allValuesFrom in http://test.org/p'
-        ' for datatype http://test.org/y on value http://test.org/v'
+        "Violation of type restriction for allValuesFrom in http://test.org/p"
+        " for datatype http://test.org/y on value http://test.org/v"
     )
     assert expected == result
-

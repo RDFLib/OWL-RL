@@ -20,7 +20,7 @@ term is used in OWL 2 RL or not.
 """
 
 import rdflib
-from rdflib				import Namespace
+from rdflib import Namespace
 
 RDFNS = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 RDFSNS = Namespace("http://www.w3.org/2000/01/rdf-schema#")

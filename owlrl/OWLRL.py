@@ -28,18 +28,24 @@ consequent triples are all right, generalized triples might have had a role in t
 
 """
 
-__author__ = 'Ivan Herman'
-__contact__ = 'Ivan Herman, ivan@w3.org'
-__license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
+__author__ = "Ivan Herman"
+__contact__ = "Ivan Herman, ivan@w3.org"
+__license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 from collections import defaultdict
-from itertools import product
 
 import rdflib
 from rdflib import BNode
 
 from owlrl.RDFS import Property, rdf_type
-from owlrl.RDFS import subClassOf, subPropertyOf, comment, label, rdfs_domain, rdfs_range
+from owlrl.RDFS import (
+    subClassOf,
+    subPropertyOf,
+    comment,
+    label,
+    rdfs_domain,
+    rdfs_range,
+)
 from owlrl.RDFS import seeAlso, isDefinedBy, Datatype
 
 from owlrl.OWL import *
@@ -47,8 +53,17 @@ from owlrl.Closure import Core
 from owlrl.AxiomaticTriples import OWLRL_Axiomatic_Triples, OWLRL_D_Axiomatic_Triples
 from owlrl.AxiomaticTriples import OWLRL_Datatypes_Disjointness
 
-OWLRL_Annotation_properties = [label, comment, seeAlso, isDefinedBy, deprecated, versionInfo, priorVersion, 
-                               backwardCompatibleWith, incompatibleWith]
+OWLRL_Annotation_properties = [
+    label,
+    comment,
+    seeAlso,
+    isDefinedBy,
+    deprecated,
+    versionInfo,
+    priorVersion,
+    backwardCompatibleWith,
+    incompatibleWith,
+]
 
 from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
 from .DatatypeHandling import AltXSDToPYTHON
@@ -94,6 +109,7 @@ class OWLRL_Semantics(Core):
     :param rdfs: Whether RDFS inference is also done (used in subclassed only).
     :type rdfs: bool
     """
+
     def __init__(self, graph, axioms, daxioms, rdfs=None):
         """
         @param graph: the RDF graph to be extended
@@ -142,13 +158,13 @@ class OWLRL_Semantics(Core):
         """
         for t in OWLRL_D_Axiomatic_Triples:
             self.graph.add(t)
-        
+
     def restriction_typing_check(self, v, t):
         """
         Helping method to check whether a type statement is in line with a possible
         restriction. This method is invoked by rule "cls-avf" before setting a type
         on an allValuesFrom restriction.
-        
+
         The method is a placeholder at this level. It is typically implemented by subclasses for
         extra checks, e.g., for datatype facet checks.
 
@@ -187,7 +203,6 @@ class OWLRL_Semantics(Core):
                     self.store_triple((new_dt, rdf_type, Datatype))
                     used_datatypes.add(new_dt)
 
-
         # explicit object->datatype relationships: those that came from an object being typed as a datatype
         # or a sameAs. The values are arrays of datatypes to which the resource belong
         explicit = defaultdict(set)
@@ -196,7 +211,8 @@ class OWLRL_Semantics(Core):
         # implicit object->datatype relationships: these come from real
         # literals which are present in the graph
         implicit = {
-            o: o.datatype for s, p, o in self.graph
+            o: o.datatype
+            for s, p, o in self.graph
             if isinstance(o, rdflib.Literal) and o.datatype in OWL_RL_Datatypes
         }
 
@@ -219,7 +235,7 @@ class OWLRL_Semantics(Core):
                 converter(str(lt))
             except ValueError:
                 self.add_error(
-                    "Lexical value of the literal '%s' does not match" \
+                    "Lexical value of the literal '%s' does not match"
                     " its datatype (%s)" % (lt, lt.datatype)
                 )
 
@@ -272,7 +288,7 @@ class OWLRL_Semantics(Core):
             dtypes = explicit[r]
             for dt in dtypes:
                 _handle_subsumptions(r, dt)
-                        
+
         for r, dt in implicit.items():
             _handle_subsumptions(r, dt)
 
@@ -332,7 +348,7 @@ class OWLRL_Semantics(Core):
     def _property_chain(self, p, x):
         """
         Implementation of the property chain axiom, invoked from inside the property axiom handler. This is the
-        implementation of rule prp-spo2, taken aside for an easier readability of the code. """
+        implementation of rule prp-spo2, taken aside for an easier readability of the code."""
         chain = self._list(x)
         # The complication is that, at each step of the chain, there may be spawns, leading to a multitude
         # of 'sub' chains:-(
@@ -394,9 +410,15 @@ class OWLRL_Semantics(Core):
             for ss, pp in self.graph.subject_predicates(o):
                 self.store_triple((ss, pp, s))
             # RULE eq-diff1
-            if (s, differentFrom, o) in self.graph or (o, differentFrom, s) in self.graph:
-                self.add_error("'sameAs' and 'differentFrom' cannot be used on the same subject-object pair: (%s, %s)" 
-                               % (s, o))
+            if (s, differentFrom, o) in self.graph or (
+                o,
+                differentFrom,
+                s,
+            ) in self.graph:
+                self.add_error(
+                    "'sameAs' and 'differentFrom' cannot be used on the same subject-object pair: (%s, %s)"
+                    % (s, o)
+                )
 
         # RULES eq-diff2 and eq-diff3
         if p == rdf_type and o == AllDifferent:
@@ -412,9 +434,14 @@ class OWLRL_Semantics(Core):
                     zi = zis[i]
                     for j in range(i + 1, len(zis) - 1):
                         zj = zis[j]
-                        if ((zi, sameAs, zj) in self.graph or (zj, sameAs, zi) in self.graph) and zi != zj:
-                            self.add_error("'sameAs' and 'AllDifferent' cannot be used on the same subject-object "
-                                           "pair: (%s, %s)" % (zi, zj))
+                        if (
+                            (zi, sameAs, zj) in self.graph
+                            or (zj, sameAs, zi) in self.graph
+                        ) and zi != zj:
+                            self.add_error(
+                                "'sameAs' and 'AllDifferent' cannot be used on the same subject-object "
+                                "pair: (%s, %s)" % (zi, zj)
+                            )
 
     def _properties(self, triple, cycle_num):
         """
@@ -467,7 +494,9 @@ class OWLRL_Semantics(Core):
             elif o == IrreflexiveProperty:
                 for x, y in self.graph.subject_objects(p):
                     if x == y:
-                        self.add_error("Irreflexive property used on %s with %s" % (x, p))
+                        self.add_error(
+                            "Irreflexive property used on %s with %s" % (x, p)
+                        )
 
             # RULE prp-symp
             elif o == SymmetricProperty:
@@ -478,7 +507,10 @@ class OWLRL_Semantics(Core):
             elif o == AsymmetricProperty:
                 for x, y in self.graph.subject_objects(p):
                     if (y, p, x) in self.graph:
-                        self.add_error("Erroneous usage of asymmetric property %s on %s and %s" % (p, x, y))
+                        self.add_error(
+                            "Erroneous usage of asymmetric property %s on %s and %s"
+                            % (p, x, y)
+                        )
 
             # RULE prp-trp
             elif o == TransitiveProperty:
@@ -500,8 +532,11 @@ class OWLRL_Semantics(Core):
                             pj = pis[j]
                             for x, y in self.graph.subject_objects(pi):
                                 if (x, pj, y) in self.graph:
-                                    self.add_error("Disjoint properties in an 'AllDisjointProperties' are not really "
-                                                   "disjoint: (%s, %s,%s) and (%s,%s,%s)" % (x, pi, y, x, pj, y))
+                                    self.add_error(
+                                        "Disjoint properties in an 'AllDisjointProperties' are not really "
+                                        "disjoint: (%s, %s,%s) and (%s,%s,%s)"
+                                        % (x, pi, y, x, pj, y)
+                                    )
 
         # RULE prp-spo1
         elif t == subPropertyOf:
@@ -533,7 +568,10 @@ class OWLRL_Semantics(Core):
             p1, p2 = p, o
             for x, y in self.graph.subject_objects(p1):
                 if (x, p2, y) in self.graph:
-                    self.add_error("Erroneous usage of disjoint properties %s and %s on %s and %s" % (p1, p2, x, y))
+                    self.add_error(
+                        "Erroneous usage of disjoint properties %s and %s on %s and %s"
+                        % (p1, p2, x, y)
+                    )
 
         # RULES prp-inv1 and prp-inv2
         elif t == inverseOf:
@@ -554,7 +592,7 @@ class OWLRL_Semantics(Core):
                     # "Calculate" the keys for 'x'. The complication is that there can be various combinations
                     # of the keys, and that is the structure one has to build up here...
                     #
-                    # The final list will be a list of lists, with each constituents being the possible combinations 
+                    # The final list will be a list of lists, with each constituents being the possible combinations
                     # of the key values.
                     # startup the list
                     finalList = [[zi] for zi in self.graph.objects(x, pis[0])]
@@ -572,7 +610,11 @@ class OWLRL_Semantics(Core):
                     # Now we can look for the y-s, to see if they have the same key values
                     for y in self.graph.subjects(rdf_type, c):
                         # rule out the existing equivalences
-                        if not(y == x or (y, sameAs, x) in self.graph or (x, sameAs, y) in self.graph):
+                        if not (
+                            y == x
+                            or (y, sameAs, x) in self.graph
+                            or (x, sameAs, y) in self.graph
+                        ):
                             # 'calculate' the keys for the y values and see if there is a match
                             for vals in valueList:
                                 same = True
@@ -592,11 +634,16 @@ class OWLRL_Semantics(Core):
             for p1 in self.graph.objects(x, assertionProperty):
                 for i2 in self.graph.objects(x, targetIndividual):
                     if (i1, p1, i2) in self.graph:
-                        self.add_error("Negative (object) property assertion violated for: (%s, %s, %s)" % (i1, p1, i2))
+                        self.add_error(
+                            "Negative (object) property assertion violated for: (%s, %s, %s)"
+                            % (i1, p1, i2)
+                        )
                 for i2 in self.graph.objects(x, targetValue):
                     if (i1, p1, i2) in self.graph:
-                        self.add_error("Negative (datatype) property assertion violated for: (%s, %s, %s)" 
-                                       % (i1, p1, self.get_literal_value(i2)))
+                        self.add_error(
+                            "Negative (datatype) property assertion violated for: (%s, %s, %s)"
+                            % (i1, p1, self.get_literal_value(i2))
+                        )
 
     def _classes(self, triple, cycle_num):
         """
@@ -626,7 +673,9 @@ class OWLRL_Semantics(Core):
             # on that does not hurt..
             if len(classes) > 0:
                 for y in self.graph.subjects(rdf_type, classes[0]):
-                    if False not in [(y, rdf_type, cl) in self.graph for cl in classes[1:]]:
+                    if False not in [
+                        (y, rdf_type, cl) in self.graph for cl in classes[1:]
+                    ]:
                         self.store_triple((y, rdf_type, c))
             # RULE cls-int2
             for y in self.graph.subjects(rdf_type, c):
@@ -644,7 +693,10 @@ class OWLRL_Semantics(Core):
             c1, c2 = c, x
             for x1 in self.graph.subjects(rdf_type, c1):
                 if (x1, rdf_type, c2) in self.graph:
-                    self.add_error("Violation of complementarity for classes %s and %s on element %s" % (c1, c2, x))
+                    self.add_error(
+                        "Violation of complementarity for classes %s and %s on element %s"
+                        % (c1, c2, x)
+                    )
 
         # RULES cls-svf1 and cls=svf2
         elif p == someValuesFrom:
@@ -665,8 +717,10 @@ class OWLRL_Semantics(Core):
                         if self.restriction_typing_check(v, y):
                             self.store_triple((v, rdf_type, y))
                         else:
-                            self.add_error("Violation of type restriction for allValuesFrom in %s for datatype %s on "
-                                           "value %s" % (pp, y, v))
+                            self.add_error(
+                                "Violation of type restriction for allValuesFrom in %s for datatype %s on "
+                                "value %s" % (pp, y, v)
+                            )
 
         # RULES cls-hv1 and cls-hv2
         elif p == hasValue:
@@ -693,7 +747,10 @@ class OWLRL_Semantics(Core):
                     for u, y in self.graph.subject_objects(pp):
                         # This should not occur:
                         if (u, rdf_type, xx) in self.graph:
-                            self.add_error("Erroneous usage of maximum cardinality with %s and %s" % (xx, y))
+                            self.add_error(
+                                "Erroneous usage of maximum cardinality with %s and %s"
+                                % (xx, y)
+                            )
             elif x.value == 1:
                 # RULE cls-maxc2
                 for pp in self.graph.objects(xx, onProperty):
@@ -717,11 +774,16 @@ class OWLRL_Semantics(Core):
                     for cc in self.graph.objects(xx, onClass):
                         for u, y in self.graph.subject_objects(pp):
                             # This should not occur:
-                            if ((y, rdf_type, cc) in self.graph \
-                                    or cc == Thing) and (u, rdf_type, xx) in self.graph:
+                            if ((y, rdf_type, cc) in self.graph or cc == Thing) and (
+                                u,
+                                rdf_type,
+                                xx,
+                            ) in self.graph:
 
-                                self.add_error("Erroneous usage of maximum qualified cardinality with %s, %s and %s"
-                                               % (xx, cc, y))
+                                self.add_error(
+                                    "Erroneous usage of maximum qualified cardinality with %s, %s and %s"
+                                    % (xx, cc, y)
+                                )
             elif x.value == 1:
                 # RULE cls-maxqc3 and cls-maxqc4 folded in one
                 for pp in self.graph.objects(xx, onProperty):
@@ -735,7 +797,10 @@ class OWLRL_Semantics(Core):
                                 else:
                                     if (y1, rdf_type, cc) in self.graph:
                                         for y2 in self.graph.objects(u, pp):
-                                            if y1 != y2 and (y2, rdf_type, cc) in self.graph:
+                                            if (
+                                                y1 != y2
+                                                and (y2, rdf_type, cc) in self.graph
+                                            ):
                                                 self.store_triple((y1, sameAs, y2))
 
             # TODO: what if x.value not in (0, 1)? according to the spec
@@ -779,8 +844,10 @@ class OWLRL_Semantics(Core):
         elif p == disjointWith:
             for x in self.graph.subjects(rdf_type, c1):
                 if (x, rdf_type, c2) in self.graph:
-                    self.add_error("Disjoint classes %s and %s have a common individual %s" 
-                                   % (c1, c2, x))
+                    self.add_error(
+                        "Disjoint classes %s and %s have a common individual %s"
+                        % (c1, c2, x)
+                    )
 
         # RULE cax-adc
         elif p == rdf_type and c2 == AllDisjointClasses:
@@ -791,10 +858,12 @@ class OWLRL_Semantics(Core):
                     for i in range(0, len(classes) - 1):
                         cl1 = classes[i]
                         for z in self.graph.subjects(rdf_type, cl1):
-                            for cl2 in classes[(i + 1):]:
+                            for cl2 in classes[(i + 1) :]:
                                 if (z, rdf_type, cl2) in self.graph:
-                                    self.add_error("Disjoint classes %s and %s have a common individual %s" 
-                                                   % (cl1, cl2, z))
+                                    self.add_error(
+                                        "Disjoint classes %s and %s have a common individual %s"
+                                        % (cl1, cl2, z)
+                                    )
 
     def _schema_vocabulary(self, triple, cycle_num):
         """
@@ -840,7 +909,9 @@ class OWLRL_Semantics(Core):
 
         # RULE scm-op and RULE scm-dp folded together
         # There is a bit of a cheating here: 'Property' is not, strictly speaking, in the rule set!
-        elif p == rdf_type and (o == ObjectProperty or o == DatatypeProperty or o == Property):
+        elif p == rdf_type and (
+            o == ObjectProperty or o == DatatypeProperty or o == Property
+        ):
             pp = s
             self.store_triple((pp, subPropertyOf, pp))
             self.store_triple((pp, equivalentProperty, pp))
