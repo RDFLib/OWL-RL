@@ -18,3 +18,6 @@ sdist/
 *.egg-info/
 
 owlrl*.tar.gz
+
+# Mac
+.DS_Store
