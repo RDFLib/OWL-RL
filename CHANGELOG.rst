@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+v5.2.3
+~~~~~~
+
+Changes:
+
+* fix README image display
+* fix version acquisition in setup.py
+
 v5.2.2
 ~~~~~~
 
