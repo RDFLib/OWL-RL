@@ -158,18 +158,18 @@ which will result in a proper graph expansion except for the datatype specific c
 """
 
 # Examples: LangString is disjoint from String
-__version__ = '5.2.1'
+__version__ = '5.2.2'
 __author__ = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
 
 import sys
 import io
-if sys.version_info < (3, 4, ):
-    raise RuntimeError("This version of owl-rl cannot be used in python < 3.4")
+if sys.version_info < (3, 5, ):
+    raise RuntimeError("This version of owl-rl cannot be used in python < 3.5")
 # noinspection PyPackageRequirements,PyPackageRequirements,PyPackageRequirements
 import rdflib
-
+from rdflib import __version__ as rdflib_version
 from rdflib import Literal as rdflibLiteral
 # noinspection PyPep8Naming
 from rdflib import Graph
@@ -194,15 +194,18 @@ RDFS = "rdfs"
 OWL  = "owl"
 FULL = "full"
 
-try:
-    from rdflib_jsonld.parser import JsonLDParser
-    from rdflib_jsonld.serializer import JsonLDSerializer
-    from rdflib.plugin import register, Serializer, Parser
-    register('json-ld', Parser, 'rdflib_jsonld.parser', 'JsonLDParser')
-    register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
+if int(rdflib_version[0]) >= 6:
     json_ld_available = True
-except:
-    json_ld_available = False
+else:
+    try:
+        from rdflib_jsonld.parser import JsonLDParser
+        from rdflib_jsonld.serializer import JsonLDSerializer
+        from rdflib.plugin import register, Serializer, Parser
+        register('json-ld', Parser, 'rdflib_jsonld.parser', 'JsonLDParser')
+        register('json-ld', Serializer, 'rdflib_jsonld.serializer', 'JsonLDSerializer')
+        json_ld_available = True
+    except:
+        json_ld_available = False
 
 
 ################################################################################################################

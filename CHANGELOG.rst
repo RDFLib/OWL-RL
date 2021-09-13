@@ -1,6 +1,18 @@
 Changelog
 ---------
 
+v5.2.2
+~~~~~~
+
+Changes:
+
+* Depend on RDFLib v5.0+
+
+* Removed rdflib_jsonld as a requirement. It is included in rdflib 6.0
+
+* Detect if rdflib 6.0 is in use, and do not import the jsonld module
+
+
 v5.2.1
 ~~~~~~
 

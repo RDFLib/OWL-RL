@@ -1,8 +1,7 @@
 pytest
 sphinx
 sphinx_rtd_theme
-rdflib>=4.2.2
-rdflib-jsonld
+rdflib>=5.0
 wheel
 twine
 
