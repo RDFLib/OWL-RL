@@ -5,6 +5,7 @@ Unit tests for OWL RL extras closure.
 from rdflib import Graph, Literal, RDF, XSD
 import sys
 from pathlib import Path
+
 sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
 from owlrl.Namespaces import T

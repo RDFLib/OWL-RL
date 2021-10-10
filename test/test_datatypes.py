@@ -14,6 +14,7 @@ NOTE: The following axioms are skipped on purpose
 from rdflib import Graph, Literal, RDF, XSD, RDFS
 import sys
 from pathlib import Path
+
 sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
 from owlrl.Namespaces import ERRNS, T

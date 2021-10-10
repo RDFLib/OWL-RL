@@ -5,6 +5,7 @@ Unit tests for RDFS closure.
 from rdflib import Graph, Literal, RDF, XSD
 from pathlib import Path
 import sys
+
 sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
 from owlrl.Namespaces import T

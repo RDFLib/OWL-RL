@@ -11,6 +11,7 @@ from unittest import mock
 from rdflib import Graph, Literal, RDF, OWL
 import sys
 from pathlib import Path
+
 sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
 from owlrl.Namespaces import ERRNS, T

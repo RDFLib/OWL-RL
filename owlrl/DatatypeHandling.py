@@ -649,23 +649,17 @@ AltXSDToPYTHON = {
     XSD.byte: lambda v: _strToBoundNumeral(v, _limits_byte, int),
     XSD.int: lambda v: _strToBoundNumeral(v, _limits_int, int),
     XSD.long: lambda v: _strToBoundNumeral(v, _limits_long, int),
-    XSD.positiveInteger: lambda v: _strToBoundNumeral(
-        v, _limits_positiveInteger, int
-    ),
+    XSD.positiveInteger: lambda v: _strToBoundNumeral(v, _limits_positiveInteger, int),
     XSD.nonPositiveInteger: lambda v: _strToBoundNumeral(
         v, _limits_nonPositiveInteger, int
     ),
-    XSD.negativeInteger: lambda v: _strToBoundNumeral(
-        v, _limits_negativeInteger, int
-    ),
+    XSD.negativeInteger: lambda v: _strToBoundNumeral(v, _limits_negativeInteger, int),
     XSD.nonNegativeInteger: lambda v: _strToBoundNumeral(
         v, _limits_nonNegativeInteger, int
     ),
     XSD.short: lambda v: _strToBoundNumeral(v, _limits_short, int),
     XSD.unsignedByte: lambda v: _strToBoundNumeral(v, _limits_unsignedByte, int),
-    XSD.unsignedShort: lambda v: _strToBoundNumeral(
-        v, _limits_unsignedShort, int
-    ),
+    XSD.unsignedShort: lambda v: _strToBoundNumeral(v, _limits_unsignedShort, int),
     XSD.unsignedInt: lambda v: _strToBoundNumeral(v, _limits_unsignedInt, int),
     XSD.unsignedLong: lambda v: _strToBoundNumeral(v, _limits_unsignedLong, int),
     XSD.hexBinary: _strToHexBinary,

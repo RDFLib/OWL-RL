@@ -9,6 +9,7 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 from rdflib import Graph, Literal, OWL
 import sys
 from pathlib import Path
+
 sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
 from owlrl.Namespaces import ERRNS, T

@@ -399,7 +399,11 @@ class OWLRL_Semantics(Core):
             for ss, pp in self.graph.subject_predicates(o):
                 self.store_triple((ss, pp, s))
             # RULE eq-diff1
-            if (s, OWL.differentFrom, o) in self.graph or (o, OWL.differentFrom, s) in self.graph:
+            if (s, OWL.differentFrom, o) in self.graph or (
+                o,
+                OWL.differentFrom,
+                s,
+            ) in self.graph:
                 self.add_error(
                     "'sameAs' and 'differentFrom' cannot be used on the same subject-object pair: (%s, %s)"
                     % (s, o)
@@ -759,7 +763,9 @@ class OWLRL_Semantics(Core):
                     for cc in self.graph.objects(xx, OWL.onClass):
                         for u, y in self.graph.subject_objects(pp):
                             # This should not occur:
-                            if ((y, RDF.type, cc) in self.graph or cc == OWL.Thing) and (u, RDF.type, xx) in self.graph:
+                            if (
+                                (y, RDF.type, cc) in self.graph or cc == OWL.Thing
+                            ) and (u, RDF.type, xx) in self.graph:
                                 self.add_error(
                                     "Erroneous usage of maximum qualified cardinality with %s, %s and %s"
                                     % (xx, cc, y)
@@ -838,7 +844,7 @@ class OWLRL_Semantics(Core):
                     for i in range(0, len(classes) - 1):
                         cl1 = classes[i]
                         for z in self.graph.subjects(RDF.type, cl1):
-                            for cl2 in classes[(i + 1):]:
+                            for cl2 in classes[(i + 1) :]:
                                 if (z, RDF.type, cl2) in self.graph:
                                     self.add_error(
                                         "Disjoint classes %s and %s have a common individual %s"
