@@ -186,18 +186,6 @@ from .RDFSClosure import RDFS_Semantics
 from .CombinedClosure import RDFS_OWLRL_Semantics
 from rdflib.namespace import OWL
 
-################################################################################################################
-RDFXML = "xml"
-TURTLE = "turtle"
-JSON = "json"
-AUTO = "auto"
-RDFA = "rdfa"
-
-NONE = "none"
-FULL = "full"
-
-################################################################################################################
-
 
 # noinspection PyShadowingBuiltins
 def __parse_input(iformat, inp, graph):
@@ -209,7 +197,7 @@ def __parse_input(iformat, inp, graph):
     standard input is used.
     @param graph: the RDFLib Graph instance to parse into.
     """
-    if iformat == AUTO:
+    if iformat == "auto":
         if inp == "-":
             format = "turtle"
         else:
@@ -221,13 +209,13 @@ def __parse_input(iformat, inp, graph):
                 format = "rdfa1.1"
             else:
                 format = "xml"
-    elif iformat == TURTLE:
+    elif iformat == "turtle":
         format = "n3"
-    elif iformat == RDFA:
+    elif iformat == "rdfa":
         format = "rdfa1.1"
-    elif iformat == RDFXML:
+    elif iformat == "rdfxml":
         format = "xml"
-    elif iformat == JSON:
+    elif iformat == "json":
         format = "json-ld"
     else:
         raise Exception("Unknown input syntax")
@@ -536,7 +524,7 @@ def convert_graph(options, closureClass=None):
 
     # Just to be sure that this attribute does not create issues with older versions of the service...
     # the try statement should be removed, eventually...
-    iformat = AUTO
+    iformat = "auto"
     try:
         iformat = options.iformat
     except:
@@ -598,9 +586,9 @@ def convert_graph(options, closureClass=None):
         datatype_axioms=daxioms,
     ).expand(graph)
 
-    if options.format == TURTLE:
+    if options.format == "turtle":
         return graph.serialize(format="turtle")
-    elif options.format == JSON:
+    elif options.format == "json":
         return graph.serialize(format="json-ld")
     else:
         return graph.serialize(format="pretty-xml")

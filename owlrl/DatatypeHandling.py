@@ -73,7 +73,7 @@ class _namelessTZ(datetime.tzinfo):
 
 # noinspection PyPep8Naming
 def _returnTimeZone(incoming_v):
-    """Almost all time/date related methods require the extraction of an optional time zone information.
+    """Almost all time/date related methods require the extraction of optional time zone information.
     @param incoming_v: the time/date string
     @return (v,timezone) tuple; 'v' is the input string with the timezone info cut off, 'timezone' is a L{_namelessTZ}
     instance or None
@@ -82,7 +82,7 @@ def _returnTimeZone(incoming_v):
         v = incoming_v[:-1]
         tzone = _namelessTZ(0, 0)
     else:
-        pattern = ".*(\+|-)([0-9][0-9]):([0-9][0-9])"
+        pattern = r".*(\+|-)([0-9][0-9]):([0-9][0-9])"
         match = re.match(pattern, incoming_v)
         if match is None:
             v = incoming_v
@@ -347,7 +347,7 @@ def _strToDateTimeAndStamp(incoming_v, timezone_required=False):
     # The microseconds should be handled here...
     final_v = v
     milliseconds = 0
-    milpattern = "(.*)(\.)([0-9]*)"
+    milpattern = r"(.*)(\.)([0-9]*)"
     match = re.match(milpattern, v)
     if match is not None:
         # we have a millisecond portion...
@@ -401,7 +401,7 @@ def _strToTime(incoming_v):
     # The microseconds should be handled here...
     final_v = v
     milliseconds = 0
-    milpattern = "(.*)(\.)([0-9]*)"
+    milpattern = r"(.*)(\.)([0-9]*)"
     match = re.match(milpattern, v)
     if match is not None:
         # we have a millisecond portion...
@@ -538,12 +538,12 @@ def _strToXMLLiteral(v):
 
 # language, NMTOKEN, NAME, etc #########################
 # regular expression for a 'language' datatype
-_re_language = "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
+_re_language = r"[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*"
 
 
 # regexp for NMTOKEN. It must be used with a re.U flag (the '(?U' regexp form did not work. It may depend on the
 # locale...)
-_re_NMTOKEN = "[\w:_.\-]+"
+_re_NMTOKEN = r"[\w:_.\-]+"
 
 
 # characters not permitted at a starting position for Name (otherwise Name is like NMTOKEN
@@ -552,7 +552,7 @@ _re_Name_ex = [".", "-"] + _numb
 
 # regexp for NCName. It must be used with a re.U flag (the '(?U' regexp form did not work. It may depend on the
 # locale...)
-_re_NCName = "[\w_.\-]+"
+_re_NCName = r"[\w_.\-]+"
 
 
 # characters not permitted at a starting position for NCName
