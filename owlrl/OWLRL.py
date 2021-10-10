@@ -36,33 +36,22 @@ from collections import defaultdict
 
 import rdflib
 from rdflib import BNode
+from rdflib.namespace import OWL, RDF, RDFS
 
-from owlrl.RDFS import Property, rdf_type
-from owlrl.RDFS import (
-    subClassOf,
-    subPropertyOf,
-    comment,
-    label,
-    rdfs_domain,
-    rdfs_range,
-)
-from owlrl.RDFS import seeAlso, isDefinedBy, Datatype
-
-from owlrl.OWL import *
 from owlrl.Closure import Core
 from owlrl.AxiomaticTriples import OWLRL_Axiomatic_Triples, OWLRL_D_Axiomatic_Triples
 from owlrl.AxiomaticTriples import OWLRL_Datatypes_Disjointness
 
 OWLRL_Annotation_properties = [
-    label,
-    comment,
-    seeAlso,
-    isDefinedBy,
-    deprecated,
-    versionInfo,
-    priorVersion,
-    backwardCompatibleWith,
-    incompatibleWith,
+    RDFS.label,
+    RDFS.comment,
+    RDFS.seeAlso,
+    RDFS.isDefinedBy,
+    OWL.deprecated,
+    OWL.versionInfo,
+    OWL.priorVersion,
+    OWL.backwardCompatibleWith,
+    OWL.incompatibleWith,
 ]
 
 from .XsdDatatypes import OWL_RL_Datatypes, OWL_Datatype_Subsumptions
@@ -199,8 +188,8 @@ class OWLRL_Semantics(Core):
         def _handle_subsumptions(r, dt):
             if dt in OWL_Datatype_Subsumptions:
                 for new_dt in OWL_Datatype_Subsumptions[dt]:
-                    self.store_triple((r, rdf_type, new_dt))
-                    self.store_triple((new_dt, rdf_type, Datatype))
+                    self.store_triple((r, RDF.type, new_dt))
+                    self.store_triple((new_dt, RDF.type, RDFS.Datatype))
                     used_datatypes.add(new_dt)
 
         # explicit object->datatype relationships: those that came from an object being typed as a datatype
@@ -225,7 +214,7 @@ class OWLRL_Semantics(Core):
         # RULE dt-not-type: see whether an explicit literal is valid in terms of the defined datatype
         for lt in implicit:  # note that all non-RL datatypes are ignored
             # add the explicit typing triple
-            self.store_triple((lt, rdf_type, lt.datatype))
+            self.store_triple((lt, RDF.type, lt.datatype))
 
             # for dt-not-type
             # This is a dirty trick: rdflib's Literal includes a method that raises an exception if the
@@ -247,7 +236,7 @@ class OWLRL_Semantics(Core):
         # Other datatype definitions can come from explicitly defining some nodes as datatypes (though rarely used,
         # it is perfectly possible...
         # there may be explicit relationships set in the graph, too!
-        for (s, p, o) in self.graph.triples((None, rdf_type, None)):
+        for (s, p, o) in self.graph.triples((None, RDF.type, None)):
             if o in OWL_RL_Datatypes:
                 used_datatypes.add(o)
                 if s not in implicit:
@@ -255,7 +244,7 @@ class OWLRL_Semantics(Core):
 
         # Finally, there may be sameAs statements that bind nodes to some of the existing ones. This does not introduce
         # new datatypes, so the used_datatypes array does not get extended
-        for (s, p, o) in self.graph.triples((None, sameAs, None)):
+        for (s, p, o) in self.graph.triples((None, OWL.sameAs, None)):
             if o in implicit:
                 _add_to_explicit(s, implicit[o])
             # note that s in implicit would mean that the original graph has
@@ -274,10 +263,10 @@ class OWLRL_Semantics(Core):
         # Note: the strict interpretation of OWL RL is to do that for all allowed datatypes, but this is
         # under discussion right now. The optimized version uses only what is really in use
         for dt in OWL_RL_Datatypes:
-            self.store_triple((dt, rdf_type, Datatype))
+            self.store_triple((dt, RDF.type, RDFS.Datatype))
         for dts in explicit.values():
             for dt in dts:
-                self.store_triple((dt, rdf_type, Datatype))
+                self.store_triple((dt, RDF.type, RDFS.Datatype))
 
         # Datatype reasoning means that certain datatypes are subtypes of one another.
         # I could simply generate the extra subclass relationships into the graph and let the generic
@@ -305,14 +294,14 @@ class OWLRL_Semantics(Core):
         Rules executed: cls-thing, cls-nothing, prp-ap.
         """
         # RULE cls-thing
-        self.store_triple((Thing, rdf_type, OWLClass))
+        self.store_triple((OWL.Thing, RDF.type, OWL.Class))
 
         # RULE cls-nothing
-        self.store_triple((Nothing, rdf_type, OWLClass))
+        self.store_triple((OWL.Nothing, RDF.type, OWL.Class))
 
         # RULE prp-ap
         for an in OWLRL_Annotation_properties:
-            self.store_triple((an, rdf_type, AnnotationProperty))
+            self.store_triple((an, RDF.type, OWL.AnnotationProperty))
 
     def one_time_rules(self):
         """
@@ -390,16 +379,16 @@ class OWLRL_Semantics(Core):
         # in the document with the implementation
         s, p, o = triple
         # RULE eq-ref
-        self.store_triple((s, sameAs, s))
-        self.store_triple((o, sameAs, o))
-        self.store_triple((p, sameAs, p))
-        if p == sameAs:
+        self.store_triple((s, OWL.sameAs, s))
+        self.store_triple((o, OWL.sameAs, o))
+        self.store_triple((p, OWL.sameAs, p))
+        if p == OWL.sameAs:
             x, y = s, o
             # RULE eq-sym
-            self.store_triple((y, sameAs, x))
+            self.store_triple((y, OWL.sameAs, x))
             # RULE eq-trans
-            for z in self.graph.objects(y, sameAs):
-                self.store_triple((x, sameAs, z))
+            for z in self.graph.objects(y, OWL.sameAs):
+                self.store_triple((x, OWL.sameAs, z))
             # RULE eq-rep-s
             for pp, oo in self.graph.predicate_objects(s):
                 self.store_triple((o, pp, oo))
@@ -410,9 +399,9 @@ class OWLRL_Semantics(Core):
             for ss, pp in self.graph.subject_predicates(o):
                 self.store_triple((ss, pp, s))
             # RULE eq-diff1
-            if (s, differentFrom, o) in self.graph or (
+            if (s, OWL.differentFrom, o) in self.graph or (
                 o,
-                differentFrom,
+                OWL.differentFrom,
                 s,
             ) in self.graph:
                 self.add_error(
@@ -421,13 +410,13 @@ class OWLRL_Semantics(Core):
                 )
 
         # RULES eq-diff2 and eq-diff3
-        if p == rdf_type and o == AllDifferent:
+        if p == RDF.type and o == OWL.AllDifferent:
             x = s
             # the objects method are generators, we cannot simply concatenate them. So we turn the results
             # into lists first. (Otherwise the body of the for loops should be repeated verbatim, which
             # is silly and error prone...
-            m1 = [i for i in self.graph.objects(x, members)]
-            m2 = [i for i in self.graph.objects(x, distinctMembers)]
+            m1 = [i for i in self.graph.objects(x, OWL.members)]
+            m2 = [i for i in self.graph.objects(x, OWL.distinctMembers)]
             for y in m1 + m2:
                 zis = self._list(y)
                 for i in range(0, len(zis) - 1):
@@ -435,8 +424,8 @@ class OWLRL_Semantics(Core):
                     for j in range(i + 1, len(zis) - 1):
                         zj = zis[j]
                         if (
-                            (zi, sameAs, zj) in self.graph
-                            or (zj, sameAs, zi) in self.graph
+                            (zi, OWL.sameAs, zj) in self.graph
+                            or (zj, OWL.sameAs, zi) in self.graph
                         ) and zi != zj:
                             self.add_error(
                                 "'sameAs' and 'AllDifferent' cannot be used on the same subject-object "
@@ -458,40 +447,40 @@ class OWLRL_Semantics(Core):
 
         # RULE prp-ap
         if cycle_num == 1 and t in OWLRL_Annotation_properties:
-            self.store_triple((t, rdf_type, AnnotationProperty))
+            self.store_triple((t, RDF.type, OWL.AnnotationProperty))
 
         # RULE prp-dom
-        if t == rdfs_domain:
+        if t == RDFS.domain:
             for x, y in self.graph.subject_objects(p):
-                self.store_triple((x, rdf_type, o))
+                self.store_triple((x, RDF.type, o))
 
         # RULE prp-rng
-        elif t == rdfs_range:
+        elif t == RDFS.range:
             for x, y in self.graph.subject_objects(p):
-                self.store_triple((y, rdf_type, o))
+                self.store_triple((y, RDF.type, o))
 
-        elif t == rdf_type:
+        elif t == RDF.type:
             # RULE prp-fp
-            if o == FunctionalProperty:
+            if o == OWL.FunctionalProperty:
                 # Property axiom #3
                 for x, y1 in self.graph.subject_objects(p):
                     for y2 in self.graph.objects(x, p):
                         # Optimization: if the two resources are identical, the samAs is already
                         # taken place somewhere else, unnecessary to add it here
                         if y1 != y2:
-                            self.store_triple((y1, sameAs, y2))
+                            self.store_triple((y1, OWL.sameAs, y2))
 
             # RULE prp-ifp
-            elif o == InverseFunctionalProperty:
+            elif o == OWL.InverseFunctionalProperty:
                 for x1, y in self.graph.subject_objects(p):
                     for x2 in self.graph.subjects(p, y):
                         # Optimization: if the two resources are identical, the samAs is already
                         # taken place somewhere else, unnecessary to add it here
                         if x1 != x2:
-                            self.store_triple((x1, sameAs, x2))
+                            self.store_triple((x1, OWL.sameAs, x2))
 
             # RULE prp-irp
-            elif o == IrreflexiveProperty:
+            elif o == OWL.IrreflexiveProperty:
                 for x, y in self.graph.subject_objects(p):
                     if x == y:
                         self.add_error(
@@ -499,12 +488,12 @@ class OWLRL_Semantics(Core):
                         )
 
             # RULE prp-symp
-            elif o == SymmetricProperty:
+            elif o == OWL.SymmetricProperty:
                 for x, y in self.graph.subject_objects(p):
                     self.store_triple((y, p, x))
 
             # RULE prp-asyp
-            elif o == AsymmetricProperty:
+            elif o == OWL.AsymmetricProperty:
                 for x, y in self.graph.subject_objects(p):
                     if (y, p, x) in self.graph:
                         self.add_error(
@@ -513,7 +502,7 @@ class OWLRL_Semantics(Core):
                         )
 
             # RULE prp-trp
-            elif o == TransitiveProperty:
+            elif o == OWL.TransitiveProperty:
                 for x, y in self.graph.subject_objects(p):
                     for z in self.graph.objects(y, p):
                         self.store_triple((x, p, z))
@@ -522,9 +511,9 @@ class OWLRL_Semantics(Core):
             # Breaking the order here, I take some additional rules here to the branch checking the type...
             #
             # RULE prp-adp
-            elif o == AllDisjointProperties:
+            elif o == OWL.AllDisjointProperties:
                 x = p
-                for y in self.graph.objects(x, members):
+                for y in self.graph.objects(x, OWL.members):
                     pis = self._list(y)
                     for i in range(0, len(pis) - 1):
                         pi = pis[i]
@@ -539,17 +528,17 @@ class OWLRL_Semantics(Core):
                                     )
 
         # RULE prp-spo1
-        elif t == subPropertyOf:
+        elif t == RDFS.subPropertyOf:
             p1, p2 = p, o
             for x, y in self.graph.subject_objects(p1):
                 self.store_triple((x, p2, y))
 
         # RULE prp-spo2
-        elif t == propertyChainAxiom:
+        elif t == OWL.propertyChainAxiom:
             self._property_chain(p, o)
 
         # RULES prp-eqp1 and prp-eqp2
-        elif t == equivalentProperty:
+        elif t == OWL.equivalentProperty:
             p1, p2 = p, o
             # Optimization: it clearly does not make sense to run these
             # if the two properties are identical (a separate axiom
@@ -564,7 +553,7 @@ class OWLRL_Semantics(Core):
                     self.store_triple((x, p1, y))
 
         # RULE prp-pdw
-        elif t == propertyDisjointWith:
+        elif t == OWL.propertyDisjointWith:
             p1, p2 = p, o
             for x, y in self.graph.subject_objects(p1):
                 if (x, p2, y) in self.graph:
@@ -574,7 +563,7 @@ class OWLRL_Semantics(Core):
                     )
 
         # RULES prp-inv1 and prp-inv2
-        elif t == inverseOf:
+        elif t == OWL.inverseOf:
             p1, p2 = p, o
             # RULE prp-inv1
             for x, y in self.graph.subject_objects(p1):
@@ -584,11 +573,11 @@ class OWLRL_Semantics(Core):
                 self.store_triple((y, p1, x))
 
         # RULE prp-key
-        elif t == hasKey:
+        elif t == OWL.hasKey:
             c, u = p, o
             pis = self._list(u)
             if len(pis) > 0:
-                for x in self.graph.subjects(rdf_type, c):
+                for x in self.graph.subjects(RDF.type, c):
                     # "Calculate" the keys for 'x'. The complication is that there can be various combinations
                     # of the keys, and that is the structure one has to build up here...
                     #
@@ -608,12 +597,12 @@ class OWLRL_Semantics(Core):
                     valueList = [l for l in finalList if len(l) == len(pis)]
 
                     # Now we can look for the y-s, to see if they have the same key values
-                    for y in self.graph.subjects(rdf_type, c):
+                    for y in self.graph.subjects(RDF.type, c):
                         # rule out the existing equivalences
                         if not (
                             y == x
-                            or (y, sameAs, x) in self.graph
-                            or (x, sameAs, y) in self.graph
+                            or (y, OWL.sameAs, x) in self.graph
+                            or (x, OWL.sameAs, y) in self.graph
                         ):
                             # 'calculate' the keys for the y values and see if there is a match
                             for vals in valueList:
@@ -624,25 +613,25 @@ class OWLRL_Semantics(Core):
                                         # No use going with this property line
                                         break
                                 if same:
-                                    self.store_triple((x, sameAs, y))
+                                    self.store_triple((x, OWL.sameAs, y))
                                     # Look for the next 'y', this branch is finished, no reason to continue
                                     break
 
         # RULES prp-npa1 and prp-npa2
-        elif t == sourceIndividual:
+        elif t == OWL.sourceIndividual:
             x, i1 = p, o
-            for p1 in self.graph.objects(x, assertionProperty):
-                for i2 in self.graph.objects(x, targetIndividual):
+            for p1 in self.graph.objects(x, OWL.assertionProperty):
+                for i2 in self.graph.objects(x, OWL.targetIndividual):
                     if (i1, p1, i2) in self.graph:
                         self.add_error(
                             "Negative (object) property assertion violated for: (%s, %s, %s)"
                             % (i1, p1, i2)
                         )
-                for i2 in self.graph.objects(x, targetValue):
+                for i2 in self.graph.objects(x, OWL.targetValue):
                     if (i1, p1, i2) in self.graph:
                         self.add_error(
                             "Negative (datatype) property assertion violated for: (%s, %s, %s)"
-                            % (i1, p1, self.get_literal_value(i2))
+                            % (i1, p1, i2)
                         )
 
     def _classes(self, triple, cycle_num):
@@ -659,11 +648,11 @@ class OWLRL_Semantics(Core):
         c, p, x = triple
 
         # RULE cls-nothing2
-        if p == rdf_type and x == Nothing:
+        if p == RDF.type and x == OWL.Nothing:
             self.add_error("%s is defined of type 'Nothing'" % c)
 
         # RULES cls-int1 and cls-int2
-        if p == intersectionOf:
+        if p == OWL.intersectionOf:
             classes = self._list(x)
             # RULE cls-int1
             # Optimization: by looking at the members of class[0] right away one
@@ -672,50 +661,50 @@ class OWLRL_Semantics(Core):
             # I am not sure how empty lists are sanctioned, so having an extra check
             # on that does not hurt..
             if len(classes) > 0:
-                for y in self.graph.subjects(rdf_type, classes[0]):
+                for y in self.graph.subjects(RDF.type, classes[0]):
                     if False not in [
-                        (y, rdf_type, cl) in self.graph for cl in classes[1:]
+                        (y, RDF.type, cl) in self.graph for cl in classes[1:]
                     ]:
-                        self.store_triple((y, rdf_type, c))
+                        self.store_triple((y, RDF.type, c))
             # RULE cls-int2
-            for y in self.graph.subjects(rdf_type, c):
+            for y in self.graph.subjects(RDF.type, c):
                 for cl in classes:
-                    self.store_triple((y, rdf_type, cl))
+                    self.store_triple((y, RDF.type, cl))
 
         # RULE cls-uni
-        elif p == unionOf:
+        elif p == OWL.unionOf:
             for cl in self._list(x):
-                for y in self.graph.subjects(rdf_type, cl):
-                    self.store_triple((y, rdf_type, c))
+                for y in self.graph.subjects(RDF.type, cl):
+                    self.store_triple((y, RDF.type, c))
 
         # RULE cls-comm
-        elif p == complementOf:
+        elif p == OWL.complementOf:
             c1, c2 = c, x
-            for x1 in self.graph.subjects(rdf_type, c1):
-                if (x1, rdf_type, c2) in self.graph:
+            for x1 in self.graph.subjects(RDF.type, c1):
+                if (x1, RDF.type, c2) in self.graph:
                     self.add_error(
                         "Violation of complementarity for classes %s and %s on element %s"
                         % (c1, c2, x)
                     )
 
         # RULES cls-svf1 and cls=svf2
-        elif p == someValuesFrom:
+        elif p == OWL.someValuesFrom:
             xx, y = c, x
             # RULE cls-svf1
             # RULE cls-svf2
-            for pp in self.graph.objects(xx, onProperty):
+            for pp in self.graph.objects(xx, OWL.onProperty):
                 for u, v in self.graph.subject_objects(pp):
-                    if y == Thing or (v, rdf_type, y) in self.graph:
-                        self.store_triple((u, rdf_type, xx))
+                    if y == OWL.Thing or (v, RDF.type, y) in self.graph:
+                        self.store_triple((u, RDF.type, xx))
 
         # RULE cls-avf
-        elif p == allValuesFrom:
+        elif p == OWL.allValuesFrom:
             xx, y = c, x
-            for pp in self.graph.objects(xx, onProperty):
-                for u in self.graph.subjects(rdf_type, xx):
+            for pp in self.graph.objects(xx, OWL.onProperty):
+                for u in self.graph.subjects(RDF.type, xx):
                     for v in self.graph.objects(u, pp):
                         if self.restriction_typing_check(v, y):
-                            self.store_triple((v, rdf_type, y))
+                            self.store_triple((v, RDF.type, y))
                         else:
                             self.add_error(
                                 "Violation of type restriction for allValuesFrom in %s for datatype %s on "
@@ -723,18 +712,18 @@ class OWLRL_Semantics(Core):
                             )
 
         # RULES cls-hv1 and cls-hv2
-        elif p == hasValue:
+        elif p == OWL.hasValue:
             xx, y = c, x
-            for pp in self.graph.objects(xx, onProperty):
+            for pp in self.graph.objects(xx, OWL.onProperty):
                 # RULE cls-hv1
-                for u in self.graph.subjects(rdf_type, xx):
+                for u in self.graph.subjects(RDF.type, xx):
                     self.store_triple((u, pp, y))
                 # RULE cls-hv2
                 for u in self.graph.subjects(pp, y):
-                    self.store_triple((u, rdf_type, xx))
+                    self.store_triple((u, RDF.type, xx))
 
         # RULES cls-maxc1 and cls-maxc1
-        elif p == maxCardinality:
+        elif p == OWL.maxCardinality:
             # This one is a bit complicated, because the literals have been
             # exchanged against bnodes...
             #
@@ -743,25 +732,25 @@ class OWLRL_Semantics(Core):
             xx = c
             if x.value == 0:
                 # RULE cls-maxc1
-                for pp in self.graph.objects(xx, onProperty):
+                for pp in self.graph.objects(xx, OWL.onProperty):
                     for u, y in self.graph.subject_objects(pp):
                         # This should not occur:
-                        if (u, rdf_type, xx) in self.graph:
+                        if (u, RDF.type, xx) in self.graph:
                             self.add_error(
                                 "Erroneous usage of maximum cardinality with %s and %s"
                                 % (xx, y)
                             )
             elif x.value == 1:
                 # RULE cls-maxc2
-                for pp in self.graph.objects(xx, onProperty):
+                for pp in self.graph.objects(xx, OWL.onProperty):
                     for u, y1 in self.graph.subject_objects(pp):
-                        if (u, rdf_type, xx) in self.graph:
+                        if (u, RDF.type, xx) in self.graph:
                             for y2 in self.graph.objects(u, pp):
                                 if y1 != y2:
-                                    self.store_triple((y1, sameAs, y2))
+                                    self.store_triple((y1, OWL.sameAs, y2))
 
         # RULES cls-maxqc1, cls-maxqc2, cls-maxqc3, cls-maxqc4
-        elif p == maxQualifiedCardinality:
+        elif p == OWL.maxQualifiedCardinality:
             # This one is a bit complicated, because the literals have been
             # exchanged against bnodes...
             #
@@ -770,41 +759,43 @@ class OWLRL_Semantics(Core):
             xx = c
             if x.value == 0:
                 # RULES cls-maxqc1 and cls-maxqc2 folded in one
-                for pp in self.graph.objects(xx, onProperty):
-                    for cc in self.graph.objects(xx, onClass):
+                for pp in self.graph.objects(xx, OWL.onProperty):
+                    for cc in self.graph.objects(xx, OWL.onClass):
                         for u, y in self.graph.subject_objects(pp):
                             # This should not occur:
-                            if ((y, rdf_type, cc) in self.graph or cc == Thing) and (u, rdf_type, xx) in self.graph:
+                            if (
+                                (y, RDF.type, cc) in self.graph or cc == OWL.Thing
+                            ) and (u, RDF.type, xx) in self.graph:
                                 self.add_error(
                                     "Erroneous usage of maximum qualified cardinality with %s, %s and %s"
                                     % (xx, cc, y)
                                 )
             elif x.value == 1:
                 # RULE cls-maxqc3 and cls-maxqc4 folded in one
-                for pp in self.graph.objects(xx, onProperty):
-                    for cc in self.graph.objects(xx, onClass):
+                for pp in self.graph.objects(xx, OWL.onProperty):
+                    for cc in self.graph.objects(xx, OWL.onClass):
                         for u, y1 in self.graph.subject_objects(pp):
-                            if (u, rdf_type, xx) in self.graph:
-                                if cc == Thing:
+                            if (u, RDF.type, xx) in self.graph:
+                                if cc == OWL.Thing:
                                     for y2 in self.graph.objects(u, pp):
                                         if y1 != y2:
-                                            self.store_triple((y1, sameAs, y2))
+                                            self.store_triple((y1, OWL.sameAs, y2))
                                 else:
-                                    if (y1, rdf_type, cc) in self.graph:
+                                    if (y1, RDF.type, cc) in self.graph:
                                         for y2 in self.graph.objects(u, pp):
                                             if (
                                                 y1 != y2
-                                                and (y2, rdf_type, cc) in self.graph
+                                                and (y2, RDF.type, cc) in self.graph
                                             ):
-                                                self.store_triple((y1, sameAs, y2))
+                                                self.store_triple((y1, OWL.sameAs, y2))
 
             # TODO: what if x.value not in (0, 1)? according to the spec
             # the cardinality shall be no more than 1, so add an # error?
 
         # RULE cls-oo
-        elif p == oneOf:
+        elif p == OWL.oneOf:
             for y in self._list(x):
-                self.store_triple((y, rdf_type, c))
+                self.store_triple((y, RDF.type, c))
 
     def _class_axioms(self, triple, cycle_num):
         """
@@ -819,42 +810,42 @@ class OWLRL_Semantics(Core):
         # in the document with the implementation
         c1, p, c2 = triple
         # RULE cax-sco
-        if p == subClassOf:
+        if p == RDFS.subClassOf:
             # Other axioms sets classes to be subclasses of themselves, to one can optimize the trivial case
             if c1 != c2:
-                for x in self.graph.subjects(rdf_type, c1):
-                    self.store_triple((x, rdf_type, c2))
+                for x in self.graph.subjects(RDF.type, c1):
+                    self.store_triple((x, RDF.type, c2))
 
         # RULES cax-eqc1 and cax-eqc1
         # Other axioms set classes to be equivalent to themselves, one can optimize the trivial case
-        elif p == equivalentClass and c1 != c2:
+        elif p == OWL.equivalentClass and c1 != c2:
             # RULE cax-eqc1
-            for x in self.graph.subjects(rdf_type, c1):
-                self.store_triple((x, rdf_type, c2))
+            for x in self.graph.subjects(RDF.type, c1):
+                self.store_triple((x, RDF.type, c2))
             # RULE cax-eqc1
-            for x in self.graph.subjects(rdf_type, c2):
-                self.store_triple((x, rdf_type, c1))
+            for x in self.graph.subjects(RDF.type, c2):
+                self.store_triple((x, RDF.type, c1))
 
         # RULE cax-dw
-        elif p == disjointWith:
-            for x in self.graph.subjects(rdf_type, c1):
-                if (x, rdf_type, c2) in self.graph:
+        elif p == OWL.disjointWith:
+            for x in self.graph.subjects(RDF.type, c1):
+                if (x, RDF.type, c2) in self.graph:
                     self.add_error(
                         "Disjoint classes %s and %s have a common individual %s"
                         % (c1, c2, x)
                     )
 
         # RULE cax-adc
-        elif p == rdf_type and c2 == AllDisjointClasses:
+        elif p == RDF.type and c2 == OWL.AllDisjointClasses:
             x = c1
-            for y in self.graph.objects(x, members):
+            for y in self.graph.objects(x, OWL.members):
                 classes = self._list(y)
                 if len(classes) > 0:
                     for i in range(0, len(classes) - 1):
                         cl1 = classes[i]
-                        for z in self.graph.subjects(rdf_type, cl1):
+                        for z in self.graph.subjects(RDF.type, cl1):
                             for cl2 in classes[(i + 1) :]:
-                                if (z, rdf_type, cl2) in self.graph:
+                                if (z, RDF.type, cl2) in self.graph:
                                     self.add_error(
                                         "Disjoint classes %s and %s have a common individual %s"
                                         % (cl1, cl2, z)
@@ -874,144 +865,144 @@ class OWLRL_Semantics(Core):
         s, p, o = triple
 
         # RULE scm-cls
-        if p == rdf_type and o == OWLClass:
+        if p == RDF.type and o == OWL.Class:
             c = s
-            self.store_triple((c, subClassOf, c))
-            self.store_triple((c, equivalentClass, c))
-            self.store_triple((c, subClassOf, Thing))
-            self.store_triple((Nothing, subClassOf, c))
+            self.store_triple((c, RDFS.subClassOf, c))
+            self.store_triple((c, OWL.equivalentClass, c))
+            self.store_triple((c, RDFS.subClassOf, OWL.Thing))
+            self.store_triple((OWL.Nothing, RDFS.subClassOf, c))
 
         # RULE scm-sco
         # Rule scm-eqc2
-        elif p == subClassOf:
+        elif p == RDFS.subClassOf:
             c1, c2 = s, o
             # RULE scm-sco
             # Optimize out the trivial identity case (set elsewhere already)
             if c1 != c2:
-                for c3 in self.graph.objects(c2, subClassOf):
+                for c3 in self.graph.objects(c2, RDFS.subClassOf):
                     # Another axiom already sets that...
                     if c1 != c3:
-                        self.store_triple((c1, subClassOf, c3))
+                        self.store_triple((c1, RDFS.subClassOf, c3))
             # RULE scm-eqc2
-            if (c2, subClassOf, c1) in self.graph:
-                self.store_triple((c1, equivalentClass, c2))
+            if (c2, RDFS.subClassOf, c1) in self.graph:
+                self.store_triple((c1, OWL.equivalentClass, c2))
 
         # RULE scm-eqc
-        elif p == equivalentClass and s != o:
+        elif p == OWL.equivalentClass and s != o:
             c1, c2 = s, o
-            self.store_triple((c1, subClassOf, c2))
-            self.store_triple((c2, subClassOf, c1))
+            self.store_triple((c1, RDFS.subClassOf, c2))
+            self.store_triple((c2, RDFS.subClassOf, c1))
 
         # RULE scm-op and RULE scm-dp folded together
         # There is a bit of a cheating here: 'Property' is not, strictly speaking, in the rule set!
-        elif p == rdf_type and (
-            o == ObjectProperty or o == DatatypeProperty or o == Property
+        elif p == RDF.type and (
+            o == OWL.ObjectProperty or o == OWL.DatatypeProperty or o == RDF.Property
         ):
             pp = s
-            self.store_triple((pp, subPropertyOf, pp))
-            self.store_triple((pp, equivalentProperty, pp))
+            self.store_triple((pp, RDFS.subPropertyOf, pp))
+            self.store_triple((pp, OWL.equivalentProperty, pp))
 
         # RULE scm-spo
         # RULE scm-eqp2
-        elif p == subPropertyOf and s != o:
+        elif p == RDFS.subPropertyOf and s != o:
             p1, p2 = s, o
             # Optimize out the trivial identity case (set elsewhere already)
             # RULE scm-spo
             if p1 != p2:
-                for p3 in self.graph.objects(p2, subPropertyOf):
+                for p3 in self.graph.objects(p2, RDFS.subPropertyOf):
                     if p1 != p3:
-                        self.store_triple((p1, subPropertyOf, p3))
+                        self.store_triple((p1, RDFS.subPropertyOf, p3))
 
             # RULE scm-eqp2
-            if (p2, subPropertyOf, p1) in self.graph:
-                self.store_triple((p1, equivalentProperty, p2))
+            if (p2, RDFS.subPropertyOf, p1) in self.graph:
+                self.store_triple((p1, OWL.equivalentProperty, p2))
 
         # RULE scm-eqp
         # Optimize out the trivial identity case (set elsewhere already)
-        elif p == equivalentProperty and s != o:
+        elif p == OWL.equivalentProperty and s != o:
             p1, p2 = s, o
-            self.store_triple((p1, subPropertyOf, p2))
-            self.store_triple((p2, subPropertyOf, p1))
+            self.store_triple((p1, RDFS.subPropertyOf, p2))
+            self.store_triple((p2, RDFS.subPropertyOf, p1))
 
         # RULES scm-dom1 and scm-dom2
-        elif p == rdfs_domain:
+        elif p == RDFS.domain:
             # RULE scm-dom1
             pp, c1 = s, o
-            for (_x, _y, c2) in self.graph.triples((c1, subClassOf, None)):
+            for (_x, _y, c2) in self.graph.triples((c1, RDFS.subClassOf, None)):
                 if c1 != c2:
-                    self.store_triple((pp, rdfs_domain, c2))
+                    self.store_triple((pp, RDFS.domain, c2))
             # RULE scm-dom1
             p2, c = s, o
-            for (p1, _x, _y) in self.graph.triples((None, subPropertyOf, p2)):
+            for (p1, _x, _y) in self.graph.triples((None, RDFS.subPropertyOf, p2)):
                 if p1 != p2:
-                    self.store_triple((p1, rdfs_domain, c))
+                    self.store_triple((p1, RDFS.domain, c))
 
         # RULES scm-rng1 and scm-rng2
-        elif p == rdfs_range:
+        elif p == RDFS.range:
             # RULE scm-rng1
             pp, c1 = s, o
-            for (_x, _y, c2) in self.graph.triples((c1, subClassOf, None)):
+            for (_x, _y, c2) in self.graph.triples((c1, RDFS.subClassOf, None)):
                 if c1 != c2:
-                    self.store_triple((pp, rdfs_range, c2))
+                    self.store_triple((pp, RDFS.range, c2))
             # RULE scm-rng1
             p2, c = s, o
-            for (p1, _x, _y) in self.graph.triples((None, subPropertyOf, p2)):
+            for (p1, _x, _y) in self.graph.triples((None, RDFS.subPropertyOf, p2)):
                 if p1 != p2:
-                    self.store_triple((p1, rdfs_range, c))
+                    self.store_triple((p1, RDFS.range, c))
 
         # RULE scm-hv
-        elif p == hasValue:
+        elif p == OWL.hasValue:
             c1, i = s, o
-            for p1 in self.graph.objects(c1, onProperty):
-                for c2 in self.graph.subjects(hasValue, i):
-                    for p2 in self.graph.objects(c2, onProperty):
-                        if (p1, subPropertyOf, p2) in self.graph:
-                            self.store_triple((c1, subClassOf, c2))
+            for p1 in self.graph.objects(c1, OWL.onProperty):
+                for c2 in self.graph.subjects(OWL.hasValue, i):
+                    for p2 in self.graph.objects(c2, OWL.onProperty):
+                        if (p1, RDFS.subPropertyOf, p2) in self.graph:
+                            self.store_triple((c1, RDFS.subClassOf, c2))
 
         # RULES scm-svf1 and scm-svf2
-        elif p == someValuesFrom:
+        elif p == OWL.someValuesFrom:
             # RULE scm-svf1
             c1, y1 = s, o
-            for pp in self.graph.objects(c1, onProperty):
-                for c2 in self.graph.subjects(onProperty, pp):
-                    for y2 in self.graph.objects(c2, someValuesFrom):
-                        if (y1, subClassOf, y2) in self.graph:
-                            self.store_triple((c1, subClassOf, c2))
+            for pp in self.graph.objects(c1, OWL.onProperty):
+                for c2 in self.graph.subjects(OWL.onProperty, pp):
+                    for y2 in self.graph.objects(c2, OWL.someValuesFrom):
+                        if (y1, RDFS.subClassOf, y2) in self.graph:
+                            self.store_triple((c1, RDFS.subClassOf, c2))
 
             # RULE scm-svf2
             c1, y = s, o
-            for p1 in self.graph.objects(c1, onProperty):
-                for c2 in self.graph.subjects(someValuesFrom, y):
-                    for p2 in self.graph.objects(c2, onProperty):
-                        if (p1, subPropertyOf, p2) in self.graph:
-                            self.store_triple((c1, subClassOf, c2))
+            for p1 in self.graph.objects(c1, OWL.onProperty):
+                for c2 in self.graph.subjects(OWL.someValuesFrom, y):
+                    for p2 in self.graph.objects(c2, OWL.onProperty):
+                        if (p1, RDFS.subPropertyOf, p2) in self.graph:
+                            self.store_triple((c1, RDFS.subClassOf, c2))
 
         # RULES scm-avf1 and scm-avf2
-        elif p == allValuesFrom:
+        elif p == OWL.allValuesFrom:
             # RULE scm-avf1
             c1, y1 = s, o
-            for pp in self.graph.objects(c1, onProperty):
-                for c2 in self.graph.subjects(onProperty, pp):
-                    for y2 in self.graph.objects(c2, allValuesFrom):
-                        if (y1, subClassOf, y2) in self.graph:
-                            self.store_triple((c1, subClassOf, c2))
+            for pp in self.graph.objects(c1, OWL.onProperty):
+                for c2 in self.graph.subjects(OWL.onProperty, pp):
+                    for y2 in self.graph.objects(c2, OWL.allValuesFrom):
+                        if (y1, RDFS.subClassOf, y2) in self.graph:
+                            self.store_triple((c1, RDFS.subClassOf, c2))
 
             # RULE scm-avf2
             c1, y = s, o
-            for p1 in self.graph.objects(c1, onProperty):
-                for c2 in self.graph.subjects(allValuesFrom, y):
-                    for p2 in self.graph.objects(c2, onProperty):
-                        if (p1, subPropertyOf, p2) in self.graph:
-                            self.store_triple((c2, subClassOf, c1))
+            for p1 in self.graph.objects(c1, OWL.onProperty):
+                for c2 in self.graph.subjects(OWL.allValuesFrom, y):
+                    for p2 in self.graph.objects(c2, OWL.onProperty):
+                        if (p1, RDFS.subPropertyOf, p2) in self.graph:
+                            self.store_triple((c2, RDFS.subClassOf, c1))
 
         # RULE scm-int
-        elif p == intersectionOf:
+        elif p == OWL.intersectionOf:
             c, x = s, o
             for ci in self._list(x):
-                self.store_triple((c, subClassOf, ci))
+                self.store_triple((c, RDFS.subClassOf, ci))
 
         # RULE scm-uni
-        elif p == unionOf:
+        elif p == OWL.unionOf:
             c, x = s, o
             for ci in self._list(x):
-                self.store_triple((ci, subClassOf, c))
+                self.store_triple((ci, RDFS.subClassOf, c))

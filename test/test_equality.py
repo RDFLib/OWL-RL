@@ -6,12 +6,13 @@ Test for OWL 2 RL/RDF rules from
 https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
 """
 
-from rdflib import Graph, BNode, Literal, Namespace, RDF, XSD, RDFS, OWL
+from rdflib import Graph, Literal, OWL
+import sys
+from pathlib import Path
 
+sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
-
-DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-T = Namespace("http://test.org/")
+from owlrl.Namespaces import ERRNS, T
 
 
 def test_eq_diff1():
@@ -37,7 +38,7 @@ def test_eq_diff1():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = g.objects(predicate=DAML.error)
+    result = g.objects(predicate=ERRNS.error)
     expected = Literal(
         "'sameAs' and 'differentFrom' cannot be used on the same"
         + " subject-object pair:"

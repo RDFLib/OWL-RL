@@ -12,7 +12,7 @@ OWL-RL Documentation
 
 .. toctree::
    :maxdepth: 2
-   :caption: Getting Started:
+   :caption: Getting Started
 
    installation
    usage
@@ -27,11 +27,8 @@ OWL-RL Documentation
    Closure
    CombinedClosure
    DatatypeHandling
-   Literals
-   OWL
    OWLRL
    OWLRLExtras
-   RDFS
    RDFSClosure
    RestrictedDatatype
    XsdDatatypes
