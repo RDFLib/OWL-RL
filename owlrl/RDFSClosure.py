@@ -28,22 +28,9 @@ __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import rdflib
+from rdflib import Literal
+from rdflib.namespace import RDF, RDFS
 from itertools import product
-
-from owlrl.RDFS import Property, rdf_type
-from owlrl.RDFS import (
-    Resource,
-    Class,
-    subClassOf,
-    subPropertyOf,
-    rdfs_domain,
-    rdfs_range,
-)
-from owlrl.RDFS import Literal, ContainerMembershipProperty, member, Datatype
-
-# noinspection PyPep8Naming
-from owlrl.RDFS import RDFNS as ns_rdf
-
 from owlrl.Closure import Core
 from owlrl.AxiomaticTriples import RDFS_Axiomatic_Triples, RDFS_D_Axiomatic_Triples
 
@@ -100,11 +87,11 @@ class RDFS_Semantics(Core):
         for t in RDFS_Axiomatic_Triples:
             self.graph.add(t)
         for i in range(1, self.IMaxNum + 1):
-            ci = ns_rdf[("_%d" % i)]
-            self.graph.add((ci, rdf_type, Property))
-            self.graph.add((ci, rdfs_domain, Resource))
-            self.graph.add((ci, rdfs_range, Resource))
-            self.graph.add((ci, rdf_type, ContainerMembershipProperty))
+            ci = RDF[("_%d" % i)]
+            self.graph.add((ci, RDF.type, RDF.Property))
+            self.graph.add((ci, RDFS.domain, RDFS.Resource))
+            self.graph.add((ci, RDFS.range, RDFS.Resource))
+            self.graph.add((ci, RDF.type, RDFS.ContainerMembershipProperty))
 
     def add_d_axioms(self):
         """
@@ -113,7 +100,7 @@ class RDFS_Semantics(Core):
         # #1
         literals = (lt for lt in self._literals() if lt.datatype is not None)
         for lt in literals:
-            self.graph.add((lt, rdf_type, lt.datatype))
+            self.graph.add((lt, RDF.type, lt.datatype))
 
         for t in RDFS_D_Axiomatic_Triples:
             self.graph.add(t)
@@ -156,51 +143,51 @@ class RDFS_Semantics(Core):
         """
         s, p, o = t
         # rdf1
-        self.store_triple((p, rdf_type, Property))
+        self.store_triple((p, RDF.type, RDF.Property))
         # rdfs4a
         if cycle_num == 1:
-            self.store_triple((s, rdf_type, Resource))
+            self.store_triple((s, RDF.type, RDFS.Resource))
         # rdfs4b
         if cycle_num == 1:
-            self.store_triple((o, rdf_type, Resource))
-        if p == rdfs_domain:
+            self.store_triple((o, RDF.type, RDFS.Resource))
+        if p == RDFS.domain:
             # rdfs2
             for uuu, Y, yyy in self.graph.triples((None, s, None)):
-                self.store_triple((uuu, rdf_type, o))
-        if p == rdfs_range:
+                self.store_triple((uuu, RDF.type, o))
+        if p == RDFS.range:
             # rdfs3
             for uuu, Y, vvv in self.graph.triples((None, s, None)):
-                self.store_triple((vvv, rdf_type, o))
-        if p == subPropertyOf:
+                self.store_triple((vvv, RDF.type, o))
+        if p == RDFS.subPropertyOf:
             # rdfs5
-            for Z, Y, xxx in self.graph.triples((o, subPropertyOf, None)):
-                self.store_triple((s, subPropertyOf, xxx))
+            for Z, Y, xxx in self.graph.triples((o, RDFS.subPropertyOf, None)):
+                self.store_triple((s, RDFS.subPropertyOf, xxx))
             # rdfs7
             for zzz, Z, www in self.graph.triples((None, s, None)):
                 self.store_triple((zzz, o, www))
-        if p == rdf_type and o == Property:
+        if p == RDF.type and o == RDF.Property:
             # rdfs6
-            self.store_triple((s, subPropertyOf, s))
-        if p == rdf_type and o == Class:
+            self.store_triple((s, RDFS.subPropertyOf, s))
+        if p == RDF.type and o == RDFS.Class:
             # rdfs8
-            self.store_triple((s, subClassOf, Resource))
+            self.store_triple((s, RDFS.subClassOf, RDFS.Resource))
             # rdfs10
-            self.store_triple((s, subClassOf, s))
-        if p == subClassOf:
+            self.store_triple((s, RDFS.subClassOf, s))
+        if p == RDFS.subClassOf:
             # rdfs9
-            for vvv, Y, Z in self.graph.triples((None, rdf_type, s)):
-                self.store_triple((vvv, rdf_type, o))
+            for vvv, Y, Z in self.graph.triples((None, RDF.type, s)):
+                self.store_triple((vvv, RDF.type, o))
             # rdfs11
-            for Z, Y, xxx in self.graph.triples((o, subClassOf, None)):
-                self.store_triple((s, subClassOf, xxx))
-        if p == rdf_type and o == ContainerMembershipProperty:
+            for Z, Y, xxx in self.graph.triples((o, RDFS.subClassOf, None)):
+                self.store_triple((s, RDFS.subClassOf, xxx))
+        if p == RDF.type and o == RDFS.ContainerMembershipProperty:
             # rdfs12
-            self.store_triple((s, subPropertyOf, member))
-        if p == rdf_type and o == Datatype:
-            self.store_triple((s, subClassOf, Literal))
+            self.store_triple((s, RDFS.subPropertyOf, RDFS.member))
+        if p == RDF.type and o == RDFS.Datatype:
+            self.store_triple((s, RDFS.subClassOf, RDFS.Literal))
 
     def _literals(self):
         """
         Get all literals defined in the graph.
         """
-        return set(o for s, p, o in self.graph if isinstance(o, rdflib.Literal))
+        return set(o for s, p, o in self.graph if isinstance(o, Literal))

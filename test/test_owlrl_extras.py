@@ -2,12 +2,12 @@
 Unit tests for OWL RL extras closure.
 """
 
-import io
-from rdflib import Graph, BNode, Literal, Namespace, OWL, RDF, RDFS, XSD
-
+from rdflib import Graph, Literal, RDF, XSD
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
-
-T = Namespace("http://test.org/")
+from owlrl.Namespaces import T
 
 
 def test_one_time_rules():
@@ -29,7 +29,7 @@ def test_one_time_rules():
     """
 
     g = Graph()
-    g.parse(io.StringIO(data), format="n3")
+    g.parse(data=data, format="n3")
 
     lt = Literal(2, datatype=XSD.integer)
     g.add((lt, RDF.type, XSD.integer))

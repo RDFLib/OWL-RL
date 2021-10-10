@@ -33,12 +33,10 @@ __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 # noinspection PyPep8Naming
-from owlrl.RDFS import RDFNS as ns_rdf
+# from owlrl.RDFS import RDFNS as ns_rdf
+from rdflib.namespace import RDF, XSD
 
 from rdflib.term import XSDToPython, Literal, _toPythonMapping
-
-# noinspection PyPep8Naming
-from rdflib.namespace import XSD as ns_xsd
 
 import datetime, time, re
 from decimal import Decimal
@@ -636,56 +634,56 @@ def _strToPlainLiteral(v):
 # Replacement of RDFLib's conversion function. Each entry assigns a function to an XSD datatype, attempting to convert
 # a string to a Python datatype (or raise an exception if some problem is found)
 AltXSDToPYTHON = {
-    ns_xsd["language"]: lambda v: _strToVal_Regexp(v, _re_language),
-    ns_xsd["NMTOKEN"]: lambda v: _strToVal_Regexp(v, _re_NMTOKEN, re.U),
-    ns_xsd["Name"]: lambda v: _strToVal_Regexp(v, _re_NMTOKEN, re.U, _re_Name_ex),
-    ns_xsd["NCName"]: lambda v: _strToVal_Regexp(v, _re_NCName, re.U, _re_NCName_ex),
-    ns_xsd["token"]: _strToToken,
-    ns_rdf["PlainLiteral"]: _strToPlainLiteral,
-    ns_xsd["boolean"]: _strToBool,
-    ns_xsd["decimal"]: _strToDecimal,
-    ns_xsd["anyURI"]: _strToAnyURI,
-    ns_xsd["base64Binary"]: _strToBase64Binary,
-    ns_xsd["double"]: _strToDouble,
-    ns_xsd["float"]: _strToFloat,
-    ns_xsd["byte"]: lambda v: _strToBoundNumeral(v, _limits_byte, int),
-    ns_xsd["int"]: lambda v: _strToBoundNumeral(v, _limits_int, int),
-    ns_xsd["long"]: lambda v: _strToBoundNumeral(v, _limits_long, int),
-    ns_xsd["positiveInteger"]: lambda v: _strToBoundNumeral(
+    XSD.language: lambda v: _strToVal_Regexp(v, _re_language),
+    XSD.NMTOKEN: lambda v: _strToVal_Regexp(v, _re_NMTOKEN, re.U),
+    XSD.Name: lambda v: _strToVal_Regexp(v, _re_NMTOKEN, re.U, _re_Name_ex),
+    XSD.NCName: lambda v: _strToVal_Regexp(v, _re_NCName, re.U, _re_NCName_ex),
+    XSD.token: _strToToken,
+    RDF.PlainLiteral: _strToPlainLiteral,
+    XSD.boolean: _strToBool,
+    XSD.decimal: _strToDecimal,
+    XSD.anyURI: _strToAnyURI,
+    XSD.base64Binary: _strToBase64Binary,
+    XSD.double: _strToDouble,
+    XSD.float: _strToFloat,
+    XSD.byte: lambda v: _strToBoundNumeral(v, _limits_byte, int),
+    XSD.int: lambda v: _strToBoundNumeral(v, _limits_int, int),
+    XSD.long: lambda v: _strToBoundNumeral(v, _limits_long, int),
+    XSD.positiveInteger: lambda v: _strToBoundNumeral(
         v, _limits_positiveInteger, int
     ),
-    ns_xsd["nonPositiveInteger"]: lambda v: _strToBoundNumeral(
+    XSD.nonPositiveInteger: lambda v: _strToBoundNumeral(
         v, _limits_nonPositiveInteger, int
     ),
-    ns_xsd["negativeInteger"]: lambda v: _strToBoundNumeral(
+    XSD.negativeInteger: lambda v: _strToBoundNumeral(
         v, _limits_negativeInteger, int
     ),
-    ns_xsd["nonNegativeInteger"]: lambda v: _strToBoundNumeral(
+    XSD.nonNegativeInteger: lambda v: _strToBoundNumeral(
         v, _limits_nonNegativeInteger, int
     ),
-    ns_xsd["short"]: lambda v: _strToBoundNumeral(v, _limits_short, int),
-    ns_xsd["unsignedByte"]: lambda v: _strToBoundNumeral(v, _limits_unsignedByte, int),
-    ns_xsd["unsignedShort"]: lambda v: _strToBoundNumeral(
+    XSD.short: lambda v: _strToBoundNumeral(v, _limits_short, int),
+    XSD.unsignedByte: lambda v: _strToBoundNumeral(v, _limits_unsignedByte, int),
+    XSD.unsignedShort: lambda v: _strToBoundNumeral(
         v, _limits_unsignedShort, int
     ),
-    ns_xsd["unsignedInt"]: lambda v: _strToBoundNumeral(v, _limits_unsignedInt, int),
-    ns_xsd["unsignedLong"]: lambda v: _strToBoundNumeral(v, _limits_unsignedLong, int),
-    ns_xsd["hexBinary"]: _strToHexBinary,
-    ns_xsd["dateTime"]: lambda v: _strToDateTimeAndStamp(v, False),
-    ns_xsd["dateTimeStamp"]: lambda v: _strToDateTimeAndStamp(v, True),
-    ns_rdf["XMLLiteral"]: _strToXMLLiteral,
-    ns_xsd["integer"]: int,
-    ns_xsd["string"]: lambda v: v,
-    ns_rdf["HTML"]: lambda v: v,
-    ns_xsd["normalizedString"]: lambda v: _strToVal_Regexp(v, _re_token),
+    XSD.unsignedInt: lambda v: _strToBoundNumeral(v, _limits_unsignedInt, int),
+    XSD.unsignedLong: lambda v: _strToBoundNumeral(v, _limits_unsignedLong, int),
+    XSD.hexBinary: _strToHexBinary,
+    XSD.dateTime: lambda v: _strToDateTimeAndStamp(v, False),
+    XSD.dateTimeStamp: lambda v: _strToDateTimeAndStamp(v, True),
+    RDF.XMLLiteral: _strToXMLLiteral,
+    XSD.integer: int,
+    XSD.string: lambda v: v,
+    RDF.HTML: lambda v: v,
+    XSD.normalizedString: lambda v: _strToVal_Regexp(v, _re_token),
     # These are RDFS specific...
-    ns_xsd["time"]: _strToTime,
-    ns_xsd["date"]: _strToDate,
-    ns_xsd["gYearMonth"]: _strTogYearMonth,
-    ns_xsd["gYear"]: _strTogYear,
-    ns_xsd["gMonthDay"]: _strTogMonthDay,
-    ns_xsd["gDay"]: _strTogDay,
-    ns_xsd["gMonth"]: _strTogMonth,
+    XSD.time: _strToTime,
+    XSD.date: _strToDate,
+    XSD.gYearMonth: _strTogYearMonth,
+    XSD.gYear: _strTogYear,
+    XSD.gMonthDay: _strTogMonthDay,
+    XSD.gDay: _strTogDay,
+    XSD.gMonth: _strTogMonth,
 }
 
 

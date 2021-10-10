@@ -8,18 +8,12 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 
 from unittest import mock
 
-from rdflib import Graph, Literal, Namespace, RDF, OWL
-
-try:
-    import owlrl
-except:
-    import sys
-    from pathlib import Path
-    sys.path.append(str(Path(__file__).parent.parent))
-    import owlrl
-
-DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-T = Namespace("http://test.org/")
+from rdflib import Graph, Literal, RDF, OWL
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+import owlrl
+from owlrl.Namespaces import ERRNS, T
 
 
 def test_cls_maxc1():
@@ -53,7 +47,7 @@ def test_cls_maxc1():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Erroneous usage of maximum cardinality with"
         " http://test.org/x and http://test.org/y"
@@ -124,7 +118,7 @@ def test_cls_maxqc1():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Erroneous usage of maximum qualified cardinality with"
         " http://test.org/x, http://test.org/C and http://test.org/y"
@@ -163,7 +157,7 @@ def test_cls_maxqc2():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Erroneous usage of maximum qualified cardinality with"
         + " http://test.org/x, http://www.w3.org/2002/07/owl#Thing and"
@@ -318,13 +312,9 @@ def test_cls_avf_error(mock_rtc):
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Violation of type restriction for allValuesFrom in http://test.org/p"
         " for datatype http://test.org/y on value http://test.org/v"
     )
     assert expected == result
-
-
-if __name__ == "__main__":
-    test_cls_maxqc1()

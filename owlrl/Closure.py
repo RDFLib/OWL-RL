@@ -26,13 +26,9 @@ __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import rdflib
-from rdflib import BNode
-from rdflib import Literal as rdflibLiteral
-from rdflib import Namespace
-
-# noinspection PyPep8Naming
-from owlrl.RDFS import RDFNS as ns_rdf
-from owlrl.RDFS import rdf_type
+from rdflib.namespace import RDF
+from rdflib import BNode, Literal
+from .Namespaces import ERRNS
 
 debugGlobal = False
 offlineGeneration = False
@@ -106,7 +102,7 @@ class Core:
         cont = True
         while cont:
             cont = False
-            predicate = ns_rdf[("_%d" % n)]
+            predicate = RDF[("_%d" % n)]
             for (s, p, o) in graph.triples((None, predicate, None)):
                 # there is at least one if we got here
                 maxnum = n
@@ -210,9 +206,9 @@ class Core:
     def store_triple(self, t):
         """
         In contrast to its name, this does not yet add anything to the graph itself, it just stores the tuple in an
-        internal set (:code:`Core.added_triples`). (It is important for this to be a set: some of the rules in the various
-        closures may generate the same tuples several times.) Before adding the tuple to the set, the method checks
-        whether the tuple is in the final graph already (if yes, it is not added to the set).
+        internal set (:code:`Core.added_triples`). (It is important for this to be a set: some of the rules in the
+        various closures may generate the same tuples several times.) Before adding the tuple to the set, the method
+        checks whether the tuple is in the final graph already (if yes, it is not added to the set).
 
         The set itself is emptied at the start of every processing cycle; the triples are then effectively added to the
         graph at the end of such a cycle. If the set is actually empty at that point, this means that the cycle has not
@@ -222,7 +218,7 @@ class Core:
         :type t: tuple (s,p,o)
         """
         (s, p, o) = t
-        if not isinstance(p, rdflibLiteral) and t not in self.graph:
+        if not isinstance(p, Literal) and t not in self.graph:
             if self._debug or offlineGeneration:
                 print(t)
             self.added_triples.add(t)
@@ -292,9 +288,8 @@ class Core:
         if self.error_messages:
             # I am not sure this is the right vocabulary to use for this purpose, but I haven't found anything!
             # I could, of course, come up with my own, but I am not sure that would be kosher...
-            ERRNS = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
             self.graph.bind("err", "http://www.daml.org/2002/03/agents/agent-ont#")
             for m in self.error_messages:
                 message = BNode()
-                self.graph.add((message, rdf_type, ERRNS["ErrorMessage"]))
-                self.graph.add((message, ERRNS["error"], rdflibLiteral(m)))
+                self.graph.add((message, RDF.type, ERRNS.ErrorMessage))
+                self.graph.add((message, ERRNS.error, Literal(m)))

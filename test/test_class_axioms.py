@@ -6,12 +6,12 @@ Test for OWL 2 RL/RDF rules from
 https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
 """
 
-from rdflib import Graph, Literal, Namespace, RDF, OWL
-
+from rdflib import Graph, Literal, RDF, OWL
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
-
-DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-T = Namespace("http://test.org/")
+from owlrl.Namespaces import ERRNS, T
 
 
 def test_cax_dw():
@@ -40,7 +40,7 @@ def test_cax_dw():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Disjoint classes http://test.org/c1 and http://test.org/c2"
         " have a common individual http://test.org/x"

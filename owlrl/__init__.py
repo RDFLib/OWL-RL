@@ -184,7 +184,7 @@ from .OWLRLExtras import OWLRL_Extension, OWLRL_Extension_Trimming
 from .OWLRL import OWLRL_Semantics
 from .RDFSClosure import RDFS_Semantics
 from .CombinedClosure import RDFS_OWLRL_Semantics
-from .OWL import imports
+from rdflib.namespace import OWL
 
 ################################################################################################################
 RDFXML = "xml"
@@ -194,27 +194,10 @@ AUTO = "auto"
 RDFA = "rdfa"
 
 NONE = "none"
-RDF = "rdf"
-RDFS = "rdfs"
-OWL = "owl"
 FULL = "full"
 
-if int(rdflib_version[0]) >= 6:
-    json_ld_available = True
-else:
-    try:
-        from rdflib_jsonld.parser import JsonLDParser
-        from rdflib_jsonld.serializer import JsonLDSerializer
-        from rdflib.plugin import register, Serializer, Parser
-
-        register("json-ld", Parser, "rdflib_jsonld.parser", "JsonLDParser")
-        register("json-ld", Serializer, "rdflib_jsonld.serializer", "JsonLDSerializer")
-        json_ld_available = True
-    except:
-        json_ld_available = False
-
-
 ################################################################################################################
+
 
 # noinspection PyShadowingBuiltins
 def __parse_input(iformat, inp, graph):
@@ -232,9 +215,7 @@ def __parse_input(iformat, inp, graph):
         else:
             if inp.endswith(".ttl") or inp.endswith(".n3"):
                 format = "turtle"
-            elif json_ld_available and (
-                inp.endswith(".json") or inp.endswith(".jsonld")
-            ):
+            if inp.endswith(".json") or inp.endswith(".jsonld"):
                 format = "json-ld"
             elif inp.endswith(".html"):
                 format = "rdfa1.1"
@@ -247,10 +228,7 @@ def __parse_input(iformat, inp, graph):
     elif iformat == RDFXML:
         format = "xml"
     elif iformat == JSON:
-        if json_ld_available:
-            format = "json-ld"
-        else:
-            raise Exception("JSON-LD parser is not available")
+        format = "json-ld"
     else:
         raise Exception("Unknown input syntax")
 
@@ -281,7 +259,7 @@ def interpret_owl_imports(iformat, graph):
     """
     while True:
         # 1. collect the import statements:
-        all_imports = [t for t in graph.triples((None, imports, None))]
+        all_imports = [t for t in graph.triples((None, OWL.imports, None))]
         if len(all_imports) == 0:
             # no import statement whatsoever, we can go on...
             return
@@ -623,9 +601,6 @@ def convert_graph(options, closureClass=None):
     if options.format == TURTLE:
         return graph.serialize(format="turtle")
     elif options.format == JSON:
-        if json_ld_available:
-            return graph.serialize(format="json-ld")
-        else:
-            raise Exception("JSON-LD serializer is not available")
+        return graph.serialize(format="json-ld")
     else:
         return graph.serialize(format="pretty-xml")

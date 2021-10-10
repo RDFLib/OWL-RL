@@ -2,13 +2,12 @@
 Unit tests for RDFS closure.
 """
 
-from rdflib import Graph, Literal, Namespace, RDF, XSD
-
+from rdflib import Graph, Literal, RDF, XSD
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
-
-
-DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-T = Namespace("http://test.org/")
+from owlrl.Namespaces import T
 
 
 def test_one_time_rules():
