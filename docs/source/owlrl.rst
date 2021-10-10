@@ -1,5 +1,5 @@
-owlrl
-=====
+OWL-RL
+======
 
 .. automodule:: owlrl
     :members:

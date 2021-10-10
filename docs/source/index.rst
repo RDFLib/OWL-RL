@@ -28,10 +28,8 @@ OWL-RL Documentation
    CombinedClosure
    DatatypeHandling
    Literals
-   OWL
    OWLRL
    OWLRLExtras
-   RDFS
    RDFSClosure
    RestrictedDatatype
    XsdDatatypes
