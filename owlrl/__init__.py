@@ -158,26 +158,14 @@ which will result in a proper graph expansion except for the datatype specific c
 """
 
 # Examples: LangString is disjoint from String
-__version__ = "5.2.3"
+__version__ = "6.0.2"
 __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
-import sys
-import io
-
-if sys.version_info < (
-    3,
-    5,
-):
-    raise RuntimeError("This version of owl-rl cannot be used in python < 3.5")
 # noinspection PyPackageRequirements,PyPackageRequirements,PyPackageRequirements
 import rdflib
-from rdflib import __version__ as rdflib_version
-from rdflib import Literal as rdflibLiteral
-
-# noinspection PyPep8Naming
-from rdflib import Graph
+from rdflib import Graph, Literal
 
 from . import DatatypeHandling, Closure
 from .OWLRLExtras import OWLRL_Extension, OWLRL_Extension_Trimming
@@ -258,7 +246,7 @@ def interpret_owl_imports(iformat, graph):
         for (s, p, uri) in all_imports:
             # this is not 100% kosher. The expected object for an import statement is a URI. However,
             # on local usage, a string would also make sense, so I do that one, too
-            if isinstance(uri, rdflibLiteral):
+            if isinstance(uri, Literal):
                 __parse_input(iformat, str(uri), graph)
             else:
                 __parse_input(iformat, uri, graph)
@@ -546,7 +534,7 @@ def convert_graph(options, closureClass=None):
 
     # add the possible extra text (ie, the text input on the HTML page)
     if options.text is not None:
-        graph.parse(io.StringIO(options.text), format="n3")
+        graph.parse(data=options.text, format="n3")
 
     # Get all the options right
     # noinspection PyPep8Naming
@@ -565,10 +553,6 @@ def convert_graph(options, closureClass=None):
     if owlClosure:
         interpret_owl_imports(iformat, graph)
 
-    # adds to the 'beauty' of the output
-    graph.bind("owl", "http://www.w3.org/2002/07/owl#")
-    graph.bind("xsd", "http://www.w3.org/2001/XMLSchema#")
-
     # @@@@ some smarter choice should be used later to decide what the closure class is!!! That should
     # also control the import management. Eg, if the superclass includes OWL...
     if closureClass is not None:
@@ -586,9 +570,9 @@ def convert_graph(options, closureClass=None):
         datatype_axioms=daxioms,
     ).expand(graph)
 
-    if options.format == "turtle":
-        return graph.serialize(format="turtle")
+    if options.format == "rdfxml":
+        return graph.serialize(format="pretty-xml")
     elif options.format == "json":
         return graph.serialize(format="json-ld")
     else:
-        return graph.serialize(format="pretty-xml")
+        return graph.serialize(format="turtle")

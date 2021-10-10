@@ -707,7 +707,7 @@ if __name__ == "__main__":
 
     dtype = sys.argv[1]
     string = sys.argv[2]
-    datatype = ns_xsd[dtype]
+    datatype = XSD[dtype]
     result = AltXSDToPYTHON[datatype](string)
     print(type(result))
     print(result)

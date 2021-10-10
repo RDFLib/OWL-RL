@@ -631,7 +631,7 @@ class OWLRL_Semantics(Core):
                     if (i1, p1, i2) in self.graph:
                         self.add_error(
                             "Negative (datatype) property assertion violated for: (%s, %s, %s)"
-                            % (i1, p1, self.get_literal_value(i2))
+                            % (i1, p1, i2)
                         )
 
     def _classes(self, triple, cycle_num):
