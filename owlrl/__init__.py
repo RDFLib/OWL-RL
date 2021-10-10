@@ -124,12 +124,14 @@ will use the improved conversion methods without resetting them. Ie, the code st
     DeductiveClosure().expand(graph)
     ...
 
+
 The default situation can be set back using the
 :py:meth:`.DeductiveClosure.use_rdflib_datatypes_conversions` call.
 
 It is, however, not *required* to use these methods at all. I.e., the user can use::
 
     DeductiveClosure(improved_datatypes=False).expand(graph)
+
 
 which will result in a proper graph expansion except for the datatype specific comparisons which will be incomplete.
 

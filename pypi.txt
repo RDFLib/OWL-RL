@@ -13,3 +13,6 @@ git push --tags
 python setup.py bdist_wheel sdist
 
 twine upload ./dist/*
+
+build docco
+    `python setup.py build_sphinx`
