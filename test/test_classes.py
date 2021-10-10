@@ -10,7 +10,13 @@ from unittest import mock
 
 from rdflib import Graph, Literal, Namespace, RDF, OWL
 
-import owlrl
+try:
+    import owlrl
+except:
+    import sys
+    from pathlib import Path
+    sys.path.append(str(Path(__file__).parent.parent))
+    import owlrl
 
 DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
 T = Namespace("http://test.org/")
@@ -109,17 +115,12 @@ def test_cls_maxqc1():
     """
     g = Graph()
 
-    x = T.x
-    p = T.p
-    c = T.C
-    u = T.u
-    y = T.y
-
-    g.add((x, OWL.maxQualifiedCardinality, Literal(0)))
-    g.add((x, OWL.onProperty, p))
-    g.add((x, OWL.onClass, c))
-    g.add((u, p, y))
-    g.add((y, RDF.type, c))
+    g.add((T.x, OWL.maxQualifiedCardinality, Literal(0)))
+    g.add((T.x, OWL.onProperty, T.p))
+    g.add((T.x, OWL.onClass, T.C))
+    g.add((T.u, RDF.type, T.x))
+    g.add((T.u, T.p, T.y))
+    g.add((T.y, RDF.type, T.C))
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
@@ -323,3 +324,7 @@ def test_cls_avf_error(mock_rtc):
         " for datatype http://test.org/y on value http://test.org/v"
     )
     assert expected == result
+
+
+if __name__ == "__main__":
+    test_cls_maxqc1()

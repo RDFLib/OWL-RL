@@ -1,2 +1,15 @@
 rm -r .pytest_cache build dist owlrl.egg-info
 
+git commit -am "..."
+
+git tag "v5.2.3"
+
+git push
+
+git push --tags
+
+# markup release on GitHub - https://github.com/RDFLib/OWL-RL/releases
+
+python setup.py bdist_wheel sdist
+
+twine upload ./dist/*
