@@ -124,12 +124,14 @@ will use the improved conversion methods without resetting them. Ie, the code st
     DeductiveClosure().expand(graph)
     ...
 
+
 The default situation can be set back using the
 :py:meth:`.DeductiveClosure.use_rdflib_datatypes_conversions` call.
 
 It is, however, not *required* to use these methods at all. I.e., the user can use::
 
     DeductiveClosure(improved_datatypes=False).expand(graph)
+
 
 which will result in a proper graph expansion except for the datatype specific comparisons which will be incomplete.
 
@@ -158,63 +160,22 @@ which will result in a proper graph expansion except for the datatype specific c
 """
 
 # Examples: LangString is disjoint from String
-__version__ = "5.2.3"
+__version__ = "6.0.2"
 __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
-import sys
-import io
-
-if sys.version_info < (
-    3,
-    5,
-):
-    raise RuntimeError("This version of owl-rl cannot be used in python < 3.5")
 # noinspection PyPackageRequirements,PyPackageRequirements,PyPackageRequirements
 import rdflib
-from rdflib import __version__ as rdflib_version
-from rdflib import Literal as rdflibLiteral
-
-# noinspection PyPep8Naming
-from rdflib import Graph
+from rdflib import Graph, Literal
 
 from . import DatatypeHandling, Closure
 from .OWLRLExtras import OWLRL_Extension, OWLRL_Extension_Trimming
 from .OWLRL import OWLRL_Semantics
 from .RDFSClosure import RDFS_Semantics
 from .CombinedClosure import RDFS_OWLRL_Semantics
-from .OWL import imports
+from rdflib.namespace import OWL
 
-################################################################################################################
-RDFXML = "xml"
-TURTLE = "turtle"
-JSON = "json"
-AUTO = "auto"
-RDFA = "rdfa"
-
-NONE = "none"
-RDF = "rdf"
-RDFS = "rdfs"
-OWL = "owl"
-FULL = "full"
-
-if int(rdflib_version[0]) >= 6:
-    json_ld_available = True
-else:
-    try:
-        from rdflib_jsonld.parser import JsonLDParser
-        from rdflib_jsonld.serializer import JsonLDSerializer
-        from rdflib.plugin import register, Serializer, Parser
-
-        register("json-ld", Parser, "rdflib_jsonld.parser", "JsonLDParser")
-        register("json-ld", Serializer, "rdflib_jsonld.serializer", "JsonLDSerializer")
-        json_ld_available = True
-    except:
-        json_ld_available = False
-
-
-################################################################################################################
 
 # noinspection PyShadowingBuiltins
 def __parse_input(iformat, inp, graph):
@@ -226,31 +187,26 @@ def __parse_input(iformat, inp, graph):
     standard input is used.
     @param graph: the RDFLib Graph instance to parse into.
     """
-    if iformat == AUTO:
+    if iformat == "auto":
         if inp == "-":
             format = "turtle"
         else:
             if inp.endswith(".ttl") or inp.endswith(".n3"):
                 format = "turtle"
-            elif json_ld_available and (
-                inp.endswith(".json") or inp.endswith(".jsonld")
-            ):
+            if inp.endswith(".json") or inp.endswith(".jsonld"):
                 format = "json-ld"
             elif inp.endswith(".html"):
                 format = "rdfa1.1"
             else:
                 format = "xml"
-    elif iformat == TURTLE:
+    elif iformat == "turtle":
         format = "n3"
-    elif iformat == RDFA:
+    elif iformat == "rdfa":
         format = "rdfa1.1"
-    elif iformat == RDFXML:
+    elif iformat == "rdfxml":
         format = "xml"
-    elif iformat == JSON:
-        if json_ld_available:
-            format = "json-ld"
-        else:
-            raise Exception("JSON-LD parser is not available")
+    elif iformat == "json":
+        format = "json-ld"
     else:
         raise Exception("Unknown input syntax")
 
@@ -281,7 +237,7 @@ def interpret_owl_imports(iformat, graph):
     """
     while True:
         # 1. collect the import statements:
-        all_imports = [t for t in graph.triples((None, imports, None))]
+        all_imports = [t for t in graph.triples((None, OWL.imports, None))]
         if len(all_imports) == 0:
             # no import statement whatsoever, we can go on...
             return
@@ -292,7 +248,7 @@ def interpret_owl_imports(iformat, graph):
         for (s, p, uri) in all_imports:
             # this is not 100% kosher. The expected object for an import statement is a URI. However,
             # on local usage, a string would also make sense, so I do that one, too
-            if isinstance(uri, rdflibLiteral):
+            if isinstance(uri, Literal):
                 __parse_input(iformat, str(uri), graph)
             else:
                 __parse_input(iformat, uri, graph)
@@ -558,7 +514,7 @@ def convert_graph(options, closureClass=None):
 
     # Just to be sure that this attribute does not create issues with older versions of the service...
     # the try statement should be removed, eventually...
-    iformat = AUTO
+    iformat = "auto"
     try:
         iformat = options.iformat
     except:
@@ -580,7 +536,7 @@ def convert_graph(options, closureClass=None):
 
     # add the possible extra text (ie, the text input on the HTML page)
     if options.text is not None:
-        graph.parse(io.StringIO(options.text), format="n3")
+        graph.parse(data=options.text, format="n3")
 
     # Get all the options right
     # noinspection PyPep8Naming
@@ -599,10 +555,6 @@ def convert_graph(options, closureClass=None):
     if owlClosure:
         interpret_owl_imports(iformat, graph)
 
-    # adds to the 'beauty' of the output
-    graph.bind("owl", "http://www.w3.org/2002/07/owl#")
-    graph.bind("xsd", "http://www.w3.org/2001/XMLSchema#")
-
     # @@@@ some smarter choice should be used later to decide what the closure class is!!! That should
     # also control the import management. Eg, if the superclass includes OWL...
     if closureClass is not None:
@@ -620,12 +572,9 @@ def convert_graph(options, closureClass=None):
         datatype_axioms=daxioms,
     ).expand(graph)
 
-    if options.format == TURTLE:
-        return graph.serialize(format="turtle")
-    elif options.format == JSON:
-        if json_ld_available:
-            return graph.serialize(format="json-ld")
-        else:
-            raise Exception("JSON-LD serializer is not available")
-    else:
+    if options.format == "rdfxml":
         return graph.serialize(format="pretty-xml")
+    elif options.format == "json":
+        return graph.serialize(format="json-ld")
+    else:
+        return graph.serialize(format="turtle")

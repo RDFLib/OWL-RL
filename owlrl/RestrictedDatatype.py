@@ -56,20 +56,8 @@ __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/L
 
 import re
 
-from .OWL import *
-
-# noinspection PyPep8Naming,PyPep8Naming
-from .OWL import OWLNS as ns_owl
-from owlrl.RDFS import Datatype
-from owlrl.RDFS import rdf_type
-
-# noinspection PyPep8Naming
-from owlrl.RDFS import RDFNS as ns_rdf
-
+from rdflib.namespace import OWL, RDF, RDFS, XSD
 from rdflib import Literal as rdflibLiteral
-
-# noinspection PyPep8Naming
-from rdflib.namespace import XSD as ns_xsd
 
 from .DatatypeHandling import AltXSDToPYTHON
 from functools import reduce
@@ -86,38 +74,39 @@ LENGTH_PATTERN_LRANGE = 3
 # Dictionary of all the datatypes, keyed by category
 Datatypes_per_facets = {
     MIN_MAX: [
-        ns_owl["rational"],
-        ns_xsd["decimal"],
-        ns_xsd["integer"],
-        ns_xsd["nonNegativeInteger"],
-        ns_xsd["nonPositiveInteger"],
-        ns_xsd["positiveInteger"],
-        ns_xsd["negativeInteger"],
-        ns_xsd["long"],
-        ns_xsd["short"],
-        ns_xsd["byte"],
-        ns_xsd["unsignedLong"],
-        ns_xsd["unsignedInt"],
-        ns_xsd["unsignedShort"],
-        ns_xsd["unsignedByte"],
-        ns_xsd["double"],
-        ns_xsd["float"],
-        ns_xsd["dateTime"],
-        ns_xsd["dateTimeStamp"],
-        ns_xsd["time"],
-        ns_xsd["date"],
+        # OWL.rational,
+        # OWL.real,
+        XSD.decimal,
+        XSD.integer,
+        XSD.nonNegativeInteger,
+        XSD.nonPositiveInteger,
+        XSD.positiveInteger,
+        XSD.negativeInteger,
+        XSD.long,
+        XSD.short,
+        XSD.byte,
+        XSD.unsignedLong,
+        XSD.unsignedInt,
+        XSD.unsignedShort,
+        XSD.unsignedByte,
+        XSD.double,
+        XSD.float,
+        XSD.dateTime,
+        XSD.dateTimeStamp,
+        XSD.time,
+        XSD.date,
     ],
-    LENGTH: [ns_xsd["hexBinary"], ns_xsd["base64Binary"]],
+    LENGTH: [XSD.hexBinary, XSD.base64Binary],
     LENGTH_AND_PATTERN: [
-        ns_xsd["anyURI"],
-        ns_xsd["string"],
-        ns_xsd["NMTOKEN"],
-        ns_xsd["Name"],
-        ns_xsd["NCName"],
-        ns_xsd["language"],
-        ns_xsd["normalizedString"],
+        XSD.anyURI,
+        XSD.string,
+        XSD.NMTOKEN,
+        XSD.Name,
+        XSD.NCName,
+        XSD.language,
+        XSD.normalizedString,
     ],
-    LENGTH_PATTERN_LRANGE: [ns_rdf["plainLiteral"]],
+    LENGTH_PATTERN_LRANGE: [RDF.PlainLiteral],
 }
 
 # a simple list containing C{all} datatypes that may have a facet
@@ -125,7 +114,7 @@ facetable_datatypes = reduce(lambda x, y: x + y, list(Datatypes_per_facets.value
 
 #######################################################################################################
 
-#
+
 def _lit_to_value(dt, v):
     """
     This method is used to convert a string to a value with facet checking. RDF Literals are converted to
@@ -222,11 +211,11 @@ def extract_faceted_datatypes(core, graph):
     :rtype: list
     """
     retval = []
-    for dtype in graph.subjects(rdf_type, Datatype):
+    for dtype in graph.subjects(RDF.type, RDFS.Datatype):
         base_type = None
         facets = []
         try:
-            base_types = [x for x in graph.objects(dtype, onDatatype)]
+            base_types = [x for x in graph.objects(dtype, OWL.onDatatype)]
             if len(base_types) > 0:
                 if len(base_types) > 1:
                     raise Exception(
@@ -235,7 +224,7 @@ def extract_faceted_datatypes(core, graph):
                 else:
                     base_type = base_types[0]
                     if base_type in facetable_datatypes:
-                        rlists = [x for x in graph.objects(dtype, withRestrictions)]
+                        rlists = [x for x in graph.objects(dtype, OWL.withRestrictions)]
                         if len(rlists) > 1:
                             raise Exception(
                                 "More than one facet lists for the same restriction %s"
@@ -252,7 +241,7 @@ def extract_faceted_datatypes(core, graph):
                                         try:
                                             if (
                                                 lit.datatype is None
-                                                or lit.datatype == ns_xsd["string"]
+                                                or lit.datatype == XSD.string
                                             ):
                                                 final_facets.append((facet, str(lit)))
                                             else:
@@ -376,35 +365,35 @@ class RestrictedDatatype(RestrictedDatatypeCore):
         self.pattern = []
         self.langRange = []
         for (facet, value) in facets:
-            if facet == ns_xsd["minInclusive"] and (
+            if facet == XSD.minInclusive and (
                 self.minInclusive is None or self.minInclusive < value
             ):
                 self.minInclusive = value
-            elif facet == ns_xsd["minExclusive"] and (
+            elif facet == XSD.minExclusive and (
                 self.minExclusive is None or self.minExclusive < value
             ):
                 self.minExclusive = value
-            elif facet == ns_xsd["maxInclusive"] and (
+            elif facet == XSD.maxInclusive and (
                 self.maxInclusive is None or value < self.maxInclusive
             ):
                 self.maxInclusive = value
-            elif facet == ns_xsd["maxExclusive"] and (
+            elif facet == XSD.maxExclusive and (
                 self.maxExclusive is None or value < self.maxExclusive
             ):
                 self.maxExclusive = value
-            elif facet == ns_rdf["langRange"]:
+            elif facet == RDF.langRange:
                 self.langRange.append(value)
-            elif facet == ns_xsd["length"]:
+            elif facet == XSD.length:
                 self.length = value
-            elif facet == ns_xsd["maxLength"] and (
+            elif facet == XSD.maxLength and (
                 self.maxLength is None or value < self.maxLength
             ):
                 self.maxLength = value
-            elif facet == ns_xsd["minLength"] and (
+            elif facet == XSD.minLength and (
                 self.minLength is None or value > self.minLength
             ):
                 self.minLength = value
-            elif facet == ns_xsd["pattern"]:
+            elif facet == XSD.pattern:
                 self.pattern.append(re.compile(value))
 
         # Choose the methods that are relevant for this datatype, based on the base type

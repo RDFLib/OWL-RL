@@ -1,7 +1,7 @@
-Literals
-========
+owlrl
+=====
 
-.. automodule:: owlrl.Literals
+.. automodule:: owlrl
     :members:
     :undoc-members:
     :inherited-members:

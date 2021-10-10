@@ -11,12 +11,13 @@ NOTE: The following axioms are skipped on purpose
 - dt-diff
 """
 
-from rdflib import Graph, Literal, Namespace, RDF, XSD, RDFS
+from rdflib import Graph, Literal, RDF, XSD, RDFS
+import sys
+from pathlib import Path
 
+sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
-
-DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-T = Namespace("http://test.org/")
+from owlrl.Namespaces import ERRNS, T
 
 
 def test_dt_type1():
@@ -88,7 +89,7 @@ def test_dt_not_type():
     # assert (m_one, RDF.type, XSD.nonNegativeInteger) not in g
     assert True
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Lexical value of the literal '-1' does not match its datatype"
         " (http://www.w3.org/2001/XMLSchema#nonNegativeInteger)"

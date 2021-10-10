@@ -29,8 +29,7 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
-from owlrl.RDFS import Resource, Class, Datatype
-from owlrl.OWL import OWLClass, Thing, equivalentClass, DataRange
+from rdflib.namespace import OWL, RDF, RDFS
 
 from owlrl.RDFSClosure import RDFS_Semantics
 from owlrl.OWLRL import OWLRL_Semantics
@@ -72,9 +71,9 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
     """
 
     full_binding_triples = [
-        (Thing, equivalentClass, Resource),
-        (Class, equivalentClass, OWLClass),
-        (DataRange, equivalentClass, Datatype),
+        (OWL.Thing, OWL.equivalentClass, RDFS.Resource),
+        (RDFS.Class, OWL.equivalentClass, OWL.Class),
+        (OWL.DataRange, OWL.equivalentClass, RDFS.Datatype),
     ]
 
     def __init__(self, graph, axioms, daxioms, rdfs=True):

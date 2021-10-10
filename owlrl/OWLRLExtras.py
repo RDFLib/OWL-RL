@@ -40,25 +40,14 @@ __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 import rdflib
-
-# noinspection PyPep8Naming
-from rdflib.namespace import XSD as ns_xsd
-
-from .RDFS import Property
-
-# noinspection PyPep8Naming
-from .RDFS import rdf_type
-from .RDFS import Resource, Class, subClassOf, subPropertyOf, rdfs_domain
-from .RDFS import Datatype
+from rdflib.namespace import RDF, RDFS, OWL, XSD
 
 from fractions import Fraction as Rational
 
 from .DatatypeHandling import AltXSDToPYTHON
 
-from .OWL import *
 
 # noinspection PyPep8Naming
-from .OWL import OWLNS as ns_owl
 from .CombinedClosure import RDFS_OWLRL_Semantics
 from .OWLRL import OWLRL_Annotation_properties
 
@@ -94,8 +83,8 @@ def _strToRational(v):
             raise ValueError("Invalid Rational literal value %s" % v)
         else:
             return Rational(
-                AltXSDToPYTHON[ns_xsd["integer"]](n_str),
-                AltXSDToPYTHON[ns_xsd["positiveInteger"]](d_str),
+                AltXSDToPYTHON[XSD.integer](n_str),
+                AltXSDToPYTHON[XSD.positiveInteger](d_str),
             )
     except:
         raise ValueError("Invalid Rational literal value %s" % v)
@@ -123,8 +112,8 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
     """
 
     extra_axioms = [
-        (hasSelf, rdf_type, Property),
-        (hasSelf, rdfs_domain, Property),
+        (OWL.hasSelf, RDF.type, RDF.Property),
+        (OWL.hasSelf, RDFS.domain, RDF.Property),
     ]
 
     def __init__(self, graph, axioms, daxioms, rdfs=False):
@@ -141,12 +130,12 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         RDFS_OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
         self.rdfs = rdfs
         self.add_new_datatype(
-            ns_owl["rational"],
+            OWL.rational,
             _strToRational,
             OWL_RL_Datatypes,
             subsumption_dict=OWL_Datatype_Subsumptions,
-            subsumption_key=ns_xsd["decimal"],
-            subsumption_list=[ns_owl["rational"]],
+            subsumption_key=XSD.decimal,
+            subsumption_list=[OWL.rational],
         )
 
         self.restricted_datatypes = extract_faceted_datatypes(self, graph)
@@ -177,12 +166,12 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
                 # check if the type of that literal matches. Note that this also takes
                 # into account the subsumption datatypes, that have been taken
                 # care of by the 'regular' OWL RL process
-                if (lt, rdf_type, base_type) in self.graph:
+                if (lt, RDF.type, base_type) in self.graph:
                     try:
                         # the conversion or the check may go wrong and raise an exception; then simply move on
                         if rt.checkValue(lt.toPython()):
                             # yep, this is also of type 'rt'
-                            self.store_triple((lt, rdf_type, rt.datatype))
+                            self.store_triple((lt, RDF.type, rt.datatype))
                     except:
                         continue
 
@@ -252,13 +241,13 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         """
         RDFS_OWLRL_Semantics.rules(self, t, cycle_num)
         z, q, x = t
-        if q == hasSelf:
-            for p in self.graph.objects(z, onProperty):
-                for y in self.graph.subjects(rdf_type, z):
+        if q == OWL.hasSelf:
+            for p in self.graph.objects(z, OWL.onProperty):
+                for y in self.graph.subjects(RDF.type, z):
                     self.store_triple((y, p, y))
                 for y1, y2 in self.graph.subject_objects(p):
                     if y1 == y2:
-                        self.store_triple((y1, rdf_type, z))
+                        self.store_triple((y1, RDF.type, z))
 
 
 # noinspection PyPep8Naming
@@ -323,47 +312,47 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
             s, p, o = t
             if s == o:
                 if (
-                    p == sameAs
-                    or p == equivalentClass
-                    or p == subClassOf
-                    or p == subPropertyOf
+                    p == OWL.sameAs
+                    or p == OWL.equivalentClass
+                    or p == RDFS.subClassOf
+                    or p == RDFS.subPropertyOf
                 ):
                     to_be_removed.add(t)
             if (
-                (p == subClassOf and (o == Thing or o == Resource))
-                or (p == rdf_type and o == Resource)
-                or (s == Nothing and p == subClassOf)
+                (p == RDFS.subClassOf and (o == OWL.Thing or o == RDFS.Resource))
+                or (p == RDF.type and o == RDFS.Resource)
+                or (s == OWL.Nothing and p == RDFS.subClassOf)
             ):
                 to_be_removed.add(t)
 
         for dt in OWL_RL_Datatypes:
             # see if this datatype appears explicitly in the graph as the type of a symbol
-            if len([s for s in self.graph.subjects(rdf_type, dt)]) == 0:
-                to_be_removed.add((dt, rdf_type, Datatype))
-                to_be_removed.add((dt, rdf_type, DataRange))
+            if len([s for s in self.graph.subjects(RDF.type, dt)]) == 0:
+                to_be_removed.add((dt, RDF.type, RDFS.Datatype))
+                to_be_removed.add((dt, RDF.type, OWL.DataRange))
 
-                for t in self.graph.triples((dt, disjointWith, None)):
+                for t in self.graph.triples((dt, OWL.disjointWith, None)):
                     to_be_removed.add(t)
-                for t in self.graph.triples((None, disjointWith, dt)):
+                for t in self.graph.triples((None, OWL.disjointWith, dt)):
                     to_be_removed.add(t)
 
         for an in OWLRL_Annotation_properties:
-            self.graph.remove((an, rdf_type, AnnotationProperty))
+            self.graph.remove((an, RDF.type, OWL.AnnotationProperty))
 
-        to_be_removed.add((Nothing, rdf_type, OWLClass))
-        to_be_removed.add((Nothing, rdf_type, Class))
-        to_be_removed.add((Thing, rdf_type, OWLClass))
-        to_be_removed.add((Thing, rdf_type, Class))
-        to_be_removed.add((Thing, equivalentClass, Resource))
-        to_be_removed.add((Resource, equivalentClass, Thing))
-        to_be_removed.add((OWLClass, equivalentClass, Class))
-        to_be_removed.add((OWLClass, subClassOf, Class))
-        to_be_removed.add((Class, equivalentClass, OWLClass))
-        to_be_removed.add((Class, subClassOf, OWLClass))
-        to_be_removed.add((Datatype, subClassOf, DataRange))
-        to_be_removed.add((Datatype, equivalentClass, DataRange))
-        to_be_removed.add((DataRange, subClassOf, Datatype))
-        to_be_removed.add((DataRange, equivalentClass, Datatype))
+        to_be_removed.add((OWL.Nothing, RDF.type, OWL.Class))
+        to_be_removed.add((OWL.Nothing, RDF.type, RDFS.Class))
+        to_be_removed.add((OWL.Thing, RDF.type, OWL.Class))
+        to_be_removed.add((OWL.Thing, RDF.type, RDFS.Class))
+        to_be_removed.add((OWL.Thing, OWL.equivalentClass, RDFS.Resource))
+        to_be_removed.add((RDFS.Resource, OWL.equivalentClass, OWL.Thing))
+        to_be_removed.add((OWL.Class, OWL.equivalentClass, RDFS.Class))
+        to_be_removed.add((OWL.Class, RDFS.subClassOf, RDFS.Class))
+        to_be_removed.add((RDFS.Class, OWL.equivalentClass, OWL.Class))
+        to_be_removed.add((RDFS.Class, RDFS.subClassOf, OWL.Class))
+        to_be_removed.add((RDFS.Datatype, RDFS.subClassOf, OWL.DataRange))
+        to_be_removed.add((RDFS.Datatype, OWL.equivalentClass, OWL.DataRange))
+        to_be_removed.add((OWL.DataRange, RDFS.subClassOf, OWL.Datatype))
+        to_be_removed.add((OWL.DataRange, OWL.equivalentClass, OWL.Datatype))
 
         for t in to_be_removed:
             self.graph.remove(t)

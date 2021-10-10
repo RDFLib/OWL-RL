@@ -8,12 +8,13 @@ https://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_
 
 from unittest import mock
 
-from rdflib import Graph, Literal, Namespace, RDF, OWL
+from rdflib import Graph, Literal, RDF, OWL
+import sys
+from pathlib import Path
 
+sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
-
-DAML = Namespace("http://www.daml.org/2002/03/agents/agent-ont#")
-T = Namespace("http://test.org/")
+from owlrl.Namespaces import ERRNS, T
 
 
 def test_cls_maxc1():
@@ -47,7 +48,7 @@ def test_cls_maxc1():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Erroneous usage of maximum cardinality with"
         " http://test.org/x and http://test.org/y"
@@ -109,21 +110,16 @@ def test_cls_maxqc1():
     """
     g = Graph()
 
-    x = T.x
-    p = T.p
-    c = T.C
-    u = T.u
-    y = T.y
-
-    g.add((x, OWL.maxQualifiedCardinality, Literal(0)))
-    g.add((x, OWL.onProperty, p))
-    g.add((x, OWL.onClass, c))
-    g.add((u, p, y))
-    g.add((y, RDF.type, c))
+    g.add((T.x, OWL.maxQualifiedCardinality, Literal(0)))
+    g.add((T.x, OWL.onProperty, T.p))
+    g.add((T.x, OWL.onClass, T.C))
+    g.add((T.u, RDF.type, T.x))
+    g.add((T.u, T.p, T.y))
+    g.add((T.y, RDF.type, T.C))
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Erroneous usage of maximum qualified cardinality with"
         " http://test.org/x, http://test.org/C and http://test.org/y"
@@ -162,7 +158,7 @@ def test_cls_maxqc2():
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Erroneous usage of maximum qualified cardinality with"
         + " http://test.org/x, http://www.w3.org/2002/07/owl#Thing and"
@@ -317,7 +313,7 @@ def test_cls_avf_error(mock_rtc):
 
     owlrl.DeductiveClosure(owlrl.OWLRL_Semantics).expand(g)
 
-    result = next(g.objects(predicate=DAML.error))
+    result = next(g.objects(predicate=ERRNS.error))
     expected = Literal(
         "Violation of type restriction for allValuesFrom in http://test.org/p"
         " for datatype http://test.org/y on value http://test.org/v"

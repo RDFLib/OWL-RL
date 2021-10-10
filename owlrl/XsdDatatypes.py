@@ -24,139 +24,131 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
-# noinspection PyPep8Naming
-from .RDFS import RDFNS as ns_rdf
-from .RDFS import Literal
-from .RDFS import XMLLiteral
-from .RDFS import HTMLLiteral
-from .RDFS import LangString
-
-# noinspection PyPep8Naming
-from rdflib.namespace import XSD as ns_xsd
+from rdflib.namespace import RDF, RDFS, XSD
 
 # The basic XSD types used everywhere; this means not the complete set of day/month types
 _Common_XSD_Datatypes = [
-    ns_xsd["integer"],
-    ns_xsd["decimal"],
-    ns_xsd["nonNegativeInteger"],
-    ns_xsd["nonPositiveInteger"],
-    ns_xsd["negativeInteger"],
-    ns_xsd["positiveInteger"],
-    ns_xsd["long"],
-    ns_xsd["int"],
-    ns_xsd["short"],
-    ns_xsd["byte"],
-    ns_xsd["unsignedLong"],
-    ns_xsd["unsignedInt"],
-    ns_xsd["unsignedShort"],
-    ns_xsd["unsignedByte"],
-    ns_xsd["float"],
-    ns_xsd["double"],
-    ns_xsd["string"],
-    ns_xsd["normalizedString"],
-    ns_xsd["token"],
-    ns_xsd["language"],
-    ns_xsd["Name"],
-    ns_xsd["NCName"],
-    ns_xsd["NMTOKEN"],
-    ns_xsd["boolean"],
-    ns_xsd["hexBinary"],
-    ns_xsd["base64Binary"],
-    ns_xsd["anyURI"],
-    ns_xsd["dateTimeStamp"],
-    ns_xsd["dateTime"],
-    ns_xsd["time"],
-    ns_xsd["date"],
-    Literal,
-    XMLLiteral,
-    HTMLLiteral,
-    LangString,
+    XSD.integer,
+    XSD.decimal,
+    XSD.nonNegativeInteger,
+    XSD.nonPositiveInteger,
+    XSD.negativeInteger,
+    XSD.positiveInteger,
+    XSD.long,
+    XSD.int,
+    XSD.short,
+    XSD.byte,
+    XSD.unsignedLong,
+    XSD.unsignedInt,
+    XSD.unsignedShort,
+    XSD.unsignedByte,
+    XSD.float,
+    XSD.double,
+    XSD.string,
+    XSD.normalizedString,
+    XSD.token,
+    XSD.language,
+    XSD.Name,
+    XSD.NCName,
+    XSD.NMTOKEN,
+    XSD.boolean,
+    XSD.hexBinary,
+    XSD.base64Binary,
+    XSD.anyURI,
+    XSD.dateTimeStamp,
+    XSD.dateTime,
+    XSD.time,
+    XSD.date,
+    RDFS.Literal,
+    RDF.XMLLiteral,
+    RDF.HTML,
+    RDF.langString,
 ]
 
 # RDFS Datatypes: the basic ones plus the complete set of day/month ones
 RDFS_Datatypes = _Common_XSD_Datatypes + [
-    ns_xsd["gYearMonth"],
-    ns_xsd["gMonthDay"],
-    ns_xsd["gYear"],
-    ns_xsd["gDay"],
-    ns_xsd["gMonth"],
+    XSD.gYearMonth,
+    XSD.gMonthDay,
+    XSD.gYear,
+    XSD.gDay,
+    XSD.gMonth,
 ]
 
 # OWL RL Datatypes: the basic ones plus plain literal
-OWL_RL_Datatypes = _Common_XSD_Datatypes + [ns_rdf["PlainLiteral"]]
+OWL_RL_Datatypes = _Common_XSD_Datatypes + [RDF.PlainLiteral]
 
 # XSD Datatype subsumptions
 _Common_Datatype_Subsumptions = {
-    ns_xsd["dateTimeStamp"]: [ns_xsd["dateTime"]],
-    ns_xsd["integer"]: [ns_xsd["decimal"]],
-    ns_xsd["long"]: [ns_xsd["integer"], ns_xsd["decimal"]],
-    ns_xsd["int"]: [ns_xsd["long"], ns_xsd["integer"], ns_xsd["decimal"]],
-    ns_xsd["short"]: [
-        ns_xsd["int"],
-        ns_xsd["long"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.dateTimeStamp: [XSD.dateTime],
+    XSD.integer: [XSD.decimal],
+    XSD.long: [XSD.integer, XSD.decimal],
+    XSD.int: [XSD.long, XSD.integer, XSD.decimal],
+    XSD.short: [
+        XSD.int,
+        XSD.long,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["byte"]: [
-        ns_xsd["short"],
-        ns_xsd["int"],
-        ns_xsd["long"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.byte: [
+        XSD.short,
+        XSD.int,
+        XSD.long,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["nonNegativeInteger"]: [ns_xsd["integer"], ns_xsd["decimal"]],
-    ns_xsd["positiveInteger"]: [
-        ns_xsd["nonNegativeInteger"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.nonNegativeInteger: [XSD.integer, XSD.decimal],
+    XSD.positiveInteger: [
+        XSD.nonNegativeInteger,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["unsignedLong"]: [
-        ns_xsd["nonNegativeInteger"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.unsignedLong: [
+        XSD.nonNegativeInteger,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["unsignedInt"]: [
-        ns_xsd["unsignedLong"],
-        ns_xsd["nonNegativeInteger"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.unsignedInt: [
+        XSD.unsignedLong,
+        XSD.nonNegativeInteger,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["unsignedShort"]: [
-        ns_xsd["unsignedInt"],
-        ns_xsd["unsignedLong"],
-        ns_xsd["nonNegativeInteger"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.unsignedShort: [
+        XSD.unsignedInt,
+        XSD.unsignedLong,
+        XSD.nonNegativeInteger,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["unsignedByte"]: [
-        ns_xsd["unsignedShort"],
-        ns_xsd["unsignedInt"],
-        ns_xsd["unsignedLong"],
-        ns_xsd["nonNegativeInteger"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.unsignedByte: [
+        XSD.unsignedShort,
+        XSD.unsignedInt,
+        XSD.unsignedLong,
+        XSD.nonNegativeInteger,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["nonPositiveInteger"]: [ns_xsd["integer"], ns_xsd["decimal"]],
-    ns_xsd["negativeInteger"]: [
-        ns_xsd["nonPositiveInteger"],
-        ns_xsd["integer"],
-        ns_xsd["decimal"],
+    XSD.nonPositiveInteger: [XSD.integer, XSD.decimal],
+    XSD.negativeInteger: [
+        XSD.nonPositiveInteger,
+        XSD.integer,
+        XSD.decimal,
     ],
-    ns_xsd["normalizedString"]: [ns_xsd["string"]],
-    ns_xsd["token"]: [ns_xsd["normalizedString"], ns_xsd["string"]],
-    ns_xsd["language"]: [ns_xsd["token"], ns_xsd["normalizedString"], ns_xsd["string"]],
-    ns_xsd["Name"]: [ns_xsd["token"], ns_xsd["normalizedString"], ns_xsd["string"]],
-    ns_xsd["NCName"]: [
-        ns_xsd["Name"],
-        ns_xsd["token"],
-        ns_xsd["normalizedString"],
-        ns_xsd["string"],
+    XSD.normalizedString: [XSD.string],
+    XSD.token: [XSD.normalizedString, XSD.string],
+    XSD.language: [XSD.token, XSD.normalizedString, XSD.string],
+    XSD.Name: [XSD.token, XSD.normalizedString, XSD.string],
+    XSD.NCName: [
+        XSD.Name,
+        XSD.token,
+        XSD.normalizedString,
+        XSD.string,
     ],
-    ns_xsd["NMTOKEN"]: [
-        ns_xsd["Name"],
-        ns_xsd["token"],
-        ns_xsd["normalizedString"],
-        ns_xsd["string"],
+    XSD.NMTOKEN: [
+        XSD.Name,
+        XSD.token,
+        XSD.normalizedString,
+        XSD.string,
     ],
 }
 

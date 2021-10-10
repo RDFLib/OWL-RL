@@ -1,142 +1,113 @@
 @prefix : <http://example.org/relatives#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://example.org/relatives> .
 
-<http://example.org/relatives> rdf:type owl:Ontology .
+<http://example.org/relatives> a owl:Ontology .
 
-#################################################################
-#    Object Properties
-#################################################################
+#
+#   Ontology
+#
 
-###  http://example.org/relatives#hasChild
-:hasChild rdf:type owl:ObjectProperty ;
-          owl:inverseOf :hasParent .
+:Person
+    a owl:Class .
 
+:Child
+    a owl:Class ;
+    rdfs:subClassOf :Person .
 
-###  http://example.org/relatives#hasParent
-:hasParent rdf:type owl:ObjectProperty .
+:Parent
+    a owl:Class ;
+    rdfs:subClassOf :Person .
 
-:hasGrandparent rdf:type owl:ObjectProperty ;
-                owl:propertyChainAxiom ( :hasParent
-                                         :hasParent
-                                       ) .
+:hasParent
+    a owl:ObjectProperty .
 
-#################################################################
-#    Classes
-#################################################################
+:hasChild
+    a owl:ObjectProperty ;
+    owl:inverseOf :hasParent .
 
-###  http://example.org/relatives#Child
-:Child rdf:type owl:Class ;
-       rdfs:subClassOf :Person .
+:hasGrandparent
+    a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( :hasParent :hasParent ) .
 
+#
+#   Data
+#
 
-###  http://example.org/relatives#Parent
-:Parent rdf:type owl:Class ;
-        rdfs:subClassOf :Person .
+:Aaron
+    a owl:NamedIndividual .
 
+:Ann
+    a :Person,
+      owl:NamedIndividual .
 
-###  http://example.org/relatives#Person
-:Person rdf:type owl:Class .
+:Bill
+    a :Person,
+      owl:NamedIndividual .
 
+:Bob
+    a :Person,
+      owl:NamedIndividual ;
+    :hasParent :Bill .
 
-#################################################################
-#    Individuals
-#################################################################
+:Cathy
+    a :Person,
+      owl:NamedIndividual ;
+    :hasParent :Bill .
 
-###  http://example.org/relatives#Aaron
-:Aaron rdf:type owl:NamedIndividual .
+:Fred
+    a :Person,
+      owl:NamedIndividual ;
+    :hasChild :James ;
+    :hasParent :Cathy .
 
+:Jacob
+    a :Person,
+      owl:NamedIndividual ;
+    :hasParent :Fred .
 
-###  http://example.org/relatives#Ann
-:Ann rdf:type owl:NamedIndividual ,
-              :Person .
+:James
+    a :Person,
+      owl:NamedIndividual .
 
+:James2
+    a :Person,
+      owl:NamedIndividual ;
+    :hasChild :John .
 
-###  http://example.org/relatives#Bill
-:Bill rdf:type owl:NamedIndividual ,
-               :Person .
+:John
+    a :Person,
+      owl:NamedIndividual ;
+    :hasChild
+        :Mary,
+        :Michael ;
+    :hasParent :James2 .
 
+:Mary
+    a :Person,
+        owl:NamedIndividual .
 
-###  http://example.org/relatives#Bob
-:Bob rdf:type owl:NamedIndividual ,
-              :Person ;
-     :hasParent :Bill .
+:Michael
+    a :Person,
+      owl:NamedIndividual ;
+    :hasParent :John .
 
+:Simon
+    a :Person,
+      owl:NamedIndividual ;
+    :hasParent :Michael .
 
-###  http://example.org/relatives#Cathy
-:Cathy rdf:type owl:NamedIndividual ,
-                :Person ;
-       :hasParent :Bill .
+:Tim
+    a :Child,
+      owl:NamedIndividual ;
+    :hasParent
+        :Simon,
+        :Valerie .
 
+:Valerie
+    a :Person,
+      owl:NamedIndividual .
 
-###  http://example.org/relatives#Fred
-:Fred rdf:type owl:NamedIndividual ,
-               :Person ;
-      :hasChild :James ;
-      :hasParent :Cathy .
-
-
-###  http://example.org/relatives#Jacob
-:Jacob rdf:type owl:NamedIndividual ,
-                :Person ;
-       :hasParent :Fred .
-
-
-###  http://example.org/relatives#James
-:James rdf:type owl:NamedIndividual ,
-                :Person .
-
-
-###  http://example.org/relatives#James2
-:James2 rdf:type owl:NamedIndividual ,
-                 :Person ;
-        :hasChild :John .
-
-
-###  http://example.org/relatives#John
-:John rdf:type owl:NamedIndividual ,
-               :Person ;
-      :hasChild :Mary ,
-                :Michael ;
-      :hasParent :James2 .
-
-
-###  http://example.org/relatives#Mary
-:Mary rdf:type owl:NamedIndividual ,
-               :Person .
-
-
-###  http://example.org/relatives#Michael
-:Michael rdf:type owl:NamedIndividual ,
-                  :Person ;
-         :hasParent :John .
-
-
-###  http://example.org/relatives#Simon
-:Simon rdf:type owl:NamedIndividual ,
-                :Person ;
-       :hasParent :Michael .
-
-
-###  http://example.org/relatives#Tim
-:Tim rdf:type owl:NamedIndividual ,
-              :Person ;
-     :hasParent :Simon ,
-                :Valerie .
-
-
-###  http://example.org/relatives#Valerie
-:Valerie rdf:type owl:NamedIndividual ,
-                  :Person .
-
-
-###  http://example.org/relatives#Victor
-:Victor rdf:type owl:NamedIndividual ,
-                 :Person .
-
-
-###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
+:Victor
+    a :Person,
+      owl:NamedIndividual .

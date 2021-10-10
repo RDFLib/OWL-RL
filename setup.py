@@ -42,7 +42,7 @@ setup(
     author="Ivan Herman",
     author_email="ivan@ivan-herman.net",
     maintainer="Nicholas Car",
-    maintainer_email="nicholas.car@csiro.au",
+    maintainer_email="nicholas.car@surroundaustralia.au",
     url="https://github.com/RDFLib/OWL-RL/",
     download_url="https://github.com/RDFLib/OWL-RL/"
     "archive/v{:s}.tar.gz".format(version),
