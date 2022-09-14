@@ -351,8 +351,8 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
         to_be_removed.add((RDFS.Class, RDFS.subClassOf, OWL.Class))
         to_be_removed.add((RDFS.Datatype, RDFS.subClassOf, OWL.DataRange))
         to_be_removed.add((RDFS.Datatype, OWL.equivalentClass, OWL.DataRange))
-        to_be_removed.add((OWL.DataRange, RDFS.subClassOf, OWL.Datatype))
-        to_be_removed.add((OWL.DataRange, OWL.equivalentClass, OWL.Datatype))
+        to_be_removed.add((OWL.DataRange, RDFS.subClassOf, OWL.DatatypeProperty))
+        to_be_removed.add((OWL.DataRange, OWL.equivalentClass, OWL.DatatypeProperty))
 
         for t in to_be_removed:
             self.graph.remove(t)
