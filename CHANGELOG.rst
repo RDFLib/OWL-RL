@@ -5,7 +5,7 @@ v.6.0.2 - October, 2021
 ~~~~~~~~~~~~~~~~~~~~~~~
 Changes:
 
-* works with rdflib >= 6.0.2
+* works with rdflib >= 6.2.0
 * replaces owl namespace element lists with those of rdflib (OWL, RDF, RDFS, XSD)
 
 v5.2.3
