@@ -27,8 +27,13 @@ __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/L
 
 import rdflib
 from rdflib.namespace import RDF
-from rdflib import BNode, Literal
+from rdflib import BNode, Literal, Graph, Dataset
 from .Namespaces import ERRNS
+
+try:
+    from rdflib.graph import ConjunctiveGraph
+except ImportError:
+    ConjunctiveGraph = Dataset
 
 debugGlobal = False
 offlineGeneration = False
@@ -111,6 +116,8 @@ class Core:
         self.IMaxNum = maxnum
 
         self.graph = graph
+        if isinstance(self.graph, (Dataset, ConjunctiveGraph)):
+            self.graph.default_union = True
         self.axioms = axioms
         self.daxioms = daxioms
 
@@ -271,7 +278,7 @@ class Core:
             self.empty_stored_triples()
 
             # Execute all the rules; these might fill up the added triples array
-            for t in self.graph:
+            for t in self.graph.triples((None, None, None)):
                 self.rules(t, cycle_num)
 
             # Add the tuples to the graph (if necessary, that is). If any new triple has been generated, a new cycle

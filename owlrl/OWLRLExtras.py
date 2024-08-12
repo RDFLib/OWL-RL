@@ -308,7 +308,7 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
         self.flush_stored_triples()
 
         to_be_removed = set()
-        for t in self.graph:
+        for t in self.graph.triples((None, None, None)):
             s, p, o = t
             if s == o:
                 if (
