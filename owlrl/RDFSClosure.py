@@ -105,6 +105,14 @@ class RDFS_Semantics(Core):
         for t in RDFS_D_Axiomatic_Triples:
             self.graph.add(t)
 
+    @staticmethod
+    def _literals_same_as(lt1, lt2):
+        if lt1.value is not None and lt2.value is not None:
+            return lt1.value == lt2.value
+        elif lt1.datatype is not None and lt2.datatype is not None:
+            return lt1.__eq__(lt2)
+        return False
+
     # noinspection PyBroadException
     def one_time_rules(self):
         """
@@ -121,7 +129,7 @@ class RDFS_Semantics(Core):
         items = (
             (lt1, lt2)
             for lt1, lt2 in product(literals, literals)
-            if lt1.value == lt2.value
+            if (lt1 is lt2) or self._literals_same_as(lt1, lt2)
         )
         for lt1, lt2 in items:
             # In OWL, this line is simply stating a sameAs for the
