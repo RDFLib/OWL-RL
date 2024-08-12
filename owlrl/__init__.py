@@ -176,6 +176,12 @@ from .RDFSClosure import RDFS_Semantics
 from .CombinedClosure import RDFS_OWLRL_Semantics
 from rdflib.namespace import OWL
 
+RDFXML = "xml"
+TURTLE = "turtle"
+JSON = "json"
+AUTO = "auto"
+RDFA = "rdfa"
+
 
 # noinspection PyShadowingBuiltins
 def __parse_input(iformat, inp, graph):
@@ -187,25 +193,25 @@ def __parse_input(iformat, inp, graph):
     standard input is used.
     @param graph: the RDFLib Graph instance to parse into.
     """
-    if iformat == "auto":
+    if iformat == AUTO:
         if inp == "-":
             format = "turtle"
         else:
             if inp.endswith(".ttl") or inp.endswith(".n3"):
                 format = "turtle"
-            if inp.endswith(".json") or inp.endswith(".jsonld"):
+            elif inp.endswith(".json") or inp.endswith(".jsonld"):
                 format = "json-ld"
             elif inp.endswith(".html"):
                 format = "rdfa1.1"
             else:
                 format = "xml"
-    elif iformat == "turtle":
-        format = "n3"
-    elif iformat == "rdfa":
+    elif iformat == TURTLE:
+        format = "turtle"
+    elif iformat == RDFA:
         format = "rdfa1.1"
-    elif iformat == "rdfxml":
+    elif iformat == RDFXML:
         format = "xml"
-    elif iformat == "json":
+    elif iformat == JSON:
         format = "json-ld"
     else:
         raise Exception("Unknown input syntax")
