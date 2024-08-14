@@ -29,6 +29,9 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
+from typing import Union
+
+from rdflib import Graph
 from rdflib.namespace import OWL, RDF, RDFS
 
 from owlrl.RDFSClosure import RDFS_Semantics
@@ -42,7 +45,7 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
     """
     Common subclass of the RDFS and OWL 2 RL semantic classes. All methods simply call back
     to the functions in the superclasses. This may lead to some unnecessary duplication of terms
-    and rules, but it it not so bad. Also, the additional identification defined for OWL Full,
+    and rules, but it is not so bad. Also, the additional identification defined for OWL Full,
     ie, Resource being the same as Thing and OWL and RDFS classes being identical are added to the
     triple store.
 
@@ -76,7 +79,7 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
         (OWL.DataRange, OWL.equivalentClass, RDFS.Datatype),
     ]
 
-    def __init__(self, graph, axioms, daxioms, rdfs=True):
+    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = True, destination: Union[None, Graph] = None):
         """
         @param graph: the RDF graph to be extended
         @type graph: rdflib.Graph
@@ -86,9 +89,11 @@ class RDFS_OWLRL_Semantics(RDFS_Semantics, OWLRL_Semantics):
         @type daxioms: bool
         @param rdfs: placeholder flag (used in subclassed only, it is always defaulted to True in this class)
         @type rdfs: boolean
+        @param destination: the destination graph to which the results are written. If None, use the source graph.
+        @type destination: rdflib.Graph
         """
-        OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
-        RDFS_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
+        OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs=rdfs, destination=destination)
+        RDFS_Semantics.__init__(self, graph, axioms, daxioms, rdfs=rdfs, destination=destination)
         self.rdfs = True
 
     # noinspection PyMethodMayBeStatic

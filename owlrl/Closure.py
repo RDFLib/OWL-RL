@@ -25,6 +25,8 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
+from typing import Union
+
 import rdflib
 from rdflib.namespace import RDF
 from rdflib import BNode, Literal, Graph, Dataset
@@ -62,6 +64,9 @@ class Core:
     :param rdfs: Whether RDFS inference is also done (used in subclassed only).
     :type rdfs: bool
 
+    :param destination: The destination graph to which the results are written. If None, use the source graph.
+    :type destination: :class:`rdflib.Graph`
+
     :var IMaxNum: Maximal index of :code:`rdf:_i` occurrence in the graph.
     :type IMaxNum: int
 
@@ -86,7 +91,7 @@ class Core:
     """
 
     # noinspection PyUnusedLocal
-    def __init__(self, graph, axioms, daxioms, rdfs=False):
+    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = False, destination: Union[None, Graph] = None):
         """
         The parameter descriptions here are from the old documentation.
 
@@ -98,6 +103,8 @@ class Core:
         @type daxioms: boolean
         @param rdfs: whether RDFS inference is also done (used in subclassed only)
         @type rdfs: boolean
+        @param destination: the destination graph to which the results are written. If None, use the source graph.
+        @type destination: rdflib.Graph
         """
         self._debug = debugGlobal
 
@@ -118,6 +125,25 @@ class Core:
         self.graph = graph
         if isinstance(self.graph, (Dataset, ConjunctiveGraph)):
             self.graph.default_union = True
+
+        if destination is None:
+            if isinstance(graph, (Dataset, ConjunctiveGraph)):
+                self.destination = graph.default_context
+            else:
+                self.destination = graph
+        else:
+            if isinstance(destination, (str, rdflib.URIRef)):
+                if isinstance(graph, (Dataset, ConjunctiveGraph)):
+                    self.destination = graph.get_context(destination)
+                else:
+                    raise ValueError("URIRef destinations are only supported for Datasets and ConjunctiveGraphs")
+            else:
+                source_store = self.graph.store
+                dest_store = destination.store
+                if source_store is not dest_store:
+                    raise ValueError("The source and destination graphs share the same backing store")
+                self.destination = destination
+
         self.axioms = axioms
         self.daxioms = daxioms
 
@@ -207,7 +233,7 @@ class Core:
         Send the stored triples to the graph, and empty the container.
         """
         for t in self.added_triples:
-            self.graph.add(t)
+            self.destination.add(t)
         self.empty_stored_triples()
 
     def store_triple(self, t):
@@ -225,7 +251,7 @@ class Core:
         :type t: tuple (s,p,o)
         """
         (s, p, o) = t
-        if not isinstance(p, Literal) and t not in self.graph:
+        if not isinstance(p, Literal) and not (t in self.destination or t in self.graph):
             if self._debug or offlineGeneration:
                 print(t)
             self.added_triples.add(t)
@@ -286,7 +312,7 @@ class Core:
             new_cycle = len(self.added_triples) > 0
 
             for t in self.added_triples:
-                self.graph.add(t)
+                self.destination.add(t)
 
         self.post_process()
         self.flush_stored_triples()
@@ -295,8 +321,8 @@ class Core:
         if self.error_messages:
             # I am not sure this is the right vocabulary to use for this purpose, but I haven't found anything!
             # I could, of course, come up with my own, but I am not sure that would be kosher...
-            self.graph.bind("err", "http://www.daml.org/2002/03/agents/agent-ont#")
+            self.destination.bind("err", "http://www.daml.org/2002/03/agents/agent-ont#")
             for m in self.error_messages:
                 message = BNode()
-                self.graph.add((message, RDF.type, ERRNS.ErrorMessage))
-                self.graph.add((message, ERRNS.error, Literal(m)))
+                self.destination.add((message, RDF.type, ERRNS.ErrorMessage))
+                self.destination.add((message, ERRNS.error, Literal(m)))

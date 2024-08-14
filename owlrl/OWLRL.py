@@ -32,9 +32,10 @@ __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
 from collections import defaultdict
+from typing import Union
 
 import rdflib
-from rdflib import BNode
+from rdflib import BNode, Graph
 from rdflib.namespace import OWL, RDF, RDFS
 
 from owlrl.Closure import Core
@@ -98,7 +99,7 @@ class OWLRL_Semantics(Core):
     :type rdfs: bool
     """
 
-    def __init__(self, graph, axioms, daxioms, rdfs=None):
+    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = False, destination: Union[None, Graph] = None):
         """
         @param graph: the RDF graph to be extended
         @type graph: rdflib.Graph
@@ -108,8 +109,10 @@ class OWLRL_Semantics(Core):
         @type daxioms: bool
         @param rdfs: whether RDFS inference is also done (used in subclassed only)
         @type rdfs: boolean
+        @param destination: the destination graph to which the results are written. If None, use the source graph.
+        @type destination: rdflib.Graph
         """
-        Core.__init__(self, graph, axioms, daxioms, rdfs)
+        Core.__init__(self, graph, axioms, daxioms, rdfs=rdfs, destination=destination)
         self.bnodes = []
 
     def _list(self, l):
@@ -131,6 +134,7 @@ class OWLRL_Semantics(Core):
                 if t not in to_be_removed:
                     to_be_removed.append(t)
         for t in to_be_removed:
+            self.destination.remove(t)
             self.graph.remove(t)
 
     def add_axioms(self):
@@ -138,14 +142,14 @@ class OWLRL_Semantics(Core):
         Add axioms
         """
         for t in OWLRL_Axiomatic_Triples:
-            self.graph.add(t)
+            self.destination.add(t)
 
     def add_d_axioms(self):
         """
         Add the datatype axioms
         """
         for t in OWLRL_D_Axiomatic_Triples:
-            self.graph.add(t)
+            self.destination.add(t)
 
     def restriction_typing_check(self, v, t):
         """

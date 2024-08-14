@@ -165,6 +165,8 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
+from typing import Union
+
 # noinspection PyPackageRequirements,PyPackageRequirements,PyPackageRequirements
 import rdflib
 from rdflib import Graph, Literal
@@ -384,19 +386,25 @@ class DeductiveClosure:
         self.rdfs_closure = rdfs_closure
         self.improved_datatypes = improved_datatypes
 
-    def expand(self, graph):
+    def expand(self, graph: Graph, destination: Union[None, Graph] = None):
         """
         Expand the graph using forward chaining, and with the relevant closure type.
 
         :param graph: The RDF graph.
         :type graph: :class:`rdflib.Graph`
+        :param destination: The RDF graph to which the results are written. If not specified, the graph is modified in-place.
+        :type destination: :class:`rdflib.Graph`
         """
         if (not DeductiveClosure.improved_datatype_generic) and self.improved_datatypes:
             DatatypeHandling.use_Alt_lexical_conversions()
 
         if self.closure_class is not None:
             self.closure_class(
-                graph, self.axiomatic_triples, self.datatype_axioms, self.rdfs_closure
+                graph,
+                self.axiomatic_triples,
+                self.datatype_axioms,
+                rdfs=self.rdfs_closure,
+                destination=destination
             ).closure()
 
         if (not DeductiveClosure.improved_datatype_generic) and self.improved_datatypes:

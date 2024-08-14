@@ -39,7 +39,10 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
+from typing import Union
+
 import rdflib
+from rdflib import Graph
 from rdflib.namespace import RDF, RDFS, OWL, XSD
 
 from fractions import Fraction as Rational
@@ -116,7 +119,7 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         (OWL.hasSelf, RDFS.domain, RDF.Property),
     ]
 
-    def __init__(self, graph, axioms, daxioms, rdfs=False):
+    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = False, destination: Union[None, Graph] = None):
         """
         @param graph: the RDF graph to be extended
         @type graph: rdflib.Graph
@@ -126,8 +129,10 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         @type daxioms: Boolean
         @param rdfs: whether RDFS extension is done
         @type rdfs: boolean
+        @param destination: the destination graph to which the results are written. If None, use the source graph.
+        @type destination: rdflib.Graph
         """
-        RDFS_OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs)
+        RDFS_OWLRL_Semantics.__init__(self, graph, axioms, daxioms, rdfs=rdfs, destination=destination)
         self.rdfs = rdfs
         self.add_new_datatype(
             OWL.rational,
@@ -226,7 +231,7 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
         """
         RDFS_OWLRL_Semantics.add_axioms(self)
         for t in self.extra_axioms:
-            self.graph.add(t)
+            self.destination.add(t)
 
     def rules(self, t, cycle_num):
         """
@@ -286,7 +291,7 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
     :type rdfs: bool
     """
 
-    def __init__(self, graph, axioms, daxioms, rdfs=False):
+    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = False, destination: Union[None, Graph] = None):
         """
         @param graph: the RDF graph to be extended
         @type graph: rdflib.Graph
@@ -296,8 +301,10 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
         @type daxioms: Boolean
         @param rdfs: whether RDFS extension is done
         @type rdfs: boolean
+        @param destination: the destination graph to which the results are written. If None, use the source graph.
+        @type destination: rdflib.Graph
         """
-        OWLRL_Extension.__init__(self, graph, axioms, daxioms, rdfs=False)
+        OWLRL_Extension.__init__(self, graph, axioms, daxioms, rdfs=rdfs, destination=destination)
 
     def post_process(self):
         """
@@ -337,7 +344,7 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
                     to_be_removed.add(t)
 
         for an in OWLRL_Annotation_properties:
-            self.graph.remove((an, RDF.type, OWL.AnnotationProperty))
+            self.destination.remove((an, RDF.type, OWL.AnnotationProperty))
 
         to_be_removed.add((OWL.Nothing, RDF.type, OWL.Class))
         to_be_removed.add((OWL.Nothing, RDF.type, RDFS.Class))
@@ -355,4 +362,4 @@ class OWLRL_Extension_Trimming(OWLRL_Extension):
         to_be_removed.add((OWL.DataRange, OWL.equivalentClass, OWL.DatatypeProperty))
 
         for t in to_be_removed:
-            self.graph.remove(t)
+            self.destination.remove(t)
