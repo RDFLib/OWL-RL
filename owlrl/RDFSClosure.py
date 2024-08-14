@@ -27,8 +27,10 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
+from typing import Union
+
 import rdflib
-from rdflib import Literal
+from rdflib import Literal, Graph
 from rdflib.namespace import RDF, RDFS
 from itertools import product
 from owlrl.Closure import Core
@@ -67,7 +69,7 @@ class RDFS_Semantics(Core):
     :type rdfs: bool
     """
 
-    def __init__(self, graph, axioms, daxioms, rdfs):
+    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = False, destination: Union[None, Graph] = None):
         """
         @param graph: the RDF graph to be extended
         @type graph: rdflib.Graph
@@ -77,21 +79,23 @@ class RDFS_Semantics(Core):
         @type daxioms: bool
         @param rdfs: whether RDFS inference is also done (used in subclassed only)
         @type rdfs: boolean
+        @param destination: the destination graph to which the results are written. If None, use the source graph.
+        @type destination: rdflib.Graph
         """
-        Core.__init__(self, graph, axioms, daxioms, rdfs)
+        Core.__init__(self, graph, axioms, daxioms, rdfs=rdfs, destination=destination)
 
     def add_axioms(self):
         """
         Add axioms
         """
         for t in RDFS_Axiomatic_Triples:
-            self.graph.add(t)
+            self.destination.add(t)
         for i in range(1, self.IMaxNum + 1):
             ci = RDF[("_%d" % i)]
-            self.graph.add((ci, RDF.type, RDF.Property))
-            self.graph.add((ci, RDFS.domain, RDFS.Resource))
-            self.graph.add((ci, RDFS.range, RDFS.Resource))
-            self.graph.add((ci, RDF.type, RDFS.ContainerMembershipProperty))
+            self.destination.add((ci, RDF.type, RDF.Property))
+            self.destination.add((ci, RDFS.domain, RDFS.Resource))
+            self.destination.add((ci, RDFS.range, RDFS.Resource))
+            self.destination.add((ci, RDF.type, RDFS.ContainerMembershipProperty))
 
     def add_d_axioms(self):
         """
@@ -100,10 +104,10 @@ class RDFS_Semantics(Core):
         # #1
         literals = (lt for lt in self._literals() if lt.datatype is not None)
         for lt in literals:
-            self.graph.add((lt, RDF.type, lt.datatype))
+            self.destination.add((lt, RDF.type, lt.datatype))
 
         for t in RDFS_D_Axiomatic_Triples:
-            self.graph.add(t)
+            self.destination.add(t)
 
     @staticmethod
     def _literals_same_as(lt1, lt2):
@@ -137,7 +141,7 @@ class RDFS_Semantics(Core):
             # effect. In RDFS this is not possible, so the sameAs rule is,
             # essentially replicated...
             for (s, p, o) in self.graph.triples((None, None, lt1)):
-                self.graph.add((s, p, lt2))
+                self.destination.add((s, p, lt2))
 
     def rules(self, t, cycle_num):
         """
