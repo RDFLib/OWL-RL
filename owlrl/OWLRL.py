@@ -200,7 +200,7 @@ class OWLRL_Semantics(Core):
         # literals which are present in the graph
         implicit = {
             o: o.datatype
-            for s, p, o in self.graph
+            for s, p, o in self.graph.triples((None, None, None))
             if isinstance(o, rdflib.Literal) and o.datatype in OWL_RL_Datatypes
         }
 

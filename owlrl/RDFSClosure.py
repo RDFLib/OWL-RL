@@ -198,4 +198,7 @@ class RDFS_Semantics(Core):
         """
         Get all literals defined in the graph.
         """
-        return set(o for s, p, o in self.graph if isinstance(o, Literal))
+        return set(
+            o for s, p, o in self.graph.triples((None, None, None))
+            if isinstance(o, Literal)
+        )
