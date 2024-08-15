@@ -57,7 +57,7 @@ __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/L
 import re
 
 from rdflib.namespace import OWL, RDF, RDFS, XSD
-from rdflib import Literal as rdflibLiteral
+from rdflib import Literal as rdflibLiteral, Graph
 
 from .DatatypeHandling import AltXSDToPYTHON
 from functools import reduce
@@ -197,7 +197,7 @@ def _lang_range_check(range, lang):
 #######################################################################################################
 
 
-def extract_faceted_datatypes(core, graph):
+def extract_faceted_datatypes(core, graph: Graph):
     """
     Extractions of restricted (i.e., faceted) datatypes from the graph.
 
@@ -205,7 +205,7 @@ def extract_faceted_datatypes(core, graph):
     :type core: :class:`.Closure.Core`
 
     :param graph: RDFLib graph.
-    :type graph: :class:`RDFLib.Graph`
+    :type graph: :class:`rdflib.graph.Graph`
 
     :return: List of :class:`.RestrictedDatatype` instances.
     :rtype: list

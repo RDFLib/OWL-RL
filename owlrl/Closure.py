@@ -53,7 +53,7 @@ class Core:
     There are some methods that are implemented in the subclasses only, ie, this class cannot be used by itself!
 
     :param graph: The RDF graph to be extended.
-    :type graph: :class:`rdflib.Graph`
+    :type graph: :class:`rdflib.graph.Graph`
 
     :param axioms: Whether axioms should be added or not.
     :type axioms: bool
@@ -65,13 +65,13 @@ class Core:
     :type rdfs: bool
 
     :param destination: The destination graph to which the results are written. If None, use the source graph.
-    :type destination: :class:`rdflib.Graph`
+    :type destination: :class:`rdflib.graph.Graph`
 
     :var IMaxNum: Maximal index of :code:`rdf:_i` occurrence in the graph.
     :type IMaxNum: int
 
     :var graph: The real graph.
-    :type graph: :class:`rdflib.Graph`
+    :type graph: :class:`rdflib.graph.Graph`
 
     :var axioms: Whether axioms should be added or not.
     :type axioms: bool
@@ -96,7 +96,7 @@ class Core:
         The parameter descriptions here are from the old documentation.
 
         @param graph: the RDF graph to be extended
-        @type graph: rdflib.Graph
+        @type graph: Graph
         @param axioms: whether axioms should be added or not
         @type axioms: boolean
         @param daxioms: whether datatype axioms should be added or not
@@ -104,7 +104,7 @@ class Core:
         @param rdfs: whether RDFS inference is also done (used in subclassed only)
         @type rdfs: boolean
         @param destination: the destination graph to which the results are written. If None, use the source graph.
-        @type destination: rdflib.Graph
+        @type destination: Graph
         """
         self._debug = debugGlobal
 
@@ -248,7 +248,7 @@ class Core:
         added any new triple, and the full processing can stop.
 
         :param t: The triple to be added to the graph, unless it is already there
-        :type t: tuple (s,p,o)
+        :type t: tuple
         """
         (s, p, o) = t
         if not isinstance(p, Literal) and not (t in self.destination or t in self.graph):
@@ -261,7 +261,7 @@ class Core:
         """
         Generate the closure the graph. This is the real 'core'.
 
-        The processing rules store new triples via the separate method :func:`.Core.store_triple` which stores
+        The processing rules store new triples via the separate method :func:`owlrl.Closure.Core.store_triple` which stores
         them in the :code:`added_triples` array. If that array is empty at the end of a cycle,
         it means that the whole process can be stopped.
 

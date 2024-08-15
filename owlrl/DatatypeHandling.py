@@ -684,7 +684,7 @@ AltXSDToPYTHON = {
 def use_Alt_lexical_conversions():
     """
     Registering the datatypes item for RDFLib, ie, bind the dictionary values. The 'bind' method of RDFLib adds
-    extra datatypes to the registered ones in RDFLib, though the table used here (I.e., :py:data:`.AltXSDToPYTHON`) actually
+    extra datatypes to the registered ones in RDFLib, though the table used here (I.e., :code:`AltXSDToPYTHON`) actually
     overrides all of the default conversion routines. The method also add a Decimal entry to the :code:`PythonToXSD` list of
     RDFLib.
     """

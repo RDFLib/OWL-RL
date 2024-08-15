@@ -7,7 +7,10 @@ owlrl.DeductiveClosure
 
    
    .. automethod:: __init__
-
+   .. automethod:: expand
+   .. automethod:: use_improved_datatypes_conversions
+   .. automethod:: use_rdflib_datatypes_conversions
+   .. autoattribute:: improved_datatype_generic
    
    .. rubric:: Methods
 
@@ -24,8 +27,6 @@ owlrl.DeductiveClosure
    
    .. rubric:: Attributes
 
-   .. autosummary::
-   
-      ~DeductiveClosure.improved_datatype_generic
+   .. autosummary:: improved_datatype_generic
    
    

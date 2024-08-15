@@ -26,7 +26,7 @@ Package Entry Points
 
 The main entry point to the package is via the :class:`.DeductiveClosure` class. This class should be
 initialized to control the parameters of the deductive closure; the forward chaining is done via the
-L{expand<DeductiveClosure.expand>} method.
+L{expand<owlrl.DeductiveClosure.expand>} method.
 The simplest way to use the package from an RDFLib application is as follows::
 
     graph = Graph()                                 # creation of an RDFLib graph
@@ -48,7 +48,7 @@ The same instance of :class:`.DeductiveClosure` can be used for several graph ex
 expand function does not change any state.
 
 For convenience, a second entry point to the package is provided in the form of a function called
-:func:`.convert_graph`, that expects a directory with various options, including a file name. The function
+:func:`owlrl.convert_graph`, that expects a directory with various options, including a file name. The function
 parses the file, creates the expanded graph, and serializes the result into RDF/XML or Turtle. This function is
 particularly useful as an entry point for a CGI call (where the HTML form parameters are in a directory) and is easy to
 use with a command line interface. The package distribution contains an example for both.
@@ -87,13 +87,6 @@ cycling through the rules, whereas the rules themselves are defined and implemen
 methods that are executed only once either at the beginning or at the end of the full processing cycle. Adding axiomatic
 triples is handled separately, which allows a finer user control over these features.
 
-Literals must be handled separately. Indeed, the functionality relies on 'extended' RDF graphs, that allows literals
-to be in a subject position, too. Because RDFLib does not allow that, processing begins by exchanging all literals in
-the graph for bnodes (identical literals get the same associated bnode). Processing occurs on these bnodes; at the end
-of the process all these bnodes are replaced by their corresponding literals if possible (if the bnode occurs in a
-subject position, that triple is removed from the resulting graph). Details of this processing is handled in the
-separate :class:`.Literals.LiteralProxies` class.
-
 The OWL specification includes references to datatypes that are not in the core RDFS specification, consequently not
 directly implemented by RDFLib. These are added in a separate module of the package.
 
@@ -102,8 +95,10 @@ Problems with Literals with datatypes
 -------------------------------------
 
 The current distribution of RDFLib is fairly poor in handling datatypes, particularly in checking whether a lexical form
-of a literal is "proper" as for its declared datatype. A typical example is::
+of a literal is "proper" as for its declared datatype. A typical example is ::
+
   "-1234"^^xsd:nonNegativeInteger
+
 which should not be accepted as valid literal. Because the requirements of OWL 2 RL are much stricter in this respect,
 an alternative set of datatype handling (essentially, conversions) had to be implemented (see the :py:mod:`.XsdDatatypes`
 module).
@@ -233,15 +228,13 @@ def interpret_owl_imports(iformat, graph):
     Interpret the owl import statements. Essentially, recursively merge with all the objects in the owl import
     statement, and remove the corresponding triples from the graph.
 
-    This method can be used by an application prior to expansion. It is *not* done by the the :class:`.DeductiveClosure`
+    This method can be used by an application prior to expansion. It is *not* done by the :class:`.DeductiveClosure`
     class.
 
-    :param iformat: Input format; can be one of :code:`AUTO`, :code:`TURTLE`, or :code:`RDFXML`. :code:`AUTO` means that
-    the suffix of the file name or URI will decide: '.ttl' means Turtle, RDF/XML otherwise.
+    :param iformat: Input format; can be one of :code:`AUTO`, :code:`TURTLE`, or :code:`RDFXML`. :code:`AUTO` means that the suffix of the file name or URI will decide: '.ttl' means Turtle, RDF/XML otherwise.
     :type iformat: str
-
     :param graph: The RDFLib Graph instance to parse into.
-    :type graph: :class:`RDFLib.Graph`
+    :type graph: :class:`rdflib.graph.Graph`
     """
     while True:
         # 1. collect the import statements:
@@ -330,7 +323,7 @@ class DeductiveClosure:
     :type datatype_axioms: bool
 
     :var improved_datatype_generic: Whether the improved set of lexical-to-Python conversions should be used for datatype handling *in general*, I.e., not only for a particular instance and not only for inference purposes. Default: False.
-    :type improved_Datatype_generic: bool
+    :type improved_datatype_generic: bool
     """
 
     # This is the original set of param definitions in the class definition
@@ -380,6 +373,8 @@ class DeductiveClosure:
             if not isinstance(closure_class, type):
                 raise ValueError("The closure type argument must be a class reference")
             else:
+
+
                 self.closure_class = closure_class
         self.axiomatic_triples = axiomatic_triples
         self.datatype_axioms = datatype_axioms
