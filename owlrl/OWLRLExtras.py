@@ -100,7 +100,7 @@ def _strToRational(v):
 class OWLRL_Extension(RDFS_OWLRL_Semantics):
     """
     Additional rules to OWL 2 RL. The initialization method also adds the :code:`owl:rational` datatype to the set of
-    allowed datatypes with the :py:func:`._strToRational` function as a conversion between the literal form and a Rational. The
+    allowed datatypes with the :func:`owlrl.OWLRLExtras._strToRational` function as a conversion between the literal form and a Rational. The
     :code:`xsd:decimal` datatype is also set to be a subclass of :code:`owl:rational`. Furthermore, the restricted datatypes are
     extracted from the graph using a separate method in a different module
     (:py:func:`.RestrictedDatatype.extract_faceted_datatypes`), and all those datatypes are also added to the set of allowed
@@ -227,7 +227,7 @@ class OWLRL_Extension(RDFS_OWLRL_Semantics):
 
     def add_axioms(self):
         """
-        Add the :class:`.OWLRL_Extension.extra_axioms`, related to the self restrictions.
+        Add the :class:`owlrl.OWLRLExtras.OWLRL_Extension.extra_axioms`, related to the self restrictions. This method is invoked only once at the beginning, and prior of, the forward chaining process.
         """
         RDFS_OWLRL_Semantics.add_axioms(self)
         for t in self.extra_axioms:

@@ -7,23 +7,21 @@ owlrl
    
    .. rubric:: Functions
 
-   .. autosummary::
-   
-      convert_graph
-      interpret_owl_imports
-      return_closure_class
+   .. autofunction:: convert_graph
+   .. autofunction:: interpret_owl_imports
+   .. autofunction:: return_closure_class
+
    
    
 
-   
    
    .. rubric:: Classes
 
    .. autosummary::
    
       DeductiveClosure
-   
-   
+
+
 
    
    

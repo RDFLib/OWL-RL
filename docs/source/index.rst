@@ -22,7 +22,8 @@ OWL-RL Documentation
    :maxdepth: 2
    :caption: Modules
 
-   owlrl
+   stubs/owlrl.__index__
+   stubs/owlrl.DeductiveClosure
    AxiomaticTriples
    Closure
    CombinedClosure
@@ -33,3 +34,10 @@ OWL-RL Documentation
    RestrictedDatatype
    XsdDatatypes
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference Source
+
+   AxiomaticTriples_source
+   DatatypeHandling_source
+   XsdDatatypes_source
