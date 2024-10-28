@@ -7,6 +7,17 @@ Changes:
 
 * works with rdflib >= 7.1.1
 
+This version of OWL-RL has been released now to update the RDFLib dependency version only, to further reduce upstream dependencies. Additionally there are several major functional updates included:
+
+* [Better handling of detecting identical literals for RDFS sameAs rules](https://github.com/RDFLib/OWL-RL/pull/68)
+* [Allow OWL-RL Closures to be run on rdflib Dataset instances](https://github.com/RDFLib/OWL-RL/pull/69)
+* [Add inferred triples to a separate named graph](https://github.com/RDFLib/OWL-RL/pull/70)
+
+The main result of the changes above is to allow OWLRL to be run on a Graph within a Dataset and to store the inferred triples in a separate Graph which allows asserted and inferred data to be kept cleanly, side-by-side, and used together but managed independently.
+
+This update is of particular importance to tools such as [pySHACL](https://github.com/RDFLib/pySHACL)...
+
+
 6.0.2 - October, 2021
 ~~~~~~~~~~~~~~~~~~~~~~~
 Changes:
