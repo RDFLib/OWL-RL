@@ -38,3 +38,24 @@ View the **OWL-RL documentation** online: http://owl-rl.readthedocs.io/
 To view the changelog for this software library, see `CHANGELOG.rst <CHANGELOG.rst>`_.
 
 This software is released under the W3C© SOFTWARE NOTICE AND LICENSE. See `LICENSE.txt <LICENSE.txt>`_.
+
+
+Release Procedure
+-----------------
+
+* update all the version numbers
+* remove the current dist dir
+* build the new distribution
+* test the metadata rendering
+* test push it to PyPI
+* actually push it to PyPI
+
+::
+
+    rm -vf dist/*
+    poetry build
+    bsdtar -xvf dist/owlrl-*.whl -O '*/METADATA' | view -
+    bsdtar -xvf dist/owlrl-*.tar.gz -O '*/PKG-INFO' | view -
+
+    poetry publish --dry-run
+    poetry publish -u __token__ -p <OWL-RL PyPI Token>
