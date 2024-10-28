@@ -1,7 +1,13 @@
 Changelog
 ---------
 
-v.6.0.2 - October, 2021
+v.7.1.1 - October, 2024
+~~~~~~~~~~~~~~~~~~~~~~~
+Changes:
+
+* works with rdflib >= 7.1.1
+
+6.0.2 - October, 2021
 ~~~~~~~~~~~~~~~~~~~~~~~
 Changes:
 

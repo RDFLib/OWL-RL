@@ -1,12 +1,12 @@
 Metadata-Version: 1.2
 Name: owlrl
-Version: 5.2.2
+Version: 7.1.1
 Summary: OWL-RL and RDFS based RDF Closure inferencing
 Home-page: https://github.com/RDFLib/OWL-RL/
 Author: Ivan Herman
 Author-email: ivan@ivan-herman.net
 Maintainer: Nicholas Car
-Maintainer-email: nicholas.car@csiro.au
+Maintainer-email: nick@kurrawong.ai
 License: LICENSE.txt
 Download-URL: https://github.com/RDFLib/OWL-RL/archive/v5.2.2.tar.gz
 Description: |Original Author DOI|

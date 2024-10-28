@@ -1,4 +1,4 @@
-from rdflib import Graph, Namespace, Dataset, URIRef
+from rdflib import Namespace, Dataset, URIRef
 from rdflib.namespace import RDF
 import sys
 from pathlib import Path
