@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+v.7.1.2 - October, 2024
+~~~~~~~~~~~~~~~~~~~~~~~
+Changes:
+
+* Python dependency changed to > 3.8 (not > 3.10) to be compatible with other RDFLib packaged
+
+
 v.7.1.1 - October, 2024
 ~~~~~~~~~~~~~~~~~~~~~~~
 Changes:

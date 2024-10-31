@@ -1,6 +1,6 @@
 Metadata-Version: 1.2
 Name: owlrl
-Version: 7.1.1
+Version: 7.1.2
 Summary: OWL-RL and RDFS based RDF Closure inferencing
 Home-page: https://github.com/RDFLib/OWL-RL/
 Author: Ivan Herman
