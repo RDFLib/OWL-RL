@@ -103,3 +103,10 @@ Release Procedure
 
     poetry publish --dry-run
     poetry publish -u __token__ -p <OWL-RL PyPI Token>
+
+* commit the version update
+* tag it
+* push the commits & tag to GitHub
+* make a GitHub release
+
+    * reuse the CHANGELOG entry for the release
