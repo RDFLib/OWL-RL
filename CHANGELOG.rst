@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+v.7.1.3 - January, 2025
+~~~~~~~~~~~~~~~~~~~~~~~
+Changes:
+
+* dependencies updates only to meet RDFLib 7.1.3
+* ensured development dependencies allow for Python 3.8.1+
+* updated README with contact info and installation instructions
+
+
 v.7.1.2 - October, 2024
 ~~~~~~~~~~~~~~~~~~~~~~~
 Changes:

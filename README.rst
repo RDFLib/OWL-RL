@@ -16,35 +16,79 @@
 OWL-RL
 ======
 
-A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining. The distribution contains:
+A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib, based on forward chaining.
 
-**OWL-RL**: the Python library. You should copy the directory somewhere into your :code:`PYTHONPATH`. Alternatively, you can also run the :code:`python setup.py install` script in the directory.
+This package is a Python library that also contains a couple of scripts:
 
-* :code:`scripts/RDFConvertService`: can be used as a CGI script to invoke the library. It may have to be adapted to the local server setup.
+* `scripts/RDFConvertService`: a CGI script to invoke the library. It may have to be adapted to the local server setup.
 
-* :code:`scripts/owlrl`: script that can be run locally on to transform a file into RDF (on the standard output). Run the script with :code:`-h` to get the available flags.
+* `scripts/owlrl`: a script that can be run locally on to transform a file into RDF (on the standard output). Run the script with `-h` to get the available flags.
 
-The package requires Python version 3.5 or higher; it depends on `RDFLib`_; version 4.2.2 or higher is required. If you need the python 2.7.x compatible version, see the @/py2 branch in this repository.
+Installation
+------------
 
-.. _RDFLib: https://github.com/RDFLib
+This package requires RDFLib 7.1.3 as its only dependency and it can be installed from the Python Package index in the usual way:
 
-For the details on RDFS, see the `RDF Semantics Specification`_; for OWL 2 RL, see the `OWL 2 Profile specification`_.
+::
+
+    pip install owlrl
+
+
+or
+
+::
+
+    poetry add owlrl
+
+
+Use
+---
+
+This package can run inference according to RDFS and/or OWL-RL.
+
+For details on RDFS, see the `RDF Semantics Specification`_; for OWL 2 RL, see the `OWL 2 Profile specification`_.
 
 .. _RDF Semantics Specification: http://www.w3.org/TR/rdf11-mt/
 .. _OWL 2 Profile specification: http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
 
 View the **OWL-RL documentation** online: http://owl-rl.readthedocs.io/
 
-To view the changelog for this software library, see `CHANGELOG.rst <CHANGELOG.rst>`_.
 
+License
+-------
 This software is released under the W3C© SOFTWARE NOTICE AND LICENSE. See `LICENSE.txt <LICENSE.txt>`_.
 
 
+Support & Contacts
+------------------
+
+For general "how do I..." queries, please use https://stackoverflow.com and tag your question with ``rdflib``. Existing questions:
+
+* https://stackoverflow.com/questions/tagged/rdflib
+
+If you want to contact the rdflib maintainers, please do so via:
+
+* the rdflib-dev mailing list: https://groups.google.com/group/rdflib-dev
+* the chat, which is available at `gitter <https://gitter.im/RDFLib/rdflib>`_ or via matrix `#RDFLib_rdflib:gitter.im <https://matrix.to/#/#RDFLib_rdflib:gitter.im>`_
+
+
+Development
+-----------
+
+Changes
+~~~~~~~
+
+To view the changelog for this software library, see `CHANGELOG.rst <CHANGELOG.rst>`_.
+
 Release Procedure
------------------
+~~~~~~~~~~~~~~~~~
 
 * update all the version numbers
-* remove the current dist dir
+
+    * pyproject.toml
+    * README.rst
+
+* remove the current ``dist/`` dir
 * build the new distribution
 * test the metadata rendering
 * test push it to PyPI
