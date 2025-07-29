@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "owlrl"
-version = "7.1.3"
+version = "7.1.4"
 description = "A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining."
 authors = ["Nicholas Car <nick@kurrawong.ai>"]
 license = "W3C software and Document Notice License"
@@ -8,8 +8,8 @@ readme = "README.rst"
 packages = [{include = "owlrl"}]
 
 [tool.poetry.dependencies]
-python = ">=3.8.1,<4.0"
-rdflib = ">=7.1.3"
+python = ">=3.9,<4.0"
+rdflib = ">=7.1.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "24.4.2"

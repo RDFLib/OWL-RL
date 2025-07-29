@@ -155,7 +155,7 @@ which will result in a proper graph expansion except for the datatype specific c
 """
 
 # Examples: LangString is disjoint from String
-__version__ = "7.1.2"
+__version__ = "7.1.4"
 __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"

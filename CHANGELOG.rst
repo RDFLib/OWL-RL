@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+v.7.1.4 - July, 2025
+~~~~~~~~~~~~~~~~~~~~~~~
+Changes:
+
+* dependencies updates to meet RDFLib 7.1.4
+* Python 3.9+ only, to match RDFLib 7.1.4
+* background dependencies updated and tested to work
+
+
 v.7.1.3 - January, 2025
 ~~~~~~~~~~~~~~~~~~~~~~~
 Changes:
