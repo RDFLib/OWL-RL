@@ -6,7 +6,7 @@ authors = [
     {name="Nicholas Car", email="nick@kurrawong.ai"},
     {name="Ashley Sommer", email="ashleysommer@gmail.com"}
 ]
-license = "W3C software and Document Notice License"
+license = "W3C-20150513"
 readme = "README.rst"
 requires-python = ">=3.9"
 dependencies = [
@@ -19,12 +19,8 @@ source = "https://github.com/RDFLib/OWL-RL"
 issues = "https://github.com/RDFLib/OWL-RL/issues"
 download = "https://github.com/RDFLib/OWL-RL/releases"
 
-[project.scripts]
-owlrl = "scripts.owlrl"
-RDFConvertService = "scripts.RDFConvertService"
-
 [project.optional-dependencies]
-# These are equivelent to python package "extras"
+# These are equivalent to python package "extras"
 oxigraph = [
     "pyoxigraph>=0.5.6"
 ]

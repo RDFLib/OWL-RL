@@ -93,7 +93,7 @@ class Core:
     """
 
     # noinspection PyUnusedLocal
-    def __init__(self, graph: DataGraph|Graph|Any, axioms, daxioms, rdfs: bool = False, destination: DataGraph|Graph|Any = None):
+    def __init__(self, graph: Union[DataGraph,Graph,Any], axioms, daxioms, rdfs: bool = False, destination: Union[DataGraph,Graph,Any] = None):
         """
         The parameter descriptions here are from the old documentation.
 
@@ -131,13 +131,19 @@ class Core:
             self.destination = destination
         else:
             if isinstance(destination, (str, rdflib.URIRef)):
-                self.destination = graph.get_context(destination)
+                if isinstance(graph, (Dataset, ConjunctiveGraph, DataGraph)):
+                    self.destination = graph.get_context(destination)
+                else:
+                    raise ValueError(
+                        "URIRef or string destinations are only supported for Dataset, "
+                        "ConjunctiveGraph, or Oxigraph/DataGraph instances"
+                    )
             else:
                 # destination is a rdflib Graph
                 source_store = self.graph.store
                 dest_store = destination.store
                 if source_store is not dest_store:
-                    raise ValueError("The source and destination graphs share the same backing store")
+                    raise ValueError("The source and destination graphs must share the same backing store")
                 self.destination = destination
 
         # Calculate the maximum 'n' value for the '_i' type predicates (see Horst's paper)

@@ -27,7 +27,7 @@ from rdflib.term import (
     URIRef as rdf_URIRef,
 )
 from rdflib.namespace import RDF
-from typing import Union, Any
+from typing import Union, Any, Tuple
 import warnings
 
 ALLOWED_GRAPH_TYPES = Union[rdf_Graph, rdf_Dataset, ox_Store]
@@ -39,7 +39,9 @@ class DataGraph:
     _default_union: bool
 
     def __new__(
-        cls, store: ALLOWED_GRAPH_TYPES, locked_context: rdf_Graph | str | None = None
+        cls,
+        store: ALLOWED_GRAPH_TYPES,
+        locked_context: Union[rdf_Graph, str, None] = None,
     ):
         self = super().__new__(cls)
         self.is_oxigraph = has_oxigraph and isinstance(store, ox_Store)
@@ -81,10 +83,10 @@ class DataGraph:
     @classmethod
     def convert_triple_to_oxigraph(
         cls,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal | None,
-            rdf_IdentifiedNode | None,
-            rdf_Literal | rdf_IdentifiedNode | None,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
+            Union[rdf_IdentifiedNode, None],
+            Union[rdf_Literal, rdf_IdentifiedNode, None],
         ],
     ):
         in_s, in_p, in_o = triple
@@ -121,8 +123,8 @@ class DataGraph:
 
     @classmethod
     def to_ox(
-        cls, term: rdf_IdentifiedNode | rdf_Literal | None
-    ) -> ox_NamedNode | ox_BlankNode | ox_Literal | None:
+        cls, term: Union[rdf_IdentifiedNode, rdf_Literal, None]
+    ) -> Union[ox_NamedNode, ox_BlankNode, ox_Literal, None]:
         if term is None:
             return None
         elif isinstance(term, rdf_BNode):
@@ -137,8 +139,8 @@ class DataGraph:
 
     @classmethod
     def to_rdf(
-        cls, term: ox_NamedNode | ox_BlankNode | ox_Literal | None
-    ) -> rdf_IdentifiedNode | rdf_Literal | None:
+        cls, term: Union[ox_NamedNode, ox_BlankNode, ox_Literal, None]
+    ) -> Union[rdf_IdentifiedNode, rdf_Literal, None]:
         if term is None:
             return None
         elif isinstance(term, ox_BlankNode):
@@ -213,10 +215,10 @@ class DataGraph:
 
     def add_to_oxigraph(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
             rdf_IdentifiedNode,
-            rdf_Literal | rdf_IdentifiedNode,
+            Union[rdf_Literal, rdf_IdentifiedNode],
         ],
     ):
         if isinstance(triple[1], rdf_BNode) or isinstance(triple[1], rdf_Literal):
@@ -242,10 +244,10 @@ class DataGraph:
 
     def remove_from_oxigraph(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
             rdf_IdentifiedNode,
-            rdf_Literal | rdf_IdentifiedNode,
+            Union[rdf_Literal, rdf_IdentifiedNode],
         ],
     ):
         ox_triples = self.convert_triple_to_oxigraph(triple)
@@ -278,16 +280,16 @@ class DataGraph:
 
     def triples_in_oxigraph(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal | None,
-            rdf_IdentifiedNode | None,
-            rdf_IdentifiedNode | rdf_Literal | None,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
+            Union[rdf_IdentifiedNode, None],
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
         ],
     ) -> Generator[
-        tuple[
-            rdf_IdentifiedNode | rdf_Literal,
+        Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
             rdf_IdentifiedNode,
-            rdf_IdentifiedNode | rdf_Literal,
+            Union[rdf_IdentifiedNode, rdf_Literal],
         ],
         None,
         None,
@@ -321,8 +323,15 @@ class DataGraph:
                 yield self.convert_quad_to_rdflib(q)[:3]
 
     def subject_objects_in_oxigraph(
-        self, predicate: rdf_IdentifiedNode | None
-    ) -> Generator[Any, None, None]:
+        self, predicate: Union[rdf_IdentifiedNode, None]
+    ) -> Generator[
+        Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
+            Union[rdf_IdentifiedNode, rdf_Literal],
+        ],
+        None,
+        None,
+    ]:
         if isinstance(predicate, rdf_BNode) or isinstance(predicate, rdf_Literal):
             # Oxigraph does not support BNode or Literal in the predicate position
             # Cannot yield any results
@@ -342,8 +351,10 @@ class DataGraph:
                 yield s, o
 
     def subject_predicates_in_oxigraph(
-        self, object_: rdf_IdentifiedNode | rdf_Literal | None
-    ) -> Generator[rdf_IdentifiedNode, rdf_IdentifiedNode, None]:
+        self, object_: Union[rdf_IdentifiedNode, rdf_Literal, None]
+    ) -> Generator[
+        Tuple[Union[rdf_IdentifiedNode, rdf_Literal], rdf_IdentifiedNode], None, None
+    ]:
         _o = self.to_ox(object_)
         if self.locked_context is not None:
             for q in self.impl.quads_for_pattern(None, None, _o, self.locked_context):
@@ -359,8 +370,10 @@ class DataGraph:
                 yield s, p
 
     def predicate_objects_in_oxigraph(
-        self, subject: rdf_IdentifiedNode | rdf_Literal | None
-    ) -> Generator[Any, None, None]:
+        self, subject: Union[rdf_IdentifiedNode, rdf_Literal, None]
+    ) -> Generator[
+        Tuple[rdf_IdentifiedNode, Union[rdf_IdentifiedNode, rdf_Literal]], None, None
+    ]:
         _s = self.to_ox(subject)
         if self.locked_context is not None:
             for q in self.impl.quads_for_pattern(_s, None, None, self.locked_context):
@@ -378,8 +391,8 @@ class DataGraph:
     def subjects_in_oxigraph(
         self,
         predicate: rdf_IdentifiedNode,
-        object_: rdf_IdentifiedNode | rdf_Literal | None,
-    ) -> Generator[rdf_IdentifiedNode, None, None]:
+        object_: Union[rdf_IdentifiedNode, rdf_Literal, None],
+    ) -> Generator[Union[rdf_IdentifiedNode, rdf_Literal], None, None]:
         _p = self.to_ox(predicate)
         _o = self.to_ox(object_)
         if self.locked_context is not None:
@@ -398,9 +411,9 @@ class DataGraph:
 
     def objects_in_oxigraph(
         self,
-        subject: rdf_IdentifiedNode | rdf_Literal,
-        predicate: rdf_IdentifiedNode | None,
-    ) -> Generator[Any, None, None]:
+        subject: Union[rdf_IdentifiedNode, rdf_Literal],
+        predicate: Union[rdf_IdentifiedNode, None],
+    ) -> Generator[Union[rdf_IdentifiedNode, rdf_Literal], None, None]:
         _s = self.to_ox(subject)
         _p = self.to_ox(predicate)
         if self.locked_context is not None:
@@ -419,8 +432,10 @@ class DataGraph:
 
     def add_to_rdflib(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode, rdf_IdentifiedNode, rdf_Literal | rdf_IdentifiedNode
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
+            rdf_IdentifiedNode,
+            Union[rdf_Literal, rdf_IdentifiedNode],
         ],
     ):
         if self.locked_context is not None:
@@ -430,10 +445,10 @@ class DataGraph:
 
     def remove_from_rdflib(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
             rdf_IdentifiedNode,
-            rdf_Literal | rdf_IdentifiedNode,
+            Union[rdf_Literal, rdf_IdentifiedNode],
         ],
     ):
         if self.locked_context is not None:
@@ -445,16 +460,16 @@ class DataGraph:
 
     def triples_in_rdflib(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal | None,
-            rdf_IdentifiedNode | None,
-            rdf_IdentifiedNode | rdf_Literal | None,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
+            Union[rdf_IdentifiedNode, None],
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
         ],
     ) -> Generator[
-        tuple[
-            rdf_IdentifiedNode | rdf_Literal,
+        Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal],
             rdf_IdentifiedNode,
-            rdf_IdentifiedNode | rdf_Literal,
+            Union[rdf_IdentifiedNode, rdf_Literal],
         ],
         None,
         None,
@@ -467,8 +482,8 @@ class DataGraph:
                 yield t
 
     def subject_objects_in_rdflib(
-        self, predicate: rdf_IdentifiedNode | None
-    ) -> Generator[Any, None, None]:
+        self, predicate: Union[rdf_IdentifiedNode, None]
+    ) -> Generator[tuple, None, None]:
         if self.locked_context is not None:
             for t in self.impl.subject_objects(predicate, context=self.locked_context):
                 yield t
@@ -477,8 +492,8 @@ class DataGraph:
                 yield t
 
     def subject_predicates_in_rdflib(
-        self, object_: rdf_IdentifiedNode | rdf_Literal | None
-    ) -> Generator[rdf_IdentifiedNode, rdf_IdentifiedNode, None]:
+        self, object_: Union[rdf_IdentifiedNode, rdf_Literal, None]
+    ) -> Generator[Any, None, None]:
         if self.locked_context is not None:
             for t in self.impl.subject_predicates(object_, context=self.locked_context):
                 yield t
@@ -487,8 +502,8 @@ class DataGraph:
                 yield t
 
     def predicate_objects_in_rdflib(
-        self, subject: rdf_IdentifiedNode | rdf_Literal | None
-    ) -> Generator[Any, None, None]:
+        self, subject: Union[rdf_IdentifiedNode, rdf_Literal, None]
+    ) -> Generator[tuple, None, None]:
         if self.locked_context is not None:
             for t in self.impl.predicate_objects(subject, context=self.locked_context):
                 yield t
@@ -499,7 +514,7 @@ class DataGraph:
     def subjects_in_rdflib(
         self,
         predicate: rdf_IdentifiedNode,
-        object_: rdf_IdentifiedNode | rdf_Literal | None,
+        object_: Union[rdf_IdentifiedNode, rdf_Literal, None],
     ) -> Generator[rdf_IdentifiedNode, None, None]:
         if self.locked_context is not None:
             for t in self.impl.subjects(
@@ -512,9 +527,9 @@ class DataGraph:
 
     def objects_in_rdflib(
         self,
-        subject: rdf_IdentifiedNode | rdf_Literal,
-        predicate: rdf_IdentifiedNode | None,
-    ) -> Generator[Any, None, None]:
+        subject: Union[rdf_IdentifiedNode, rdf_Literal],
+        predicate: Union[rdf_IdentifiedNode, None],
+    ) -> Generator[Union[rdf_IdentifiedNode, rdf_Literal], None, None]:
         if self.locked_context is not None:
             for t in self.impl.objects(subject, predicate, context=self.locked_context):
                 yield t
@@ -522,7 +537,7 @@ class DataGraph:
             for t in self.impl.objects(subject, predicate):
                 yield t
 
-    def get_context(self, identifier: rdf_URIRef | str) -> "DataGraph":
+    def get_context(self, identifier: Union[rdf_URIRef, str]) -> "DataGraph":
         if self.is_oxigraph:
             return DataGraph(self.impl, str(identifier))
         else:
@@ -530,10 +545,10 @@ class DataGraph:
 
     def __contains__(
         self,
-        triple: tuple[
-            rdf_IdentifiedNode | rdf_Literal | None,
-            rdf_IdentifiedNode | None,
-            rdf_IdentifiedNode | rdf_Literal | None,
+        triple: Tuple[
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
+            Union[rdf_IdentifiedNode, None],
+            Union[rdf_IdentifiedNode, rdf_Literal, None],
         ],
     ) -> bool:
         if self.is_oxigraph:
@@ -554,7 +569,7 @@ class DataGraph:
 
     def items(
         self, list_: rdf_IdentifiedNode
-    ) -> Generator[rdf_IdentifiedNode | rdf_Literal, None, None]:
+    ) -> Generator[Union[rdf_IdentifiedNode, rdf_Literal], None, None]:
         """Generator over all items in the resource specified by list
 
         Args:
@@ -590,8 +605,8 @@ class DataGraph:
                 raise ValueError("List contains a recursive rdf:rest reference")
             chain.add(next_list)
 
-    def bind(self, namespace: str, prefix: str) -> None:
+    def bind(self, prefix: str, namespace: str, **kwargs) -> None:
         if self.is_oxigraph:
             pass
         else:
-            self.impl.bind(namespace, prefix)
+            self.impl.bind(prefix, namespace, **kwargs)
