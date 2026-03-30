@@ -21,3 +21,4 @@ owlrl*.tar.gz
 
 # Mac
 .DS_Store
+/.venv/

@@ -3,7 +3,7 @@
 """
 The generic superclasses for various rule based semantics and the possible extensions.
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 7.5.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 
@@ -25,11 +25,13 @@ __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
 
-from typing import Union
+from typing import Union, Any
 
 import rdflib
 from rdflib.namespace import RDF
 from rdflib import BNode, Literal, Graph, Dataset
+
+from owlrl.graph_abstraction import DataGraph
 from .Namespaces import ERRNS
 
 try:
@@ -91,22 +93,52 @@ class Core:
     """
 
     # noinspection PyUnusedLocal
-    def __init__(self, graph: Graph, axioms, daxioms, rdfs: bool = False, destination: Union[None, Graph] = None):
+    def __init__(self, graph: DataGraph|Graph|Any, axioms, daxioms, rdfs: bool = False, destination: DataGraph|Graph|Any = None):
         """
         The parameter descriptions here are from the old documentation.
 
         @param graph: the RDF graph to be extended
-        @type graph: Graph
+        @type graph: DataGraph
         @param axioms: whether axioms should be added or not
         @type axioms: boolean
         @param daxioms: whether datatype axioms should be added or not
         @type daxioms: boolean
         @param rdfs: whether RDFS inference is also done (used in subclassed only)
         @type rdfs: boolean
-        @param destination: the destination graph to which the results are written. If None, use the source graph.
-        @type destination: Graph
+        @param destination: the destination graph to which the results are written. If None, use the source datagraph.
+        @type destination: DataGraph
         """
         self._debug = debugGlobal
+
+        if isinstance(graph, (Dataset, ConjunctiveGraph)):
+            graph.default_union = True
+
+        if isinstance(graph, DataGraph):
+            graph.default_union = True
+        elif not isinstance(graph, Graph):
+            # Wrap a RDFlib Graph and Oxigraph Store in a DataGraph abstraction layer
+            graph = DataGraph(graph)
+            graph.default_union = True
+
+        self.graph = graph
+
+        if destination is None:
+            if isinstance(graph, (Dataset, ConjunctiveGraph)):
+                self.destination = graph.default_context
+            else:
+                self.destination = graph
+        elif isinstance(destination, DataGraph):
+            self.destination = destination
+        else:
+            if isinstance(destination, (str, rdflib.URIRef)):
+                self.destination = graph.get_context(destination)
+            else:
+                # destination is a rdflib Graph
+                source_store = self.graph.store
+                dest_store = destination.store
+                if source_store is not dest_store:
+                    raise ValueError("The source and destination graphs share the same backing store")
+                self.destination = destination
 
         # Calculate the maximum 'n' value for the '_i' type predicates (see Horst's paper)
         n = 1
@@ -121,28 +153,6 @@ class Core:
                 n += 1
                 cont = True
         self.IMaxNum = maxnum
-
-        self.graph = graph
-        if isinstance(self.graph, (Dataset, ConjunctiveGraph)):
-            self.graph.default_union = True
-
-        if destination is None:
-            if isinstance(graph, (Dataset, ConjunctiveGraph)):
-                self.destination = graph.default_context
-            else:
-                self.destination = graph
-        else:
-            if isinstance(destination, (str, rdflib.URIRef)):
-                if isinstance(graph, (Dataset, ConjunctiveGraph)):
-                    self.destination = graph.get_context(destination)
-                else:
-                    raise ValueError("URIRef destinations are only supported for Datasets and ConjunctiveGraphs")
-            else:
-                source_store = self.graph.store
-                dest_store = destination.store
-                if source_store is not dest_store:
-                    raise ValueError("The source and destination graphs share the same backing store")
-                self.destination = destination
 
         self.axioms = axioms
         self.daxioms = daxioms

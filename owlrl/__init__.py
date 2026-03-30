@@ -132,13 +132,13 @@ which will result in a proper graph expansion except for the datatype specific c
 
 
 **Requires**:
-    * `RDFLib`_, 4.0.0 and higher.
+    * `RDFLib`_, 7.5.0 and higher.
 
     .. _RDFLib: https://github.com/RDFLib/rdflib
 
-    * `rdflib_jsonld`_
+    * Optional: `PyOxigraph`_ (install with ``pip install owlrl[oxigraph]``) to use an Oxigraph store as the graph backend.
 
-    .. _rdflib_jsonld: https://github.com/RDFLib/rdflib-jsonld
+    .. _PyOxigraph: https://pyoxigraph.readthedocs.io/
 
 **License**: This software is available for use under the `W3C Software License`_
 
@@ -155,7 +155,7 @@ which will result in a proper graph expansion except for the datatype specific c
 """
 
 # Examples: LangString is disjoint from String
-__version__ = "7.1.4"
+__version__ = "7.5.0"
 __author__ = "Ivan Herman"
 __contact__ = "Ivan Herman, ivan@w3.org"
 __license__ = "W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231"
