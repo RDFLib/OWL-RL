@@ -3,7 +3,7 @@
 """
 Axiomatic triples to be (possibly) added to the final graph.
 
-**Requires**: `RDFLib`_, 4.0.0 and higher.
+**Requires**: `RDFLib`_, 7.5.0 and higher.
 
 .. _RDFLib: https://github.com/RDFLib/rdflib
 

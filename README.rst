@@ -27,7 +27,7 @@ This package is a Python library that also contains a couple of scripts:
 Installation
 ------------
 
-This package requires RDFLib 7.1.3 as its only dependency and it can be installed from the Python Package index in the usual way:
+This package requires RDFLib 7.5.0 or newer. It can be installed from the Python Package index in the usual way:
 
 ::
 
@@ -39,6 +39,10 @@ or
 ::
 
     poetry add owlrl
+
+Optional: run the closure against an `Oxigraph <https://pyoxigraph.readthedocs.io/>`_ in-memory store by installing the extra::
+
+    pip install owlrl[oxigraph]
 
 
 Use
@@ -52,6 +56,14 @@ For details on RDFS, see the `RDF Semantics Specification`_; for OWL 2 RL, see t
 .. _OWL 2 Profile specification: http://www.w3.org/TR/owl2-profiles/#Reasoning_in_OWL_2_RL_and_RDF_Graphs_using_Rules
 
 View the **OWL-RL documentation** online: http://owl-rl.readthedocs.io/
+
+
+Oxigraph store (optional)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After installing the ``oxigraph`` extra (see **Installation** above), you may pass a `PyOxigraph <https://pyoxigraph.readthedocs.io/>`_ ``Store`` into ``owlrl.DeductiveClosure(...).expand(...)`` and related closure entry points wherever you would normally pass an RDFLib ``Graph`` or ``Dataset``. Inferred triples can still be written to a separate named graph on that store via the ``destination`` argument, as with RDFLib.
+
+This integration is provided for **compatibility** (for example, keeping the rest of an application on Oxigraph) rather than for speed. Converting terms to and from RDFLib objects removes most of the performance benefit of Oxigraph, and this project still uses RDFLib types and logic internally for all inference steps.
 
 
 License

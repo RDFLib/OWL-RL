@@ -1,15 +1,32 @@
-[tool.poetry]
+[project]
 name = "owlrl"
-version = "7.1.4"
+version = "7.5.0"
 description = "A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining."
-authors = ["Nicholas Car <nick@kurrawong.ai>"]
-license = "W3C software and Document Notice License"
+authors = [
+    {name="Nicholas Car", email="nick@kurrawong.ai"},
+    {name="Ashley Sommer", email="ashleysommer@gmail.com"}
+]
+license = "W3C-20150513"
 readme = "README.rst"
-packages = [{include = "owlrl"}]
+requires-python = ">=3.9"
+dependencies = [
+    "rdflib>=7.5.0",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-rdflib = ">=7.1.4"
+[project.urls]
+homepage = "https://github.com/RDFLib/OWL-RL"
+source = "https://github.com/RDFLib/OWL-RL"
+issues = "https://github.com/RDFLib/OWL-RL/issues"
+download = "https://github.com/RDFLib/OWL-RL/releases"
+
+[project.optional-dependencies]
+# These are equivalent to python package "extras"
+oxigraph = [
+    "pyoxigraph>=0.5.6"
+]
+
+[tool.poetry]
+packages = [{include = "owlrl"}]
 
 [tool.poetry.group.dev.dependencies]
 black = "24.4.2"
@@ -17,5 +34,5 @@ sphinx = ">=7.1.2,<8"
 pytest = ">=7.1.3,<9.0.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0"]
 build-backend = "poetry.core.masonry.api"
