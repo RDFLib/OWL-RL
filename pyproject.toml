@@ -1,16 +1,16 @@
 [project]
 name = "owlrl"
-version = "7.5.0"
+version = "7.6.1"
 description = "A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining."
 authors = [
     {name="Nicholas Car", email="nick@kurrawong.ai"},
     {name="Ashley Sommer", email="ashleysommer@gmail.com"}
 ]
 license = "W3C-20150513"
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "rdflib>=7.5.0",
+    "rdflib>=7.6.0",
 ]
 
 [project.urls]
