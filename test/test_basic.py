@@ -1,9 +1,6 @@
 from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
-import sys
-from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent.parent))
 import owlrl
 
 RELS = Namespace("http://example.org/relatives#")

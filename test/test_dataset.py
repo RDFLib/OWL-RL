@@ -1,7 +1,5 @@
 from rdflib import Namespace, Dataset, URIRef
 from rdflib.namespace import RDF
-import sys
-from pathlib import Path
 
 try:
     from rdflib.graph import ConjunctiveGraph
@@ -9,7 +7,7 @@ try:
 except ImportError:
     ConjunctiveGraph = Dataset
 
-sys.path.append(str(Path(__file__).parent.parent))
+
 import owlrl
 
 RELS = Namespace("http://example.org/relatives#")

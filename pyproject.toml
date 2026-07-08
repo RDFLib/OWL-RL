@@ -1,6 +1,6 @@
 [project]
 name = "owlrl"
-version = "7.6.2a"
+version = "7.6.2"
 description = "A simple implementation of the OWL2 RL Profile, as well as a basic RDFS inference, on top of RDFLib. Based mechanical forward chaining."
 authors = [
     {name="Nicholas Car", email="nick@kurrawong.ai"},
