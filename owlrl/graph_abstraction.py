@@ -97,12 +97,12 @@ class DataGraph:
             out_s = ox_BlankNode(str(in_s))
         elif isinstance(in_s, rdf_Literal):
             if in_s.language is not None:
-                out_s = ox_Literal(str(in_s.value), language=in_s.language)
+                out_s = ox_Literal(str(in_s), language=in_s.language)
             else:
                 data_type = in_s.datatype
                 if data_type is not None:
                     data_type = ox_NamedNode(str(data_type))
-                out_s = ox_Literal(str(in_s.value), datatype=data_type)
+                out_s = ox_Literal(str(in_s), datatype=data_type)
         else:
             out_s = ox_NamedNode(str(in_s))
         if in_p is None:
@@ -117,12 +117,12 @@ class DataGraph:
             out_o = ox_BlankNode(str(in_o))
         elif isinstance(in_o, rdf_Literal):
             if in_o.language is not None:
-                out_o = ox_Literal(str(in_o.value), language=in_o.language)
+                out_o = ox_Literal(str(in_o), language=in_o.language)
             else:
                 data_type = in_o.datatype
                 if data_type is not None:
                     data_type = ox_NamedNode(str(data_type))
-                out_o = ox_Literal(str(in_o.value), datatype=data_type)
+                out_o = ox_Literal(str(in_o), datatype=data_type)
         else:
             out_o = ox_NamedNode(str(in_o))
         return out_s, out_p, out_o
@@ -137,12 +137,12 @@ class DataGraph:
             return ox_BlankNode(str(term))
         elif isinstance(term, rdf_Literal):
             if term.language is not None:
-                return ox_Literal(str(term.value), language=term.language)
+                return ox_Literal(str(term), language=term.language)
             else:
                 data_type = term.datatype
                 if data_type is not None:
                     data_type = ox_NamedNode(str(data_type))
-                return ox_Literal(str(term.value), datatype=data_type)
+                return ox_Literal(str(term), datatype=data_type)
         else:
             return ox_NamedNode(str(term))
 
