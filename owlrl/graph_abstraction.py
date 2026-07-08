@@ -96,10 +96,13 @@ class DataGraph:
         elif isinstance(in_s, rdf_BNode):
             out_s = ox_BlankNode(str(in_s))
         elif isinstance(in_s, rdf_Literal):
-            data_type = in_s.datatype
-            if data_type is not None:
-                data_type = ox_NamedNode(str(data_type))
-            out_s = ox_Literal(in_s.value, datatype=data_type, language=in_s.language)
+            if in_s.language is not None:
+                out_s = ox_Literal(str(in_s.value), language=in_s.language)
+            else:
+                data_type = in_s.datatype
+                if data_type is not None:
+                    data_type = ox_NamedNode(str(data_type))
+                out_s = ox_Literal(str(in_s.value), datatype=data_type)
         else:
             out_s = ox_NamedNode(str(in_s))
         if in_p is None:
@@ -113,10 +116,13 @@ class DataGraph:
         elif isinstance(in_o, rdf_BNode):
             out_o = ox_BlankNode(str(in_o))
         elif isinstance(in_o, rdf_Literal):
-            data_type = in_o.datatype
-            if data_type is not None:
-                data_type = ox_NamedNode(str(data_type))
-            out_o = ox_Literal(in_o.value, datatype=data_type, language=in_o.language)
+            if in_o.language is not None:
+                out_o = ox_Literal(str(in_o.value), language=in_o.language)
+            else:
+                data_type = in_o.datatype
+                if data_type is not None:
+                    data_type = ox_NamedNode(str(data_type))
+                out_o = ox_Literal(str(in_o.value), datatype=data_type)
         else:
             out_o = ox_NamedNode(str(in_o))
         return out_s, out_p, out_o
@@ -130,10 +136,13 @@ class DataGraph:
         elif isinstance(term, rdf_BNode):
             return ox_BlankNode(str(term))
         elif isinstance(term, rdf_Literal):
-            data_type = term.datatype
-            if data_type is not None:
-                data_type = ox_NamedNode(str(data_type))
-            return ox_Literal(term.value, datatype=data_type, language=term.language)
+            if term.language is not None:
+                return ox_Literal(str(term.value), language=term.language)
+            else:
+                data_type = term.datatype
+                if data_type is not None:
+                    data_type = ox_NamedNode(str(data_type))
+                return ox_Literal(str(term.value), datatype=data_type)
         else:
             return ox_NamedNode(str(term))
 
@@ -146,10 +155,12 @@ class DataGraph:
         elif isinstance(term, ox_BlankNode):
             return rdf_BNode(term.value)
         elif isinstance(term, ox_Literal):
+            if term.language is not None:
+                return rdf_Literal(term.value, lang=term.language)
             data_type = term.datatype
             if data_type is not None:
                 data_type = rdf_URIRef(data_type.value)
-            return rdf_Literal(term.value, datatype=data_type, language=term.language)
+            return rdf_Literal(term.value, datatype=data_type)
         else:
             return rdf_URIRef(term.value)
 
@@ -163,10 +174,13 @@ class DataGraph:
         elif isinstance(s, ox_Literal):
             # Technically a subject can never be a Literal
             # in Oxigraph, but this is here for completeness
-            data_type = s.datatype
-            if data_type is not None:
-                data_type = rdf_URIRef(data_type.value)
-            out_s = rdf_Literal(s.value, datatype=data_type, language=s.language)
+            if s.language is not None:
+                out_s = rdf_Literal(s.value, lang=s.language)
+            else:
+                data_type = s.datatype
+                if data_type is not None:
+                    data_type = rdf_URIRef(data_type.value)
+                out_s = rdf_Literal(s.value, datatype=data_type)
         else:
             out_s = rdf_URIRef(s.value)
         if p is None:
@@ -178,10 +192,13 @@ class DataGraph:
         if o is None:
             out_o = None
         elif isinstance(o, ox_Literal):
-            data_type = o.datatype
-            if data_type is not None:
-                data_type = rdf_URIRef(data_type.value)
-            out_o = rdf_Literal(o.value, datatype=data_type, language=o.language)
+            if o.language is not None:
+                out_o = rdf_Literal(o.value, lang=o.language)
+            else:
+                data_type = o.datatype
+                if data_type is not None:
+                    data_type = rdf_URIRef(data_type.value)
+                out_o = rdf_Literal(o.value, datatype=data_type)
         elif isinstance(o, ox_BlankNode):
             out_o = rdf_BNode(o.value)
         else:
