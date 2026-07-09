@@ -238,18 +238,18 @@ class DataGraph:
             Union[rdf_Literal, rdf_IdentifiedNode],
         ],
     ):
+        if isinstance(triple[0], rdf_Literal):
+            # Oxigraph does not support Literal in the subject position
+            # So this cannot be added to the store.
+            warnings.warn(
+                "OWL-RL inferencer tried to add a triple with a Literal in the subject position",
+            )
+            return
         if isinstance(triple[1], rdf_BNode) or isinstance(triple[1], rdf_Literal):
             # Oxigraph does not support BNode or Literal in the predicate position
             # Cannot add the triple
             warnings.warn(
                 "OWL-RL inferencer tried to add a triple with a BNode or Literal in the predicate position",
-            )
-            return
-        if isinstance(triple[0], rdf_Literal):
-            # Oxigraph does not support Literal in the subject position
-            # Cannot add the triple
-            warnings.warn(
-                "OWL-RL inferencer tried to add a triple with a Literal in the subject position",
             )
             return
         ox_s, ox_p, ox_o = self.convert_triple_to_oxigraph(triple)
@@ -267,12 +267,14 @@ class DataGraph:
             Union[rdf_Literal, rdf_IdentifiedNode],
         ],
     ):
+        if triple[0] is not None and isinstance(triple[0], rdf_Literal):
+            # Oxigraph does not support Literal in the subject position
+            # So this can never match any triples in the Store.
+            return
         ox_triples = self.convert_triple_to_oxigraph(triple)
         if isinstance(ox_triples[1], ox_BlankNode) or isinstance(
             ox_triples[1], ox_Literal
         ):
-            return
-        if isinstance(ox_triples[0], ox_Literal):
             return
         if self.locked_context is not None:
             to_remove = list(
@@ -311,15 +313,15 @@ class DataGraph:
         None,
         None,
     ]:
+        if triple[0] is not None and isinstance(triple[0], rdf_Literal):
+            # Oxigraph does not support Literal in the subject position
+            # So this can never match any triples in the Store.
+            return
         ox_triples = self.convert_triple_to_oxigraph(triple)
         if isinstance(ox_triples[1], ox_BlankNode) or isinstance(
             ox_triples[1], ox_Literal
         ):
             # Oxigraph does not support BNode or Literal in the predicate position
-            # Cannot yield any results
-            return
-        if isinstance(ox_triples[0], ox_Literal):
-            # Oxigraph does not support Literal in the subject position
             # Cannot yield any results
             return
         if self.locked_context is not None:
@@ -391,6 +393,10 @@ class DataGraph:
     ) -> Generator[
         Tuple[rdf_IdentifiedNode, Union[rdf_IdentifiedNode, rdf_Literal]], None, None
     ]:
+        if subject is not None and isinstance(subject, rdf_Literal):
+            # Oxigraph does not support literal subjects
+            # So no predicate-object pairs can be returned
+            return
         _s = self.to_ox(subject)
         if self.locked_context is not None:
             for q in self.impl.quads_for_pattern(_s, None, None, self.locked_context):
@@ -431,6 +437,10 @@ class DataGraph:
         subject: Union[rdf_IdentifiedNode, rdf_Literal],
         predicate: Union[rdf_IdentifiedNode, None],
     ) -> Generator[Union[rdf_IdentifiedNode, rdf_Literal], None, None]:
+        if subject is not None and isinstance(subject, rdf_Literal):
+            # Oxigraph does not support literal subjects
+            # So no objects can be returned 
+            return
         _s = self.to_ox(subject)
         _p = self.to_ox(predicate)
         if self.locked_context is not None:
@@ -569,6 +579,10 @@ class DataGraph:
         ],
     ) -> bool:
         if self.is_oxigraph:
+            if triple[0] is not None and isinstance(triple[0], rdf_Literal):
+                # an oxigraph store cannot have a Literal in the subject position
+                # so this triple cannot exist in the store
+                return False
             triple_ = self.convert_triple_to_oxigraph(triple)
             if self.locked_context is not None:
                 quad = ox_Quad(triple_[0], triple_[1], triple_[2], self.locked_context)
