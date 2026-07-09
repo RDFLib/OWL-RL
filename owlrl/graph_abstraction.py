@@ -569,6 +569,10 @@ class DataGraph:
         ],
     ) -> bool:
         if self.is_oxigraph:
+            if triple[0] is not None and isinstance(triple[0], rdf_Literal):
+                # an oxigraph store cannot have a Literal in the subject position
+                # so this triple cannot exist in the store
+                return False
             triple_ = self.convert_triple_to_oxigraph(triple)
             if self.locked_context is not None:
                 quad = ox_Quad(triple_[0], triple_[1], triple_[2], self.locked_context)
