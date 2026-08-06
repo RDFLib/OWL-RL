@@ -434,12 +434,12 @@ class DataGraph:
 
     def objects_in_oxigraph(
         self,
-        subject: Union[rdf_IdentifiedNode, rdf_Literal],
+        subject: Union[rdf_IdentifiedNode, rdf_Literal, None],
         predicate: Union[rdf_IdentifiedNode, None],
     ) -> Generator[Union[rdf_IdentifiedNode, rdf_Literal], None, None]:
         if subject is not None and isinstance(subject, rdf_Literal):
             # Oxigraph does not support literal subjects
-            # So no objects can be returned 
+            # So no objects can be returned
             return
         _s = self.to_ox(subject)
         _p = self.to_ox(predicate)
