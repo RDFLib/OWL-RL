@@ -424,7 +424,7 @@ class OWLRL_Semantics(Core):
                 zis = self._list(y)
                 for i in range(0, len(zis) - 1):
                     zi = zis[i]
-                    for j in range(i + 1, len(zis) - 1):
+                    for j in range(i + 1, len(zis)):
                         zj = zis[j]
                         if (
                             (zi, OWL.sameAs, zj) in self.graph
