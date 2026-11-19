@@ -520,7 +520,7 @@ class OWLRL_Semantics(Core):
                     pis = self._list(y)
                     for i in range(0, len(pis) - 1):
                         pi = pis[i]
-                        for j in range(i + 1, len(pis) - 1):
+                        for j in range(i + 1, len(pis)):
                             pj = pis[j]
                             for x, y in self.graph.subject_objects(pi):
                                 if (x, pj, y) in self.graph:
