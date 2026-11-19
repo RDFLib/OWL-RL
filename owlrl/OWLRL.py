@@ -610,7 +610,7 @@ class OWLRL_Semantics(Core):
                             # 'calculate' the keys for the y values and see if there is a match
                             for vals in valueList:
                                 same = True
-                                for i in range(0, len(pis) - 1):
+                                for i in range(0, len(pis)):
                                     if (y, pis[i], vals[i]) not in self.graph:
                                         same = False
                                         # No use going with this property line
